@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gridiron GM — College Football Manager</title>
+<style>
+  :root{
+    --bg:#0a0d12; --panel:#11161e; --panel2:#182029; --raise:#1e2833;
+    --line:#232d3a; --line2:#313d4d;
+    --text:#e9edf4; --muted:#97a3b4; --faint:#67748a;
+    --accent:#e6b23d; --good:#41b883; --bad:#e05d5d; --team:#1f4e79;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--text); font-family:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif; font-size:14.5px; line-height:1.45;}
+  h1{font-size:20px; font-weight:800; letter-spacing:-.01em;}
+  h2,h3{font-weight:700;}
+  button{font:inherit; cursor:pointer; border:none; border-radius:9px;}
+  button:disabled{opacity:.4; cursor:not-allowed;}
+  .num, td.num, .stat .v, .tile .v, .chip{font-variant-numeric:tabular-nums;}
+
+  /* ===== app shell ===== */
+  .shell{display:grid; grid-template-columns:238px minmax(0,1fr); min-height:100vh;}
+  .side{position:sticky; top:0; height:100vh; display:flex; flex-direction:column; gap:14px; padding:18px 14px 14px; border-right:1px solid var(--line);
+    background:linear-gradient(180deg, color-mix(in srgb, var(--team) 30%, var(--panel)) 0%, var(--panel) 36%);}
+  .brand{display:flex; gap:10px; align-items:center; padding:0 4px;}
+  .brand .bn{font-weight:800; font-size:15px; line-height:1.2;}
+  .brand .bm{color:var(--muted); font-size:12px;}
+  .ctx{background:rgba(0,0,0,.25); border:1px solid var(--line); border-radius:10px; padding:8px 11px; font-size:12.5px;}
+  .ctxrow{display:flex; justify-content:space-between; gap:8px; padding:3px 0; color:var(--muted);}
+  .ctxrow b{color:var(--text); font-weight:700; text-align:right;}
+  .nav{display:flex; flex-direction:column; gap:2px; flex:1; overflow-y:auto;}
+  .nav a{display:flex; gap:10px; align-items:center; padding:8px 10px; border-radius:9px; color:var(--muted); font-weight:600; font-size:13.5px; cursor:pointer; border-left:3px solid transparent;}
+  .nav a:hover{background:var(--panel2); color:var(--text);}
+  .nav a.on{background:var(--panel2); color:var(--text); border-left-color:var(--accent);}
+  .nav .ic{width:20px; text-align:center;}
+  .sidefoot{border-top:1px solid var(--line); padding-top:12px; font-size:12px;}
+  .sf-l{color:var(--faint); text-transform:uppercase; letter-spacing:.07em; font-size:10.5px; margin-bottom:6px;}
+  .sf-v{margin-top:6px; font-weight:700;}
+
+  .main{padding:20px 26px 48px; min-width:0; max-width:1280px;}
+  .pagehead{display:flex; justify-content:space-between; align-items:center; gap:14px; margin-bottom:16px; flex-wrap:wrap;}
+  .crumb{display:flex; gap:6px; margin-top:7px; flex-wrap:wrap;}
+  .chip{display:inline-block; background:var(--panel2); border:1px solid var(--line); color:var(--muted); border-radius:999px; padding:2px 11px; font-size:12px; font-weight:600;}
+  .chip.gold{color:var(--accent); border-color:color-mix(in srgb, var(--accent) 45%, var(--line));}
+  .actions{display:flex; gap:8px; flex-wrap:wrap;}
+
+  /* ===== KPI tiles ===== */
+  .kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(152px,1fr)); gap:10px; margin-bottom:14px;}
+  .tile{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:12px 14px;}
+  .tile .l{font-size:10.5px; color:var(--faint); text-transform:uppercase; letter-spacing:.07em; margin-bottom:4px;}
+  .tile .v{font-size:22px; font-weight:800; line-height:1.1;}
+  .tile .s{font-size:12px; color:var(--muted); margin-top:3px;}
+
+  /* ===== season form chart ===== */
+  .form{display:flex; gap:5px; align-items:stretch; height:98px; padding:4px 2px;}
+  .fcol{flex:1; display:flex; flex-direction:column; min-width:10px; max-width:28px; cursor:default;}
+  .fup{flex:1; display:flex; align-items:flex-end; justify-content:center; border-bottom:1px solid var(--line2);}
+  .fdn{flex:1; display:flex; align-items:flex-start; justify-content:center;}
+  .fbar{width:72%; border-radius:3px;}
+  .fbar.w{background:var(--good);}
+  .fbar.l{background:var(--bad);}
+
+  /* ===== live-game bar ===== */
+  .topbar{display:flex; align-items:center; gap:16px; background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:14px 18px; margin-bottom:14px; flex-wrap:wrap;}
+  .teambadge{width:46px; height:46px; border-radius:11px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; color:#fff; flex:none; box-shadow:inset 0 -2px 0 rgba(0,0,0,.25);}
+  .topinfo{flex:1; min-width:200px;}
+  .topinfo .tname{font-size:18px; font-weight:800;}
+  .topinfo .tsub{color:var(--muted); font-size:13px;}
+  .topstats{display:flex; gap:20px; align-items:center; flex-wrap:wrap;}
+  .stat{text-align:center;}
+  .stat .v{font-size:22px; font-weight:800;}
+  .stat .l{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px;}
+  .btn-advance{background:var(--accent); color:#161006; font-weight:800; padding:11px 20px; font-size:14.5px; box-shadow:0 2px 8px rgba(230,178,61,.22);}
+  .btn-advance:hover{filter:brightness(1.08);}
+  .btn-sm{background:var(--panel2); color:var(--text); border:1px solid var(--line2); padding:6px 12px; font-size:13px;}
+  .btn-sm:hover:not(:disabled){border-color:var(--accent);}
+  .btn-sm.active{background:var(--accent); color:#161006; border-color:var(--accent); font-weight:700;}
+  .btn-sm.danger{color:var(--bad); border-color:rgba(224,93,93,.4);}
+
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;}
+  .gdash{display:grid; grid-template-columns:1.45fr 1fr; gap:14px;}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px; margin-bottom:14px;}
+  .card h3{font-size:11.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--faint); margin-bottom:12px; font-weight:700;}
+
+  table{width:100%; border-collapse:collapse; font-size:13.5px;}
+  th{color:var(--faint); font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; text-align:left; padding:6px 8px; border-bottom:1px solid var(--line2); cursor:pointer; white-space:nowrap;}
+  td{padding:8px; border-bottom:1px solid rgba(35,45,58,.55); white-space:nowrap;}
+  tr:has(td):hover td{background:rgba(230,178,61,.05);}
+  tr.hl td{background:color-mix(in srgb, var(--accent) 9%, transparent);}
+  .num{text-align:right;}
+  .ovr{display:inline-block; min-width:30px; text-align:center; padding:2px 5px; border-radius:6px; font-weight:700; font-size:12.5px;}
+  .stars{color:var(--accent); letter-spacing:1px;}
+
+  .newsitem{padding:8px 0 8px 12px; border-bottom:1px solid rgba(35,45,58,.55); border-left:2px solid var(--line2); margin-left:2px; font-size:13.5px;}
+  .newsitem .wk{display:block; color:var(--faint); font-size:11px; margin-bottom:1px;}
+
+  .meter{height:9px; background:var(--panel2); border-radius:5px; overflow:hidden; margin-top:4px;}
+  .meter div{height:100%; border-radius:5px;}
+
+  /* ===== team select ===== */
+  .selectwrap{max-width:1180px; margin:0 auto; padding:24px 20px;}
+  .confblock{margin-bottom:24px;}
+  .confblock h2{font-size:13px; color:var(--faint); text-transform:uppercase; letter-spacing:.1em; margin-bottom:10px;}
+  .teamgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:10px;}
+  .teamcard{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:13px; display:flex; gap:12px; align-items:center; cursor:pointer; transition:border-color .15s, transform .1s;}
+  .teamcard:hover{border-color:var(--accent); transform:translateY(-1px);}
+  .teamcard .tn{font-weight:700; font-size:14px;}
+  .teamcard .tm{color:var(--muted); font-size:12px;}
+
+  .sliderrow{display:flex; align-items:center; gap:12px; margin-bottom:14px;}
+  .sliderrow label{width:110px; font-weight:600; font-size:14px;}
+  .sliderrow input{flex:1;}
+  .sliderrow .val{width:44px; text-align:right; font-weight:700;}
+  input[type=range]{accent-color:var(--accent);}
+
+  .bigmsg{text-align:center; padding:44px 20px 30px;}
+  .bigmsg h2{font-size:30px; margin-bottom:10px; letter-spacing:-.02em;}
+  .bigmsg p{color:var(--muted); margin-bottom:20px;}
+  .muted{color:var(--muted);}
+  .tag{display:inline-block; padding:2px 8px; border-radius:6px; font-size:11.5px; font-weight:700;}
+  .tag.g{background:rgba(65,184,131,.14); color:var(--good);}
+  .tag.r{background:rgba(224,93,93,.14); color:var(--bad);}
+  .tag.y{background:rgba(230,178,61,.14); color:var(--accent);}
+  .scoreline{display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid rgba(35,45,58,.55); font-size:14px;}
+  .filterbar{display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap; align-items:center;}
+  select{background:var(--panel2); color:var(--text); border:1px solid var(--line2); border-radius:8px; padding:6px 10px; font:inherit; font-size:13px;}
+
+  .schemecard{background:var(--panel2); border:2px solid var(--line); border-radius:11px; padding:12px; cursor:pointer; margin-bottom:10px;}
+  .schemecard:hover{border-color:var(--muted);}
+  .schemecard.sel{border-color:var(--accent);}
+  .schemecard .sn{font-weight:800; display:flex; justify-content:space-between; align-items:center;}
+  .schemecard .sd{color:var(--muted); font-size:13px; margin-top:4px;}
+  .coachcard{background:var(--panel2); border:1px solid var(--line); border-radius:11px; padding:12px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;}
+  .coachcard .cn{font-weight:700;}
+  .coachcard .cd{color:var(--muted); font-size:13px;}
+  .boxline{display:flex; justify-content:space-between; gap:10px; font-size:13px; padding:3px 0;}
+
+  /* ===== collectible player cards ===== */
+  .cardsgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(156px,1fr)); gap:12px;}
+  .cardsgrid.mini{grid-template-columns:repeat(auto-fill,minmax(124px,1fr)); gap:10px;}
+  .pcard{position:relative; aspect-ratio:63/88; border-radius:16px; padding:11px 11px 9px; overflow:hidden;
+    background:radial-gradient(130% 95% at 50% -12%, var(--tint) 0%, transparent 55%), linear-gradient(165deg,#1b232e 0%,#0b0f14 72%);
+    box-shadow:0 4px 14px rgba(0,0,0,.35);
+    transition:transform .18s ease, box-shadow .18s ease;
+    display:flex; flex-direction:column;}
+  .pcard::before{content:""; position:absolute; inset:0; border-radius:16px; padding:2px; background:var(--frame);
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none;}
+  .pcard::after{content:""; position:absolute; top:-80%; left:-90%; width:55%; height:260%; transform:rotate(25deg);
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.11),transparent); pointer-events:none; transition:left .55s ease;}
+  .pcard:hover{transform:translateY(-5px) scale(1.02); box-shadow:0 14px 34px rgba(0,0,0,.55), 0 0 26px -6px var(--glow);}
+  .pcard:hover::after{left:140%;}
+  .r-uni {--frame:linear-gradient(140deg,#f8e08e,#a97e1c 42%,#fff3c4 58%,#8a6d1d); --tint:rgba(231,197,94,.30); --glow:rgba(231,197,94,.6);  --rlab:#f1d47c;}
+  .r-sr  {--frame:linear-gradient(140deg,#9cc4f5,#2f66b0 42%,#d6e7ff 58%,#1c3f6e); --tint:rgba(94,150,231,.28);  --glow:rgba(94,150,231,.55); --rlab:#9cc4f5;}
+  .r-rare{--frame:linear-gradient(140deg,#f0908a,#a3272c 42%,#ffd9d1 58%,#6e1c22); --tint:rgba(224,93,93,.26);   --glow:rgba(224,93,93,.55);  --rlab:#f0908a;}
+  .r-lim {--frame:linear-gradient(140deg,#f3cf7d,#b98a1f 42%,#fff0c8 58%,#7c5c14); --tint:rgba(230,178,61,.22);  --glow:rgba(230,178,61,.5);  --rlab:#f3cf7d;}
+  .r-com {--frame:linear-gradient(140deg,#7e8b9d,#414c5c 42%,#c7d1de 58%,#333d4b); --tint:rgba(139,151,168,.16); --glow:rgba(139,151,168,.35);--rlab:#aab6c5;}
+  .pc-top{display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:800; z-index:1;}
+  .pc-pos{background:rgba(0,0,0,.4); border:1px solid rgba(255,255,255,.14); padding:2px 8px; border-radius:7px;}
+  .pc-rar{color:var(--rlab); letter-spacing:.09em; font-size:9px;}
+  .pc-fig{flex:1; display:flex; align-items:center; justify-content:center; position:relative; z-index:1; min-height:0; padding:4px 0;}
+  .pc-fig svg{width:62%; max-height:88%; color:color-mix(in srgb, var(--rlab) 50%, #0b0e13); filter:drop-shadow(0 6px 10px rgba(0,0,0,.5));}
+  .pc-num{position:absolute; top:8%; right:7%; font-size:34px; font-weight:900; color:rgba(255,255,255,.09); z-index:0; font-variant-numeric:tabular-nums;}
+  .pc-name{font-weight:800; font-size:13.5px; line-height:1.15; z-index:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .pc-sub{color:var(--muted); font-size:10.5px; margin-top:1px; z-index:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .pc-row{display:flex; justify-content:space-between; align-items:flex-end; margin-top:6px; z-index:1;}
+  .pc-ovr{font-size:24px; font-weight:900; line-height:1;}
+  .pc-ovr span{font-size:9px; color:var(--faint); display:block; letter-spacing:.09em; margin-top:2px;}
+  .pc-meta{text-align:right; font-size:10.5px; color:var(--muted); line-height:1.45;}
+  .pc-stat{margin-top:7px; padding-top:6px; border-top:1px solid rgba(255,255,255,.08); font-size:10.5px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; z-index:1;}
+
+  @media(max-width:940px){
+    .shell{grid-template-columns:1fr;}
+    .side{position:static; height:auto; border-right:none; border-bottom:1px solid var(--line); gap:10px; padding:14px;}
+    .nav{flex-direction:row; overflow-x:auto; padding-bottom:2px;}
+    .nav a{white-space:nowrap; border-left:none; border-bottom:3px solid transparent; border-radius:9px 9px 0 0;}
+    .nav a.on{border-left:none; border-bottom-color:var(--accent);}
+    .ctx,.sidefoot{display:none;}
+    .grid2,.grid3,.gdash{grid-template-columns:1fr;}
+    .main{padding:16px 14px 40px;}
+  }
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+"use strict";
+/* ============================ helpers ============================ */
+const RI=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+function gauss(m,s){let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();
+  return m+s*Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+const FIRST=["Jalen","Marcus","Tyler","Devin","Caleb","Jordan","Trey","Malik","Austin","Bryce","Cade","Xavier","Elijah","Nolan","Derek","Isaiah","Logan","Trent","Amari","Chase","Grant","Darius","Kellen","Mason","Rashad","Cole","Dante","Wyatt","Jamal","Peyton","Kobe","Silas","Andre","Tucker","Omar","Reese","Deshawn","Hunter","Ezra","Colt","Micah","Jaxon","Terrell","Beau","Quincy","Levi","Damon","Sterling","Rico","Gage"];
+const LAST=["Washington","Carter","Brooks","Hayes","Mitchell","Sanders","Coleman","Griffin","Barnes","Fletcher","Dawson","Ellis","Monroe","Sutton","Vance","Holloway","Pierce","Whitfield","Lawson","Mercer","Boone","Calloway","Drummond","Easton","Fairbanks","Granger","Hollis","Ingram","Jarrett","Kimble","Landry","Maddox","Norwood","Overton","Prescott","Quimby","Rockwell","Stallworth","Thorne","Underwood","Vaughn","Wexler","Yancey","Ziegler","Ashford","Bellamy","Crowder","Delaney","Everhart","Falk"];
+
+/* ============================ league data ============================ */
+const CONFS=["Coastal League","Heartland League","Mountain League","Great Lakes League"];
+const SCHOOLS=[
+  {n:"Harborview State",m:"Mariners",c:0,p:88,col:"#1f4e79"},
+  {n:"Palmetto Bay",m:"Marlins",c:0,p:80,col:"#0e7490"},
+  {n:"Bayport",m:"Buccaneers",c:0,p:72,col:"#7a1f2b"},
+  {n:"Tidewater Tech",m:"Terrapins",c:0,p:66,col:"#2e6b4f"},
+  {n:"Beacon Point",m:"Keepers",c:0,p:60,col:"#8a6d1d"},
+  {n:"Saltmarsh A&M",m:"Herons",c:0,p:55,col:"#4a5d7a"},
+  {n:"Gulf Breeze",m:"Pelicans",c:0,p:50,col:"#b3541e"},
+  {n:"Coral Ridge",m:"Hammerheads",c:0,p:45,col:"#5b6472"},
+  {n:"Prairie State",m:"Bison",c:1,p:90,col:"#5d3a1a"},
+  {n:"Red River Tech",m:"Coyotes",c:1,p:82,col:"#a12a2a"},
+  {n:"Wheatland",m:"Harvesters",c:1,p:74,col:"#a3841c"},
+  {n:"Ironton",m:"Forgemen",c:1,p:67,col:"#444c56"},
+  {n:"Grainbelt A&M",m:"Mustangs",c:1,p:61,col:"#2f6d3a"},
+  {n:"Copper Plains",m:"Rattlers",c:1,p:54,col:"#8c5a2b"},
+  {n:"Frontier Falls",m:"Pioneers",c:1,p:49,col:"#3f5e8c"},
+  {n:"Longhollow",m:"Stampede",c:1,p:46,col:"#6d3a5d"},
+  {n:"Summit Ridge",m:"Elks",c:2,p:86,col:"#355e3b"},
+  {n:"Granite Peak",m:"Miners",c:2,p:79,col:"#54585f"},
+  {n:"Timberline",m:"Lumberjacks",c:2,p:73,col:"#7a3b1e"},
+  {n:"Glacier Valley",m:"Wolves",c:2,p:65,col:"#3a6d8c"},
+  {n:"High Mesa",m:"Hawks",c:2,p:59,col:"#8c2f39"},
+  {n:"Silver Canyon",m:"Prospectors",c:2,p:53,col:"#6e6a5e"},
+  {n:"Thunder Basin",m:"Bighorns",c:2,p:48,col:"#4c3a6d"},
+  {n:"Pinecrest",m:"Grizzlies",c:2,p:44,col:"#2d4a33"},
+  {n:"Lakeshore",m:"Admirals",c:3,p:87,col:"#1e3a6d"},
+  {n:"North Harbor",m:"Norsemen",c:3,p:81,col:"#5e2750"},
+  {n:"Frostbay",m:"Huskies",c:3,p:71,col:"#3d7a8c"},
+  {n:"Ironlake",m:"Icebreakers",c:3,p:64,col:"#2f4858"},
+  {n:"Maplewood",m:"Moose",c:3,p:58,col:"#7a2e1e"},
+  {n:"Duneside",m:"Badgers",c:3,p:52,col:"#6d5a2f"},
+  {n:"Steelport",m:"Stags",c:3,p:47,col:"#444"},
+  {n:"Cedarford",m:"Cardinals",c:3,p:43,col:"#8c1f1f"},
+];
+const POS=["QB","RB","WR","OL","DL","LB","DB","K"];
+const ROSTER_NEED={QB:3,RB:4,WR:6,OL:8,DL:6,LB:5,DB:6,K:2};
+const YEARS=["FR","SO","JR","SR"];
+const REG_WEEKS=11, CONF_WEEK=12, SEMI_WEEK=13, FINAL_WEEK=14, SIGN_WEEK=15;
+
+/* ============================ playbooks ============================ */
+const OFF_SCHEMES={
+  air:   {name:"Air Raid",      desc:"Four wide, up-tempo, throw it 50 times. Lives and dies with the QB and receivers.", w:{QB:.38,RB:.08,WR:.32,OL:.22}, pass:.72, tempo:1.10},
+  spread:{name:"Spread Option", desc:"Dual-threat QB run game with speed in space. Punishes over-aggressive defenses.",   w:{QB:.32,RB:.24,WR:.20,OL:.24}, pass:.46, tempo:1.05},
+  pro:   {name:"Pro Style",     desc:"Multiple formations, play-action, balance. No weakness, no extreme either.",        w:{QB:.30,RB:.18,WR:.22,OL:.30}, pass:.55, tempo:1.00},
+  power: {name:"Power Run",     desc:"Downhill running behind a mauling line. Controls the clock, shortens the game.",    w:{QB:.14,RB:.30,WR:.16,OL:.40}, pass:.34, tempo:0.88},
+  west:  {name:"West Coast",    desc:"Short, precise passing as an extended run game. Low risk, methodical drives.",      w:{QB:.36,RB:.16,WR:.26,OL:.22}, pass:.62, tempo:0.94},
+};
+const DEF_SCHEMES={
+  d43:   {name:"4-3 Base",    desc:"Sound, balanced front. No glaring weakness against any offense.",          w:{DL:.40,LB:.30,DB:.30}},
+  d34:   {name:"3-4 Attack",  desc:"Versatile front seven, stout against the run, flexible pressure looks.",   w:{DL:.30,LB:.42,DB:.28}},
+  nickel:{name:"4-2-5 Nickel",desc:"Five defensive backs. Built to erase spread passing attacks.",             w:{DL:.35,LB:.18,DB:.47}},
+  blitz: {name:"3-3-5 Blitz", desc:"Constant pressure from everywhere. Creates chaos — and gives up big plays.",w:{DL:.26,LB:.36,DB:.38}},
+};
+/* points modifier for the OFFENSE when its scheme meets a defense */
+const MATCHUP={
+  air:   {d43: 1, d34: 3, nickel:-3, blitz:-2},
+  spread:{d43: 0, d34:-1, nickel: 1, blitz: 3},
+  pro:   {d43: 0, d34: 0, nickel: 0, blitz: 1},
+  power: {d43:-1, d34:-3, nickel: 3, blitz: 1},
+  west:  {d43: 1, d34: 1, nickel:-2, blitz: 3},
+};
+const GAMEPLANS={
+  conservative:{name:"Conservative",mean:-1.5,sd:-3,int:-0.4,desc:"Protect the ball, shorten the game. Fewer points, fewer disasters."},
+  balanced:    {name:"Balanced",    mean:0,   sd:0, int:0,   desc:"Take what the defense gives."},
+  aggressive:  {name:"Aggressive",  mean:2,   sd:4, int:0.6, desc:"Fourth downs, deep shots, tempo. High ceiling, high risk."},
+};
+const STAFF_ROLES=["OC","DC","RC","SC"];
+const ROLE_INFO={
+  OC:{name:"Offensive Coordinator",eff:"Boosts offense. Bonus if his specialty matches your offensive playbook."},
+  DC:{name:"Defensive Coordinator",eff:"Boosts defense. Bonus if his specialty matches your defensive playbook."},
+  RC:{name:"Recruiting Coordinator",eff:"Adds weekly recruiting points on every target."},
+  SC:{name:"Strength & Conditioning",eff:"Faster offseason development and fewer injuries."},
+};
+
+/* ============================ generation ============================ */
+let nextId=1;
+function pname(){return pick(FIRST)+" "+pick(LAST);}
+function newSt(){return {gp:0,paYd:0,paTD:0,int:0,ruYd:0,ruTD:0,reYd:0,reTD:0,tkl:0,sk:0,dInt:0};}
+function genPlayer(pos,yearIdx,quality){
+  const base=quality*0.55+18;
+  let ovr=clamp(Math.round(gauss(base+yearIdx*2.5,6)),40,92);
+  let pot=clamp(ovr+RI(0,14-yearIdx*3),ovr,99);
+  return {id:nextId++,name:pname(),pos,year:yearIdx,ovr,pot,inj:0,st:newSt(),mor:RI(60,80),rs:false};
+}
+function genRoster(prestige){
+  const r=[];
+  for(const pos of POS) for(let i=0;i<ROSTER_NEED[pos];i++) r.push(genPlayer(pos,RI(0,3),prestige));
+  return r;
+}
+function genRecruits(){
+  const list=[];
+  for(let i=0;i<140;i++){
+    const roll=Math.random();
+    const stars=roll<0.04?5:roll<0.18?4:roll<0.62?3:2;
+    const ovr={2:RI(52,60),3:RI(58,67),4:RI(65,74),5:RI(72,80)}[stars];
+    const pot=clamp(ovr+RI(8,{2:14,3:18,4:22,5:24}[stars]),ovr,99);
+    list.push({id:"r"+(nextId++),name:pname(),pos:pick(POS.filter(p=>p!=="K"||Math.random()<0.15)),
+      stars,ovr,pot,interest:{},committed:null,suitors:[]});
+  }
+  const totalP=SCHOOLS.reduce((s,x)=>s+x.p,0);
+  for(const rec of list){
+    const set=new Set();
+    while(set.size<4){
+      let x=Math.random()*totalP;
+      for(let i=0;i<SCHOOLS.length;i++){x-=SCHOOLS[i].p; if(x<=0){set.add(i);break;}}
+    }
+    rec.suitors=[...set];
+  }
+  list.sort((a,b)=>b.stars-a.stars||b.pot-a.pot);
+  return list;
+}
+function genCoach(role,quality){
+  const rating=clamp(Math.round(gauss(quality,9)),48,96);
+  return {id:"c"+(nextId++),name:"Coach "+pick(LAST),role,rating,
+    spec:role==="OC"?pick(Object.keys(OFF_SCHEMES)):role==="DC"?pick(Object.keys(DEF_SCHEMES)):null,
+    salary:+(0.35+(rating-50)*0.048).toFixed(2)};
+}
+function genMarket(){
+  const m={};
+  for(const r of STAFF_ROLES) m[r]=Array.from({length:6},()=>genCoach(r,gauss(66,9))).sort((a,b)=>b.rating-a.rating);
+  return m;
+}
+
+/* ============================ schedule ============================ */
+function roundRobin8(ids){
+  const a=ids.slice(); const rounds=[];
+  for(let r=0;r<7;r++){
+    const games=[];
+    for(let i=0;i<4;i++){const h=a[i],v=a[7-i]; games.push(Math.random()<0.5?[h,v]:[v,h]);}
+    rounds.push(games);
+    a.splice(1,0,a.pop());
+  }
+  return rounds;
+}
+function buildSchedule(){
+  const weeks=Array.from({length:REG_WEEKS},()=>[]);
+  for(let c=0;c<4;c++){
+    const ids=[]; for(let i=0;i<32;i++) if(SCHOOLS[i].c===c) ids.push(i);
+    const rr=roundRobin8(ids);
+    for(let r=0;r<7;r++) for(const g of rr[r]) weeks[r+2].push({h:g[0],v:g[1],conf:true});
+  }
+  const confPairs=[[0,1,2,3],[0,2,1,3],[0,3,1,2],[0,1,2,3]];
+  const ncWeeks=[0,1,9,10];
+  ncWeeks.forEach((w,k)=>{
+    const cp=confPairs[k];
+    for(let j=0;j<4;j+=2){
+      const A=[],B=[];
+      for(let i=0;i<32;i++){if(SCHOOLS[i].c===cp[j])A.push(i); if(SCHOOLS[i].c===cp[j+1])B.push(i);}
+      A.sort(()=>Math.random()-0.5); B.sort(()=>Math.random()-0.5);
+      for(let i=0;i<8;i++) weeks[w].push(Math.random()<0.5?{h:A[i],v:B[i],conf:false}:{h:B[i],v:A[i],conf:false});
+    }
+  });
+  return weeks;
+}
+
+/* ============================ ratings & staff ============================ */
+function avail(t){return t.players.filter(p=>!p.inj&&!p.rs);}
+function topN(players,pos,n){return players.filter(p=>p.pos===pos).sort((a,b)=>b.ovr-a.ovr).slice(0,n);}
+function avg(list){return list.length?list.reduce((s,p)=>s+p.ovr,0)/list.length:45;}
+function isUser(t){return t.id===state.userTeam;}
+function coachRating(t,role){
+  if(isUser(t)){const c=state.staff[role]; return c?c.rating:45;}
+  return t.aiStaff[role];
+}
+function coordBonus(t,role){ // role OC/DC
+  let b=(coachRating(t,role)-70)/6;
+  if(isUser(t)){
+    const c=state.staff[role];
+    if(c) b+=(c.spec===(role==="OC"?t.off:t.def))?1.5:-1;
+  }
+  return b;
+}
+function offRating(t,talentOnly){
+  const sch=OFF_SCHEMES[t.off]; const P=talentOnly?t.players:avail(t);
+  const rbs=topN(P,"RB",2);
+  const rbAvg=rbs.length?rbs.reduce((s,p,i)=>s+p.ovr*(i===0?0.7:0.3),0)/(rbs.length===1?0.7:1):45;
+  let r=avg(topN(P,"QB",1))*sch.w.QB+rbAvg*sch.w.RB+avg(topN(P,"WR",3))*sch.w.WR+avg(topN(P,"OL",5))*sch.w.OL;
+  if(!talentOnly){r+=coordBonus(t,"OC"); if(isUser(t)&&state.installingOff) r-=3;}
+  return r;
+}
+function defRating(t,talentOnly){
+  const sch=DEF_SCHEMES[t.def]; const P=talentOnly?t.players:avail(t);
+  let r=avg(topN(P,"DL",4))*sch.w.DL+avg(topN(P,"LB",3))*sch.w.LB+avg(topN(P,"DB",4))*sch.w.DB;
+  if(!talentOnly){r+=coordBonus(t,"DC"); if(isUser(t)&&state.installingDef) r-=3;}
+  return r;
+}
+function teamRating(t){const o=offRating(t),d=defRating(t); return {off:o,def:d,ovr:(o+d)/2};}
+function startersOf(t){
+  const P=avail(t);
+  return [...topN(P,"QB",1),...topN(P,"RB",2),...topN(P,"WR",3),...topN(P,"OL",5),
+          ...topN(P,"DL",4),...topN(P,"LB",3),...topN(P,"DB",4),...topN(P,"K",1)];
+}
+function salaryPool(){return +(2.5+state.teams[state.userTeam].prestige/25).toFixed(1);}
+function salaryUsed(){return +STAFF_ROLES.reduce((s,r)=>s+(state.staff[r]?state.staff[r].salary:0),0).toFixed(2);}
+
+/* ============================ game sim ============================ */
+function gameplanOf(ti){return ti===state.userTeam?GAMEPLANS[state.gameplan]:GAMEPLANS.balanced;}
+function playGame(hi,vi,neutral){
+  const H=state.teams[hi],V=state.teams[vi];
+  const oh=offRating(H),dh=defRating(H),ov=offRating(V),dv=defRating(V);
+  const pace=(OFF_SCHEMES[H.off].tempo+OFF_SCHEMES[V.off].tempo)/2;
+  const gh=gameplanOf(hi),gv=gameplanOf(vi);
+  let mh=23+(oh-dv)*0.5+MATCHUP[H.off][V.def]+(neutral?0:2.2)+gh.mean+(pace-1)*16;
+  let mv=23+(ov-dh)*0.5+MATCHUP[V.off][H.def]+gv.mean+(pace-1)*16;
+  let sh=Math.round(mh+gauss(0,9.5+gh.sd+(V.def==="blitz"?1.5:0)));
+  let sv=Math.round(mv+gauss(0,9.5+gv.sd+(H.def==="blitz"?1.5:0)));
+  sh=Math.max(0,sh); sv=Math.max(0,sv);
+  if(sh===sv){ if(Math.random()<0.5) sh+=RI(3,7); else sv+=RI(3,7); }
+  return {h:hi,v:vi,sh,sv,winner:sh>sv?hi:vi};
+}
+function applyResult(g,conf){
+  const W=state.teams[g.winner], L=state.teams[g.winner===g.h?g.v:g.h];
+  W.wins++; L.losses++;
+  if(conf){W.confW++; L.confL++;}
+  state.teams[g.h].results.push({week:state.week,opp:g.v,home:true,us:g.sh,them:g.sv});
+  state.teams[g.v].results.push({week:state.week,opp:g.h,home:false,us:g.sv,them:g.sh});
+}
+/* generate a statistically plausible box score for one offense; returns performer lines */
+function statTeam(t,pts,oppDef,gp){
+  const sch=OFF_SCHEMES[t.off], P=avail(t);
+  const totYd=clamp(Math.round(pts*11.5+gauss(70,45)),100,720);
+  const passShare=clamp(sch.pass+gauss(0,0.05),0.15,0.85);
+  const passYd=Math.round(totYd*passShare), rushYd=totYd-passYd;
+  const tds=Math.max(0,Math.round(pts/7.2));
+  const passTD=clamp(Math.round(tds*passShare+gauss(0,0.5)),0,tds), rushTD=tds-passTD;
+  const ints=Math.max(0,Math.round(gauss(0.8+gp.int+(oppDef==="blitz"?0.4:0),0.8)));
+  const qb=topN(P,"QB",1)[0], rbs=topN(P,"RB",2), wrs=topN(P,"WR",3);
+  const lines=[];
+  if(qb){qb.st.gp++; qb.st.paYd+=passYd; qb.st.paTD+=passTD; qb.st.int+=ints;
+    const qbRu=Math.round(rushYd*(t.off==="spread"?0.30:0.08));
+    qb.st.ruYd+=qbRu;
+    lines.push(`${qb.name}: ${passYd} pass yds, ${passTD} TD, ${ints} INT`);}
+  const rbShare=[0.62,0.30];
+  rbs.forEach((rb,i)=>{const yd=Math.round(rushYd*rbShare[i]*(t.off==="spread"?0.75:1));
+    rb.st.gp++; rb.st.ruYd+=yd;
+    const rtd=i===0?Math.round(rushTD*0.7):rushTD-Math.round(rushTD*0.7);
+    rb.st.ruTD+=Math.max(0,rtd);
+    if(i===0&&yd>30) lines.push(`${rb.name}: ${yd} rush yds${rtd>0?`, ${rtd} TD`:""}`);});
+  const wrShare=[0.42,0.32,0.26];
+  wrs.forEach((wr,i)=>{const yd=Math.round(passYd*wrShare[i]);
+    wr.st.gp++; wr.st.reYd+=yd;
+    const wtd=i===0?Math.round(passTD*0.5):i===1?Math.round(passTD*0.3):Math.max(0,passTD-Math.round(passTD*0.5)-Math.round(passTD*0.3));
+    wr.st.reTD+=wtd;
+    if(i===0&&yd>25) lines.push(`${wr.name}: ${yd} rec yds${wtd>0?`, ${wtd} TD`:""}`);});
+  return {ints,lines};
+}
+function statDefense(t,oppInts,oppOL){
+  const P=avail(t);
+  const dls=topN(P,"DL",4), lbs=topN(P,"LB",3), dbs=topN(P,"DB",4);
+  const tot=Math.round(gauss(58,8));
+  lbs.forEach(p=>{p.st.gp++; p.st.tkl+=Math.round(tot*0.40/3+gauss(0,2));});
+  dbs.forEach(p=>{p.st.gp++; p.st.tkl+=Math.round(tot*0.35/4+gauss(0,2));});
+  dls.forEach(p=>{p.st.gp++; p.st.tkl+=Math.round(tot*0.25/4+gauss(0,1.5));});
+  let sacks=Math.max(0,Math.round(gauss(2.2+(t.def==="blitz"?1.2:0)-(oppOL-65)/25,1.4)));
+  while(sacks-->0){const p=pick([...dls,...lbs].filter(Boolean)); if(p)p.st.sk++;}
+  let iv=oppInts;
+  while(iv-->0){const p=pick(dbs.filter(Boolean)); if(p)p.st.dInt++;}
+}
+function simStats(res){
+  const H=state.teams[res.h],V=state.teams[res.v];
+  const bh=statTeam(H,res.sh,V.def,gameplanOf(res.h));
+  const bv=statTeam(V,res.sv,H.def,gameplanOf(res.v));
+  statDefense(H,bv.ints,avg(topN(avail(V),"OL",5)));
+  statDefense(V,bh.ints,avg(topN(avail(H),"OL",5)));
+  return {hLines:bh.lines,vLines:bv.lines};
+}
+/* injuries: roll after each played game */
+function injuryRate(t){const sc=coachRating(t,"SC"); return clamp(0.042-sc*0.00028,0.012,0.036);}
+function rollInjuries(t){
+  const rate=injuryRate(t);
+  for(const p of startersOf(t)){
+    if(Math.random()<rate){
+      p.inj=RI(1,5);
+      if(isUser(t)) addNews(`🚑 ${p.pos} ${p.name} injured — out ${p.inj} week${p.inj>1?"s":""}.`);
+    }
+  }
+}
+function healWeek(){
+  for(const t of state.teams) for(const p of t.players){
+    if(p.inj>0){p.inj--; if(p.inj===0&&isUser(t)) addNews(`✅ ${p.pos} ${p.name} is back from injury.`);}
+  }
+}
+
+/* ============================ recruiting ============================ */
+function userWeeklyPoints(){
+  const t=state.teams[state.userTeam];
+  return 16+Math.round(t.prestige/7)+Math.round(state.budget.rec/4)+Math.max(0,Math.round((coachRating(t,"RC")-70)/4));
+}
+function runRecruitingWeek(){
+  const targets=state.recruits.filter(r=>!r.committed&&r.targeted);
+  const per=targets.length?userWeeklyPoints()/targets.length:0;
+  for(const rec of state.recruits){
+    if(rec.committed!==null) continue;
+    for(const s of rec.suitors){
+      if(s===state.userTeam) continue;
+      rec.interest[s]=(rec.interest[s]||0)+SCHOOLS[s].p/12+Math.random()*4;
+    }
+    if(rec.targeted) rec.interest[state.userTeam]=(rec.interest[state.userTeam]||0)+per+state.budget.nil/15;
+    if(state.week>=8){
+      const lead=recruitLeader(rec);
+      if(lead&&lead.gap>60&&Math.random()<0.25) commitRecruit(rec,lead.team);
+    }
+  }
+}
+function recruitLeader(rec){
+  const entries=Object.entries(rec.interest).map(([k,v])=>[+k,v]).sort((a,b)=>b[1]-a[1]);
+  if(!entries.length||entries[0][1]<20) return null;
+  return {team:entries[0][0],pts:entries[0][1],gap:entries[0][1]-(entries[1]?entries[1][1]:0)};
+}
+function commitRecruit(rec,teamIdx){
+  if(teamIdx===state.userTeam){
+    const signed=state.recruits.filter(r=>r.committed===state.userTeam).length;
+    if(signed>=10){
+      const alt=rec.suitors.find(s=>s!==state.userTeam);
+      rec.committed=alt!==undefined?alt:RI(0,31);
+      return;
+    }
+  }
+  rec.committed=teamIdx;
+  if(teamIdx===state.userTeam||rec.stars>=4)
+    addNews(`${"★".repeat(rec.stars)} ${rec.pos} ${rec.name} committed to ${SCHOOLS[teamIdx].n}${teamIdx===state.userTeam?" — that's us!":""}`);
+}
+function signingDay(){
+  for(const rec of state.recruits){
+    if(rec.committed!==null) continue;
+    const lead=recruitLeader(rec);
+    commitRecruit(rec,lead?lead.team:pick(rec.suitors));
+  }
+  const mine=state.recruits.filter(r=>r.committed===state.userTeam);
+  addNews(`Signing Day: we signed ${mine.length} recruit${mine.length!==1?"s":""} (${mine.filter(r=>r.stars>=4).length} four-star+).`);
+}
+
+/* ============================ transfer portal ============================ */
+function openPortal(){
+  state.portal=[];
+  for(const t of state.teams){
+    if(isUser(t)){
+      const starters=new Set(startersOf(t).map(p=>p.id));
+      const cands=t.players.filter(p=>!starters.has(p.id)&&p.year>=1&&p.year<=2&&p.ovr>=62);
+      let n=0;
+      for(const p of cands){
+        if(n>=3)break;
+        // unhappy players bolt; NIL budget helps retention
+        const chance=clamp(0.06+Math.max(0,70-(p.mor??70))*0.009-state.budget.nil*0.0012,0.02,0.5);
+        if(Math.random()<chance){
+          t.players=t.players.filter(x=>x.id!==p.id);
+          state.portal.push({...p,from:t.id,ask:Math.max(4,Math.round((p.ovr-50)*0.75))});
+          addNews(`↪️ ${p.pos} ${p.name} (${YEARS[p.year]}, ${p.ovr} OVR) entered the transfer portal.`);
+          n++;
+        }
+      }
+    } else {
+      const cands=t.players.filter(p=>p.year>=1&&p.year<=2&&p.ovr>=64).sort(()=>Math.random()-0.5).slice(0,RI(0,2));
+      for(const p of cands){
+        t.players=t.players.filter(x=>x.id!==p.id);
+        state.portal.push({...p,from:t.id,ask:Math.max(4,Math.round((p.ovr-50)*0.75))});
+      }
+    }
+  }
+  state.portal.sort((a,b)=>b.ovr-a.ovr);
+  const t=state.teams[state.userTeam];
+  state.portalPts=Math.round(12+state.budget.nil*0.5+t.prestige/4);
+  addNews(`The transfer portal is open: ${state.portal.length} players available. You have ${state.portalPts} NIL points to spend (Recruiting tab).`);
+}
+function signPortal(id){
+  const p=state.portal.find(x=>x.id===id);
+  if(!p||p.signed) return;
+  if(p.ask>state.portalPts){alert("Not enough NIL points left for this transfer.");return;}
+  state.portalPts-=p.ask;
+  p.signed=true;
+  state.teams[state.userTeam].players.push({id:p.id,name:p.name,pos:p.pos,year:p.year,ovr:p.ovr,pot:p.pot,inj:0,st:newSt(),mor:75,rs:false});
+  addNews(`✍️ Transfer signed: ${p.pos} ${p.name} (${YEARS[p.year]}, ${p.ovr} OVR) from ${SCHOOLS[p.from].n}.`);
+  save(); render();
+}
+
+/* ============================ awards ============================ */
+function statline(p){
+  const s=p.st;
+  if(p.pos==="QB")return `${s.paYd} yds, ${s.paTD} TD, ${s.int} INT`;
+  if(p.pos==="RB")return `${s.ruYd} rush yds, ${s.ruTD} TD`;
+  if(p.pos==="WR")return `${s.reYd} rec yds, ${s.reTD} TD`;
+  if(p.pos==="DB")return `${s.tkl} tkl, ${s.dInt} INT`;
+  if(p.pos==="DL"||p.pos==="LB")return `${s.tkl} tkl, ${s.sk} sacks`;
+  return `${p.ovr} OVR`;
+}
+function computeAwards(){
+  let poy=null,poyS=-1,dpoy=null,dpoyS=-1;
+  for(const t of state.teams)for(const p of t.players){
+    const s=p.st;
+    const os=s.paYd*0.045+s.paTD*3.5+s.ruYd*0.07+s.ruTD*4.5+s.reYd*0.06+s.reTD*4.5+t.wins*1.5;
+    const ds=s.tkl*0.35+s.sk*4+s.dInt*5+t.wins*1.5;
+    if(os>poyS){poyS=os;poy={p,t};}
+    if(ds>dpoyS){dpoyS=ds;dpoy={p,t};}
+  }
+  let coy=null,coyS=-99;
+  for(const t of state.teams){const d=t.wins-expectedWins(t.prestige); if(d>coyS){coyS=d;coy=t;}}
+  const fmt=x=>x?`${x.p.name} (${x.p.pos}, ${SCHOOLS[x.t.id].n}) — ${statline(x.p)}`:"—";
+  return {poy:fmt(poy),dpoy:fmt(dpoy),
+    coy:coy?`${SCHOOLS[coy.id].n} (${coy.wins}-${coy.losses}, expected ~${expectedWins(coy.prestige)} wins)`:"—",
+    poyUser:poy&&poy.t.id===state.userTeam, dpoyUser:dpoy&&dpoy.t.id===state.userTeam, coyUser:coy&&coy.id===state.userTeam};
+}
+
+/* ============================ season flow ============================ */
+let state=null;
+function addNews(txt){state.news.unshift({week:state.week,season:state.season,txt}); state.news=state.news.slice(0,80);}
+function makeTeam(s,i){
+  return {id:i,prestige:s.p,players:genRoster(s.p),wins:0,losses:0,confW:0,confL:0,results:[],
+    confChamp:false,natChamp:false,
+    off:pick(Object.keys(OFF_SCHEMES)),def:pick(Object.keys(DEF_SCHEMES)),
+    aiStaff:{OC:clamp(Math.round(gauss(s.p,8)),50,95),DC:clamp(Math.round(gauss(s.p,8)),50,95),
+             RC:clamp(Math.round(gauss(s.p,8)),50,95),SC:clamp(Math.round(gauss(s.p,8)),50,95)}};
+}
+function newGame(userTeamIdx){
+  nextId=1;
+  const p=SCHOOLS[userTeamIdx].p;
+  state={version:3,season:2026,week:0,userTeam:userTeamIdx,confidence:50,budget:{fac:34,rec:33,nil:33},
+    career:{seasons:0,wins:0,losses:0,confTitles:0,natTitles:0,stops:[{team:userTeamIdx,season:2026}]},
+    offers:[],live:null,
+    teams:SCHOOLS.map(makeTeam),news:[],history:[],recruits:genRecruits(),
+    schedule:buildSchedule(),post:{confGames:[],semis:[],final:null,champs:[],natChamp:null},
+    staff:{OC:genCoach("OC",48+p/4),DC:genCoach("DC",48+p/4),RC:genCoach("RC",48+p/4),SC:genCoach("SC",48+p/4)},
+    market:genMarket(),gameplan:"balanced",installingOff:false,installingDef:false,
+    portal:[],portalPts:0,lastBox:null,tab:"dash",fired:false};
+  const u=state.teams[userTeamIdx];
+  state.staff.OC.spec=u.off; state.staff.DC.spec=u.def; // starting staff fits current playbook
+  addNews(`Welcome to ${SCHOOLS[userTeamIdx].n}! Review your staff, pick your playbooks, set the budget and build a recruiting board — then advance.`);
+  save(); render();
+}
+function confStandings(c){
+  const ids=[]; for(let i=0;i<32;i++) if(SCHOOLS[i].c===c) ids.push(i);
+  return ids.sort((a,b)=>{
+    const A=state.teams[a],B=state.teams[b];
+    return (B.confW-B.confL)-(A.confW-A.confL)||B.wins-A.wins||B.prestige-A.prestige;
+  });
+}
+function top25(){
+  return state.teams.map(t=>({id:t.id,score:t.wins*9-t.losses*3+teamRating(t).ovr*0.9+t.prestige*0.15}))
+    .sort((a,b)=>b.score-a.score).slice(0,25).map(x=>x.id);
+}
+function userRank(){const i=top25().indexOf(state.userTeam); return i<0?null:i+1;}
+
+function advanceWeek(liveRes){
+  if(state.fired) return;
+  healWeek();
+  const sameGame=(res,x,y)=>!!res&&res.h===x&&res.v===y;
+  if(state.week<REG_WEEKS){
+    const games=state.schedule[state.week];
+    state.week++;
+    for(const g of games){
+      const res=sameGame(liveRes,g.h,g.v)?liveRes:playGame(g.h,g.v,false);
+      applyResult(res,g.conf);
+      const box=simStats(res);
+      if(g.h===state.userTeam||g.v===state.userTeam){
+        const home=g.h===state.userTeam;
+        state.lastBox={opp:home?g.v:g.h,home,us:home?res.sh:res.sv,them:home?res.sv:res.sh,
+          usLines:home?box.hLines:box.vLines,oppLines:home?box.vLines:box.hLines};
+      }
+    }
+    for(const t of state.teams) if(t.results.some(r=>r.week===state.week)) rollInjuries(t);
+    updateMorale();
+    const u=state.teams[state.userTeam];
+    const last=u.results[u.results.length-1];
+    if(last){
+      const opp=SCHOOLS[last.opp];
+      addNews(`${last.us>last.them?"WIN":"LOSS"} ${last.us}–${last.them} ${last.home?"vs":"at"} ${opp.n} ${opp.m}.`);
+    }
+    runRecruitingWeek();
+  } else if(state.week===REG_WEEKS){
+    state.week=CONF_WEEK;
+    state.post.champs=[];
+    for(let c=0;c<4;c++){
+      const st=confStandings(c);
+      const res=sameGame(liveRes,st[0],st[1])?liveRes:playGame(st[0],st[1],true);
+      applyResult(res,false); simStats(res);
+      state.post.confGames.push(res);
+      state.teams[res.winner].confChamp=true;
+      state.post.champs.push(res.winner);
+      addNews(`${SCHOOLS[res.winner].n} wins the ${CONFS[c]} title, ${Math.max(res.sh,res.sv)}–${Math.min(res.sh,res.sv)} over ${SCHOOLS[res.winner===res.h?res.v:res.h].n}.`);
+    }
+    runRecruitingWeek();
+  } else if(state.week===CONF_WEEK){
+    state.week=SEMI_WEEK;
+    const seeds=state.post.champs.slice().sort((a,b)=>state.teams[b].wins-state.teams[a].wins);
+    const s1=sameGame(liveRes,seeds[0],seeds[3])?liveRes:playGame(seeds[0],seeds[3],true);
+    const s2=sameGame(liveRes,seeds[1],seeds[2])?liveRes:playGame(seeds[1],seeds[2],true);
+    applyResult(s1,false); applyResult(s2,false); simStats(s1); simStats(s2);
+    state.post.semis=[s1,s2];
+    addNews(`Playoff semifinals: ${SCHOOLS[s1.winner].n} and ${SCHOOLS[s2.winner].n} advance to the National Championship.`);
+    runRecruitingWeek();
+  } else if(state.week===SEMI_WEEK){
+    state.week=FINAL_WEEK;
+    const a=state.post.semis[0].winner,b=state.post.semis[1].winner;
+    const f=sameGame(liveRes,a,b)?liveRes:playGame(a,b,true);
+    applyResult(f,false); simStats(f);
+    state.post.final=f;
+    state.post.natChamp=f.winner;
+    state.teams[f.winner].natChamp=true;
+    addNews(`🏆 ${SCHOOLS[f.winner].n} ${SCHOOLS[f.winner].m} are NATIONAL CHAMPIONS! Final: ${Math.max(f.sh,f.sv)}–${Math.min(f.sh,f.sv)}.`);
+    runRecruitingWeek();
+  } else if(state.week===FINAL_WEEK){
+    state.week=SIGN_WEEK;
+    signingDay();
+    const aw=computeAwards();
+    addNews(`🏅 Player of the Year: ${aw.poy}${aw.poyUser?" — OUR GUY!":""}`);
+    addNews(`🛡️ Defensive Player of the Year: ${aw.dpoy}${aw.dpoyUser?" — OUR GUY!":""}`);
+    addNews(`🎩 Coach of the Year: ${aw.coy}${aw.coyUser?" — that's YOU!":""}`);
+    state.lastAwards=aw;
+    endOfSeasonReview();
+    openPortal();
+    genOffers();
+  }
+  save(); render();
+}
+
+function expectedWins(prestige){return clamp(Math.round((prestige-30)/8),2,10);}
+function endOfSeasonReview(){
+  const u=state.teams[state.userTeam];
+  const exp=expectedWins(u.prestige);
+  let delta=(u.wins-exp)*6;
+  if(u.confChamp) delta+=12;
+  if(u.natChamp) delta+=25;
+  state.confidence=clamp(state.confidence+delta,0,100);
+  const verdict=delta>=10?"The board is thrilled.":delta>=0?"The board is satisfied.":delta>=-15?"The board expected more.":"The board is furious.";
+  addNews(`Season review: ${u.wins}-${u.losses} (expected ~${exp} wins). ${verdict} Board confidence: ${state.confidence}%.`);
+  if(state.confidence<15){
+    state.fired=true;
+    addNews(`You have been relieved of your duties at ${SCHOOLS[state.userTeam].n}.`);
+  }
+  for(const t of state.teams){
+    let d=Math.round((t.wins-expectedWins(t.prestige))*0.8);
+    if(t.confChamp)d+=2; if(t.natChamp)d+=4;
+    t.prestige=clamp(t.prestige+clamp(d,-4,6),35,99);
+  }
+  state.career.seasons++; state.career.wins+=u.wins; state.career.losses+=u.losses;
+  if(u.confChamp)state.career.confTitles++; if(u.natChamp)state.career.natTitles++;
+  state.history.push({season:state.season,champ:state.post.natChamp,team:state.userTeam,
+    userW:u.wins,userL:u.losses,confChamp:u.confChamp,natChamp:u.natChamp,awards:state.lastAwards});
+}
+
+function offseasonStaff(){
+  const u=state.teams[state.userTeam];
+  for(const role of STAFF_ROLES){
+    const c=state.staff[role];
+    if(!c) continue;
+    const p=clamp((c.rating-72)/80,0,0.3)+(u.wins>=11?0.10:0);
+    if(Math.random()<p){
+      addNews(`💼 ${ROLE_INFO[role].name} ${c.name} (${c.rating}) was hired away by a bigger program. The seat is open.`);
+      state.staff[role]=null;
+    } else {
+      c.rating=clamp(c.rating+RI(-1,2),48,96);
+    }
+  }
+  state.market=genMarket();
+}
+
+function startNewSeason(){
+  const facBoost=state.budget.fac/40;
+  const scBoost=Math.max(0,(coachRating(state.teams[state.userTeam],"SC")-70)/25);
+  offseasonStaff();
+  for(const t of state.teams){
+    const usr=isUser(t);
+    t.players=t.players.filter(p=>p.year<3);
+    for(const p of t.players){
+      const boost=usr?facBoost+scBoost:1.2;
+      const rsBoost=p.rs?1.5:0; // redshirt year = extra development
+      p.ovr=clamp(Math.round(p.ovr+clamp(gauss(1.5+boost+rsBoost,2),0,8)),40,p.pot);
+      if(!p.rs) p.year++;
+      p.rs=false; p.inj=0; p.st=newSt();
+      p.mor=clamp(Math.round(((p.mor??70)+72)/2)+(t.natChamp?5:0),5,99);
+    }
+    for(const rec of state.recruits.filter(r=>r.committed===t.id)){
+      t.players.push({id:nextId++,name:rec.name,pos:rec.pos,year:0,ovr:rec.ovr,pot:rec.pot,inj:0,st:newSt(),mor:RI(65,85),rs:false});
+    }
+    for(const pos of POS){
+      while(t.players.filter(p=>p.pos===pos).length<ROSTER_NEED[pos]){
+        t.players.push(genPlayer(pos,0,Math.max(38,t.prestige-22)));
+      }
+    }
+    t.wins=0;t.losses=0;t.confW=0;t.confL=0;t.results=[];t.confChamp=false;t.natChamp=false;
+    if(!usr&&Math.random()<0.12){t.off=pick(Object.keys(OFF_SCHEMES)); t.def=pick(Object.keys(DEF_SCHEMES));}
+  }
+  state.season++; state.week=0;
+  state.schedule=buildSchedule();
+  state.recruits=genRecruits();
+  state.post={confGames:[],semis:[],final:null,champs:[],natChamp:null};
+  state.portal=[]; state.portalPts=0; state.lastBox=null;
+  state.offers=[]; state.live=null;
+  state.installingOff=false; state.installingDef=false;
+  addNews(`${state.season} season begins. Freshmen and transfers are in, the roster developed over the summer. Check your staff, playbooks and recruiting board.`);
+  save(); render();
+}
+
+/* ============================ staff actions ============================ */
+function hireCoach(role,id){
+  const cand=state.market[role].find(c=>c.id===id);
+  if(!cand) return;
+  const cur=state.staff[role]?state.staff[role].salary:0;
+  if(salaryUsed()-cur+cand.salary>salaryPool()+0.001){alert("Not enough salary pool. Fire someone or wait for prestige to grow the pool.");return;}
+  if(state.staff[role]) addNews(`${ROLE_INFO[role].name} ${state.staff[role].name} was let go.`);
+  state.staff[role]=cand;
+  state.market[role]=state.market[role].filter(c=>c.id!==id);
+  addNews(`✍️ Hired ${cand.name} as ${ROLE_INFO[role].name} (rating ${cand.rating}, $${cand.salary}M).`);
+  save(); render();
+}
+function fireCoach(role){
+  if(!state.staff[role]) return;
+  if(!confirm(`Fire ${state.staff[role].name}? The seat stays empty (big penalty) until you hire a replacement.`))return;
+  addNews(`${ROLE_INFO[role].name} ${state.staff[role].name} was fired.`);
+  state.staff[role]=null;
+  save(); render();
+}
+function setScheme(side,key){
+  const u=state.teams[state.userTeam];
+  if(side==="off"){
+    if(u.off===key)return;
+    u.off=key;
+    if(state.week>0&&state.week<SIGN_WEEK){state.installingOff=true; addNews(`Offense switched to ${OFF_SCHEMES[key].name} mid-season — the install costs you until next year.`);}
+    else addNews(`Offensive playbook set to ${OFF_SCHEMES[key].name}.`);
+  } else {
+    if(u.def===key)return;
+    u.def=key;
+    if(state.week>0&&state.week<SIGN_WEEK){state.installingDef=true; addNews(`Defense switched to ${DEF_SCHEMES[key].name} mid-season — the install costs you until next year.`);}
+    else addNews(`Defensive playbook set to ${DEF_SCHEMES[key].name}.`);
+  }
+  save(); render();
+}
+function setGameplan(v){state.gameplan=v; save(); render();}
+
+/* ============================ morale & redshirts ============================ */
+function updateMorale(){
+  const u=state.teams[state.userTeam];
+  const last=u.results[u.results.length-1];
+  if(!last||last.week!==state.week) return;
+  const won=last.us>last.them;
+  const starters=new Set(startersOf(u).map(p=>p.id));
+  for(const p of u.players){
+    let d=won?2:-3;
+    if(!starters.has(p.id)&&p.year>=1&&p.ovr>=68) d-=1; // talented bench player wants snaps
+    p.mor=clamp((p.mor??70)+d,5,99);
+  }
+}
+function toggleRedshirt(id){
+  if(state.week!==0){alert("Redshirts can only be set or removed in the preseason.");return;}
+  const u=state.teams[state.userTeam];
+  const p=u.players.find(x=>x.id===id); if(!p)return;
+  if(!p.rs){
+    if(p.year!==0){alert("Only freshmen can redshirt.");return;}
+    if(u.players.filter(x=>x.rs).length>=6){alert("Maximum 6 redshirts per season.");return;}
+    p.rs=true;
+  } else p.rs=false;
+  save(); render();
+}
+
+/* ============================ coaching career & job market ============================ */
+function coachRep(){
+  const c=state.career;
+  return clamp(Math.round(28+c.wins*0.8-c.losses*0.3+c.confTitles*6+c.natTitles*15),10,99);
+}
+function genOffers(){
+  const rep=coachRep();
+  const cur=state.teams[state.userTeam].prestige;
+  const pool=state.teams.filter(t=>!isUser(t)&&t.wins<expectedWins(t.prestige)-1)
+    .sort(()=>Math.random()-0.5).slice(0,5);
+  let offers=pool.filter(t=>state.fired
+      ? t.prestige<=58
+      : (t.prestige<=rep+18&&t.prestige>=cur-20&&t.prestige!==cur))
+    .map(t=>t.id).slice(0,3);
+  if(state.fired&&!offers.length){
+    const low=state.teams.filter(t=>!isUser(t)).sort((a,b)=>a.prestige-b.prestige).slice(0,3);
+    offers=[pick(low).id];
+  }
+  state.offers=offers;
+  if(offers.length){
+    if(state.fired) addNews(`📞 Despite the firing, ${offers.length} program${offers.length>1?"s are":" is"} offering you a rebuild job (see Dashboard).`);
+    else addNews(`📞 ${offers.length} program${offers.length>1?"s want":" wants"} to talk to you about their head-coaching job (see Dashboard).`);
+  }
+}
+function acceptOffer(id){
+  if(!state.offers.includes(id))return;
+  const from=SCHOOLS[state.userTeam].n;
+  if(!confirm(`Leave ${from} to become head coach at ${SCHOOLS[id].n}?`))return;
+  const wasFired=state.fired;
+  state.userTeam=id;
+  state.confidence=wasFired?40:50;
+  state.fired=false;
+  state.offers=[];
+  state.recruits.forEach(r=>r.targeted=false);
+  state.installingOff=false; state.installingDef=false;
+  state.career.stops.push({team:id,season:state.season+1});
+  const t=state.teams[id];
+  state.portalPts=Math.round(12+state.budget.nil*0.5+t.prestige/4);
+  addNews(`🎓 You are the new head coach at ${SCHOOLS[id].n} ${SCHOOLS[id].m}. Your coordinators come with you. The class this program signed is now yours.`);
+  save(); render();
+}
+
+/* ============================ live game (coach mode) ============================ */
+const OFF_CALLS={run:"Ground game",bal:"Balanced attack",pass:"Air it out"};
+const DEF_CALLS={run:"Stack the box",bal:"Base defense",pass:"Coverage shell",blitz:"All-out blitz"};
+const CALL_MOD={ // offense call vs defense call → points modifier for the offense
+  run: {run:-6,bal:1, pass:5, blitz:-1},
+  bal: {run:1, bal:0, pass:1, blitz:1},
+  pass:{run:5, bal:1, pass:-6,blitz:-2},
+};
+function pendingUserGame(){
+  const U=state.userTeam;
+  if(state.fired)return null;
+  if(state.week<REG_WEEKS){
+    const g=state.schedule[state.week].find(g=>g.h===U||g.v===U);
+    return g?{h:g.h,v:g.v,neutral:false,kind:"Week "+(state.week+1)}:null;
+  }
+  if(state.week===REG_WEEKS){
+    const st=confStandings(SCHOOLS[U].c);
+    if(st[0]===U||st[1]===U)return {h:st[0],v:st[1],neutral:true,kind:"Conference Championship"};
+    return null;
+  }
+  if(state.week===CONF_WEEK){
+    const seeds=state.post.champs.slice().sort((a,b)=>state.teams[b].wins-state.teams[a].wins);
+    if(seeds[0]===U||seeds[3]===U)return{h:seeds[0],v:seeds[3],neutral:true,kind:"Playoff Semifinal"};
+    if(seeds[1]===U||seeds[2]===U)return{h:seeds[1],v:seeds[2],neutral:true,kind:"Playoff Semifinal"};
+    return null;
+  }
+  if(state.week===SEMI_WEEK){
+    const a=state.post.semis[0].winner,b=state.post.semis[1].winner;
+    if(a===U||b===U)return{h:a,v:b,neutral:true,kind:"National Championship"};
+    return null;
+  }
+  return null;
+}
+function startLive(){
+  const pg=pendingUserGame();
+  if(!pg||state.live)return;
+  state.live={h:pg.h,v:pg.v,kind:pg.kind,i:0,total:20,sh:0,sv:0,
+    recv:Math.random()<0.5?"h":"v",log:[],done:false};
+  save(); render();
+}
+function liveOffenseIdx(){
+  const L=state.live;
+  const first=L.recv==="h"?L.h:L.v, second=L.recv==="h"?L.v:L.h;
+  return L.i%2===0?first:second;
+}
+function aiOffCall(t,scoreDiff,driveIdx,total){
+  if(driveIdx>=total-6&&scoreDiff<-8)return "pass";
+  if(driveIdx>=total-6&&scoreDiff>8)return "run";
+  const p=OFF_SCHEMES[t.off].pass, r=Math.random();
+  return r<p*0.75?"pass":r<p*0.75+0.25?"bal":"run";
+}
+function aiDefCall(oppOffScheme){
+  const p=OFF_SCHEMES[oppOffScheme].pass, r=Math.random();
+  if(r<0.15)return "blitz";
+  if(r<0.15+p*0.55)return "pass";
+  if(r<0.15+p*0.55+0.25)return "bal";
+  return "run";
+}
+function resolveDrive(O,D,offCall,defCall){
+  const base=offRating(O)-defRating(D);
+  let mod=CALL_MOD[offCall][defCall];
+  let toP=0.09+(offCall==="pass"?0.02:0)+(defCall==="blitz"?0.05:0);
+  let big=false;
+  if(defCall==="blitz"&&offCall==="pass"&&Math.random()<0.30){mod+=9;big=true;}
+  const x=base*0.011+mod*0.02;
+  const pTD=clamp(0.26+x,0.03,0.72);
+  const pFG=clamp(0.15+x*0.3,0.05,0.25);
+  const r=Math.random();
+  if(r<toP)return {pts:0,ev:"TO"};
+  if(r<toP+pTD)return {pts:7,ev:big?"BIGTD":"TD"};
+  if(r<toP+pTD+pFG)return {pts:3,ev:"FG"};
+  return {pts:0,ev:"PUNT"};
+}
+function driveDesc(O,ev){
+  const P=avail(O);
+  const qb=topN(P,"QB",1)[0],rb=topN(P,"RB",1)[0],wr=topN(P,"WR",1)[0];
+  const n=p=>p?p.name:"the offense";
+  const T={
+    TD:[`${n(qb)} caps the drive with a touchdown strike to ${n(wr)}`,`${n(rb)} punches it in from short range`,`a methodical drive ends in the end zone`,`${n(qb)} keeps it himself and scores`],
+    BIGTD:[`the blitz gets burned — ${n(wr)} takes it to the house!`,`${n(qb)} beats the pressure with a deep bomb for six!`],
+    FG:[`the drive stalls in the red zone — the field goal is good`,`settling for three points`],
+    TO:[`${n(qb)} is intercepted!`,`fumble! the defense takes over`,`stuffed on fourth down — turnover on downs`],
+    PUNT:[`three and out`,`the drive stalls near midfield, punt away`],
+  };
+  return pick(T[ev]);
+}
+function playLiveDrive(userCall){
+  const L=state.live;
+  const offIdx=liveOffenseIdx(), defIdx=offIdx===L.h?L.v:L.h;
+  const O=state.teams[offIdx], D=state.teams[defIdx];
+  const userOff=offIdx===state.userTeam;
+  const diff=offIdx===L.h?L.sh-L.sv:L.sv-L.sh;
+  const offCall=userOff?userCall:aiOffCall(O,diff,L.i,L.total);
+  const defCall=userOff?aiDefCall(O.off):userCall;
+  const res=resolveDrive(O,D,offCall,defCall);
+  if(offIdx===L.h)L.sh+=res.pts; else L.sv+=res.pts;
+  const q=Math.min(4,Math.floor(L.i/(L.total/4))+1);
+  L.log.unshift({q,off:offIdx,offCall,defCall,ev:res.ev,pts:res.pts,desc:driveDesc(O,res.ev),sh:L.sh,sv:L.sv});
+  L.i++;
+  if(L.i>=L.total){
+    if(L.sh===L.sv) liveOvertime();
+    L.done=true;
+  }
+}
+function liveOvertime(){
+  const L=state.live;
+  const A=state.teams[L.h],B=state.teams[L.v];
+  for(let r=0;r<5&&L.sh===L.sv;r++){
+    const ra=resolveDrive(A,B,"bal","bal"),rb=resolveDrive(B,A,"bal","bal");
+    L.sh+=ra.pts; L.sv+=rb.pts;
+    L.log.unshift({q:"OT",off:L.h,ev:ra.ev,pts:ra.pts,desc:"OT: "+driveDesc(A,ra.ev),sh:L.sh,sv:L.sv});
+    L.log.unshift({q:"OT",off:L.v,ev:rb.ev,pts:rb.pts,desc:"OT: "+driveDesc(B,rb.ev),sh:L.sh,sv:L.sv});
+  }
+  if(L.sh===L.sv){
+    if(Math.random()<0.5)L.sh+=3; else L.sv+=3;
+    L.log.unshift({q:"OT",off:L.sh>L.sv?L.h:L.v,ev:"FG",pts:3,desc:"walk-off field goal!",sh:L.sh,sv:L.sv});
+  }
+}
+function liveCall(call){
+  const L=state.live; if(!L||L.done)return;
+  playLiveDrive(call);
+  save(); render();
+}
+function liveSimRest(){
+  const L=state.live; if(!L)return;
+  while(!L.done) playLiveDrive("bal");
+  save(); render();
+}
+function liveFinish(){
+  const L=state.live; if(!L||!L.done)return;
+  const res={h:L.h,v:L.v,sh:L.sh,sv:L.sv,winner:L.sh>L.sv?L.h:L.v};
+  state.live=null;
+  advanceWeek(res);
+}
+function liveQuit(){
+  if(!confirm("Abandon coach mode? The rest of the game will be simulated."))return;
+  liveSimRest();
+  liveFinish();
+}
+
+/* ============================ persistence ============================ */
+function save(){try{localStorage.setItem("cfbgm2",JSON.stringify({state,nextId}));}catch(e){}}
+function load(){
+  try{const d=JSON.parse(localStorage.getItem("cfbgm2"));
+    if(d&&d.state&&d.state.version===3){state=d.state; nextId=d.nextId||500000; return true;}
+  }catch(e){}
+  return false;
+}
+function resetGame(){localStorage.removeItem("cfbgm2"); state=null; render();}
+
+/* ============================ UI ============================ */
+const app=document.getElementById("app");
+function weekLabel(){
+  if(state.week===0)return "Preseason";
+  if(state.week<=REG_WEEKS)return "Week "+state.week;
+  if(state.week===CONF_WEEK)return "Conf. Championships";
+  if(state.week===SEMI_WEEK)return "Playoff Semifinals";
+  if(state.week===FINAL_WEEK)return "National Championship";
+  return "Offseason — Signing Day & Portal";
+}
+function advLabel(){
+  if(state.week===SIGN_WEEK)return "Start "+(state.season+1)+" Season →";
+  if(state.week===REG_WEEKS)return "Play Conf. Championships →";
+  if(state.week===CONF_WEEK)return "Play Semifinals →";
+  if(state.week===SEMI_WEEK)return "Play National Final →";
+  if(state.week===FINAL_WEEK)return "Go to Signing Day →";
+  return "Play "+(state.week===0?"Week 1":"Week "+(state.week+1))+" →";
+}
+function ovrColor(o){return o>=80?"#4caf7d":o>=70?"#a3c94c":o>=60?"#e0a325":"#e05656";}
+function ovrCell(o){return `<span class="ovr" style="background:${ovrColor(o)}22;color:${ovrColor(o)}">${o}</span>`;}
+function abbrev(i){return SCHOOLS[i].n.split(" ").map(w=>w[0]).join("").slice(0,3).toUpperCase();}
+
+/* ===== collectible player cards ===== */
+const SIL=`<svg viewBox="0 0 100 62" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="19" r="13.5" fill="currentColor"/><path d="M16 62c3-19 17-26 34-26s31 7 34 26z" fill="currentColor"/></svg>`;
+function rarity(p){
+  if(p.ovr>=85)return{k:"r-uni",l:"UNIQUE"};
+  if(p.ovr>=78)return{k:"r-sr",l:"SUPER RARE"};
+  if(p.ovr>=70)return{k:"r-rare",l:"RARE"};
+  if(p.ovr>=60)return{k:"r-lim",l:"LIMITED"};
+  return{k:"r-com",l:"COMMON"};
+}
+function jersey(p){
+  const n=typeof p.id==="number"?p.id:parseInt(String(p.id).replace(/\D/g,""),10)||7;
+  return (n*37)%98+1;
+}
+function playerCard(p,teamIdx,subOverride){
+  const r=rarity(p);
+  const st=p.st&&p.st.gp?statline(p):YEARS[p.year]==="FR"?"incoming season":"no games yet";
+  const flags=`${p.inj>0?` · 🚑 out ${p.inj}w`:""}${p.rs?" · redshirt":""}`;
+  return `<div class="pcard ${r.k}" title="${esc(p.name)} — ${r.l} · potential ${p.pot} · morale ${p.mor??70}">
+    <div class="pc-num">#${jersey(p)}</div>
+    <div class="pc-top"><span class="pc-pos">${p.pos}</span><span class="pc-rar">${r.l}</span></div>
+    <div class="pc-fig">${SIL}</div>
+    <div class="pc-name">${esc(p.name)}</div>
+    <div class="pc-sub">${subOverride?esc(subOverride):`${YEARS[p.year]} · ${esc(SCHOOLS[teamIdx].n)}${flags}`}</div>
+    <div class="pc-row">
+      <div class="pc-ovr">${p.ovr}<span>OVR</span></div>
+      <div class="pc-meta">POT ${p.pot}<br>MOR ${p.mor??70}</div>
+    </div>
+    <div class="pc-stat">${esc(st)}</div>
+  </div>`;
+}
+
+function render(){
+  if(!state){renderSelect(); return;}
+  if(state.live){app.innerHTML=renderLive(); return;}
+  const s=SCHOOLS[state.userTeam], u=state.teams[state.userTeam];
+  const r=teamRating(u);
+  const conf=state.confidence;
+  const confCol=conf>=60?"var(--good)":conf>=30?"var(--accent)":"var(--bad)";
+  const rk=userRank();
+  document.documentElement.style.setProperty("--team",s.col);
+  const NAV=[["dash","Dashboard","▦"],["roster","Roster","👥"],["sched","Schedule","🗓"],["stand","Standings","🏆"],["stats","Stats","📊"],["recruit","Recruiting","🎯"],["staff","Staff","🪪"],["strategy","Strategy","📖"],["budget","Budget","💰"],["hist","History","📜"]];
+  const titles=Object.fromEntries(NAV.map(([k,l])=>[k,l]));
+  const actions=state.fired
+    ?`<button class="btn-advance" style="background:var(--bad);color:#fff" onclick="resetGame()">Start Over</button>`
+    :(state.week===SIGN_WEEK
+      ?`<button class="btn-advance" onclick="startNewSeason()">${advLabel()}</button>`
+      :(pendingUserGame()
+        ?`<button class="btn-sm" style="padding:11px 18px;font-size:14px" onclick="startLive()">🎧 Coach Game</button>
+           <button class="btn-advance" onclick="advanceWeek()">Quick Sim →</button>`
+        :`<button class="btn-advance" onclick="advanceWeek()">${advLabel()}</button>`));
+  app.innerHTML=`
+  <div class="shell">
+    <aside class="side">
+      <div class="brand">
+        <div class="teambadge" style="background:${s.col}">${abbrev(state.userTeam)}</div>
+        <div><div class="bn">${esc(s.n)}</div><div class="bm">${esc(s.m)} · ${CONFS[s.c].replace(" League","")}</div></div>
+      </div>
+      <div class="ctx">
+        <div class="ctxrow"><span>Season</span><b>${state.season}</b></div>
+        <div class="ctxrow"><span>Phase</span><b>${weekLabel()}</b></div>
+        <div class="ctxrow"><span>Playbook</span><b>${OFF_SCHEMES[u.off].name}</b></div>
+        <div class="ctxrow"><span>Defense</span><b>${DEF_SCHEMES[u.def].name}</b></div>
+        <div class="ctxrow"><span>Coach rep</span><b>${coachRep()}/99</b></div>
+      </div>
+      <nav class="nav">${NAV.map(([k,l,i])=>`<a class="${state.tab===k?"on":""}" onclick="setTab('${k}')"><span class="ic">${i}</span>${l}</a>`).join("")}</nav>
+      <div class="sidefoot">
+        <div class="sf-l">Board confidence</div>
+        <div class="meter"><div style="width:${conf}%;background:${confCol}"></div></div>
+        <div class="sf-v" style="color:${confCol}">${conf}%${state.fired?" · FIRED":conf<30?" · hot seat":""}</div>
+      </div>
+    </aside>
+    <main class="main">
+      <div class="pagehead">
+        <div>
+          <h1>${titles[state.tab]}</h1>
+          <div class="crumb">
+            ${rk?`<span class="chip gold">#${rk}</span>`:'<span class="chip">NR</span>'}
+            <span class="chip">${u.wins}–${u.losses}</span>
+            <span class="chip">Off ${Math.round(r.off)}</span>
+            <span class="chip">Def ${Math.round(r.def)}</span>
+            <span class="chip">Prestige ${u.prestige}</span>
+          </div>
+        </div>
+        <div class="actions">${actions}</div>
+      </div>
+      ${{dash:renderDash,roster:renderRoster,sched:renderSched,stand:renderStand,stats:renderStats,recruit:renderRecruit,staff:renderStaff,strategy:renderStrategy,budget:renderBudget,hist:renderHist}[state.tab]()}
+    </main>
+  </div>`;
+}
+function setTab(t){state.tab=t; render();}
+
+function renderSelect(){
+  let html=`<div class="selectwrap"><div class="bigmsg"><h2>🏈 Gridiron GM</h2>
+  <p>A college football management sim — 32 programs, 4 conferences.<br>Hire your staff, install your playbooks, recruit, develop, survive the board.<br>Pick your program. Higher prestige means higher expectations.</p></div>`;
+  for(let c=0;c<4;c++){
+    html+=`<div class="confblock"><h2>${CONFS[c]}</h2><div class="teamgrid">`;
+    SCHOOLS.forEach((sc,i)=>{ if(sc.c!==c)return;
+      html+=`<div class="teamcard" onclick="newGame(${i})">
+        <div class="teambadge" style="background:${sc.col}">${abbrev(i)}</div>
+        <div style="flex:1;min-width:0">
+          <div class="tn">${esc(sc.n)} ${esc(sc.m)}</div>
+          <div class="tm">Prestige ${sc.p} · expects ~${expectedWins(sc.p)} wins</div>
+          <div class="meter" style="margin-top:7px"><div style="width:${sc.p}%;background:linear-gradient(90deg,${sc.col},var(--accent))"></div></div>
+        </div>
+      </div>`;
+    });
+    html+=`</div></div>`;
+  }
+  app.innerHTML=html+"</div>";
+}
+
+function nextOpponent(){
+  if(state.week>=REG_WEEKS) return null;
+  const g=state.schedule[state.week].find(g=>g.h===state.userTeam||g.v===state.userTeam);
+  if(!g) return null;
+  const home=g.h===state.userTeam;
+  return {idx:home?g.v:g.h,home,conf:g.conf};
+}
+function renderLive(){
+  const L=state.live;
+  const H=state.teams[L.h],V=state.teams[L.v];
+  const badge=i=>`<div class="teambadge" style="background:${SCHOOLS[i].col}">${abbrev(i)}</div>`;
+  const q=L.done?"FINAL":(L.log[0]&&L.log[0].q==="OT"?"OT":"Q"+Math.min(4,Math.floor(L.i/(L.total/4))+1));
+  const offIdx=L.done?null:liveOffenseIdx();
+  const userOff=offIdx===state.userTeam;
+  let panel;
+  if(L.done){
+    const won=(L.h===state.userTeam?L.sh>L.sv:L.sv>L.sh);
+    panel=`<div class="card" style="text-align:center">
+      <h3>${won?"🎉 VICTORY":"Defeat"}</h3>
+      <div style="font-size:22px;font-weight:800;margin-bottom:12px">${esc(SCHOOLS[L.h].n)} ${L.sh} — ${L.sv} ${esc(SCHOOLS[L.v].n)}</div>
+      <button class="btn-advance" onclick="liveFinish()">Continue →</button></div>`;
+  } else if(userOff){
+    panel=`<div class="card"><h3>Drive ${L.i+1}/${L.total} — YOUR BALL. Call the drive:</h3>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        ${Object.entries(OFF_CALLS).map(([k,n])=>`<button class="btn-sm" style="padding:12px 18px;font-size:14px" onclick="liveCall('${k}')">${n}</button>`).join("")}
+      </div>
+      <div class="muted" style="font-size:13px;margin-top:10px">Their ${DEF_SCHEMES[state.teams[offIdx===L.h?L.v:L.h].def].name} will try to guess your call. Run beats coverage shells; passing beats stacked boxes; balance is safe.</div></div>`;
+  } else {
+    const O=state.teams[offIdx];
+    panel=`<div class="card"><h3>Drive ${L.i+1}/${L.total} — THEIR BALL. Call your defense:</h3>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        ${Object.entries(DEF_CALLS).map(([k,n])=>`<button class="btn-sm" style="padding:12px 18px;font-size:14px" onclick="liveCall('${k}')">${n}</button>`).join("")}
+      </div>
+      <div class="muted" style="font-size:13px;margin-top:10px">They run ${OFF_SCHEMES[O.off].name} (${Math.round(OFF_SCHEMES[O.off].pass*100)}% pass). Guess right to shut the drive down. The blitz forces chaos — turnovers or big plays.</div></div>`;
+  }
+  return `<div class="selectwrap" style="max-width:980px"><div class="topbar">
+    ${badge(L.h)}
+    <div class="topinfo"><div class="tname">${esc(SCHOOLS[L.h].n)} vs ${esc(SCHOOLS[L.v].n)}</div>
+    <div class="tsub">${L.kind} · ${q}</div></div>
+    <div class="topstats">
+      <div class="stat"><div class="v">${L.sh}</div><div class="l">${abbrev(L.h)}</div></div>
+      <div class="stat"><div class="v">${L.sv}</div><div class="l">${abbrev(L.v)}</div></div>
+    </div>
+    ${badge(L.v)}
+    ${L.done?"":`<button class="btn-sm" onclick="liveSimRest()">Sim rest</button><button class="btn-sm danger" onclick="liveQuit()">Abandon</button>`}
+  </div>
+  ${panel}
+  <div class="card"><h3>Drive Log</h3>
+    ${L.log.map(d=>`<div class="boxline">
+      <span><b style="color:var(--muted)">${d.q==="OT"?"OT":"Q"+d.q}</b> · ${abbrev(d.off)} ball${d.offCall?` <span class="muted">(${OFF_CALLS[d.offCall]||d.offCall} vs ${DEF_CALLS[d.defCall]||d.defCall})</span>`:""} — ${esc(d.desc)}</span>
+      <span>${d.pts>0?`<b style="color:var(--good)">+${d.pts}</b> `:""}${d.sh}–${d.sv}</span>
+    </div>`).join("")||'<div class="muted">Kickoff coming up…</div>'}
+  </div></div>`;
+}
+
+function renderDash(){
+  const u=state.teams[state.userTeam];
+  let nextHtml="—";
+  const no=nextOpponent();
+  if(no){
+    const O=state.teams[no.idx], or_=teamRating(O);
+    nextHtml=`${no.home?"vs":"at"} <b>${esc(SCHOOLS[no.idx].n)} ${esc(SCHOOLS[no.idx].m)}</b>
+      <span class="muted">(${O.wins}-${O.losses}, Off ${Math.round(or_.off)} / Def ${Math.round(or_.def)}${no.conf?", conference":""})</span>
+      <div class="muted" style="font-size:13px;margin-top:6px">They run ${OFF_SCHEMES[O.off].name} / ${DEF_SCHEMES[O.def].name} — matchup vs your offense: <b>${MATCHUP[u.off][O.def]>=0?"+":""}${MATCHUP[u.off][O.def]} pts</b> · your gameplan: <b>${GAMEPLANS[state.gameplan].name}</b> (Strategy tab)</div>`;
+  } else if(state.week===REG_WEEKS){
+    const st=confStandings(SCHOOLS[state.userTeam].c);
+    nextHtml=st[0]===state.userTeam||st[1]===state.userTeam?"<b>Conference Championship!</b>":"Season over — watching the championships from home.";
+  } else if(state.week<SIGN_WEEK){
+    nextHtml=state.post.champs.includes(state.userTeam)||state.post.semis.some(g=>g.winner===state.userTeam)?"<b>Playoffs!</b>":"Postseason in progress.";
+  } else nextHtml="Offseason — sign transfers in the Recruiting tab, then start the new season.";
+  const best=u.players.slice().sort((a,b)=>b.ovr-a.ovr).slice(0,6);
+  const conf=state.confidence;
+  const injured=u.players.filter(p=>p.inj>0);
+  const r=teamRating(u), rk=userRank();
+  let streak=0,sw=null;
+  for(let i=u.results.length-1;i>=0;i--){const w=u.results[i].us>u.results[i].them; if(sw===null){sw=w;streak=1;} else if(w===sw)streak++; else break;}
+  const signed=state.recruits.filter(x=>x.committed===state.userTeam).length;
+  const targets=state.recruits.filter(x=>x.targeted&&!x.committed).length;
+  const tiles=`<div class="kpis">
+    <div class="tile"><div class="l">Record</div><div class="v">${u.wins}–${u.losses}</div><div class="s">${sw===null?"no games yet":(sw?"won":"lost")+" last "+streak}</div></div>
+    <div class="tile"><div class="l">National Rank</div><div class="v">${rk?"#"+rk:"NR"}</div><div class="s">${rk?"Top 25 power poll":"outside the Top 25"}</div></div>
+    <div class="tile"><div class="l">Team Rating</div><div class="v">${Math.round(r.ovr)}</div><div class="s">Off ${Math.round(r.off)} · Def ${Math.round(r.def)}</div></div>
+    <div class="tile"><div class="l">Prestige</div><div class="v">${u.prestige}</div><div class="s">board expects ~${expectedWins(u.prestige)} wins</div></div>
+    <div class="tile"><div class="l">Recruiting Class</div><div class="v">${signed}/10</div><div class="s">${targets} active target${targets!==1?"s":""}</div></div>
+    <div class="tile"><div class="l">Board</div><div class="v" style="color:${conf>=60?"var(--good)":conf>=30?"var(--accent)":"var(--bad)"}">${conf}%</div><div class="s">${state.fired?"fired":conf<30?"hot seat":conf<60?"under watch":"secure"}</div></div>
+  </div>`;
+  const formHtml=u.results.length?`<div class="card"><h3>Season Form — margin by week</h3>
+    <div class="form">${u.results.map(res=>{
+      const m=res.us-res.them, h=clamp(Math.abs(m)*1.6,4,40);
+      return `<div class="fcol" title="Wk ${res.week} ${res.home?"vs":"at"} ${SCHOOLS[res.opp].n}: ${res.us}–${res.them}">
+        <div class="fup">${m>0?`<div class="fbar w" style="height:${h}px"></div>`:""}</div>
+        <div class="fdn">${m<0?`<div class="fbar l" style="height:${h}px"></div>`:""}</div></div>`;}).join("")}
+    </div>
+    <div class="muted" style="font-size:12px;margin-top:6px">Wins rise above the line, losses fall below · bar length = margin · hover for the score</div></div>`:"";
+  let boxHtml="";
+  if(state.lastBox){
+    const b=state.lastBox;
+    boxHtml=`<div class="card"><h3>Last Game — ${b.us>b.them?"W":"L"} ${b.us}–${b.them} ${b.home?"vs":"at"} ${esc(SCHOOLS[b.opp].n)}</h3>
+      ${b.usLines.map(l=>`<div class="boxline"><span>${esc(l)}</span></div>`).join("")}
+      <div class="muted" style="font-size:12px;margin-top:6px">${esc(SCHOOLS[b.opp].n)}: ${b.oppLines.map(esc).join(" · ")||"—"}</div></div>`;
+  }
+  let offersHtml="";
+  if(state.week===SIGN_WEEK&&state.offers.length){
+    offersHtml=`<div class="card" style="border-color:var(--accent)"><h3>📞 Head-Coaching Offers${state.fired?" — your way back in":""}</h3>
+    ${state.offers.map(id=>{const t=state.teams[id];
+      return `<div class="coachcard"><div>
+        <div class="cn">${esc(SCHOOLS[id].n)} ${esc(SCHOOLS[id].m)}</div>
+        <div class="cd">${CONFS[SCHOOLS[id].c]} · prestige ${t.prestige} · went ${t.wins}-${t.losses} · expects ~${expectedWins(t.prestige)} wins</div></div>
+        <button class="btn-sm" onclick="acceptOffer(${id})">Accept job</button></div>`;}).join("")}
+    <div class="muted" style="font-size:13px">Your reputation: ${coachRep()}/99. Your coordinators move with you. Offers expire when the new season starts.</div></div>`;
+  }
+  const no2=nextOpponent();
+  const nextCard=`<div class="card"><h3>Next Up</h3>
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      ${no2?`<div class="teambadge" style="background:${SCHOOLS[no2.idx].col}">${abbrev(no2.idx)}</div>`:""}
+      <div style="font-size:15px;min-width:0">${nextHtml}</div>
+    </div></div>`;
+  return `${tiles}
+  <div class="gdash">
+    <div>
+      ${offersHtml}
+      ${nextCard}
+      ${formHtml}
+      ${boxHtml}
+      ${injured.length?`<div class="card"><h3>Injury Report</h3>${injured.map(p=>`<div class="boxline"><span>${p.pos} ${esc(p.name)}</span><span class="tag r">OUT ${p.inj} wk</span></div>`).join("")}</div>`:""}
+    </div>
+    <div>
+      <div class="card"><h3>News Wire</h3>
+        ${state.news.slice(0,14).map(n=>`<div class="newsitem"><span class="wk">Season ${n.season} · Week ${n.week}</span>${esc(n.txt)}</div>`).join("")||'<div class="muted">Nothing yet.</div>'}
+      </div>
+      <div class="card"><h3>Star Cards</h3>
+        <div class="cardsgrid mini">${best.slice(0,4).map(p=>playerCard(p,state.userTeam)).join("")}</div>
+        <div class="muted" style="font-size:12px;margin-top:8px">Your four highest-rated players. Full collection in the Roster tab.</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+let rosterSort={key:"ovr",dir:-1};
+function sortRoster(key){
+  if(rosterSort.key===key) rosterSort.dir*=-1; else rosterSort={key,dir:key==="name"?1:-1};
+  render();
+}
+let rosterView="cards", rosterPos="ALL";
+function setRosterView(v){rosterView=v; render();}
+function setRosterPos(v){rosterPos=v; render();}
+function renderRoster(){
+  const u=state.teams[state.userTeam];
+  const toggle=`<div class="filterbar">
+    <button class="btn-sm ${rosterView==="cards"?"active":""}" onclick="setRosterView('cards')">🃏 Cards</button>
+    <button class="btn-sm ${rosterView==="list"?"active":""}" onclick="setRosterView('list')">☰ List</button>
+    ${rosterView==="cards"?`<select onchange="setRosterPos(this.value)">
+      <option value="ALL">All positions</option>
+      ${POS.map(p=>`<option ${rosterPos===p?"selected":""}>${p}</option>`).join("")}
+    </select>
+    <span class="muted" style="font-size:12.5px">Card rarity follows the player's rating — Common → Limited → Rare → Super Rare → Unique. Use List for sorting${state.week===0?" and redshirts":""}.</span>`:""}
+  </div>`;
+  if(rosterView==="cards"){
+    const cards=u.players.filter(p=>rosterPos==="ALL"||p.pos===rosterPos)
+      .sort((a,b)=>b.ovr-a.ovr)
+      .map(p=>playerCard(p,state.userTeam)).join("");
+    return `<div class="card"><h3>My Collection — ${u.players.length} players</h3>${toggle}
+      <div class="cardsgrid">${cards}</div></div>`;
+  }
+  const {key,dir}=rosterSort;
+  const rows=u.players.slice().sort((a,b)=>{
+    const x=a[key],y=b[key];
+    return (typeof x==="string"?x.localeCompare(y):x-y)*dir;
+  });
+  const starters=new Set(startersOf(u).map(p=>p.id));
+  return `<div class="card"><h3>Roster (${u.players.length} players) — click headers to sort · ⭐ = current starter${state.week===0?" · redshirt up to 6 freshmen (they sit the season but develop faster and keep the year of eligibility)":""}</h3>
+  ${toggle}
+  <div style="overflow-x:auto"><table>
+    <tr><th onclick="sortRoster('name')">Player</th><th onclick="sortRoster('pos')">Pos</th><th onclick="sortRoster('year')">Year</th><th class="num" onclick="sortRoster('ovr')">OVR</th><th class="num" onclick="sortRoster('pot')">Pot</th><th class="num" onclick="sortRoster('mor')">Morale</th><th>Status</th><th>Season</th>${state.week===0?"<th></th>":""}</tr>
+    ${rows.map(p=>{
+      const mor=p.mor??70;
+      const morCol=mor>=65?"var(--good)":mor>=45?"var(--accent)":"var(--bad)";
+      return `<tr>
+      <td>${starters.has(p.id)?"⭐ ":""}${esc(p.name)}</td><td>${p.pos}</td><td>${YEARS[p.year]}${p.rs?' <span class="tag y">RS</span>':""}</td>
+      <td class="num">${ovrCell(p.ovr)}</td><td class="num muted">${p.pot}</td>
+      <td class="num" style="color:${morCol};font-weight:700">${mor}</td>
+      <td>${p.inj>0?`<span class="tag r">OUT ${p.inj} wk</span>`:p.rs?'<span class="tag y">Redshirt</span>':'<span class="tag g">OK</span>'}</td>
+      <td class="muted" style="font-size:13px">${p.st.gp?esc(statline(p)):"—"}</td>
+      ${state.week===0?`<td>${p.year===0||p.rs?`<button class="btn-sm ${p.rs?"active":""}" onclick="toggleRedshirt(${p.id})">${p.rs?"Redshirted":"Redshirt"}</button>`:""}</td>`:""}</tr>`;}).join("")}
+  </table></div></div>`;
+}
+
+function renderSched(){
+  const u=state.teams[state.userTeam];
+  let rows="";
+  for(let w=0;w<REG_WEEKS;w++){
+    const g=state.schedule[w].find(g=>g.h===state.userTeam||g.v===state.userTeam);
+    if(!g){rows+=`<tr><td>W${w+1}</td><td colspan="2" class="muted">Bye</td></tr>`;continue;}
+    const home=g.h===state.userTeam, opp=home?g.v:g.h;
+    const res=u.results.find(r=>r.week===w+1);
+    rows+=`<tr ${res&&res.us>res.them?'class="hl"':""}><td>W${w+1}</td>
+      <td>${home?"vs":"at"} ${esc(SCHOOLS[opp].n)} ${esc(SCHOOLS[opp].m)}${g.conf?' <span class="muted">(conf)</span>':""}</td>
+      <td>${res?`<b style="color:${res.us>res.them?"var(--good)":"var(--bad)"}">${res.us>res.them?"W":"L"} ${res.us}–${res.them}</b>`:'<span class="muted">—</span>'}</td></tr>`;
+  }
+  let post="";
+  const fmt=g=>`${esc(SCHOOLS[g.winner].n)} def. ${esc(SCHOOLS[g.winner===g.h?g.v:g.h].n)} ${Math.max(g.sh,g.sv)}–${Math.min(g.sh,g.sv)}`;
+  if(state.post.confGames.length) post+=`<div class="card"><h3>Conference Championships</h3>${state.post.confGames.map(g=>`<div class="scoreline"><span>${fmt(g)}</span></div>`).join("")}</div>`;
+  if(state.post.semis.length) post+=`<div class="card"><h3>Playoff Semifinals</h3>${state.post.semis.map(g=>`<div class="scoreline"><span>${fmt(g)}</span></div>`).join("")}</div>`;
+  if(state.post.final) post+=`<div class="card"><h3>🏆 National Championship</h3><div class="scoreline"><span><b>${fmt(state.post.final)}</b></span></div></div>`;
+  return `<div class="grid2"><div class="card"><h3>${state.season} Schedule</h3><table>${rows}</table></div><div>${post||'<div class="card"><h3>Postseason</h3><div class="muted">Conference title games, then a 4-team playoff of the conference champions.</div></div>'}</div></div>`;
+}
+
+function renderStand(){
+  const poll=top25();
+  let html=`<div class="card"><h3>AP-style Top 25 (power poll)</h3><div style="columns:2;column-gap:24px">
+    ${poll.map((id,i)=>{const t=state.teams[id];
+      return `<div class="boxline" ${id===state.userTeam?'style="color:var(--accent);font-weight:700"':""}><span>#${i+1} ${esc(SCHOOLS[id].n)}</span><span>${t.wins}-${t.losses}</span></div>`;}).join("")}
+  </div></div><div class="grid2">`;
+  for(let c=0;c<4;c++){
+    const st=confStandings(c);
+    html+=`<div class="card"><h3>${CONFS[c]}</h3><table>
+    <tr><th>Team</th><th class="num">Conf</th><th class="num">Overall</th><th class="num">Off/Def</th></tr>
+    ${st.map(i=>{const t=state.teams[i];const r=teamRating(t);
+      return `<tr ${i===state.userTeam?'class="hl"':""}><td>${esc(SCHOOLS[i].n)}${t.confChamp?" 🏅":""}${t.natChamp?" 🏆":""}</td><td class="num">${t.confW}-${t.confL}</td><td class="num">${t.wins}-${t.losses}</td><td class="num muted">${Math.round(r.off)}/${Math.round(r.def)}</td></tr>`;}).join("")}
+    </table></div>`;
+  }
+  return html+"</div>";
+}
+
+function renderStats(){
+  const all=[];
+  for(const t of state.teams) for(const p of t.players) if(p.st.gp) all.push({p,t});
+  const table=(title,key,fmt)=>{
+    const top=all.slice().sort((a,b)=>b.p.st[key]-a.p.st[key]).slice(0,8);
+    return `<div class="card"><h3>${title}</h3><table>
+      ${top.map((x,i)=>`<tr ${x.t.id===state.userTeam?'class="hl"':""}><td class="muted">${i+1}</td><td>${esc(x.p.name)} <span class="muted">(${x.p.pos}, ${abbrev(x.t.id)})</span></td><td class="num"><b>${fmt(x.p.st)}</b></td></tr>`).join("")}
+    </table></div>`;
+  };
+  const u=state.teams[state.userTeam];
+  const leaders=u.players.filter(p=>p.st.gp).sort((a,b)=>(b.st.paYd+b.st.ruYd+b.st.reYd)-(a.st.paYd+a.st.ruYd+a.st.reYd)).slice(0,8);
+  return `<div class="card"><h3>Our Season Leaders</h3><table>
+      <tr><th>Player</th><th>Pos</th><th>Line</th></tr>
+      ${leaders.map(p=>`<tr><td>${esc(p.name)}</td><td>${p.pos}</td><td class="muted">${esc(statline(p))}</td></tr>`).join("")||'<tr><td colspan="3" class="muted">No games played yet.</td></tr>'}
+    </table></div>
+    <div class="grid3">
+    ${table("Passing Yards","paYd",s=>s.paYd+" yds, "+s.paTD+" TD")}
+    ${table("Rushing Yards","ruYd",s=>s.ruYd+" yds, "+s.ruTD+" TD")}
+    ${table("Receiving Yards","reYd",s=>s.reYd+" yds, "+s.reTD+" TD")}
+    ${table("Sacks","sk",s=>s.sk+" sacks")}
+    ${table("Interceptions","dInt",s=>s.dInt+" INT")}
+    ${table("Tackles","tkl",s=>s.tkl+" tkl")}
+  </div>`;
+}
+
+let recFilter={pos:"ALL",show:"board"};
+function setRecFilter(k,v){recFilter[k]=v; render();}
+function toggleTarget(id){
+  const rec=state.recruits.find(r=>r.id===id);
+  if(!rec||rec.committed!==null) return;
+  if(!rec.targeted&&state.recruits.filter(r=>r.targeted&&!r.committed).length>=8){
+    alert("You can only actively recruit 8 targets at a time. Drop someone first."); return;
+  }
+  rec.targeted=!rec.targeted; save(); render();
+}
+function renderRecruit(){
+  const targets=state.recruits.filter(r=>r.targeted&&!r.committed);
+  const signed=state.recruits.filter(r=>r.committed===state.userTeam);
+  const pool=state.recruits.filter(r=>{
+    if(recFilter.pos!=="ALL"&&r.pos!==recFilter.pos)return false;
+    if(recFilter.show==="board")return !r.committed;
+    if(recFilter.show==="targets")return r.targeted&&!r.committed;
+    return r.committed===state.userTeam;
+  }).slice(0,50);
+  const row=r=>{
+    const lead=recruitLeader(r);
+    const mine=r.interest[state.userTeam]||0;
+    let status;
+    if(r.committed===state.userTeam) status='<span class="tag g">SIGNED ✓</span>';
+    else if(r.committed!==null) status=`<span class="tag r">→ ${esc(SCHOOLS[r.committed].n)}</span>`;
+    else if(lead&&lead.team===state.userTeam) status='<span class="tag g">Leading</span>';
+    else if(lead) status=`<span class="tag y">${esc(SCHOOLS[lead.team].n)} leads</span>`;
+    else status='<span class="muted">Open</span>';
+    return `<tr ${r.targeted&&!r.committed?'class="hl"':""}>
+      <td><span class="stars">${"★".repeat(r.stars)}</span></td>
+      <td>${esc(r.name)}</td><td>${r.pos}</td>
+      <td class="num">${ovrCell(r.ovr)}</td><td class="num muted">${r.pot}</td>
+      <td class="num">${Math.round(mine)}</td><td>${status}</td>
+      <td>${r.committed===null?`<button class="btn-sm ${r.targeted?"active":""}" onclick="toggleTarget('${r.id}')">${r.targeted?"Targeted":"Target"}</button>`:""}</td></tr>`;
+  };
+  let portalHtml="";
+  if(state.week===SIGN_WEEK&&state.portal.length){
+    portalHtml=`<div class="card"><h3>Transfer Portal — ${state.portalPts} NIL points left</h3>
+    <div style="overflow-x:auto"><table>
+      <tr><th>Player</th><th>Pos</th><th>Yr</th><th class="num">OVR</th><th class="num">Pot</th><th>From</th><th class="num">Cost</th><th></th></tr>
+      ${state.portal.slice(0,25).map(p=>`<tr>
+        <td>${esc(p.name)}</td><td>${p.pos}</td><td>${YEARS[p.year]}</td>
+        <td class="num">${ovrCell(p.ovr)}</td><td class="num muted">${p.pot}</td>
+        <td class="muted">${esc(SCHOOLS[p.from].n)}</td><td class="num">${p.ask}</td>
+        <td>${p.signed?'<span class="tag g">SIGNED ✓</span>':`<button class="btn-sm" ${p.ask>state.portalPts?"disabled":""} onclick="signPortal('${p.id}')">Sign</button>`}</td></tr>`).join("")}
+    </table></div></div>`;
+  }
+  return portalHtml+`<div class="card">
+    <h3>Recruiting — ${userWeeklyPoints()} pts/week split across ${targets.length}/8 targets · class: ${signed.length}/10 signed</h3>
+    <div class="filterbar">
+      <select onchange="setRecFilter('show',this.value)">
+        <option value="board" ${recFilter.show==="board"?"selected":""}>Available recruits</option>
+        <option value="targets" ${recFilter.show==="targets"?"selected":""}>My targets</option>
+        <option value="signed" ${recFilter.show==="signed"?"selected":""}>My signings</option>
+      </select>
+      <select onchange="setRecFilter('pos',this.value)">
+        <option value="ALL">All positions</option>
+        ${POS.map(p=>`<option ${recFilter.pos===p?"selected":""}>${p}</option>`).join("")}
+      </select>
+      <span class="muted" style="font-size:13px">Interest builds weekly. Recruits start committing from week 8; everyone signs on Signing Day.</span>
+    </div>
+    ${recFilter.show==="signed"
+      ?(pool.length
+        ?`<div class="cardsgrid">${pool.map(r=>playerCard(
+            {id:r.id,name:r.name,pos:r.pos,year:0,ovr:r.ovr,pot:r.pot,st:null,mor:75,inj:0,rs:false},
+            state.userTeam,
+            `${"★".repeat(r.stars)} recruit · joins in the offseason`)).join("")}</div>`
+        :'<div class="muted">No signings yet — target recruits and build interest week by week.</div>')
+      :`<div style="overflow-x:auto"><table>
+      <tr><th></th><th>Name</th><th>Pos</th><th class="num">OVR</th><th class="num">Pot</th><th class="num">My pts</th><th>Status</th><th></th></tr>
+      ${pool.map(row).join("")||'<tr><td colspan="8" class="muted">No recruits match this filter.</td></tr>'}
+    </table></div>`}</div>`;
+}
+
+function renderStaff(){
+  const used=salaryUsed(), pool=salaryPool();
+  const u=state.teams[state.userTeam];
+  const slot=role=>{
+    const c=state.staff[role];
+    return `<div class="coachcard">
+      <div>
+        <div class="cn">${ROLE_INFO[role].name}</div>
+        ${c?`<div>${esc(c.name)} — rating <b style="color:${ovrColor(c.rating)}">${c.rating}</b>${c.spec?` · specialty: <b>${(role==="OC"?OFF_SCHEMES:DEF_SCHEMES)[c.spec].name}</b>${c.spec===(role==="OC"?u.off:u.def)?' <span class="tag g">fits playbook</span>':' <span class="tag y">scheme mismatch</span>'}`:""} · $${c.salary}M/yr</div>`
+          :`<div class="tag r">VACANT — big penalty until filled</div>`}
+        <div class="cd">${ROLE_INFO[role].eff}</div>
+      </div>
+      ${c?`<button class="btn-sm danger" onclick="fireCoach('${role}')">Fire</button>`:""}
+    </div>`;
+  };
+  const market=role=>`<div class="card"><h3>${ROLE_INFO[role].name} candidates</h3>
+    ${state.market[role].map(c=>`<div class="coachcard">
+      <div><div class="cn">${esc(c.name)} — <span style="color:${ovrColor(c.rating)}">${c.rating}</span></div>
+      <div class="cd">${c.spec?`Specialty: ${(role==="OC"?OFF_SCHEMES:DEF_SCHEMES)[c.spec].name} · `:""}$${c.salary}M/yr</div></div>
+      <button class="btn-sm" onclick="hireCoach('${role}','${c.id}')">${state.staff[role]?"Replace":"Hire"}</button>
+    </div>`).join("")}</div>`;
+  return `<div class="card"><h3>Coaching Staff — salary pool $${used.toFixed(2)}M / $${pool.toFixed(1)}M (grows with prestige)</h3>
+    ${STAFF_ROLES.map(slot).join("")}
+    <div class="muted" style="font-size:13px">Coaches can be hired or replaced at any time. Good coordinators get poached by bigger programs in the offseason.</div>
+  </div>
+  <div class="grid2">${market("OC")}${market("DC")}${market("RC")}${market("SC")}</div>`;
+}
+
+function renderStrategy(){
+  const u=state.teams[state.userTeam];
+  const no=nextOpponent();
+  const offCard=key=>{
+    const s=OFF_SCHEMES[key];
+    const fit=Math.round(
+      avg(topN(u.players,"QB",1))*s.w.QB+avg(topN(u.players,"RB",2))*s.w.RB+
+      avg(topN(u.players,"WR",3))*s.w.WR+avg(topN(u.players,"OL",5))*s.w.OL);
+    return `<div class="schemecard ${u.off===key?"sel":""}" onclick="setScheme('off','${key}')">
+      <div class="sn">${s.name} <span>${ovrCell(fit)}</span></div>
+      <div class="sd">${s.desc}</div>
+      <div class="sd">Pass ${Math.round(s.pass*100)}% · Tempo ${s.tempo>1.02?"fast":s.tempo<0.95?"slow":"normal"} · leans on ${Object.entries(s.w).sort((a,b)=>b[1]-a[1]).slice(0,2).map(x=>x[0]).join(" + ")}</div>
+    </div>`;
+  };
+  const defCard=key=>{
+    const s=DEF_SCHEMES[key];
+    const fit=Math.round(avg(topN(u.players,"DL",4))*s.w.DL+avg(topN(u.players,"LB",3))*s.w.LB+avg(topN(u.players,"DB",4))*s.w.DB);
+    return `<div class="schemecard ${u.def===key?"sel":""}" onclick="setScheme('def','${key}')">
+      <div class="sn">${s.name} <span>${ovrCell(fit)}</span></div>
+      <div class="sd">${s.desc}</div>
+      <div class="sd">Leans on ${Object.entries(s.w).sort((a,b)=>b[1]-a[1]).slice(0,2).map(x=>x[0]).join(" + ")}</div>
+    </div>`;
+  };
+  let scout="";
+  if(no){
+    const O=state.teams[no.idx];
+    const bestDef=Object.keys(DEF_SCHEMES).sort((a,b)=>MATCHUP[O.off][a]-MATCHUP[O.off][b])[0];
+    scout=`<div class="card"><h3>Scouting Report — ${no.home?"vs":"at"} ${esc(SCHOOLS[no.idx].n)}</h3>
+      <div style="font-size:14px">They run <b>${OFF_SCHEMES[O.off].name}</b> offense and <b>${DEF_SCHEMES[O.def].name}</b> defense.</div>
+      <div class="muted" style="font-size:13px;margin-top:6px">
+      Your ${OFF_SCHEMES[u.off].name} vs their ${DEF_SCHEMES[O.def].name}: <b>${MATCHUP[u.off][O.def]>=0?"+":""}${MATCHUP[u.off][O.def]} pts</b>.
+      Their ${OFF_SCHEMES[O.off].name} vs your ${DEF_SCHEMES[u.def].name}: <b>${MATCHUP[O.off][u.def]>=0?"+":""}${MATCHUP[O.off][u.def]} pts</b> for them.
+      Best defense against their offense: <b>${DEF_SCHEMES[bestDef].name}</b>. Mid-season playbook changes carry an install penalty.</div></div>`;
+  }
+  return `${scout}
+  ${(state.installingOff||state.installingDef)?'<div class="card"><span class="tag y">INSTALLING</span> <span class="muted" style="font-size:13px">You changed playbooks mid-season — the unit takes a penalty until next season.</span></div>':""}
+  <div class="card"><h3>Weekly Gameplan</h3>
+    ${Object.entries(GAMEPLANS).map(([k,g])=>`<button class="btn-sm ${state.gameplan===k?"active":""}" style="margin-right:8px" onclick="setGameplan('${k}')">${g.name}</button>`).join("")}
+    <div class="muted" style="font-size:13px;margin-top:10px">${GAMEPLANS[state.gameplan].desc}</div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>Offensive Playbook — the number is your roster's talent fit</h3>${Object.keys(OFF_SCHEMES).map(offCard).join("")}</div>
+    <div class="card"><h3>Defensive Playbook</h3>${Object.keys(DEF_SCHEMES).map(defCard).join("")}</div>
+  </div>`;
+}
+
+function setBudget(k,v){
+  v=+v;
+  const keys=["fac","rec","nil"].filter(x=>x!==k);
+  const rest=100-v;
+  const cur=state.budget[keys[0]]+state.budget[keys[1]];
+  if(cur>0) state.budget[keys[0]]=Math.round(rest*state.budget[keys[0]]/cur);
+  else state.budget[keys[0]]=Math.round(rest/2);
+  state.budget[keys[1]]=rest-state.budget[keys[0]];
+  state.budget[k]=v;
+  save(); render();
+}
+function renderBudget(){
+  const b=state.budget;
+  const row=(k,label,desc)=>`<div class="sliderrow">
+    <label>${label}</label>
+    <input type="range" min="0" max="100" value="${b[k]}" oninput="setBudget('${k}',this.value)">
+    <span class="val">${b[k]}%</span></div>
+    <div class="muted" style="margin:-8px 0 16px 122px;font-size:13px">${desc}</div>`;
+  return `<div class="card"><h3>Program Budget — 100 points across three areas</h3>
+    ${row("fac","Facilities","Boosts player development each offseason.")}
+    ${row("rec","Recruiting","Adds weekly recruiting points on your targets.")}
+    ${row("nil","NIL Fund","Extra pull with recruits, and funds your transfer-portal signings.")}
+    <div class="muted" style="font-size:13px">Coach salaries come from a separate pool that grows with prestige (see Staff tab).</div>
+  </div>`;
+}
+
+function renderHist(){
+  const c=state.career;
+  const careerCard=`<div class="card"><h3>Coaching Career — reputation ${coachRep()}/99</h3>
+    <div style="font-size:15px;margin-bottom:8px"><b>${c.wins}-${c.losses}</b> over ${c.seasons} season${c.seasons!==1?"s":""} · ${c.confTitles} conference title${c.confTitles!==1?"s":""} · ${c.natTitles} national title${c.natTitles!==1?"s":""}</div>
+    <div class="muted" style="font-size:13px">Stops: ${c.stops.map(s=>`${esc(SCHOOLS[s.team].n)} (${s.season}–)`).join(" → ")}</div>
+    <div class="muted" style="font-size:13px;margin-top:6px">Win big and bigger programs will come calling in the offseason. Get fired and you'll be rebuilding somewhere small.</div>
+  </div>`;
+  if(!state.history.length) return careerCard+`<div class="card"><h3>Record Book</h3><div class="muted">Finish your first season to start the record book.</div></div>`;
+  return careerCard+`<div class="card"><h3>Record Book</h3>
+  ${state.history.slice().reverse().map(h=>`
+    <div style="border-bottom:1px solid var(--line);padding:10px 0">
+      <b>${h.season}</b> — ${h.team!==undefined?esc(SCHOOLS[h.team].n)+" ":""}went ${h.userW}-${h.userL} ${h.natChamp?'<span class="tag g">🏆 National Champs</span>':h.confChamp?'<span class="tag y">🏅 Conf Champs</span>':""}
+      · National Champion: <b>${h.champ!==null?esc(SCHOOLS[h.champ].n):"—"}</b>
+      ${h.awards?`<div class="muted" style="font-size:13px;margin-top:4px">POY: ${esc(h.awards.poy)}<br>DPOY: ${esc(h.awards.dpoy)}<br>Coach of the Year: ${esc(h.awards.coy)}</div>`:""}
+    </div>`).join("")}
+  <div style="margin-top:14px"><button class="btn-sm" onclick="if(confirm('Delete save and start a new career?'))resetGame()">New career (delete save)</button></div></div>`;
+}
+
+/* boot */
+load(); render();
+</script>
+</body>
+</html>
