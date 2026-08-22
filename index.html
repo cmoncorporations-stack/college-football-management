@@ -2,8 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Gridiron GM — College Football Manager</title>
+<meta name="description" content="Take over a college football program: recruit, coach, and survive the board.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0a0d12">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Gridiron GM">
+<meta name="mobile-web-app-capable" content="yes">
 <style>
   :root{
     --bg:#0a0d12; --panel:#11161e; --panel2:#182029; --raise:#1e2833;
@@ -285,6 +294,21 @@
   .rec-row .r-h{font-weight:700; font-variant-numeric:tabular-nums;}
   .rec-row .r-w{color:var(--muted); font-size:12.5px;}
 
+  /* ===== onboarding / hints / settings ===== */
+  .hintbar{display:flex; align-items:center; gap:12px; justify-content:space-between;
+    background:linear-gradient(150deg,rgba(230,178,61,.13),transparent 70%),var(--panel);
+    border:1px solid var(--accent); border-radius:11px; padding:11px 14px; margin-bottom:14px; font-size:14px;}
+  .obstep{display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid rgba(35,45,58,.55);
+    cursor:pointer; font-size:14px;}
+  .obstep:hover{color:var(--accent);}
+  .obstep .ob-box{width:20px; height:20px; border-radius:6px; border:1.5px solid var(--line2);
+    display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; flex:none;}
+  .obstep.ok .ob-box{background:var(--good); border-color:var(--good); color:#08130d;}
+  .obstep.ok{color:var(--muted);}
+  .obstep .ob-go{margin-left:auto; color:var(--faint); font-size:12px;}
+  .chkrow{display:flex; align-items:center; gap:9px; padding:6px 0; font-size:14px; cursor:pointer;}
+  .chkrow input{accent-color:var(--accent); width:16px; height:16px;}
+
   @media(prefers-reduced-motion:reduce){
     .ovl,.ovl-p,.trophy,.toast{animation:none;}
     .flip-in{transition:none;}
@@ -314,6 +338,25 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 function gauss(m,s){let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();
   return m+s*Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ============================ i18n ============================
+   English strings are the keys, so anything not translated falls back to English.
+   Placeholders are {0}, {1}, … News is rendered at the moment it happens, so
+   entries written before a language switch keep the language they were written in. */
+const LANG_KEY="cfbgm3_lang";
+let uiLang=(()=>{ try{ return localStorage.getItem(LANG_KEY)||"en"; }catch(e){ return "en"; } })();
+const L10N={fr:{}}; // filled in at the bottom of the file
+function T(k,...a){
+  let s=(uiLang!=="en"&&L10N[uiLang]&&L10N[uiLang][k])||k;
+  a.forEach((v,i)=>{ s=s.split("{"+i+"}").join(v); });
+  return s;
+}
+function setLang(l){
+  uiLang=l;
+  try{ localStorage.setItem(LANG_KEY,l); }catch(e){}
+  if(state) state.lang=l;
+  save(); render();
+}
 
 const FIRST=["Jalen","Marcus","Tyler","Devin","Caleb","Jordan","Trey","Malik","Austin","Bryce","Cade","Xavier","Elijah","Nolan","Derek","Isaiah","Logan","Trent","Amari","Chase","Grant","Darius","Kellen","Mason","Rashad","Cole","Dante","Wyatt","Jamal","Peyton","Kobe","Silas","Andre","Tucker","Omar","Reese","Deshawn","Hunter","Ezra","Colt","Micah","Jaxon","Terrell","Beau","Quincy","Levi","Damon","Sterling","Rico","Gage"];
 const LAST=["Washington","Carter","Brooks","Hayes","Mitchell","Sanders","Coleman","Griffin","Barnes","Fletcher","Dawson","Ellis","Monroe","Sutton","Vance","Holloway","Pierce","Whitfield","Lawson","Mercer","Boone","Calloway","Drummond","Easton","Fairbanks","Granger","Hollis","Ingram","Jarrett","Kimble","Landry","Maddox","Norwood","Overton","Prescott","Quimby","Rockwell","Stallworth","Thorne","Underwood","Vaughn","Wexler","Yancey","Ziegler","Ashford","Bellamy","Crowder","Delaney","Everhart","Falk"];
@@ -809,7 +852,7 @@ function award(id,sub){
   const a=ACHIEVEMENTS.find(x=>x.id===id); if(!a) return;
   state.achv[id]={season:state.season};
   if(!state.toasts) state.toasts=[];
-  state.toasts.push({i:a.i,n:a.n,s:sub||a.d});
+  state.toasts.push({i:a.i,n:T(a.n),s:sub||T(a.d)});
 }
 function checkAchievements(ctx){
   ctx=ctx||{};
@@ -916,7 +959,9 @@ function makeTeam(s,i){
 function newGame(userTeamIdx){
   nextId=1;
   const p=SCHOOLS[userTeamIdx].p;
-  state={version:5,season:2026,week:0,userTeam:userTeamIdx,confidence:50,budget:{fac:34,rec:33,nil:33},
+  pickingTeam=false;
+  state={version:6,season:2026,week:0,userTeam:userTeamIdx,confidence:50,budget:{fac:34,rec:33,nil:33},
+    lang:uiLang,simStops:{injury:true,rivalry:true,playoff:true},onboard:{tabs:{},hidden:false},
     career:{seasons:0,wins:0,losses:0,confTitles:0,natTitles:0,stops:[{team:userTeamIdx,season:2026}]},
     offers:[],live:null,
     teams:SCHOOLS.map(makeTeam),news:[],history:[],recruits:genRecruits(),
@@ -1042,10 +1087,70 @@ function advanceWeek(liveRes){
   }
   if(weekGames.length){
     state.prevPoll=pollBefore; // set first: the recap reads movement against it
-    if(!liveRes&&!ceremony&&state.recapOn!==false) buildRecap(weekGames,recapLabel);
+    if(!liveRes&&!ceremony&&state.recapOn!==false&&!state.simming) buildRecap(weekGames,recapLabel);
   }
+  save();
+  if(!state.simming) render(); // the multi-week sim paints once at the end
+}
+
+/* --- L3-3: simulate several weeks, pausing on what matters --- */
+function simToEnd(){
+  if(state.fired||state.live||(state.oq&&state.oq.length)) return;
+  const stops=state.simStops||{injury:true,rivalry:true,playoff:true};
+  state.simming=true;
+  let guard=0, stop=null, played=0;
+  while(!state.fired&&state.week<SIGN_WEEK&&guard++<40){
+    const nx=nextOpponent();
+    if(stops.rivalry&&nx&&RIVALS[state.userTeam]===nx.idx&&played>0){ stop={k:"rivalry",team:nx.idx}; break; }
+    if(stops.playoff&&state.week>=REG_WEEKS&&pendingUserGame()&&played>0){ stop={k:"playoff"}; break; }
+    const u=state.teams[state.userTeam];
+    const wasStarter=new Set(startersOf(u).map(p=>p.id));
+    advanceWeek(); played++;
+    const hurt=u.players.find(p=>p.inj>0&&wasStarter.has(p.id));
+    if(stops.injury&&hurt){ stop={k:"injury",name:hurt.name,pos:hurt.pos,w:hurt.inj}; break; }
+  }
+  state.simming=false;
+  if(stop){
+    if(stop.k==="rivalry") addNews(T("⏸ Simulation paused — rivalry week against {0}.",SCHOOLS[stop.team].n));
+    else if(stop.k==="playoff") addNews(T("⏸ Simulation paused — we have a postseason game."));
+    else addNews(T("⏸ Simulation paused — {0} {1} went down for {2} week(s).",stop.pos,stop.name,stop.w));
+  } else if(played) addNews(T("Simulated {0} week(s) through to the end of the season.",played));
   save(); render();
 }
+function toggleStop(k){
+  if(!state.simStops) state.simStops={injury:true,rivalry:true,playoff:true};
+  state.simStops[k]=!state.simStops[k];
+  save(); render();
+}
+
+/* --- L3-5: first-career onboarding --- */
+const TAB_HINTS={
+  dash:"Your week starts here. The buttons top right advance the season.",
+  roster:"Your squad as collectible cards. Click any player to open his file.",
+  sched:"Your 11-game season. The last week is always your rivalry game.",
+  stand:"Conference tables and the national Top 25, with weekly movement.",
+  stats:"Season leaders — yours and the whole country's.",
+  recruit:"Target up to 8 recruits. Your weekly points are split between them.",
+  staff:"Four coordinators to hire. A scheme specialist who fits your playbook is worth real points.",
+  strategy:"Pick your playbooks and this week's gameplan. Scouting sits at the top.",
+  budget:"Split 100 points across facilities, recruiting and NIL — plus your game settings.",
+  hist:"Records, Hall of Fame, achievements and your coaching career.",
+};
+function onboardSteps(){
+  const u=state.teams[state.userTeam];
+  const staffFull=STAFF_ROLES.every(r=>state.staff[r]);
+  const ob=state.onboard||{tabs:{}};
+  return [
+    {k:"staff",  d:T("Check your coaching staff"),  ok:staffFull&&!!ob.tabs.staff,     tab:"staff"},
+    {k:"play",   d:T("Choose your playbooks"),      ok:!!ob.tabs.strategy,             tab:"strategy"},
+    {k:"budget", d:T("Set your budget split"),      ok:!!ob.tabs.budget,               tab:"budget"},
+    {k:"recruit",d:T("Target at least 4 recruits"), ok:state.recruits.filter(r=>r.targeted&&!r.committed).length>=4, tab:"recruit"},
+  ];
+}
+function showOnboarding(){
+  return state.career&&state.career.seasons===0&&state.week===0&&!(state.onboard&&state.onboard.hidden);
+}
+function hideOnboarding(){ if(!state.onboard)state.onboard={tabs:{}}; state.onboard.hidden=true; save(); render(); }
 
 function expectedWins(prestige){return clamp(Math.round((prestige-30)/8),2,10);}
 function endOfSeasonReview(){
@@ -1700,7 +1805,7 @@ let toastTimer=null;
 function renderToasts(){
   if(!state.toasts||!state.toasts.length) return "";
   return `<div class="toasts">${state.toasts.map(t=>`<div class="toast">
-    <div class="t-e">Achievement unlocked</div>
+    <div class="t-e">${T("Achievement unlocked")}</div>
     <div class="t-t">${t.i} ${esc(t.n)}</div>
     <div class="t-s">${esc(t.s)}</div></div>`).join("")}</div>`;
 }
@@ -1728,7 +1833,26 @@ function renderOverlay(){
 }
 
 /* ============================ persistence ============================ */
-function save(){try{localStorage.setItem("cfbgm2",JSON.stringify({state,nextId}));}catch(e){}}
+/* Saves live in three slots. `cfbgm2` was the old single-slot key and is imported into slot 0 once. */
+const SLOTS=3, SLOT_KEY=i=>"cfbgm3_s"+i, ACTIVE_KEY="cfbgm3_active", LEGACY_KEY="cfbgm2";
+let activeSlot=0;
+function slotMeta(i){
+  try{
+    const d=JSON.parse(localStorage.getItem(SLOT_KEY(i)));
+    if(!d||!d.state) return null;
+    const s=d.state, u=s.teams[s.userTeam];
+    return {team:s.userTeam,season:s.season,week:s.week,
+      rec:u.wins+"-"+u.losses,
+      career:s.career?`${s.career.wins}-${s.career.losses}`:"0-0",
+      titles:(s.career?s.career.natTitles:0),
+      fired:!!s.fired,saved:d.saved||null};
+  }catch(e){ return null; }
+}
+function save(){
+  if(!state) return; // nothing to write from the home screen — never blank a slot
+  try{ localStorage.setItem(SLOT_KEY(activeSlot),JSON.stringify({state,nextId,saved:Date.now()}));
+       localStorage.setItem(ACTIVE_KEY,String(activeSlot)); }catch(e){}
+}
 function migrate(s){
   if(s.version===3){ // v3 → v4: overlays, poll history. Keep the career intact.
     s.oq=[]; s.prevPoll=null; s.recapOn=true;
@@ -1742,16 +1866,79 @@ function migrate(s){
     // rivalry week only exists in newly built schedules; the current season keeps its old one
     s.version=5;
   }
+  if(s.version===5){ // v5 → v6: language, sim stops, onboarding
+    s.lang=s.lang||"en";
+    s.simStops=s.simStops||{injury:true,rivalry:true,playoff:true};
+    s.onboard=s.onboard||{tabs:{},hidden:false};
+    s.version=6;
+  }
   return s;
 }
-function load(){
-  try{const d=JSON.parse(localStorage.getItem("cfbgm2"));
-    if(d&&d.state&&d.state.version>=3&&d.state.version<=5){
-      state=migrate(d.state); nextId=d.nextId||500000; return true;}
+function loadSlot(i){
+  try{const d=JSON.parse(localStorage.getItem(SLOT_KEY(i)));
+    if(d&&d.state&&d.state.version>=3&&d.state.version<=6){
+      state=migrate(d.state); nextId=d.nextId||500000; activeSlot=i;
+      localStorage.setItem(ACTIVE_KEY,String(i));
+      return true;}
   }catch(e){}
   return false;
 }
-function resetGame(){localStorage.removeItem("cfbgm2"); state=null; render();}
+function adoptLegacySave(){ // one-time: the pre-slot save becomes slot 0
+  try{
+    const old=localStorage.getItem(LEGACY_KEY);
+    if(!old) return;
+    if(!localStorage.getItem(SLOT_KEY(0))) localStorage.setItem(SLOT_KEY(0),old);
+    localStorage.removeItem(LEGACY_KEY);
+  }catch(e){}
+}
+function anySlotUsed(){ for(let i=0;i<SLOTS;i++) if(slotMeta(i)) return true; return false; }
+let pickingTeam=false;
+function newCareerIn(i){ activeSlot=i; state=null; pickingTeam=true; render(); }
+function backToHome(){ state=null; pickingTeam=false; render(); }
+function deleteSlot(i){
+  const m=slotMeta(i); if(!m) return;
+  if(!confirm(T("Delete the {0} career in slot {1}? This cannot be undone.",SCHOOLS[m.team].n,i+1))) return;
+  localStorage.removeItem(SLOT_KEY(i));
+  if(activeSlot===i) state=null;
+  render();
+}
+function resetGame(){ localStorage.removeItem(SLOT_KEY(activeSlot)); state=null; render(); }
+
+/* --- L3-1: export / import a career --- */
+function exportSave(){
+  if(!state) return;
+  const payload=JSON.stringify({app:"gridiron-gm",state,nextId,saved:Date.now()});
+  const url=URL.createObjectURL(new Blob([payload],{type:"application/json"}));
+  const a=document.createElement("a");
+  a.href=url;
+  a.download=`gridiron-${SCHOOLS[state.userTeam].n.toLowerCase().replace(/\W+/g,"-")}-${state.season}.json`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function importSave(input){
+  const file=input.files&&input.files[0];
+  input.value="";
+  if(!file) return;
+  const fr=new FileReader();
+  fr.onload=()=>{
+    try{
+      const d=JSON.parse(fr.result);
+      const s=d&&d.state;
+      if(!s||!Array.isArray(s.teams)||s.teams.length!==32||typeof s.season!=="number"||typeof s.userTeam!=="number")
+        throw new Error("not a Gridiron GM save");
+      if(!(s.version>=3&&s.version<=6)) throw new Error("save version "+s.version+" is not supported");
+      const cur=slotMeta(activeSlot);
+      if(cur&&!confirm(T("Importing will overwrite the career in slot {0}. Continue?",activeSlot+1))) return;
+      state=migrate(s); nextId=d.nextId||500000;
+      save(); render();
+      alert(T("Career imported: {0}, {1} season.",SCHOOLS[state.userTeam].n,state.season));
+    }catch(e){
+      alert(T("That file could not be loaded ({0}). Pick a .json exported from Gridiron GM.",e.message));
+    }
+  };
+  fr.onerror=()=>alert(T("The file could not be read."));
+  fr.readAsText(file);
+}
 
 /* ============================ UI ============================ */
 const app=document.getElementById("app");
@@ -1807,7 +1994,10 @@ function playerCard(p,teamIdx,subOverride){
 }
 
 function render(){
-  if(!state){renderSelect(); return;}
+  if(!state){
+    if(pickingTeam||!anySlotUsed()) renderSelect(); else app.innerHTML=renderHome();
+    return;
+  }
   if(state.live){app.innerHTML=renderLive()+renderOverlay(); scheduleToastClear(); return;}
   const s=SCHOOLS[state.userTeam], u=state.teams[state.userTeam];
   const r=teamRating(u);
@@ -1815,16 +2005,20 @@ function render(){
   const confCol=conf>=60?"var(--good)":conf>=30?"var(--accent)":"var(--bad)";
   const rk=userRank();
   document.documentElement.style.setProperty("--team",s.col);
-  const NAV=[["dash","Dashboard","▦"],["roster","Roster","👥"],["sched","Schedule","🗓"],["stand","Standings","🏆"],["stats","Stats","📊"],["recruit","Recruiting","🎯"],["staff","Staff","🪪"],["strategy","Strategy","📖"],["budget","Budget","💰"],["hist","History","📜"]];
+  const NAV=[["dash",T("Dashboard"),"▦"],["roster",T("Roster"),"👥"],["sched",T("Schedule"),"🗓"],["stand",T("Standings"),"🏆"],["stats",T("Stats"),"📊"],["recruit",T("Recruiting"),"🎯"],["staff",T("Staff"),"🪪"],["strategy",T("Strategy"),"📖"],["budget",T("Budget"),"💰"],["hist",T("History"),"📜"]];
   const titles=Object.fromEntries(NAV.map(([k,l])=>[k,l]));
+  const simBtn=(state.week<SIGN_WEEK&&!state.fired)
+    ?`<button class="btn-sm" style="padding:11px 14px;font-size:14px" onclick="simToEnd()" title="${esc(T("Simulate week by week until the season ends, pausing on key events"))}">⏩ ${T("Sim season")}</button>`:"";
   const actions=state.fired
-    ?`<button class="btn-advance" style="background:var(--bad);color:#fff" onclick="resetGame()">Start Over</button>`
+    ?`<button class="btn-sm" onclick="backToHome()">← ${T("Careers")}</button>
+      <button class="btn-advance" style="background:var(--bad);color:#fff" onclick="resetGame()">${T("Start Over")}</button>`
     :(state.week===SIGN_WEEK
       ?`<button class="btn-advance" onclick="startNewSeason()">${advLabel()}</button>`
       :(pendingUserGame()
-        ?`<button class="btn-sm" style="padding:11px 18px;font-size:14px" onclick="startLive()">🎧 Coach Game</button>
-           <button class="btn-advance" onclick="advanceWeek()">Quick Sim →</button>`
-        :`<button class="btn-advance" onclick="advanceWeek()">${advLabel()}</button>`));
+        ?`<button class="btn-sm" style="padding:11px 18px;font-size:14px" onclick="startLive()">🎧 ${T("Coach Game")}</button>
+           ${simBtn}
+           <button class="btn-advance" onclick="advanceWeek()">${T("Quick Sim")} →</button>`
+        :`${simBtn}<button class="btn-advance" onclick="advanceWeek()">${advLabel()}</button>`));
   app.innerHTML=`
   <div class="shell">
     <aside class="side">
@@ -1833,17 +2027,17 @@ function render(){
         <div><div class="bn">${esc(s.n)}</div><div class="bm">${esc(s.m)} · ${CONFS[s.c].replace(" League","")}</div></div>
       </div>
       <div class="ctx">
-        <div class="ctxrow"><span>Season</span><b>${state.season}</b></div>
-        <div class="ctxrow"><span>Phase</span><b>${weekLabel()}</b></div>
-        <div class="ctxrow"><span>Playbook</span><b>${OFF_SCHEMES[u.off].name}</b></div>
-        <div class="ctxrow"><span>Defense</span><b>${DEF_SCHEMES[u.def].name}</b></div>
-        <div class="ctxrow"><span>Coach rep</span><b>${coachRep()}/99</b></div>
+        <div class="ctxrow"><span>${T("Season")}</span><b>${state.season}</b></div>
+        <div class="ctxrow"><span>${T("Phase")}</span><b>${weekLabel()}</b></div>
+        <div class="ctxrow"><span>${T("Playbook")}</span><b>${OFF_SCHEMES[u.off].name}</b></div>
+        <div class="ctxrow"><span>${T("Defense")}</span><b>${DEF_SCHEMES[u.def].name}</b></div>
+        <div class="ctxrow"><span>${T("Coach rep")}</span><b>${coachRep()}/99</b></div>
       </div>
       <nav class="nav">${NAV.map(([k,l,i])=>`<a class="${state.tab===k?"on":""}" onclick="setTab('${k}')"><span class="ic">${i}</span>${l}</a>`).join("")}</nav>
       <div class="sidefoot">
-        <div class="sf-l">Board confidence</div>
+        <div class="sf-l">${T("Board confidence")}</div>
         <div class="meter"><div style="width:${conf}%;background:${confCol}"></div></div>
-        <div class="sf-v" style="color:${confCol}">${conf}%${state.fired?" · FIRED":conf<30?" · hot seat":""}</div>
+        <div class="sf-v" style="color:${confCol}">${conf}%${state.fired?" · "+T("FIRED"):conf<30?" · "+T("hot seat"):""}</div>
       </div>
     </aside>
     <main class="main">
@@ -1853,23 +2047,92 @@ function render(){
           <div class="crumb">
             ${rk?`<span class="chip gold">#${rk}</span>`:'<span class="chip">NR</span>'}
             <span class="chip">${u.wins}–${u.losses}</span>
-            <span class="chip">Off ${Math.round(r.off)}</span>
-            <span class="chip">Def ${Math.round(r.def)}</span>
-            <span class="chip">Prestige ${u.prestige}</span>
+            <span class="chip">${T("Off")} ${Math.round(r.off)}</span>
+            <span class="chip">${T("Def")} ${Math.round(r.def)}</span>
+            <span class="chip">${T("Prestige")} ${u.prestige}</span>
           </div>
         </div>
         <div class="actions">${actions}</div>
       </div>
+      ${(state.onboard&&state.onboard.fresh===state.tab&&TAB_HINTS[state.tab])
+        ?`<div class="hintbar"><span>💡 ${T(TAB_HINTS[state.tab])}</span><button class="btn-sm" onclick="dismissHint()">${T("Got it")}</button></div>`:""}
       ${{dash:renderDash,roster:renderRoster,sched:renderSched,stand:renderStand,stats:renderStats,recruit:renderRecruit,staff:renderStaff,strategy:renderStrategy,budget:renderBudget,hist:renderHist}[state.tab]()}
     </main>
   </div>`+renderOverlay();
   scheduleToastClear();
 }
-function setTab(t){state.tab=t; render();}
+function setTab(t){
+  state.tab=t;
+  if(!state.onboard) state.onboard={tabs:{},hidden:false};
+  if(!state.onboard.tabs) state.onboard.tabs={};
+  if(!state.onboard.tabs[t]){ state.onboard.tabs[t]=true; state.onboard.fresh=t; }
+  else state.onboard.fresh=null;
+  save(); render();
+}
+function dismissHint(){ if(state.onboard) state.onboard.fresh=null; save(); render(); }
 
+function langToggle(){
+  return `<div style="display:flex;gap:6px;justify-content:center;margin-bottom:18px">
+    ${[["en","English"],["fr","Français"]].map(([k,l])=>
+      `<button class="btn-sm ${uiLang===k?"active":""}" onclick="setLang('${k}')">${l}</button>`).join("")}</div>`;
+}
+/* --- L3-2: career slots --- */
+function renderHome(){
+  const cards=[];
+  for(let i=0;i<SLOTS;i++){
+    const m=slotMeta(i);
+    if(m){
+      const s=SCHOOLS[m.team];
+      const when=m.saved?new Date(m.saved).toLocaleDateString():"";
+      cards.push(`<div class="teamcard" style="align-items:flex-start" onclick="loadSlot(${i})&&render()">
+        <div class="teambadge" style="background:${s.col}">${abbrev(m.team)}</div>
+        <div style="flex:1;min-width:0">
+          <div class="tn">${esc(s.n)} ${esc(s.m)}</div>
+          <div class="tm">${T("Season")} ${m.season} · ${m.fired?T("fired"):m.rec} · ${T("career")} ${m.career}${m.titles?" · 🏆"+m.titles:""}</div>
+          <div class="tm" style="margin-top:5px;opacity:.75">${T("Slot {0}",i+1)}${when?" · "+when:""}</div>
+          <div style="display:flex;gap:6px;margin-top:9px">
+            <button class="btn-sm active" onclick="event.stopPropagation();loadSlot(${i})&&render()">${T("Continue")}</button>
+            <button class="btn-sm danger" onclick="event.stopPropagation();deleteSlot(${i})">${T("Delete")}</button>
+          </div>
+        </div></div>`);
+    } else {
+      cards.push(`<div class="teamcard" style="border-style:dashed" onclick="newCareerIn(${i})">
+        <div class="teambadge" style="background:var(--panel2);color:var(--faint);font-size:22px">+</div>
+        <div><div class="tn">${T("New career")}</div><div class="tm">${T("Slot {0} — empty",i+1)}</div></div>
+      </div>`);
+    }
+  }
+  return `<div class="selectwrap">
+    <div class="bigmsg"><h2>🏈 Gridiron GM</h2>
+      <p>${T("Pick up where you left off, or start a new career.")}</p></div>
+    ${langToggle()}
+    <div class="teamgrid" style="margin-bottom:22px">${cards.join("")}</div>
+    <div class="card" style="max-width:560px;margin:0 auto">
+      <h3>${T("Move a career between devices")}</h3>
+      <div class="muted" style="font-size:13px;margin-bottom:10px">
+        ${T("Progress lives in this browser only. Export a file to carry a career to another device or browser.")}
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn-sm" onclick="document.getElementById('impf').click()">${T("Import a save file")}</button>
+        <input id="impf" type="file" accept="application/json,.json" style="display:none" onchange="importSlotFile(this)">
+      </div>
+      <div class="muted" style="font-size:12px;margin-top:8px">${T("Imports into the first empty slot.")}</div>
+    </div>
+  </div>`;
+}
+function importSlotFile(input){
+  let target=-1;
+  for(let i=0;i<SLOTS;i++) if(!slotMeta(i)){target=i;break;}
+  if(target<0){ target=activeSlot; }
+  activeSlot=target;
+  importSave(input);
+}
 function renderSelect(){
-  let html=`<div class="selectwrap"><div class="bigmsg"><h2>🏈 Gridiron GM</h2>
-  <p>A college football management sim — 32 programs, 4 conferences.<br>Hire your staff, install your playbooks, recruit, develop, survive the board.<br>Pick your program. Higher prestige means higher expectations.</p></div>`;
+  let html=`<div class="selectwrap">
+  ${anySlotUsed()?`<div style="max-width:1180px;margin:0 auto 10px"><button class="btn-sm" onclick="backToHome()">← ${T("Back to careers")}</button></div>`:""}
+  <div class="bigmsg"><h2>🏈 Gridiron GM</h2>
+  <p>${T("A college football management sim — 32 programs, 4 conferences.")}<br>${T("Hire your staff, install your playbooks, recruit, develop, survive the board.")}<br>${T("Pick your program. Higher prestige means higher expectations.")}</p></div>
+  ${anySlotUsed()?"":langToggle()}`;
   for(let c=0;c<4;c++){
     html+=`<div class="confblock"><h2>${CONFS[c]}</h2><div class="teamgrid">`;
     SCHOOLS.forEach((sc,i)=>{ if(sc.c!==c)return;
@@ -1919,7 +2182,7 @@ function renderLive(){
           <button class="dopt" onclick="liveDecide('fg')"><div class="o-n">Field goal</div><div class="o-p">${pc(P.fg)} to make · 3 points</div></button>
           <button class="dopt" onclick="liveDecide('punt')"><div class="o-n">Punt</div><div class="o-p">Safe · no points, hand them the ball</div></button>
         </div></div>`
-      :`<div class="decide"><h3>🏈 Touchdown — extra point or two?</h3>
+      :`<div class="decide"><h3>${T("🏈 Touchdown — extra point or two?")}</h3>
         <div style="font-size:15px;margin-bottom:10px">Six points are on the board. You'd be ${P.margin>0?`up ${P.margin}`:P.margin<0?`down ${-P.margin}`:"level"} after the kick.</div>
         <div class="dopts">
           <button class="dopt" onclick="liveDecide('xp')"><div class="o-n">Kick the extra point</div><div class="o-p">${pc(P.xp)} · +1 point</div></button>
@@ -1951,7 +2214,7 @@ function renderLive(){
     ${L.done?"":`<button class="btn-sm" onclick="liveSimRest()">Sim rest</button><button class="btn-sm danger" onclick="liveQuit()">Abandon</button>`}
   </div>
   ${panel}
-  <div class="card"><h3>Drive Log</h3>
+  <div class="card"><h3>${T("Drive Log")}</h3>
     ${L.log.map(d=>`<div class="boxline">
       <span><b style="color:var(--muted)">${d.q==="OT"?"OT":"Q"+d.q}</b> · ${abbrev(d.off)} ball${d.offCall?` <span class="muted">(${OFF_CALLS[d.offCall]||d.offCall} vs ${DEF_CALLS[d.defCall]||d.defCall})</span>`:""} — ${esc(d.desc)}</span>
       <span>${d.pts>0?`<b style="color:var(--good)">+${d.pts}</b> `:""}${d.sh}–${d.sv}</span>
@@ -1983,14 +2246,14 @@ function renderDash(){
   const signed=state.recruits.filter(x=>x.committed===state.userTeam).length;
   const targets=state.recruits.filter(x=>x.targeted&&!x.committed).length;
   const tiles=`<div class="kpis">
-    <div class="tile"><div class="l">Record</div><div class="v">${u.wins}–${u.losses}</div><div class="s">${sw===null?"no games yet":(sw?"won":"lost")+" last "+streak}</div></div>
-    <div class="tile"><div class="l">National Rank</div><div class="v">${rk?"#"+rk:"NR"}</div><div class="s">${rk?"Top 25 power poll":"outside the Top 25"}</div></div>
-    <div class="tile"><div class="l">Team Rating</div><div class="v">${Math.round(r.ovr)}</div><div class="s">Off ${Math.round(r.off)} · Def ${Math.round(r.def)}</div></div>
-    <div class="tile"><div class="l">Prestige</div><div class="v">${u.prestige}</div><div class="s">board expects ~${expectedWins(u.prestige)} wins</div></div>
-    <div class="tile"><div class="l">Recruiting Class</div><div class="v">${signed}/10</div><div class="s">${targets} active target${targets!==1?"s":""}</div></div>
-    <div class="tile"><div class="l">Board</div><div class="v" style="color:${conf>=60?"var(--good)":conf>=30?"var(--accent)":"var(--bad)"}">${conf}%</div><div class="s">${state.fired?"fired":conf<30?"hot seat":conf<60?"under watch":"secure"}</div></div>
+    <div class="tile"><div class="l">${T("Record")}</div><div class="v">${u.wins}–${u.losses}</div><div class="s">${sw===null?T("no games yet"):(sw?T("won last {0}",streak):T("lost last {0}",streak))}</div></div>
+    <div class="tile"><div class="l">${T("National Rank")}</div><div class="v">${rk?"#"+rk:"NR"}</div><div class="s">${rk?T("Top 25 power poll"):T("outside the Top 25")}</div></div>
+    <div class="tile"><div class="l">${T("Team Rating")}</div><div class="v">${Math.round(r.ovr)}</div><div class="s">${T("Off")} ${Math.round(r.off)} · ${T("Def")} ${Math.round(r.def)}</div></div>
+    <div class="tile"><div class="l">${T("Prestige")}</div><div class="v">${u.prestige}</div><div class="s">${T("board expects ~{0} wins",expectedWins(u.prestige))}</div></div>
+    <div class="tile"><div class="l">${T("Recruiting Class")}</div><div class="v">${signed}/10</div><div class="s">${T("{0} active target(s)",targets)}</div></div>
+    <div class="tile"><div class="l">${T("Board")}</div><div class="v" style="color:${conf>=60?"var(--good)":conf>=30?"var(--accent)":"var(--bad)"}">${conf}%</div><div class="s">${state.fired?T("fired"):conf<30?T("hot seat"):conf<60?T("under watch"):T("secure")}</div></div>
   </div>`;
-  const formHtml=u.results.length?`<div class="card"><h3>Season Form — margin by week</h3>
+  const formHtml=u.results.length?`<div class="card"><h3>${T("Season Form — margin by week")}</h3>
     <div class="form">${u.results.map(res=>{
       const m=res.us-res.them, h=clamp(Math.abs(m)*1.6,4,40);
       return `<div class="fcol" title="Wk ${res.week} ${res.home?"vs":"at"} ${SCHOOLS[res.opp].n}: ${res.us}–${res.them}">
@@ -2017,26 +2280,41 @@ function renderDash(){
   }
   const no2=nextOpponent();
   const isRiv=no2&&RIVALS[state.userTeam]===no2.idx;
-  const nextCard=`<div class="card" ${isRiv?'style="border-color:var(--bad)"':""}><h3>Next Up${isRiv?' <span class="rivtag">⚔️ RIVALRY WEEK</span>':""}</h3>
+  const nextCard=`<div class="card" ${isRiv?'style="border-color:var(--bad)"':""}><h3>${T("Next Up")}${isRiv?' <span class="rivtag">⚔️ '+T("RIVALRY WEEK")+'</span>':""}</h3>
     <div style="display:flex;gap:14px;align-items:flex-start">
       ${no2?`<div class="teambadge" style="background:${SCHOOLS[no2.idx].col}">${abbrev(no2.idx)}</div>`:""}
       <div style="font-size:15px;min-width:0">${nextHtml}
         ${isRiv?'<div style="color:var(--bad);font-size:13px;margin-top:6px;font-weight:600">Your rival. The board swings ±5% on this one.</div>':""}</div>
     </div></div>`;
+  let onboardHtml="";
+  if(showOnboarding()){
+    const steps=onboardSteps(), done=steps.filter(s=>s.ok).length;
+    onboardHtml=`<div class="card" style="border-color:var(--accent)">
+      <h3>${T("Getting started")} — ${done}/${steps.length}</h3>
+      ${steps.map(s=>`<div class="obstep ${s.ok?"ok":""}" onclick="setTab('${s.tab}')">
+        <span class="ob-box">${s.ok?"✓":""}</span><span>${esc(s.d)}</span>
+        <span class="ob-go">${s.ok?"":T("open")+" →"}</span></div>`).join("")}
+      <div class="muted" style="font-size:12.5px;margin-top:10px">
+        ${done===steps.length?T("You're set — hit Quick Sim or Coach Game to play week 1.")
+          :T("None of this is mandatory, but it shapes your first season.")}
+        <button class="btn-sm" style="margin-left:8px" onclick="hideOnboarding()">${T("Hide")}</button>
+      </div></div>`;
+  }
   return `${tiles}
   <div class="gdash">
     <div>
+      ${onboardHtml}
       ${offersHtml}
       ${nextCard}
       ${formHtml}
       ${boxHtml}
-      ${injured.length?`<div class="card"><h3>Injury Report</h3>${injured.map(p=>`<div class="boxline"><span>${p.pos} ${esc(p.name)}</span><span class="tag r">OUT ${p.inj} wk</span></div>`).join("")}</div>`:""}
+      ${injured.length?`<div class="card"><h3>${T("Injury Report")}</h3>${injured.map(p=>`<div class="boxline"><span>${p.pos} ${esc(p.name)}</span><span class="tag r">OUT ${p.inj} wk</span></div>`).join("")}</div>`:""}
     </div>
     <div>
-      <div class="card"><h3>News Wire</h3>
+      <div class="card"><h3>${T("News Wire")}</h3>
         ${state.news.slice(0,14).map(n=>`<div class="newsitem"><span class="wk">Season ${n.season} · Week ${n.week}</span>${esc(n.txt)}</div>`).join("")||'<div class="muted">Nothing yet.</div>'}
       </div>
-      <div class="card"><h3>Star Cards</h3>
+      <div class="card"><h3>${T("Star Cards")}</h3>
         <div class="cardsgrid mini">${best.slice(0,4).map(p=>`<div style="cursor:pointer" onclick="openPlayer('${p.id}')">${playerCard(p,state.userTeam)}</div>`).join("")}</div>
         <div class="muted" style="font-size:12px;margin-top:8px">Your four highest-rated players. Full collection in the Roster tab.</div>
       </div>
@@ -2055,10 +2333,10 @@ function setRosterPos(v){rosterPos=v; render();}
 function renderRoster(){
   const u=state.teams[state.userTeam];
   const toggle=`<div class="filterbar">
-    <button class="btn-sm ${rosterView==="cards"?"active":""}" onclick="setRosterView('cards')">🃏 Cards</button>
-    <button class="btn-sm ${rosterView==="list"?"active":""}" onclick="setRosterView('list')">☰ List</button>
+    <button class="btn-sm ${rosterView==="cards"?"active":""}" onclick="setRosterView('cards')">🃏 ${T("Cards")}</button>
+    <button class="btn-sm ${rosterView==="list"?"active":""}" onclick="setRosterView('list')">☰ ${T("List")}</button>
     ${rosterView==="cards"?`<select onchange="setRosterPos(this.value)">
-      <option value="ALL">All positions</option>
+      <option value="ALL">${T("All positions")}</option>
       ${POS.map(p=>`<option ${rosterPos===p?"selected":""}>${p}</option>`).join("")}
     </select>
     <span class="muted" style="font-size:12.5px">Card rarity follows the player's rating — Common → Limited → Rare → Super Rare → Unique. Use List for sorting${state.week===0?" and redshirts":""}.</span>`:""}
@@ -2067,7 +2345,7 @@ function renderRoster(){
     const cards=u.players.filter(p=>rosterPos==="ALL"||p.pos===rosterPos)
       .sort((a,b)=>b.ovr-a.ovr)
       .map(p=>`<div style="cursor:pointer" onclick="openPlayer('${p.id}')">${playerCard(p,state.userTeam)}</div>`).join("");
-    return `<div class="card"><h3>My Collection — ${u.players.length} players</h3>${toggle}
+    return `<div class="card"><h3>${T("My Collection")} — ${T("{0} players",u.players.length)}</h3>${toggle}
       <div class="cardsgrid">${cards}</div></div>`;
   }
   const {key,dir}=rosterSort;
@@ -2107,15 +2385,15 @@ function renderSched(){
   }
   let post="";
   const fmt=g=>`${esc(SCHOOLS[g.winner].n)} def. ${esc(SCHOOLS[g.winner===g.h?g.v:g.h].n)} ${Math.max(g.sh,g.sv)}–${Math.min(g.sh,g.sv)}`;
-  if(state.post.confGames.length) post+=`<div class="card"><h3>Conference Championships</h3>${state.post.confGames.map(g=>`<div class="scoreline"><span>${fmt(g)}</span></div>`).join("")}</div>`;
-  if(state.post.semis.length) post+=`<div class="card"><h3>Playoff Semifinals</h3>${state.post.semis.map(g=>`<div class="scoreline"><span>${fmt(g)}</span></div>`).join("")}</div>`;
-  if(state.post.final) post+=`<div class="card"><h3>🏆 National Championship</h3><div class="scoreline"><span><b>${fmt(state.post.final)}</b></span></div></div>`;
-  return `<div class="grid2"><div class="card"><h3>${state.season} Schedule</h3><table>${rows}</table></div><div>${post||'<div class="card"><h3>Postseason</h3><div class="muted">Conference title games, then a 4-team playoff of the conference champions.</div></div>'}</div></div>`;
+  if(state.post.confGames.length) post+=`<div class="card"><h3>${T("Conference Championships")}</h3>${state.post.confGames.map(g=>`<div class="scoreline"><span>${fmt(g)}</span></div>`).join("")}</div>`;
+  if(state.post.semis.length) post+=`<div class="card"><h3>${T("Playoff Semifinals")}</h3>${state.post.semis.map(g=>`<div class="scoreline"><span>${fmt(g)}</span></div>`).join("")}</div>`;
+  if(state.post.final) post+=`<div class="card"><h3>${T("🏆 National Championship")}</h3><div class="scoreline"><span><b>${fmt(state.post.final)}</b></span></div></div>`;
+  return `<div class="grid2"><div class="card"><h3>${state.season} Schedule</h3><table>${rows}</table></div><div>${post||'<div class="card"><h3>${T("Postseason")}</h3><div class="muted">Conference title games, then a 4-team playoff of the conference champions.</div></div>'}</div></div>`;
 }
 
 function renderStand(){
   const poll=top25();
-  let html=`<div class="card"><h3>AP-style Top 25 (power poll) — movement since last week</h3><div style="columns:2;column-gap:24px">
+  let html=`<div class="card"><h3>${T("AP-style Top 25 (power poll) — movement since last week")}</h3><div style="columns:2;column-gap:24px">
     ${poll.map((id,i)=>{const t=state.teams[id];
       return `<div class="boxline" ${id===state.userTeam?'style="color:var(--accent);font-weight:700"':""}><span>${moveTag(id)} #${i+1} ${esc(SCHOOLS[id].n)}</span><span>${t.wins}-${t.losses}</span></div>`;}).join("")}
   </div></div><div class="grid2">`;
@@ -2141,7 +2419,7 @@ function renderStats(){
   };
   const u=state.teams[state.userTeam];
   const leaders=u.players.filter(p=>p.st.gp).sort((a,b)=>(b.st.paYd+b.st.ruYd+b.st.reYd)-(a.st.paYd+a.st.ruYd+a.st.reYd)).slice(0,8);
-  return `<div class="card"><h3>Our Season Leaders</h3><table>
+  return `<div class="card"><h3>${T("Our Season Leaders")}</h3><table>
       <tr><th>Player</th><th>Pos</th><th>Line</th></tr>
       ${leaders.map(p=>`<tr><td>${playerLink(p)}</td><td>${p.pos}</td><td class="muted">${esc(statline(p))}</td></tr>`).join("")||'<tr><td colspan="3" class="muted">No games played yet.</td></tr>'}
     </table></div>
@@ -2190,7 +2468,7 @@ function renderRecruit(){
       <td><span class="stars">${"★".repeat(r.stars)}</span></td>
       <td>${esc(r.name)}${r.visited?' <span class="tag y" title="Took his official visit">visited</span>':""}</td><td>${r.pos}</td>
       <td class="num">${ovrCell(r.ovr)}</td><td class="num muted">${r.pot}</td>
-      <td title="${esc(PERS[r.pers].hint)}"><span class="tag ${ap.c}">${esc(PERS[r.pers].name)}</span></td>
+      <td title="${esc(T(PERS[r.pers].hint))}"><span class="tag ${ap.c}">${esc(T(PERS[r.pers].name))}</span></td>
       <td class="num">${Math.round(mine)} ${gap}</td><td>${status}</td>
       <td>${r.committed===null?`<button class="btn-sm ${r.targeted?"active":""}" onclick="toggleTarget('${r.id}')">${r.targeted?"Targeted":"Target"}</button>
         <button class="btn-sm" ${r.visited||state.visits<=0?"disabled":""} onclick="useVisit('${r.id}')" title="Official visit — one-off interest boost">🏟️</button>`:""}</td></tr>`;
@@ -2211,12 +2489,12 @@ function renderRecruit(){
     <h3>Recruiting — ${userWeeklyPoints()} pts/week split across ${targets.length}/8 targets · class: ${signed.length}/10 signed</h3>
     <div class="filterbar">
       <select onchange="setRecFilter('show',this.value)">
-        <option value="board" ${recFilter.show==="board"?"selected":""}>Available recruits</option>
-        <option value="targets" ${recFilter.show==="targets"?"selected":""}>My targets</option>
-        <option value="signed" ${recFilter.show==="signed"?"selected":""}>My signings</option>
+        <option value="board" ${recFilter.show==="board"?"selected":""}>${T("Available recruits")}</option>
+        <option value="targets" ${recFilter.show==="targets"?"selected":""}>${T("My targets")}</option>
+        <option value="signed" ${recFilter.show==="signed"?"selected":""}>${T("My signings")}</option>
       </select>
       <select onchange="setRecFilter('pos',this.value)">
-        <option value="ALL">All positions</option>
+        <option value="ALL">${T("All positions")}</option>
         ${POS.map(p=>`<option ${recFilter.pos===p?"selected":""}>${p}</option>`).join("")}
       </select>
       <span class="tag ${state.visits>0?"y":"r"}">🏟️ ${state.visits||0} official visit${(state.visits||0)!==1?"s":""} left</span>
@@ -2242,15 +2520,15 @@ function renderStaff(){
     const c=state.staff[role];
     return `<div class="coachcard">
       <div>
-        <div class="cn">${ROLE_INFO[role].name}</div>
+        <div class="cn">${T(ROLE_INFO[role].name)}</div>
         ${c?`<div>${esc(c.name)} — rating <b style="color:${ovrColor(c.rating)}">${c.rating}</b>${c.spec?` · specialty: <b>${(role==="OC"?OFF_SCHEMES:DEF_SCHEMES)[c.spec].name}</b>${c.spec===(role==="OC"?u.off:u.def)?' <span class="tag g">fits playbook</span>':' <span class="tag y">scheme mismatch</span>'}`:""} · $${c.salary}M/yr</div>`
           :`<div class="tag r">VACANT — big penalty until filled</div>`}
-        <div class="cd">${ROLE_INFO[role].eff}</div>
+        <div class="cd">${T(ROLE_INFO[role].eff)}</div>
       </div>
       ${c?`<button class="btn-sm danger" onclick="fireCoach('${role}')">Fire</button>`:""}
     </div>`;
   };
-  const market=role=>`<div class="card"><h3>${ROLE_INFO[role].name} candidates</h3>
+  const market=role=>`<div class="card"><h3>${T("{0} candidates",T(ROLE_INFO[role].name))}</h3>
     ${state.market[role].map(c=>`<div class="coachcard">
       <div><div class="cn">${esc(c.name)} — <span style="color:${ovrColor(c.rating)}">${c.rating}</span></div>
       <div class="cd">${c.spec?`Specialty: ${(role==="OC"?OFF_SCHEMES:DEF_SCHEMES)[c.spec].name} · `:""}$${c.salary}M/yr</div></div>
@@ -2273,7 +2551,7 @@ function renderStrategy(){
       avg(topN(u.players,"WR",3))*s.w.WR+avg(topN(u.players,"OL",5))*s.w.OL);
     return `<div class="schemecard ${u.off===key?"sel":""}" onclick="setScheme('off','${key}')">
       <div class="sn">${s.name} <span>${ovrCell(fit)}</span></div>
-      <div class="sd">${s.desc}</div>
+      <div class="sd">${T(s.desc)}</div>
       <div class="sd">Pass ${Math.round(s.pass*100)}% · Tempo ${s.tempo>1.02?"fast":s.tempo<0.95?"slow":"normal"} · leans on ${Object.entries(s.w).sort((a,b)=>b[1]-a[1]).slice(0,2).map(x=>x[0]).join(" + ")}</div>
     </div>`;
   };
@@ -2282,7 +2560,7 @@ function renderStrategy(){
     const fit=Math.round(avg(topN(u.players,"DL",4))*s.w.DL+avg(topN(u.players,"LB",3))*s.w.LB+avg(topN(u.players,"DB",4))*s.w.DB);
     return `<div class="schemecard ${u.def===key?"sel":""}" onclick="setScheme('def','${key}')">
       <div class="sn">${s.name} <span>${ovrCell(fit)}</span></div>
-      <div class="sd">${s.desc}</div>
+      <div class="sd">${T(s.desc)}</div>
       <div class="sd">Leans on ${Object.entries(s.w).sort((a,b)=>b[1]-a[1]).slice(0,2).map(x=>x[0]).join(" + ")}</div>
     </div>`;
   };
@@ -2299,13 +2577,13 @@ function renderStrategy(){
   }
   return `${scout}
   ${(state.installingOff||state.installingDef)?'<div class="card"><span class="tag y">INSTALLING</span> <span class="muted" style="font-size:13px">You changed playbooks mid-season — the unit takes a penalty until next season.</span></div>':""}
-  <div class="card"><h3>Weekly Gameplan</h3>
-    ${Object.entries(GAMEPLANS).map(([k,g])=>`<button class="btn-sm ${state.gameplan===k?"active":""}" style="margin-right:8px" onclick="setGameplan('${k}')">${g.name}</button>`).join("")}
-    <div class="muted" style="font-size:13px;margin-top:10px">${GAMEPLANS[state.gameplan].desc}</div>
+  <div class="card"><h3>${T("Weekly Gameplan")}</h3>
+    ${Object.entries(GAMEPLANS).map(([k,g])=>`<button class="btn-sm ${state.gameplan===k?"active":""}" style="margin-right:8px" onclick="setGameplan('${k}')">${T(g.name)}</button>`).join("")}
+    <div class="muted" style="font-size:13px;margin-top:10px">${T(GAMEPLANS[state.gameplan].desc)}</div>
   </div>
   <div class="grid2">
-    <div class="card"><h3>Offensive Playbook — the number is your roster's talent fit</h3>${Object.keys(OFF_SCHEMES).map(offCard).join("")}</div>
-    <div class="card"><h3>Defensive Playbook</h3>${Object.keys(DEF_SCHEMES).map(defCard).join("")}</div>
+    <div class="card"><h3>${T("Offensive Playbook — the number is your roster's talent fit")}</h3>${Object.keys(OFF_SCHEMES).map(offCard).join("")}</div>
+    <div class="card"><h3>${T("Defensive Playbook")}</h3>${Object.keys(DEF_SCHEMES).map(defCard).join("")}</div>
   </div>`;
 }
 
@@ -2327,11 +2605,37 @@ function renderBudget(){
     <input type="range" min="0" max="100" value="${b[k]}" oninput="setBudget('${k}',this.value)">
     <span class="val">${b[k]}%</span></div>
     <div class="muted" style="margin:-8px 0 16px 122px;font-size:13px">${desc}</div>`;
-  return `<div class="card"><h3>Program Budget — 100 points across three areas</h3>
-    ${row("fac","Facilities","Boosts player development each offseason.")}
-    ${row("rec","Recruiting","Adds weekly recruiting points on your targets.")}
-    ${row("nil","NIL Fund","Extra pull with recruits, and funds your transfer-portal signings.")}
-    <div class="muted" style="font-size:13px">Coach salaries come from a separate pool that grows with prestige (see Staff tab).</div>
+  const st=state.simStops||{injury:true,rivalry:true,playoff:true};
+  const chk=(k,l)=>`<label class="chkrow"><input type="checkbox" ${st[k]?"checked":""} onchange="toggleStop('${k}')"> ${esc(l)}</label>`;
+  return `<div class="card"><h3>${T("Program Budget — 100 points across three areas")}</h3>
+    ${row("fac",T("Facilities"),T("Boosts player development each offseason."))}
+    ${row("rec",T("Recruiting"),T("Adds weekly recruiting points on your targets."))}
+    ${row("nil",T("NIL Fund"),T("Extra pull with recruits, and funds your transfer-portal signings."))}
+    <div class="muted" style="font-size:13px">${T("Coach salaries come from a separate pool that grows with prestige (see Staff tab).")}</div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>${T("Season simulation")}</h3>
+      <div class="muted" style="font-size:13px;margin-bottom:10px">${T("“Sim season” plays week after week. Pause it when:")}</div>
+      ${chk("injury",T("a starter gets injured"))}
+      ${chk("rivalry",T("rivalry week comes up"))}
+      ${chk("playoff",T("we reach a postseason game"))}
+      <label class="chkrow" style="margin-top:10px"><input type="checkbox" ${state.recapOn!==false?"checked":""} onchange="toggleRecap()"> ${T("Show the weekly recap screen")}</label>
+    </div>
+    <div class="card"><h3>${T("Language & saves")}</h3>
+      <div style="display:flex;gap:6px;margin-bottom:14px">
+        ${[["en","English"],["fr","Français"]].map(([k,l])=>`<button class="btn-sm ${uiLang===k?"active":""}" onclick="setLang('${k}')">${l}</button>`).join("")}
+      </div>
+      <div class="muted" style="font-size:13px;margin-bottom:10px">
+        ${T("Your career is stored in this browser. Export it to keep a backup or move to another device.")}
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn-sm" onclick="exportSave()">⬇ ${T("Export career")}</button>
+        <button class="btn-sm" onclick="document.getElementById('impf2').click()">⬆ ${T("Import career")}</button>
+        <input id="impf2" type="file" accept="application/json,.json" style="display:none" onchange="importSave(this)">
+        <button class="btn-sm" onclick="backToHome()">${T("Switch career")}</button>
+      </div>
+      <div class="muted" style="font-size:12px;margin-top:8px">${T("Importing replaces the career in this slot.")}</div>
+    </div>
   </div>`;
 }
 
@@ -2349,21 +2653,21 @@ function renderHist(){
       const e=(state.achv||{})[a.id];
       return `<div class="ach ${e?"got":"locked"}">
         <div class="a-i">${e?a.i:"🔒"}</div>
-        <div class="a-n">${esc(a.n)}</div>
-        <div class="a-d">${esc(a.d)}</div>
-        ${e?`<div class="a-w">Unlocked ${e.season}</div>`:""}
+        <div class="a-n">${esc(T(a.n))}</div>
+        <div class="a-d">${esc(T(a.d))}</div>
+        ${e?`<div class="a-w">${T("Unlocked")} ${e.season}</div>`:""}
       </div>`;}).join("")}</div></div>`;
   // L2-2 records
   ensureRecords();
   const prog=state.records.prog[state.userTeam]||blankRecords();
   const recRow=(o,c)=>o&&o[c.k]
-    ? `<div class="rec-row"><span>${esc(c.n)}</span>
+    ? `<div class="rec-row"><span>${esc(T(c.n))}</span>
         <span style="text-align:right"><span class="r-h">${esc(c.fmt(o[c.k].v))}</span><br>
         <span class="r-w">${esc(o[c.k].name)} · ${esc(SCHOOLS[o[c.k].team].n)} ${o[c.k].season}</span></span></div>`
-    : `<div class="rec-row"><span>${esc(c.n)}</span><span class="muted">—</span></div>`;
+    : `<div class="rec-row"><span>${esc(T(c.n))}</span><span class="muted">—</span></div>`;
   const recCard=`<div class="grid2">
     <div class="card"><h3>Program Records — ${esc(SCHOOLS[state.userTeam].n)}</h3>${REC_CATS.map(c=>recRow(prog,c)).join("")}</div>
-    <div class="card"><h3>National Records</h3>${REC_CATS.map(c=>recRow(state.records.nat,c)).join("")}</div>
+    <div class="card"><h3>${T("National Records")}</h3>${REC_CATS.map(c=>recRow(state.records.nat,c)).join("")}</div>
   </div>`;
   // L2-3 hall of fame
   const hof=state.hof||[];
@@ -2371,9 +2675,9 @@ function renderHist(){
     ${hof.length?`<div class="cardsgrid">${hof.slice().reverse().slice(0,12).map(h=>
         `<div style="cursor:pointer" onclick="openPlayer('${h.card.id}')">${playerCard(h.card,h.team,`${h.seasons} season${h.seasons!==1?"s":""} · class of ${h.season}`)}</div>`).join("")}</div>`
       :'<div class="muted">Your best players enter here when they graduate — 85+ overall, a national award, or huge career numbers.</div>'}</div>`;
-  if(!state.history.length) return careerCard+achvCard+recCard+hofCard+`<div class="card"><h3>Record Book</h3><div class="muted">Finish your first season to start the record book.</div></div>`;
+  if(!state.history.length) return careerCard+achvCard+recCard+hofCard+`<div class="card"><h3>${T("Record Book")}</h3><div class="muted">Finish your first season to start the record book.</div></div>`;
   const titles=state.history.filter(h=>h.confChamp||h.natChamp);
-  const trophyCase=titles.length?`<div class="card"><h3>Trophy Case</h3>
+  const trophyCase=titles.length?`<div class="card"><h3>${T("Trophy Case")}</h3>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
     ${titles.slice().reverse().map(h=>`<div class="champcard">
       <div style="font-size:26px;line-height:1">${h.natChamp?"🏆":"🏅"}</div>
@@ -2381,7 +2685,7 @@ function renderHist(){
       <div class="muted" style="font-size:13px">${esc(SCHOOLS[h.team!==undefined?h.team:state.userTeam].n)} · ${h.season}</div>
       <div class="muted" style="font-size:13px;margin-top:2px">${h.userW}–${h.userL}</div>
     </div>`).join("")}</div></div>`:"";
-  return careerCard+trophyCase+achvCard+recCard+hofCard+`<div class="card"><h3>Record Book</h3>
+  return careerCard+trophyCase+achvCard+recCard+hofCard+`<div class="card"><h3>${T("Record Book")}</h3>
   ${state.history.slice().reverse().map(h=>`
     <div style="border-bottom:1px solid var(--line);padding:10px 0">
       <b>${h.season}</b> — ${h.team!==undefined?esc(SCHOOLS[h.team].n)+" ":""}went ${h.userW}-${h.userL} ${h.natChamp?'<span class="tag g">🏆 National Champs</span>':h.confChamp?'<span class="tag y">🏅 Conf Champs</span>':""}
@@ -2391,8 +2695,163 @@ function renderHist(){
   <div style="margin-top:14px"><button class="btn-sm" onclick="if(confirm('Delete save and start a new career?'))resetGame()">New career (delete save)</button></div></div>`;
 }
 
+/* ============================ French dictionary ============================
+   Scheme names (Air Raid, 4-3 Base…) stay in English on purpose — that is the
+   vocabulary French coverage of college football actually uses. */
+Object.assign(L10N.fr,{
+  "no games yet":"aucun match joué","won last {0}":"{0} victoire(s) de suite","lost last {0}":"{0} défaite(s) de suite",
+  "Top 25 power poll":"classé dans le Top 25","outside the Top 25":"hors du Top 25",
+  "board expects ~{0} wins":"le bureau attend ~{0} victoires","{0} active target(s)":"{0} cible(s) active(s)",
+  "under watch":"sous surveillance","secure":"en confiance","Next Up":"Prochain match","RIVALRY WEEK":"SEMAINE DU DERBY",
+  "Achievement unlocked":"Succès débloqué","My Collection":"Ma collection","{0} players":"{0} joueurs",
+  // ---- navigation & chrome ----
+  "Dashboard":"Tableau de bord","Roster":"Effectif","Schedule":"Calendrier","Standings":"Classements",
+  "Stats":"Statistiques","Recruiting":"Recrutement","Staff":"Staff","Strategy":"Stratégie",
+  "Budget":"Budget","History":"Historique",
+  "Season":"Saison","Phase":"Phase","Playbook":"Attaque","Defense":"Défense","Coach rep":"Réputation",
+  "Board confidence":"Confiance du bureau","hot seat":"siège éjectable","FIRED":"LIMOGÉ",
+  "Record":"Bilan","National Rank":"Classement national","Team Rating":"Niveau d'équipe",
+  "Prestige":"Prestige","Recruiting Class":"Classe de recrues","Board":"Bureau",
+  "Off":"Att","Def":"Déf",
+  // ---- actions ----
+  "Coach Game":"Coacher le match","Quick Sim":"Simuler","Sim season":"Simuler la saison",
+  "Start Over":"Recommencer","Careers":"Carrières","Continue":"Continuer","Delete":"Supprimer",
+  "Hide":"Masquer","Got it":"Compris","open":"ouvrir","Cards":"Cartes","List":"Liste",
+  "Simulate week by week until the season ends, pausing on key events":
+    "Simule semaine après semaine jusqu'à la fin de la saison, avec pause sur les événements importants",
+  // ---- home / slots ----
+  "Pick up where you left off, or start a new career.":"Reprends ta partie ou lance une nouvelle carrière.",
+  "New career":"Nouvelle carrière","Slot {0}":"Emplacement {0}","Slot {0} — empty":"Emplacement {0} — vide",
+  "career":"carrière","fired":"limogé","Back to careers":"Retour aux carrières",
+  "Move a career between devices":"Transférer une carrière",
+  "Progress lives in this browser only. Export a file to carry a career to another device or browser.":
+    "La progression n'existe que dans ce navigateur. Exporte un fichier pour emporter ta carrière ailleurs.",
+  "Import a save file":"Importer une sauvegarde","Imports into the first empty slot.":"Import dans le premier emplacement libre.",
+  "Delete the {0} career in slot {1}? This cannot be undone.":"Supprimer la carrière {0} (emplacement {1}) ? C'est définitif.",
+  "A college football management sim — 32 programs, 4 conferences.":
+    "Un jeu de gestion de football américain universitaire — 32 programmes, 4 conférences.",
+  "Hire your staff, install your playbooks, recruit, develop, survive the board.":
+    "Recrute ton staff, installe tes systèmes de jeu, recrute, développe, survis au bureau.",
+  "Pick your program. Higher prestige means higher expectations.":
+    "Choisis ton programme. Plus le prestige est élevé, plus les attentes le sont.",
+  // ---- dashboard ----
+  "Next Up":"Prochain match","News Wire":"Fil d'actualité","Star Cards":"Cartes vedettes",
+  "Top Players":"Meilleurs joueurs","Injury Report":"Infirmerie","Last Game":"Dernier match",
+  "Season Form — margin by week":"Forme de la saison — écart par semaine",
+  "Getting started":"Pour bien démarrer","Check your coaching staff":"Vérifie ton staff",
+  "Choose your playbooks":"Choisis tes systèmes de jeu","Set your budget split":"Répartis ton budget",
+  "Target at least 4 recruits":"Cible au moins 4 recrues",
+  "None of this is mandatory, but it shapes your first season.":"Rien n'est obligatoire, mais ça façonne ta première saison.",
+  "You're set — hit Quick Sim or Coach Game to play week 1.":"Tout est prêt — lance la semaine 1 en simulant ou en coachant.",
+  // ---- schedule / standings ----
+  "Postseason":"Phase finale","Conference Championships":"Finales de conférence",
+  "Playoff Semifinals":"Demi-finales","🏆 National Championship":"🏆 Finale nationale",
+  "AP-style Top 25 (power poll) — movement since last week":"Top 25 national — évolution depuis la semaine dernière",
+  // ---- stats / history ----
+  "Our Season Leaders":"Nos meilleurs joueurs de la saison","Record Book":"Livre des records",
+  "Trophy Case":"Vitrine à trophées","National Records":"Records nationaux","Unlocked":"Débloqué en",
+  "Passing yards, season":"Yards à la passe, saison","Rushing yards, season":"Yards à la course, saison",
+  "Receiving yards, season":"Yards à la réception, saison","Sacks, season":"Sacks, saison",
+  "Tackles, season":"Plaquages, saison","Interceptions, season":"Interceptions, saison",
+  // ---- achievements ----
+  "On the board":"Premier succès","Win your first game.":"Gagne ton premier match.",
+  "Conference crown":"Couronne de conférence","Win a conference championship.":"Gagne un titre de conférence.",
+  "National champions":"Champions nationaux","Win the national championship.":"Gagne le titre national.",
+  "Perfect season":"Saison parfaite","Finish a regular season undefeated.":"Termine une saison régulière invaincu.",
+  "Cinderella story":"Conte de fées","Win a national title with a program under 50 prestige.":"Gagne le titre national avec un programme sous 50 de prestige.",
+  "Dynasty":"Dynastie","Win three conference titles in a row.":"Gagne trois titres de conférence d'affilée.",
+  "Blue-chip closer":"Closer de haut vol","Sign a five-star recruit.":"Signe une recrue 5 étoiles.",
+  "Loaded class":"Classe pleine","Sign eight or more recruits in one class.":"Signe au moins huit recrues dans une classe.",
+  "Star maker":"Créateur de stars","Coach a Player of the Year winner.":"Entraîne un Joueur de l'année.",
+  "Coach of the Year":"Entraîneur de l'année","Win Coach of the Year.":"Sois élu entraîneur de l'année.",
+  "Redemption":"Rédemption","Win a title after being fired at least once.":"Gagne un titre après avoir été limogé au moins une fois.",
+  "Own the rivalry":"Maître du derby","Beat your rival three years running.":"Bats ton rival trois années de suite.",
+  "Record breaker":"Briseur de records","Set a national statistical record.":"Établis un record national.",
+  "Legacy":"Héritage","Send five players to your Hall of Fame.":"Fais entrer cinq joueurs au Hall of Fame.",
+  // ---- staff ----
+  "Offensive Coordinator":"Coordinateur offensif","Defensive Coordinator":"Coordinateur défensif",
+  "Recruiting Coordinator":"Coordinateur du recrutement","Strength & Conditioning":"Préparateur physique",
+  "{0} candidates":"Candidats — {0}",
+  "Boosts offense. Bonus if his specialty matches your offensive playbook.":"Améliore l'attaque. Bonus si sa spécialité correspond à ton système offensif.",
+  "Boosts defense. Bonus if his specialty matches your defensive playbook.":"Améliore la défense. Bonus si sa spécialité correspond à ton système défensif.",
+  "Adds weekly recruiting points on every target.":"Ajoute des points de recrutement chaque semaine sur chaque cible.",
+  "Faster offseason development and fewer injuries.":"Développement plus rapide à l'intersaison et moins de blessures.",
+  // ---- strategy ----
+  "Weekly Gameplan":"Plan de jeu de la semaine","Offensive Playbook — the number is your roster's talent fit":
+    "Système offensif — le chiffre indique l'adéquation avec ton effectif",
+  "Defensive Playbook":"Système défensif",
+  "Conservative":"Prudent","Balanced":"Équilibré","Aggressive":"Agressif",
+  "Protect the ball, shorten the game. Fewer points, fewer disasters.":"Protéger le ballon, raccourcir le match. Moins de points, moins de catastrophes.",
+  "Take what the defense gives.":"Prendre ce que la défense concède.",
+  "Fourth downs, deep shots, tempo. High ceiling, high risk.":"Quatrièmes tentatives, longues passes, tempo. Gros potentiel, gros risque.",
+  // ---- recruiting ----
+  "All positions":"Tous les postes","Available recruits":"Recrues disponibles","My targets":"Mes cibles","My signings":"Mes signatures",
+  "Wants to play early":"Veut jouer vite","Sell him a starting job — he checks your depth chart at his position.":
+    "Vends-lui une place de titulaire — il regarde ta profondeur d'effectif à son poste.",
+  "NIL-motivated":"Motivé par le NIL","Follows the money. Your NIL budget does the talking.":"Suit l'argent. C'est ton budget NIL qui parle.",
+  "Wants to win big":"Veut tout gagner","Chasing rings — prestige and recent titles move him.":"Il court après les titres — prestige et succès récents le séduisent.",
+  "Wants to stay close":"Veut rester près de chez lui","Loyal to the region — favours programs from his own conference.":
+    "Attaché à sa région — privilégie les programmes de sa conférence.",
+  // ---- budget & settings ----
+  "Program Budget — 100 points across three areas":"Budget du programme — 100 points à répartir",
+  "Facilities":"Infrastructures","NIL Fund":"Fonds NIL",
+  "Boosts player development each offseason.":"Accélère la progression des joueurs à chaque intersaison.",
+  "Adds weekly recruiting points on your targets.":"Ajoute des points de recrutement hebdomadaires sur tes cibles.",
+  "Extra pull with recruits, and funds your transfer-portal signings.":"Plus d'attractivité auprès des recrues, et finance tes transferts.",
+  "Coach salaries come from a separate pool that grows with prestige (see Staff tab).":
+    "Les salaires du staff proviennent d'une enveloppe distincte qui grandit avec le prestige (onglet Staff).",
+  "Season simulation":"Simulation de saison",
+  "“Sim season” plays week after week. Pause it when:":"« Simuler la saison » enchaîne les semaines. Mettre en pause quand :",
+  "a starter gets injured":"un titulaire se blesse","rivalry week comes up":"la semaine du derby arrive",
+  "we reach a postseason game":"on atteint un match de phase finale",
+  "Show the weekly recap screen":"Afficher le résumé hebdomadaire",
+  "Language & saves":"Langue et sauvegardes","Export career":"Exporter la carrière","Import career":"Importer une carrière",
+  "Switch career":"Changer de carrière","Importing replaces the career in this slot.":"L'import remplace la carrière de cet emplacement.",
+  "Your career is stored in this browser. Export it to keep a backup or move to another device.":
+    "Ta carrière est stockée dans ce navigateur. Exporte-la pour la sauvegarder ou la transférer.",
+  "Career imported: {0}, {1} season.":"Carrière importée : {0}, saison {1}.",
+  "Importing will overwrite the career in slot {0}. Continue?":"L'import va écraser la carrière de l'emplacement {0}. Continuer ?",
+  "That file could not be loaded ({0}). Pick a .json exported from Gridiron GM.":
+    "Ce fichier n'a pas pu être chargé ({0}). Choisis un .json exporté depuis Gridiron GM.",
+  "The file could not be read.":"Le fichier n'a pas pu être lu.",
+  // ---- live game ----
+  "Drive Log":"Journal des drives",
+  "🏈 Touchdown — extra point or two?":"🏈 Touchdown — transformation à 1 ou 2 points ?",
+  // ---- sim pauses ----
+  "⏸ Simulation paused — rivalry week against {0}.":"⏸ Simulation en pause — semaine du derby contre {0}.",
+  "⏸ Simulation paused — we have a postseason game.":"⏸ Simulation en pause — un match de phase finale nous attend.",
+  "⏸ Simulation paused — {0} {1} went down for {2} week(s).":"⏸ Simulation en pause — {0} {1} est blessé pour {2} semaine(s).",
+  "Simulated {0} week(s) through to the end of the season.":"{0} semaine(s) simulée(s) jusqu'à la fin de la saison.",
+  // ---- tab hints ----
+  "Your week starts here. The buttons top right advance the season.":"Ta semaine commence ici. Les boutons en haut à droite font avancer la saison.",
+  "Your squad as collectible cards. Click any player to open his file.":"Ton effectif en cartes à collectionner. Clique un joueur pour ouvrir sa fiche.",
+  "Your 11-game season. The last week is always your rivalry game.":"Tes 11 matchs. La dernière semaine est toujours celle du derby.",
+  "Conference tables and the national Top 25, with weekly movement.":"Les classements de conférence et le Top 25 national, avec les évolutions.",
+  "Season leaders — yours and the whole country's.":"Les meilleurs joueurs — les tiens et ceux de tout le pays.",
+  "Target up to 8 recruits. Your weekly points are split between them.":"Cible jusqu'à 8 recrues. Tes points hebdomadaires se répartissent entre elles.",
+  "Four coordinators to hire. A scheme specialist who fits your playbook is worth real points.":
+    "Quatre coordinateurs à recruter. Un spécialiste dont la spécialité colle à ton système rapporte gros.",
+  "Pick your playbooks and this week's gameplan. Scouting sits at the top.":"Choisis tes systèmes et le plan de jeu de la semaine. Le scouting est en haut.",
+  "Split 100 points across facilities, recruiting and NIL — plus your game settings.":
+    "Répartis 100 points entre infrastructures, recrutement et NIL — et règle le jeu ici.",
+  "Records, Hall of Fame, achievements and your coaching career.":"Records, Hall of Fame, succès et ta carrière d'entraîneur.",
+});
+
 /* boot */
-load(); render();
+function boot(){
+  adoptLegacySave();
+  let act=0;
+  try{ act=parseInt(localStorage.getItem(ACTIVE_KEY)||"0",10)||0; }catch(e){}
+  activeSlot=clamp(act,0,SLOTS-1);
+  if(loadSlot(activeSlot)){
+    if(state.lang) uiLang=state.lang; // a career remembers the language it was played in
+  } else {
+    // fall back to any slot that does hold a career
+    for(let i=0;i<SLOTS;i++) if(loadSlot(i)){ if(state.lang) uiLang=state.lang; break; }
+  }
+  render();
+}
+boot();
 </script>
 </body>
 </html>

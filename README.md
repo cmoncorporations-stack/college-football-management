@@ -15,6 +15,8 @@ A college football general-management simulation game. Single-file web app — n
 - **Rivalries**: a cross-conference rival every year on the final week, with your job security on the line
 - **Legacy**: program and national record books, a Hall of Fame for your greatest players, and 14 career achievements
 - **Career mode**: board confidence, hot seat, firings, job offers from bigger programs
+- **Three career slots**, export/import your save as a file, and a French translation (FR/EN toggle)
+- **Installable** on a phone home screen, and a "sim the season" mode that pauses on injuries, rivalry week and playoff games
 - **Season loop**: 11-game regular season → conference championships → 4-team playoff → awards (POY, DPOY, Coach of the Year)
 - **Big moments**: weekly "around the league" recap with poll movement, Signing Day card reveal, title ceremonies, and a summer camp development report
 
