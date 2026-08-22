@@ -7,11 +7,13 @@ A college football general-management simulation game. Single-file web app — n
 ## Features
 
 - **32 fictional programs** across 4 conferences — pick a powerhouse or rebuild a bottom-feeder
-- **Coach mode**: drive-by-drive play-calling for every game, including the playoffs
+- **Coach mode**: drive-by-drive play-calling for every game, including the playoffs, with fourth-down and two-point decisions at the key moments
 - **Full playbooks**: 5 offensive × 4 defensive schemes with matchup dynamics and weekly gameplans
 - **Coaching staff market**: hire and lose coordinators (OC / DC / Recruiting / S&C) on a prestige-based salary pool
-- **Recruiting**: weekly interest battles against AI programs, Signing Day, transfer portal with NIL points
-- **Roster management**: player development, morale, injuries, redshirts, Sorare-style collectible player cards
+- **Recruiting**: weekly interest battles against AI programs, recruit personalities, official visits, Signing Day, transfer portal with NIL points
+- **Roster management**: player development, morale, injuries, redshirts, Sorare-style collectible player cards, clickable player files with full career history
+- **Rivalries**: a cross-conference rival every year on the final week, with your job security on the line
+- **Legacy**: program and national record books, a Hall of Fame for your greatest players, and 14 career achievements
 - **Career mode**: board confidence, hot seat, firings, job offers from bigger programs
 - **Season loop**: 11-game regular season → conference championships → 4-team playoff → awards (POY, DPOY, Coach of the Year)
 - **Big moments**: weekly "around the league" recap with poll movement, Signing Day card reveal, title ceremonies, and a summer camp development report
