@@ -14,8 +14,9 @@ A college football general-management simulation game. Single-file web app — n
 - **Roster management**: player development, morale, injuries, redshirts, Sorare-style collectible player cards
 - **Career mode**: board confidence, hot seat, firings, job offers from bigger programs
 - **Season loop**: 11-game regular season → conference championships → 4-team playoff → awards (POY, DPOY, Coach of the Year)
+- **Big moments**: weekly "around the league" recap with poll movement, Signing Day card reveal, title ceremonies, and a summer camp development report
 
-Progress is saved automatically in your browser (`localStorage`).
+Progress is saved automatically in your browser (`localStorage`). Existing careers carry over across updates.
 
 ## Development
 
