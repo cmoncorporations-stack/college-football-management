@@ -2627,7 +2627,7 @@ function renderSched(){
   if(state.post.confGames.length) post+=`<div class="card"><h3>${T("Conference Championships")}</h3>${state.post.confGames.map(g=>`<div class="scoreline"><span>${fmt(g)}</span></div>`).join("")}</div>`;
   if(state.post.semis.length) post+=`<div class="card"><h3>${T("Playoff Semifinals")}</h3>${state.post.semis.map(g=>`<div class="scoreline"><span>${fmt(g)}</span></div>`).join("")}</div>`;
   if(state.post.final) post+=`<div class="card"><h3>${T("🏆 National Championship")}</h3><div class="scoreline"><span><b>${fmt(state.post.final)}</b></span></div></div>`;
-  return `<div class="grid2"><div class="card"><h3>${state.season} Schedule</h3><table>${rows}</table></div><div>${post||'<div class="card"><h3>${T("Postseason")}</h3><div class="muted">Conference title games, then a 4-team playoff of the conference champions.</div></div>'}</div></div>`;
+  return `<div class="grid2"><div class="card"><h3>${state.season} ${T("Schedule")}</h3><table>${rows}</table></div><div>${post||`<div class="card"><h3>${T("Postseason")}</h3><div class="muted">${T("Conference title games, then a 4-team playoff of the conference champions.")}</div></div>`}</div></div>`;
 }
 
 function renderStand(){
@@ -2985,7 +2985,7 @@ Object.assign(L10N.fr,{
   "None of this is mandatory, but it shapes your first season.":"Rien n'est obligatoire, mais ça façonne ta première saison.",
   "You're set — hit Quick Sim or Coach Game to play week 1.":"Tout est prêt — lance la semaine 1 en simulant ou en coachant.",
   // ---- schedule / standings ----
-  "Postseason":"Phase finale","Conference Championships":"Finales de conférence",
+  "Postseason":"Phase finale","Conference title games, then a 4-team playoff of the conference champions.":"Finales de conférence, puis un playoff à 4 entre les champions de conférence.","Conference Championships":"Finales de conférence",
   "Playoff Semifinals":"Demi-finales","🏆 National Championship":"🏆 Finale nationale",
   "AP-style Top 25 (power poll) — movement since last week":"Top 25 national — évolution depuis la semaine dernière",
   // ---- stats / history ----
