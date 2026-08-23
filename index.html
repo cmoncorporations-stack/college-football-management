@@ -387,6 +387,16 @@
   .zoneseg.onz{background:var(--accent); border-color:var(--accent);}
   .zoneseg.donez{background:color-mix(in srgb, var(--accent) 40%, var(--panel2));}
 
+  .savebar{margin-top:11px; padding-top:10px; border-top:1px solid var(--line); display:flex;
+    flex-direction:column; gap:7px;}
+  .savedot{display:flex; align-items:center; gap:5px; font-size:11px; color:var(--good); font-weight:600;}
+  .exitbtn{width:100%; justify-content:center; display:flex; align-items:center;}
+  .exitbtn:hover{border-color:var(--accent); color:var(--accent);}
+  .slotcard.justleft{border-color:var(--accent);}
+  .plusbadge{width:44px; height:44px; border-radius:11px; flex:none; display:flex; align-items:center;
+    justify-content:center; font-size:24px; font-weight:800; color:var(--faint);
+    background:var(--panel2); border:1px dashed var(--line2);}
+  .newcard:hover .plusbadge{color:var(--accent); border-color:var(--accent);}
   /* ===== onboarding / hints / settings ===== */
   .hintbar{display:flex; align-items:center; gap:12px; justify-content:space-between;
     background:linear-gradient(150deg,rgba(230,178,61,.13),transparent 70%),var(--panel);
@@ -414,7 +424,11 @@
     .nav{flex-direction:row; overflow-x:auto; padding-bottom:2px;}
     .nav a{white-space:nowrap; border-left:none; border-bottom:3px solid transparent; border-radius:9px 9px 0 0;}
     .nav a.on{border-left:none; border-bottom-color:var(--accent);}
-    .ctx,.sidefoot{display:none;}
+    .ctx{display:none;}
+    .sidefoot{border:none; padding-top:0;}
+    .sidefoot .sf-l,.sidefoot .meter,.sidefoot .sf-v{display:none;}
+    .savebar{margin-top:0; border-top:none; flex-direction:row; align-items:center; gap:10px;}
+    .exitbtn{width:auto;}
     .grid2,.grid3,.gdash{grid-template-columns:1fr;}
     .main{padding:16px 14px 40px;}
   }
@@ -2122,6 +2136,27 @@ function renderOverlay(){
 /* Saves live in three slots. `cfbgm2` was the old single-slot key and is imported into slot 0 once. */
 const SLOTS=3, SLOT_KEY=i=>"cfbgm3_s"+i, ACTIVE_KEY="cfbgm3_active", LEGACY_KEY="cfbgm2";
 let activeSlot=0;
+function weekName(w){
+  if(w===0) return T("Preseason");
+  if(w<=REG_WEEKS) return T("Week")+" "+w;
+  if(w===CONF_WEEK) return T("Conference Championships");
+  if(w===SEMI_WEEK) return T("Playoff Semifinals");
+  if(w===FINAL_WEEK) return T("National Championship");
+  return T("Offseason");
+}
+function exportSlot(i){
+  try{
+    const raw=localStorage.getItem(SLOT_KEY(i)); if(!raw) return;
+    const d=JSON.parse(raw), st=d.state;
+    const url=URL.createObjectURL(new Blob([JSON.stringify({app:"gridiron-gm",state:st,nextId:d.nextId,saved:Date.now()})],
+      {type:"application/json"}));
+    const a=document.createElement("a");
+    a.href=url;
+    a.download=`gridiron-${SCHOOLS[st.userTeam].n.toLowerCase().replace(/\W+/g,"-")}-${st.season}.json`;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }catch(e){ alert(T("The file could not be read.")); }
+}
 function slotMeta(i){
   try{
     const d=JSON.parse(localStorage.getItem(SLOT_KEY(i)));
@@ -2185,6 +2220,26 @@ function anySlotUsed(){ for(let i=0;i<SLOTS;i++) if(slotMeta(i)) return true; re
 let pickingTeam=false;
 function newCareerIn(i){ activeSlot=i; state=null; pickingTeam=true; render(); }
 function backToHome(){ state=null; pickingTeam=false; render(); }
+/* Explicit save + exit. The game already autosaves, but players need a visible
+   way to put a career down and come back to the career list. */
+function saveAndExit(){
+  if(state){ save(); lastExit={team:state.userTeam,season:state.season,slot:activeSlot}; }
+  backToHome();
+}
+let lastExit=null;
+/* Start a new career: pick a free slot, or let the player choose one to replace. */
+function startNewCareer(){
+  for(let i=0;i<SLOTS;i++) if(!slotMeta(i)){ newCareerIn(i); return; }
+  const list=[];
+  for(let i=0;i<SLOTS;i++){ const m=slotMeta(i); list.push(`${i+1}. ${SCHOOLS[m.team].n} — ${T("Season")} ${m.season} (${m.rec})`); }
+  const ans=prompt(T("All three slots are in use. Type 1, 2 or 3 to replace that career:")+"\n\n"+list.join("\n"));
+  const n=parseInt(ans,10);
+  if(!n||n<1||n>SLOTS) return;
+  const m=slotMeta(n-1);
+  if(!confirm(T("Replace the {0} career in slot {1}? This cannot be undone.",SCHOOLS[m.team].n,n))) return;
+  localStorage.removeItem(SLOT_KEY(n-1));
+  newCareerIn(n-1);
+}
 function deleteSlot(i){
   const m=slotMeta(i); if(!m) return;
   if(!confirm(T("Delete the {0} career in slot {1}? This cannot be undone.",SCHOOLS[m.team].n,i+1))) return;
@@ -2295,6 +2350,7 @@ const ICONS={
   list:'<path d="M3 5h18v2.5H3zM3 10.75h18v2.5H3zM3 16.5h18V19H3z"/>',
   down:'<path d="M11 3h2v10h4l-5 6-5-6h4V3zM4 20h16v2H4z"/>',
   up:'<path d="M13 21h-2V11H7l5-6 5 6h-4v10zM4 2h16v2H4z"/>',
+  trash:'<path d="M9 2h6l1 2h5v2H3V4h5l1-2zM5 8h14l-1 13a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 8zm4 3v8h2v-8H9zm4 0v8h2v-8h-2z"/>',
   lock:'<path d="M12 2a5 5 0 0 0-5 5v3H5v12h14V10h-2V7a5 5 0 0 0-5-5zm0 2a3 3 0 0 1 3 3v3H9V7a3 3 0 0 1 3-3zm0 10a2 2 0 0 1 1 3.7V19h-2v-1.3A2 2 0 0 1 12 14z"/>',
   phone:'<path d="M6.6 2.5 3.2 5.9c-.7.7-.9 1.7-.5 2.6a26 26 0 0 0 12.8 12.8c.9.4 1.9.2 2.6-.5l3.4-3.4-5-3.3-2.3 2.3a20 20 0 0 1-6.6-6.6l2.3-2.3-3.3-5z"/>',
   grad:'<path d="M12 3 1 8l11 5 9-4.1V15h2V8L12 3zM5 13.2V17c0 1.7 3.1 3 7 3s7-1.3 7-3v-3.8l-7 3.2-7-3.2z"/>',
@@ -2532,6 +2588,14 @@ function render(){
         <div class="sf-l">${T("Board confidence")}</div>
         <div class="meter"><div style="width:${conf}%;background:${confCol}"></div></div>
         <div class="sf-v" style="color:${confCol}">${conf}%${state.fired?" · "+T("FIRED"):conf<30?" · "+T("hot seat"):""}</div>
+        <div class="savebar">
+          <span class="savedot" title="${esc(T("Your career saves automatically after every action."))}">
+            ${IC("check",11)} ${T("Saved")} · ${T("Slot {0}",activeSlot+1)}
+          </span>
+          <button class="btn-sm exitbtn" onclick="saveAndExit()" title="${esc(T("Save and return to the career list"))}">
+            ${IC("arrowl",12,"margin-right:5px")}${T("Save & quit")}
+          </button>
+        </div>
       </div>
     </aside>
     <main class="main">
@@ -2578,36 +2642,44 @@ function renderHome(){
     if(m){
       const s=SCHOOLS[m.team];
       const when=m.saved?new Date(m.saved).toLocaleDateString():"";
-      cards.push(`<div class="teamcard" style="align-items:flex-start" onclick="loadSlot(${i})&&render()">
+      const justLeft=lastExit&&lastExit.slot===i;
+      cards.push(`<div class="teamcard slotcard${justLeft?" justleft":""}" style="align-items:flex-start" onclick="loadSlot(${i})&&render()">
         ${crestSVG(m.team,44)}
         <div style="flex:1;min-width:0">
-          <div class="tn">${esc(s.n)} ${esc(s.m)}</div>
-          <div class="tm">${T("Season")} ${m.season} · ${m.fired?T("fired"):m.rec} · ${T("career")} ${m.career}${m.titles?" · "+m.titles+"x":""}</div>
-          <div class="tm" style="margin-top:5px;opacity:.75">${T("Slot {0}",i+1)}${when?" · "+when:""}</div>
-          <div style="display:flex;gap:6px;margin-top:9px">
-            <button class="btn-sm active" onclick="event.stopPropagation();loadSlot(${i})&&render()">${T("Continue")}</button>
-            <button class="btn-sm danger" onclick="event.stopPropagation();deleteSlot(${i})">${T("Delete")}</button>
+          <div class="tn">${esc(s.n)} ${esc(s.m)}${justLeft?` <span class="tag y">${T("last played")}</span>`:""}</div>
+          <div class="tm">${T("Season")} ${m.season} · ${weekName(m.week)}</div>
+          <div class="tm">${m.fired?T("fired"):T("this season {0}",m.rec)} · ${T("career")} ${m.career}${m.titles?" · "+IC("trophy",12,"color:var(--accent)")+m.titles:""}</div>
+          <div class="tm" style="margin-top:5px;opacity:.7">${T("Slot {0}",i+1)}${when?" · "+when:""}</div>
+          <div style="display:flex;gap:6px;margin-top:9px;flex-wrap:wrap">
+            <button class="btn-sm active" onclick="event.stopPropagation();loadSlot(${i})&&render()">${IC("arrowr",12,"margin-right:4px")}${T("Continue")}</button>
+            <button class="btn-sm" onclick="event.stopPropagation();exportSlot(${i})" title="${esc(T("Export career"))}">${IC("down",12)}</button>
+            <button class="btn-sm danger" onclick="event.stopPropagation();deleteSlot(${i})" title="${esc(T("Delete"))}">${IC("trash",12)}</button>
           </div>
         </div></div>`);
     } else {
-      cards.push(`<div class="teamcard" style="border-style:dashed" onclick="newCareerIn(${i})">
-        <div class="teambadge" style="background:var(--panel2);color:var(--faint);font-size:22px">+</div>
+      cards.push(`<div class="teamcard newcard" style="border-style:dashed" onclick="newCareerIn(${i})">
+        <div class="plusbadge">+</div>
         <div><div class="tn">${T("New career")}</div><div class="tm">${T("Slot {0} — empty",i+1)}</div></div>
       </div>`);
     }
   }
+  const full=[0,1,2].every(i=>slotMeta(i));
   return `<div class="selectwrap">
     <div class="bigmsg">${LOGO(120)}<h2 style="margin-top:12px">GRIDIRON GM</h2>
       <p>${T("Pick up where you left off, or start a new career.")}</p></div>
     ${langToggle()}
-    <div class="teamgrid" style="margin-bottom:22px">${cards.join("")}</div>
+    <div class="teamgrid" style="margin-bottom:18px">${cards.join("")}</div>
+    <div style="text-align:center;margin-bottom:24px">
+      <button class="btn-advance" onclick="startNewCareer()">${IC("football",15,"margin-right:7px")}${T("Start a new career")}</button>
+      ${full?`<div class="muted" style="font-size:12.5px;margin-top:8px">${T("All three slots are full — you'll be asked which one to replace.")}</div>`:""}
+    </div>
     <div class="card" style="max-width:560px;margin:0 auto">
       <h3>${T("Move a career between devices")}</h3>
       <div class="muted" style="font-size:13px;margin-bottom:10px">
         ${T("Progress lives in this browser only. Export a file to carry a career to another device or browser.")}
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn-sm" onclick="document.getElementById('impf').click()">${T("Import a save file")}</button>
+        <button class="btn-sm" onclick="document.getElementById('impf').click()">${IC("up",13,"margin-right:5px")}${T("Import a save file")}</button>
         <input id="impf" type="file" accept="application/json,.json" style="display:none" onchange="importSlotFile(this)">
       </div>
       <div class="muted" style="font-size:12px;margin-top:8px">${T("Imports into the first empty slot.")}</div>
@@ -3267,6 +3339,15 @@ Object.assign(L10N.fr,{
   "None of this is mandatory, but it shapes your first season.":"Rien n'est obligatoire, mais ça façonne ta première saison.",
   "You're set — hit Quick Sim or Coach Game to play week 1.":"Tout est prêt — lance la semaine 1 en simulant ou en coachant.",
   // ---- schedule / standings ----
+  "Saved":"Sauvegardé","Save & quit":"Sauver et quitter",
+  "Your career saves automatically after every action.":"Ta carrière est sauvegardée automatiquement après chaque action.",
+  "Save and return to the career list":"Sauvegarder et revenir à la liste des carrières",
+  "Start a new career":"Lancer une nouvelle carrière","last played":"reprise",
+  "this season {0}":"cette saison {0}",
+  "All three slots are full — you'll be asked which one to replace.":"Les trois emplacements sont occupés — on te demandera lequel remplacer.",
+  "All three slots are in use. Type 1, 2 or 3 to replace that career:":"Les trois emplacements sont occupés. Tape 1, 2 ou 3 pour remplacer cette carrière :",
+  "Replace the {0} career in slot {1}? This cannot be undone.":"Remplacer la carrière {0} (emplacement {1}) ? C'est définitif.",
+  "Preseason":"Pré-saison","Week":"Semaine","Offseason":"Intersaison",
   "Postseason":"Phase finale","RIVALRY":"DERBY","VICTORY":"VICTOIRE","Defeat":"Défaite",
   "incoming season":"saison à venir","no games yet":"aucun match joué","out {0}w":"absent {0} sem.","redshirt":"redshirt","Conference title games, then a 4-team playoff of the conference champions.":"Finales de conférence, puis un playoff à 4 entre les champions de conférence.","Conference Championships":"Finales de conférence",
   "Playoff Semifinals":"Demi-finales","{ic:trophy} National Championship":"{ic:trophy} Finale nationale",
