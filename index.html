@@ -294,6 +294,23 @@
   .rec-row .r-h{font-weight:700; font-variant-numeric:tabular-nums;}
   .rec-row .r-w{color:var(--muted); font-size:12.5px;}
 
+  /* ===== play cards (coach mode) ===== */
+  .playgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(172px,1fr)); gap:9px;}
+  .playcard{background:var(--panel2); border:1px solid var(--line2); border-radius:11px; padding:10px 12px;
+    text-align:left; color:var(--text); cursor:pointer; transition:border-color .12s, transform .12s;}
+  .playcard:hover{border-color:var(--accent); transform:translateY(-2px);}
+  .pl-top{display:flex; justify-content:space-between; gap:6px; align-items:baseline;}
+  .pl-n{font-weight:800; font-size:13px; line-height:1.2;}
+  .pl-t{font-size:12px;}
+  .pl-meta{display:flex; justify-content:space-between; gap:6px; font-size:10.5px; color:var(--faint); margin-top:4px;}
+  .pl-hint{font-size:10.5px; margin-top:5px; color:var(--muted);}
+  .pl-hint .g{color:var(--good);} .pl-hint .b{color:var(--bad);}
+  .seen{color:var(--bad); font-size:10px; font-weight:800; letter-spacing:.04em;}
+  .zonebar{display:flex; gap:6px; align-items:center; margin-bottom:10px; font-size:12px; color:var(--muted);}
+  .zoneseg{flex:1; max-width:70px; height:8px; border-radius:4px; background:var(--panel2); border:1px solid var(--line);}
+  .zoneseg.onz{background:var(--accent); border-color:var(--accent);}
+  .zoneseg.donez{background:color-mix(in srgb, var(--accent) 40%, var(--panel2));}
+
   /* ===== onboarding / hints / settings ===== */
   .hintbar{display:flex; align-items:center; gap:12px; justify-content:space-between;
     background:linear-gradient(150deg,rgba(230,178,61,.13),transparent 70%),var(--panel);
@@ -960,7 +977,7 @@ function newGame(userTeamIdx){
   nextId=1;
   const p=SCHOOLS[userTeamIdx].p;
   pickingTeam=false;
-  state={version:6,season:2026,week:0,userTeam:userTeamIdx,confidence:50,budget:{fac:34,rec:33,nil:33},
+  state={version:7,season:2026,week:0,userTeam:userTeamIdx,confidence:50,budget:{fac:34,rec:33,nil:33},
     lang:uiLang,simStops:{injury:true,rivalry:true,playoff:true},onboard:{tabs:{},hidden:false},
     career:{seasons:0,wins:0,losses:0,confTitles:0,natTitles:0,stops:[{team:userTeamIdx,season:2026}]},
     offers:[],live:null,
@@ -1350,14 +1367,127 @@ function acceptOffer(id){
   save(); render();
 }
 
-/* ============================ live game (coach mode) ============================ */
-const OFF_CALLS={run:"Ground game",bal:"Balanced attack",pass:"Air it out"};
-const DEF_CALLS={run:"Stack the box",bal:"Base defense",pass:"Coverage shell",blitz:"All-out blitz"};
-const CALL_MOD={ // offense call vs defense call → points modifier for the offense
-  run: {run:-6,bal:1, pass:5, blitz:-1},
-  bal: {run:1, bal:0, pass:1, blitz:1},
-  pass:{run:5, bal:1, pass:-6,blitz:-2},
+/* ============================ live game (coach mode) ============================
+   Each drive is played in up to three sequences — own territory, midfield, red
+   zone. Every sequence is a play-vs-call chess move: the offense picks from its
+   scheme's playbook, the defense picks a call, and the counter matrix + player
+   ratings + tendency reads decide the outcome. */
+
+/* offensive play type vs defensive call type → offense's edge */
+const PLAY_CM={
+  run:   {stop:-2, zone:0,  man:1,  blitz:1,  prevent:2,  contain:0},
+  short: {stop:1,  zone:0,  man:0,  blitz:2,  prevent:1,  contain:0},
+  deep:  {stop:1,  zone:-1, man:1,  blitz:-2, prevent:-2, contain:1},
+  screen:{stop:1,  zone:0,  man:-1, blitz:2,  prevent:0,  contain:-1},
+  trick: {stop:2,  zone:0,  man:1,  blitz:-1, prevent:-1, contain:-2},
 };
+const PT_LABEL={run:"Run",short:"Short pass",deep:"Deep shot",screen:"Screen",trick:"Trick play"};
+const PT_ICON={run:"🏃",short:"🎯",deep:"🚀",screen:"🛡️",trick:"🎭"};
+const DT_LABEL={stop:"Run stop",zone:"Zone coverage",man:"Man coverage",blitz:"Blitz",prevent:"Prevent",contain:"Contain / spy"};
+
+/* Each offensive scheme carries its own playbook. sig = signature play (bonus when your OC's specialty matches the scheme). */
+const OFF_PLAYS={
+  air:[
+    {id:"a1",n:"Four Verticals",t:"deep",r:2,k:["QB","WR"],sig:1},
+    {id:"a2",n:"Mesh",t:"short",r:0,k:["QB","WR"],sig:1},
+    {id:"a3",n:"Y-Cross",t:"deep",r:1,k:["QB","WR"]},
+    {id:"a4",n:"Stick",t:"short",r:0,k:["QB","WR"]},
+    {id:"a5",n:"Tunnel Screen",t:"screen",r:0,k:["WR","OL"]},
+    {id:"a6",n:"QB Draw",t:"run",r:0,k:["QB","OL"]},
+    {id:"a7",n:"Double Move",t:"deep",r:2,k:["QB","WR"]},
+    {id:"a8",n:"Shallow Cross",t:"short",r:0,k:["QB","WR"]},
+  ],
+  spread:[
+    {id:"s1",n:"Zone Read",t:"run",r:0,k:["QB","RB"],sig:1},
+    {id:"s2",n:"Triple Option",t:"run",r:1,k:["QB","RB"],sig:1},
+    {id:"s3",n:"QB Power",t:"run",r:1,k:["QB","OL"]},
+    {id:"s4",n:"Bubble Screen",t:"screen",r:0,k:["WR"]},
+    {id:"s5",n:"RPO Slant",t:"short",r:0,k:["QB","WR"]},
+    {id:"s6",n:"Speed Option",t:"run",r:1,k:["QB","RB"]},
+    {id:"s7",n:"PA Deep Shot",t:"deep",r:2,k:["QB","WR"]},
+    {id:"s8",n:"Jet Sweep",t:"trick",r:1,k:["WR","RB"]},
+  ],
+  pro:[
+    {id:"p1",n:"Inside Zone",t:"run",r:0,k:["RB","OL"],sig:1},
+    {id:"p2",n:"PA Deep Cross",t:"deep",r:1,k:["QB","WR"],sig:1},
+    {id:"p3",n:"Outside Zone",t:"run",r:0,k:["RB","OL"]},
+    {id:"p4",n:"PA Boot",t:"short",r:1,k:["QB"]},
+    {id:"p5",n:"Dig Concept",t:"short",r:0,k:["QB","WR"]},
+    {id:"p6",n:"HB Screen",t:"screen",r:0,k:["RB","OL"]},
+    {id:"p7",n:"Counter Trey",t:"run",r:1,k:["RB","OL"]},
+    {id:"p8",n:"Flood",t:"short",r:0,k:["QB","WR"]},
+  ],
+  power:[
+    {id:"w1",n:"Power O",t:"run",r:0,k:["RB","OL"],sig:1},
+    {id:"w2",n:"PA Deep Post",t:"deep",r:2,k:["QB","WR"],sig:1},
+    {id:"w3",n:"Counter",t:"run",r:0,k:["RB","OL"]},
+    {id:"w4",n:"Iso Lead",t:"run",r:0,k:["RB","OL"]},
+    {id:"w5",n:"Toss Sweep",t:"run",r:1,k:["RB"]},
+    {id:"w6",n:"FB Trap",t:"run",r:0,k:["RB","OL"]},
+    {id:"w7",n:"Bootleg Keeper",t:"trick",r:1,k:["QB"]},
+    {id:"w8",n:"Heavy Goal Line",t:"run",r:0,k:["OL","RB"]},
+  ],
+  west:[
+    {id:"c1",n:"Slant-Flat",t:"short",r:0,k:["QB","WR"],sig:1},
+    {id:"c2",n:"Spider 2 Y Banana",t:"short",r:1,k:["QB","RB"],sig:1},
+    {id:"c3",n:"Curl-Flat",t:"short",r:0,k:["QB","WR"]},
+    {id:"c4",n:"Drive Concept",t:"short",r:0,k:["QB","WR"]},
+    {id:"c5",n:"HB Swing Screen",t:"screen",r:0,k:["RB"]},
+    {id:"c6",n:"Lead Draw",t:"run",r:0,k:["RB","OL"]},
+    {id:"c7",n:"Sluggo",t:"deep",r:2,k:["QB","WR"]},
+    {id:"c8",n:"Deep Comeback",t:"deep",r:1,k:["QB","WR"]},
+  ],
+};
+/* Each defensive scheme carries six calls, one per call type. */
+const DEF_PLAYS={
+  d43:[
+    {id:"d1",n:"Stack the Box",t:"stop",k:["DL","LB"]},
+    {id:"d2",n:"Cover 3 Sky",t:"zone",k:["DB"]},
+    {id:"d3",n:"Cover 1 Press",t:"man",k:["DB"]},
+    {id:"d4",n:"Sam Blitz",t:"blitz",k:["LB"]},
+    {id:"d5",n:"Prevent Shell",t:"prevent",k:["DB"]},
+    {id:"d6",n:"Contain Spy",t:"contain",k:["LB","DL"]},
+  ],
+  d34:[
+    {id:"e1",n:"Bear Front",t:"stop",k:["DL","LB"]},
+    {id:"e2",n:"Cover 4 Match",t:"zone",k:["DB"]},
+    {id:"e3",n:"Press Man",t:"man",k:["DB"]},
+    {id:"e4",n:"Fire Zone",t:"blitz",k:["LB"]},
+    {id:"e5",n:"Soft Shell",t:"prevent",k:["DB"]},
+    {id:"e6",n:"Edge Contain",t:"contain",k:["LB"]},
+  ],
+  nickel:[
+    {id:"n1",n:"8-Man Run Fit",t:"stop",k:["DL","LB"]},
+    {id:"n2",n:"Cover 2 Shell",t:"zone",k:["DB"]},
+    {id:"n3",n:"Slot Man",t:"man",k:["DB"]},
+    {id:"n4",n:"Nickel Fire",t:"blitz",k:["DB","LB"]},
+    {id:"n5",n:"Quarters Prevent",t:"prevent",k:["DB"]},
+    {id:"n6",n:"QB Spy",t:"contain",k:["LB"]},
+  ],
+  blitz:[
+    {id:"b1",n:"Mug Front",t:"stop",k:["DL","LB"]},
+    {id:"b2",n:"3-Deep Fire Zone",t:"zone",k:["DB","LB"]},
+    {id:"b3",n:"Cover 0 Man",t:"man",k:["DB"]},
+    {id:"b4",n:"House Blitz",t:"blitz",k:["LB","DB"]},
+    {id:"b5",n:"Soft Umbrella",t:"prevent",k:["DB"]},
+    {id:"b6",n:"Green Dog Spy",t:"contain",k:["LB"]},
+  ],
+};
+const ZONES=["Own territory","Midfield","Red zone"];
+const KEY_COUNTS={QB:1,RB:2,WR:3,OL:5,DL:4,LB:3,DB:4,K:1};
+function keyAvg(t,play){
+  const P=avail(t);
+  const vals=play.k.map(pos=>avg(topN(P,pos,KEY_COUNTS[pos]||2)));
+  return vals.reduce((a,b)=>a+b,0)/vals.length;
+}
+function playHint(play){
+  const row=Object.entries(PLAY_CM[play.t]).sort((a,b)=>b[1]-a[1]);
+  return {best:row[0][0],worst:row[row.length-1][0]};
+}
+function callHint(dcall){ // what this defensive call shuts down / concedes
+  const col=Object.keys(PLAY_CM).map(pt=>[pt,PLAY_CM[pt][dcall.t]]).sort((a,b)=>a[1]-b[1]);
+  return {stops:col[0][0],concedes:col[col.length-1][0]};
+}
 function pendingUserGame(){
   const U=state.userTeam;
   if(state.fired)return null;
@@ -1387,7 +1517,10 @@ function startLive(){
   const pg=pendingUserGame();
   if(!pg||state.live)return;
   state.live={h:pg.h,v:pg.v,kind:pg.kind,i:0,total:20,sh:0,sv:0,
-    recv:Math.random()<0.5?"h":"v",log:[],done:false,pending:null};
+    recv:Math.random()<0.5?"h":"v",log:[],done:false,pending:null,
+    stage:0,tend:{run:0,short:0,deep:0,screen:0,trick:0},
+    aiTend:{run:0,short:0,deep:0,screen:0,trick:0},
+    lastPlays:[],aiLast:null,lastSeq:null};
   save(); render();
 }
 function liveOffenseIdx(){
@@ -1395,149 +1528,224 @@ function liveOffenseIdx(){
   const first=L.recv==="h"?L.h:L.v, second=L.recv==="h"?L.v:L.h;
   return L.i%2===0?first:second;
 }
-function aiOffCall(t,scoreDiff,driveIdx,total){
-  if(driveIdx>=total-6&&scoreDiff<-8)return "pass";
-  if(driveIdx>=total-6&&scoreDiff>8)return "run";
-  const p=OFF_SCHEMES[t.off].pass, r=Math.random();
-  return r<p*0.75?"pass":r<p*0.75+0.25?"bal":"run";
+
+/* ---- sequence resolution: the chess move ---- */
+function resolveSeq(O,D,play,dcall,userOff){
+  // Team strength applies to all three sequences of a drive, so it compounds —
+  // keep its per-sequence weight small or rating gaps explode into blowouts.
+  const base=(offRating(O)-defRating(D))*0.14;
+  const cm=PLAY_CM[play.t][dcall.t]*4;
+  const fit=clamp((keyAvg(O,play)-70)*0.18,-5,6);
+  const sig=(userOff&&play.sig&&state.staff.OC&&state.staff.OC.spec===O.off)?2:0;
+  let rep=0;
+  if(userOff) rep=Math.max(-8,-4*state.live.lastPlays.filter(x=>x===play.id).length);
+  const s=gauss(0,6.5)+base+cm+fit+sig+rep;
+  const r=play.r||0;
+  if(s>=8.5-r*2) return "BIG";
+  if(s>=-6) return "ADV";
+  if(s>=-16+r*2) return "STALL";
+  return "TO";
 }
-function aiDefCall(oppOffScheme){
-  const p=OFF_SCHEMES[oppOffScheme].pass, r=Math.random();
-  if(r<0.15)return "blitz";
-  if(r<0.15+p*0.55)return "pass";
-  if(r<0.15+p*0.55+0.25)return "bal";
-  return "run";
-}
-function resolveDrive(O,D,offCall,defCall){
-  const base=offRating(O)-defRating(D);
-  let mod=CALL_MOD[offCall][defCall];
-  let toP=0.09+(offCall==="pass"?0.02:0)+(defCall==="blitz"?0.05:0);
-  let big=false;
-  if(defCall==="blitz"&&offCall==="pass"&&Math.random()<0.30){mod+=9;big=true;}
-  const x=base*0.011+mod*0.02;
-  const pTD=clamp(0.26+x,0.03,0.72);
-  const pFG=clamp(0.15+x*0.3,0.05,0.25);
-  const r=Math.random();
-  if(r<toP)return {pts:0,ev:"TO"};
-  if(r<toP+pTD)return {pts:7,ev:big?"BIGTD":"TD"};
-  if(r<toP+pTD+pFG)return {pts:3,ev:"FG"};
-  return {pts:0,ev:"PUNT"};
-}
-function driveDesc(O,ev){
+function seqDesc(O,play,ev){
   const P=avail(O);
-  const qb=topN(P,"QB",1)[0],rb=topN(P,"RB",1)[0],wr=topN(P,"WR",1)[0];
-  const n=p=>p?p.name:"the offense";
-  const T={
-    TD:[`${n(qb)} caps the drive with a touchdown strike to ${n(wr)}`,`${n(rb)} punches it in from short range`,`a methodical drive ends in the end zone`,`${n(qb)} keeps it himself and scores`],
-    BIGTD:[`the blitz gets burned — ${n(wr)} takes it to the house!`,`${n(qb)} beats the pressure with a deep bomb for six!`],
-    FG:[`the drive stalls in the red zone — the field goal is good`,`settling for three points`],
-    TO:[`${n(qb)} is intercepted!`,`fumble! the defense takes over`,`stuffed on fourth down — turnover on downs`],
-    PUNT:[`three and out`,`the drive stalls near midfield, punt away`],
+  const qb=topN(P,"QB",1)[0], rb=topN(P,"RB",1)[0], wr=topN(P,"WR",1)[0];
+  const nm=p=>p?p.name:"the offense";
+  const star=play.k&&(play.k[0]==="RB"||play.k[0]==="OL")?nm(rb):play.k&&play.k.includes("WR")?nm(wr):nm(qb);
+  const bank={
+    BIG:[`${play.n} breaks wide open — ${star} rips off a huge gain!`,`they never saw ${play.n} coming — ${star} explodes downfield`],
+    ADV:[`${play.n} moves the chains`,`steady gain on ${play.n}`,`${star} keeps the drive alive on ${play.n}`],
+    TD:[`${play.n} finishes it — ${star} scores!`,`touchdown! ${play.n} walks it in behind ${star}`],
+    BIGTD:[`${play.n} goes the distance — ${star} takes it to the house!`],
+    STALL:[`${play.n} gets stuffed`,`the defense sniffs out ${play.n}`,`${play.n} goes nowhere`],
+    TO:[`disaster — ${play.n} ends in a turnover!`,`the defense jumps ${play.n} and takes the ball away!`],
   };
-  return pick(T[ev]);
+  return pick(bank[ev]||bank.ADV);
 }
-function commitDrive(offIdx,offCall,defCall,ev,pts,desc){
+function seqLog(offIdx,zone,playN,dcallN,ev,desc,pts){
   const L=state.live;
-  if(offIdx===L.h)L.sh+=pts; else L.sv+=pts;
+  pts=pts||0;
+  if(pts){ if(offIdx===L.h)L.sh+=pts; else L.sv+=pts; }
   const q=Math.min(4,Math.floor(L.i/(L.total/4))+1);
-  L.log.unshift({q,off:offIdx,offCall,defCall,ev,pts,desc,sh:L.sh,sv:L.sv});
-  L.i++;
+  L.log.unshift({q,zone,off:offIdx,playN,dcallN,ev,pts,desc,sh:L.sh,sv:L.sv});
+}
+function endDrive(){
+  const L=state.live;
+  L.stage=0; L.i++;
   if(L.i>=L.total){
     if(L.sh===L.sv) liveOvertime();
     L.done=true;
   }
 }
-/* L2-6: should this drive become a coaching decision? */
-function decisionFor(L,offIdx,res,O,D){
-  if(offIdx!==state.userTeam) return null;
-  const myScore=offIdx===L.h?L.sh:L.sv, theirScore=offIdx===L.h?L.sv:L.sh;
-  if(res.ev==="PUNT"&&L.i<L.total-1&&Math.random()<0.5){
-    const edge=(offRating(O)-defRating(D))*0.01;
-    return {kind:"fourth",go:clamp(0.5+edge,0.3,0.72),fg:0.62,dist:RI(1,3)};
-  }
-  if((res.ev==="TD"||res.ev==="BIGTD")&&L.i>=L.total-6){
-    const after=(myScore+6)-theirScore; // margin once the touchdown counts
-    if(Math.abs(after)<=8) return {kind:"twopt",xp:0.96,two:0.47,margin:after};
-  }
-  return null;
+
+/* ---- AI pickers ---- */
+function aiPickOff(O,ctx){ // ctx: {stage,diff,late,avoid}
+  const lib=OFF_PLAYS[O.off];
+  const passP=OFF_SCHEMES[O.off].pass;
+  const wT={run:(1-passP)*1.6, short:passP*0.9, deep:passP*0.6, screen:0.45, trick:0.2};
+  if(ctx.stage===2){ wT.deep*=0.3; wT.trick*=0.5; wT.run*=1.3; }
+  if(ctx.late&&ctx.diff<-8){ wT.deep*=2.5; wT.short*=1.4; wT.run*=0.3; }
+  if(ctx.late&&ctx.diff>8){ wT.run*=2.5; wT.deep*=0.2; }
+  const avoid=ctx.avoid||[];
+  const weights=lib.map(p=>(wT[p.t]||0.3)*(avoid.includes(p.id)?0.03:1));
+  let x=Math.random()*weights.reduce((a,b)=>a+b,0);
+  for(let i=0;i<lib.length;i++){ x-=weights[i]; if(x<=0) return lib[i]; }
+  return lib[0];
 }
-function playLiveDrive(userCall){
+function aiPickDef(L,D,O){ // reads the opposing offense's observed tendencies
+  const lib=DEF_PLAYS[D.def];
+  const tend=L?L.tend:null;
+  const passP=OFF_SCHEMES[O.off].pass;
+  const prior={run:1-passP, short:passP*0.5, deep:passP*0.3, screen:0.12, trick:0.06};
+  const tot=tend?Object.values(tend).reduce((a,b)=>a+b,0):0;
+  const trust=Math.min(1,tot/6);
+  const mix={};
+  for(const t of Object.keys(PLAY_CM))
+    mix[t]=(1-trust)*(prior[t]||0.05)+trust*(tot?(tend[t]||0)/tot:0);
+  const scored=lib.map(c=>{
+    let ev=0; for(const t in mix) ev+=mix[t]*PLAY_CM[t][c.t];
+    return {c,ev};
+  }).sort((a,b)=>a.ev-b.ev); // defense wants the offense's edge as low as possible
+  const roll=Math.random();
+  if(roll<0.35) return pick(lib);                    // stay unpredictable
+  return roll<0.8?scored[0].c:scored[1].c;
+}
+
+/* ---- one sequence of the current drive ---- */
+function playLiveSeq(choiceId){
   const L=state.live;
-  if(L.pending) return; // waiting on a coaching decision
+  if(!L||L.done||L.pending)return;
   const offIdx=liveOffenseIdx(), defIdx=offIdx===L.h?L.v:L.h;
   const O=state.teams[offIdx], D=state.teams[defIdx];
   const userOff=offIdx===state.userTeam;
   const diff=offIdx===L.h?L.sh-L.sv:L.sv-L.sh;
-  const offCall=userOff?userCall:aiOffCall(O,diff,L.i,L.total);
-  const defCall=userOff?aiDefCall(O.off):userCall;
-  const res=resolveDrive(O,D,offCall,defCall);
-  const dec=decisionFor(L,offIdx,res,O,D);
-  if(dec){ L.pending={...dec,offIdx,offCall,defCall,ev:res.ev}; return; }
-  commitDrive(offIdx,offCall,defCall,res.ev,res.pts,driveDesc(O,res.ev));
+  const ctxUser={stage:L.stage,diff,late:L.i>=L.total-6,avoid:L.lastPlays};
+  const ctxAI={stage:L.stage,diff,late:L.i>=L.total-6,avoid:L.aiLast?[L.aiLast]:[]};
+  let play,dcall;
+  if(userOff){
+    play=OFF_PLAYS[O.off].find(p=>p.id===choiceId)||aiPickOff(O,ctxUser);
+    dcall=aiPickDef(L,D,O);
+    L.tend[play.t]++; L.lastPlays=[play.id,...L.lastPlays].slice(0,3);
+  }else{
+    dcall=DEF_PLAYS[D.def].find(c=>c.id===choiceId)||aiPickDef({tend:L.aiTend},D,O);
+    play=aiPickOff(O,ctxAI);
+    L.aiTend[play.t]++; L.aiLast=play.id;
+  }
+  const out=resolveSeq(O,D,play,dcall,userOff);
+  L.lastSeq={playN:play.n,dcallN:dcall.n,out,off:offIdx};
+  const zone=L.stage;
+  if(out==="TO"){ seqLog(offIdx,zone,play.n,dcall.n,"TO",seqDesc(O,play,"TO")); endDrive(); }
+  else if(out==="STALL") handleStall(offIdx,zone,play,dcall,O,D);
+  else if(out==="BIG"){
+    if(zone===0){ L.stage=2; seqLog(offIdx,zone,play.n,dcall.n,"BIG",seqDesc(O,play,"BIG")); }
+    else scoreTD(offIdx,zone,play,dcall,O,true);
+  } else { // ADV
+    if(zone===2) scoreTD(offIdx,zone,play,dcall,O,false);
+    else { L.stage++; seqLog(offIdx,zone,play.n,dcall.n,"ADV",seqDesc(O,play,"ADV")); }
+  }
+}
+function scoreTD(offIdx,zone,play,dcall,O,big){
+  const L=state.live;
+  const userOff=offIdx===state.userTeam;
+  const myScore=offIdx===L.h?L.sh:L.sv, theirScore=offIdx===L.h?L.sv:L.sh;
+  const after=(myScore+6)-theirScore;
+  const desc=seqDesc(O,play,big?"BIGTD":"TD");
+  if(userOff&&L.i>=L.total-6&&Math.abs(after)<=8){
+    L.pending={kind:"twopt",xp:0.96,two:0.47,margin:after,offIdx,zone,playN:play.n,dcallN:dcall.n,desc};
+    return;
+  }
+  seqLog(offIdx,zone,play.n,dcall.n,big?"BIGTD":"TD",desc,7);
+  endDrive();
+}
+function handleStall(offIdx,zone,play,dcall,O,D){
+  const L=state.live;
+  const userOff=offIdx===state.userTeam;
+  if(zone===0){ seqLog(offIdx,zone,play.n,dcall.n,"PUNT",seqDesc(O,play,"STALL")+" — "+T("punt away")); endDrive(); return; }
+  const edge=(offRating(O)-defRating(D))*0.01;
+  const P={kind:"fourth",go:clamp(0.5+edge,0.3,0.72),fg:zone===2?0.76:0.45,dist:RI(1,3),
+    zone,offIdx,playN:play.n,dcallN:dcall.n};
+  if(userOff){ L.pending=P; return; }
+  const diff=offIdx===L.h?L.sh-L.sv:L.sv-L.sh;
+  let choice;
+  if(zone===2) choice=(diff<-8&&L.i>=L.total-4)?"go":"fg";
+  else choice=((P.dist<=1&&Math.random()<0.5)||(diff<-8&&L.i>=L.total-4))?"go":"punt";
+  resolveFourth(choice,P);
+}
+function resolveFourth(choice,P){
+  const L=state.live, offIdx=P.offIdx, O=state.teams[offIdx];
+  if(choice==="punt"){
+    seqLog(offIdx,P.zone,P.playN,P.dcallN,"PUNT",T("4th and {0} — the punt team comes on",P.dist)); endDrive(); return;
+  }
+  if(choice==="fg"){
+    if(Math.random()<P.fg) seqLog(offIdx,P.zone,P.playN,P.dcallN,"FG",T("4th and {0} — the field goal is up… GOOD",P.dist),3);
+    else seqLog(offIdx,P.zone,P.playN,P.dcallN,"MISS",T("4th and {0} — the field goal sails wide",P.dist));
+    endDrive(); return;
+  }
+  // go for it
+  if(Math.random()<P.go){
+    if(P.zone===2){ seqLog(offIdx,P.zone,P.playN,P.dcallN,"TD",T("4th and {0} — converted, and punched in for the touchdown!",P.dist),7); endDrive(); }
+    else { L.stage=2; seqLog(offIdx,P.zone,P.playN,P.dcallN,"CONV",T("4th and {0} — converted! The drive rolls on",P.dist)); }
+  } else {
+    seqLog(offIdx,P.zone,P.playN,P.dcallN,"TO",T("4th and {0} — stuffed. Turnover on downs",P.dist)); endDrive();
+  }
 }
 function liveDecide(choice){
   const L=state.live; if(!L||!L.pending) return;
-  const P=L.pending, O=state.teams[P.offIdx];
-  let pts=0, ev=P.ev, desc="";
-  if(P.kind==="fourth"){
-    if(choice==="punt"){ pts=0; ev="PUNT"; desc="4th and "+P.dist+" — we punt it away"; }
-    else if(choice==="fg"){
-      if(Math.random()<P.fg){ pts=3; ev="FG"; desc="4th and "+P.dist+" — the field goal is up… and GOOD"; }
-      else { pts=0; ev="TO"; desc="4th and "+P.dist+" — the field goal sails wide"; }
-    } else { // go for it
-      if(Math.random()<P.go){
-        if(Math.random()<0.55){ pts=7; ev="TD"; desc="we go for it on 4th and "+P.dist+" — converted, and the drive ends in the end zone!"; }
-        else { pts=3; ev="FG"; desc="we go for it on 4th and "+P.dist+" — converted, drive stalls later, field goal good"; }
-      } else { pts=0; ev="TO"; desc="we go for it on 4th and "+P.dist+" — stuffed. Turnover on downs"; }
-    }
-  } else { // two-point decision, touchdown already earned
-    if(choice==="xp"){
-      const made=Math.random()<P.xp;
-      pts=made?7:6; ev="TD";
-      desc=driveDesc(O,"TD")+(made?" — extra point good":" — the extra point is BLOCKED");
-    } else {
-      const made=Math.random()<P.two;
-      pts=made?8:6; ev="TD";
-      desc=driveDesc(O,"TD")+(made?" — two-point conversion GOOD!":" — two-point try stopped short");
-    }
-  }
-  L.pending=null;
-  commitDrive(P.offIdx,P.offCall,P.defCall,ev,pts,desc);
+  const P=L.pending; L.pending=null;
+  if(P.kind==="fourth"){ resolveFourth(choice,P); save(); render(); return; }
+  // two-point decision — the touchdown is already earned
+  let pts,suffix;
+  if(choice==="xp"){ const made=Math.random()<P.xp; pts=made?7:6; suffix=made?T(" — extra point good"):T(" — the extra point is BLOCKED"); }
+  else { const made=Math.random()<P.two; pts=made?8:6; suffix=made?T(" — two-point conversion GOOD!"):T(" — two-point try stopped short"); }
+  seqLog(P.offIdx,P.zone,P.playN,P.dcallN,"TD",P.desc+suffix,pts);
+  endDrive();
   save(); render();
+}
+function liveDecideAuto(){
+  const L=state.live; if(!L||!L.pending)return;
+  const P=L.pending;
+  if(P.kind==="fourth") liveDecide(P.zone===2?"fg":(P.dist<=1?"go":"punt"));
+  else liveDecide((P.margin===-2||P.margin===2||P.margin===5)?"two":"xp");
+}
+function autoDrivePts(O,D){ // full drive, both sides on autopilot (overtime, abandoned games)
+  let stage=0, guard=0;
+  while(guard++<6){
+    const play=aiPickOff(O,{stage,diff:0,late:false,avoid:[]});
+    const dcall=aiPickDef(null,D,O);
+    const out=resolveSeq(O,D,play,dcall,false);
+    if(out==="TO") return 0;
+    if(out==="BIG"){ if(stage===0){stage=2;continue;} return 7; }
+    if(out==="ADV"){ if(stage===2)return 7; stage++; continue; }
+    return stage===2?(Math.random()<0.74?3:0):0; // STALL
+  }
+  return 0;
 }
 function liveOvertime(){
   const L=state.live;
   const A=state.teams[L.h],B=state.teams[L.v];
   for(let r=0;r<5&&L.sh===L.sv;r++){
-    const ra=resolveDrive(A,B,"bal","bal"),rb=resolveDrive(B,A,"bal","bal");
-    L.sh+=ra.pts; L.sv+=rb.pts;
-    L.log.unshift({q:"OT",off:L.h,ev:ra.ev,pts:ra.pts,desc:"OT: "+driveDesc(A,ra.ev),sh:L.sh,sv:L.sv});
-    L.log.unshift({q:"OT",off:L.v,ev:rb.ev,pts:rb.pts,desc:"OT: "+driveDesc(B,rb.ev),sh:L.sh,sv:L.sv});
+    const pa=autoDrivePts(A,B), pb=autoDrivePts(B,A);
+    L.sh+=pa; L.sv+=pb;
+    L.log.unshift({q:"OT",zone:1,off:L.h,playN:"OT",dcallN:"",ev:pa?"TD":"STALL",pts:pa,desc:T("overtime possession — {0} point(s)",pa),sh:L.sh,sv:L.sv});
+    L.log.unshift({q:"OT",zone:1,off:L.v,playN:"OT",dcallN:"",ev:pb?"TD":"STALL",pts:pb,desc:T("overtime possession — {0} point(s)",pb),sh:L.sh,sv:L.sv});
   }
   if(L.sh===L.sv){
     if(Math.random()<0.5)L.sh+=3; else L.sv+=3;
-    L.log.unshift({q:"OT",off:L.sh>L.sv?L.h:L.v,ev:"FG",pts:3,desc:"walk-off field goal!",sh:L.sh,sv:L.sv});
+    L.log.unshift({q:"OT",zone:1,off:L.sh>L.sv?L.h:L.v,playN:"FG",dcallN:"",ev:"FG",pts:3,desc:T("walk-off field goal!"),sh:L.sh,sv:L.sv});
   }
 }
-function liveCall(call){
+function liveCall(id){
   const L=state.live; if(!L||L.done)return;
-  playLiveDrive(call);
+  playLiveSeq(id);
   save(); render();
 }
 function liveSimRest(){
   const L=state.live; if(!L)return;
   let guard=0;
-  while(!L.done&&guard++<400){
+  while(!L.done&&guard++<600){
     if(L.pending) liveDecideAuto();
-    else playLiveDrive("bal");
+    else playLiveSeq(null);
   }
   save(); render();
-}
-function liveDecideAuto(){ // sensible default when the user hands the game over to the sim
-  const L=state.live; if(!L||!L.pending)return;
-  const P=L.pending;
-  if(P.kind==="fourth") liveDecide(P.dist<=1?"go":"punt");
-  else liveDecide(P.margin===-2||P.margin===2||P.margin===5?"two":"xp");
 }
 function liveFinish(){
   const L=state.live; if(!L||!L.done)return;
@@ -1872,11 +2080,15 @@ function migrate(s){
     s.onboard=s.onboard||{tabs:{},hidden:false};
     s.version=6;
   }
+  if(s.version===6){ // v6 → v7: the sequence-based coach mode replaces the old drive engine.
+    s.live=null;     // an in-progress old-format game can't resume; the week itself is untouched
+    s.version=7;
+  }
   return s;
 }
 function loadSlot(i){
   try{const d=JSON.parse(localStorage.getItem(SLOT_KEY(i)));
-    if(d&&d.state&&d.state.version>=3&&d.state.version<=6){
+    if(d&&d.state&&d.state.version>=3&&d.state.version<=7){
       state=migrate(d.state); nextId=d.nextId||500000; activeSlot=i;
       localStorage.setItem(ACTIVE_KEY,String(i));
       return true;}
@@ -1926,7 +2138,7 @@ function importSave(input){
       const s=d&&d.state;
       if(!s||!Array.isArray(s.teams)||s.teams.length!==32||typeof s.season!=="number"||typeof s.userTeam!=="number")
         throw new Error("not a Gridiron GM save");
-      if(!(s.version>=3&&s.version<=6)) throw new Error("save version "+s.version+" is not supported");
+      if(!(s.version>=3&&s.version<=7)) throw new Error("save version "+s.version+" is not supported");
       const cur=slotMeta(activeSlot);
       if(cur&&!confirm(T("Importing will overwrite the career in slot {0}. Continue?",activeSlot+1))) return;
       state=migrate(s); nextId=d.nextId||500000;
@@ -2176,7 +2388,7 @@ function renderLive(){
     const pc=x=>Math.round(x*100)+"%";
     panel=P.kind==="fourth"
       ?`<div class="decide"><h3>⏱ 4th and ${P.dist} — your call</h3>
-        <div style="font-size:15px;margin-bottom:10px">The drive stalled. You can send the offense back out, try the field goal, or punt it away.</div>
+        <div style="font-size:15px;margin-bottom:10px">${P.zone===2?T("The drive stalled in the red zone."):T("The drive stalled at midfield — the field goal would be a long one.")}</div>
         <div class="dopts">
           <button class="dopt" onclick="liveDecide('go')"><div class="o-n">Go for it</div><div class="o-p">${pc(P.go)} to convert · TD or FG if it works, turnover if not</div></button>
           <button class="dopt" onclick="liveDecide('fg')"><div class="o-n">Field goal</div><div class="o-p">${pc(P.fg)} to make · 3 points</div></button>
@@ -2188,19 +2400,46 @@ function renderLive(){
           <button class="dopt" onclick="liveDecide('xp')"><div class="o-n">Kick the extra point</div><div class="o-p">${pc(P.xp)} · +1 point</div></button>
           <button class="dopt" onclick="liveDecide('two')"><div class="o-n">Go for two</div><div class="o-p">${pc(P.two)} · +2 points, nothing if it fails</div></button>
         </div></div>`;
-  } else if(userOff){
-    panel=`<div class="card"><h3>Drive ${L.i+1}/${L.total} — YOUR BALL. Call the drive:</h3>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        ${Object.entries(OFF_CALLS).map(([k,n])=>`<button class="btn-sm" style="padding:12px 18px;font-size:14px" onclick="liveCall('${k}')">${n}</button>`).join("")}
-      </div>
-      <div class="muted" style="font-size:13px;margin-top:10px">Their ${DEF_SCHEMES[state.teams[offIdx===L.h?L.v:L.h].def].name} will try to guess your call. Run beats coverage shells; passing beats stacked boxes; balance is safe.</div></div>`;
   } else {
-    const O=state.teams[offIdx];
-    panel=`<div class="card"><h3>Drive ${L.i+1}/${L.total} — THEIR BALL. Call your defense:</h3>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        ${Object.entries(DEF_CALLS).map(([k,n])=>`<button class="btn-sm" style="padding:12px 18px;font-size:14px" onclick="liveCall('${k}')">${n}</button>`).join("")}
-      </div>
-      <div class="muted" style="font-size:13px;margin-top:10px">They run ${OFF_SCHEMES[O.off].name} (${Math.round(OFF_SCHEMES[O.off].pass*100)}% pass). Guess right to shut the drive down. The blitz forces chaos — turnovers or big plays.</div></div>`;
+    const O=state.teams[offIdx], D=state.teams[offIdx===L.h?L.v:L.h];
+    const zoneBar=`<div class="zonebar">
+      <span>${T("Drive {0}/{1}",L.i+1,L.total)}</span>
+      ${ZONES.map((z,i)=>`<span class="zoneseg ${i===L.stage?"onz":i<L.stage?"donez":""}" title="${esc(T(z))}"></span>`).join("")}
+      <b>${T(ZONES[L.stage])}</b></div>`;
+    const lastLine=L.lastSeq?`<div class="muted" style="font-size:12.5px;margin-bottom:8px">↳ ${esc(L.lastSeq.playN)} vs ${esc(L.lastSeq.dcallN)} — ${T(L.lastSeq.out==="ADV"?"chains moved":L.lastSeq.out==="BIG"?"big play":L.lastSeq.out)}</div>`:"";
+    if(userOff){
+      const ocFit=state.staff.OC&&state.staff.OC.spec===O.off;
+      panel=`<div class="card"><h3>${T("Your ball — pick the play")}</h3>${zoneBar}${lastLine}
+        <div class="playgrid">
+        ${OFF_PLAYS[O.off].map(p=>{
+          const h=playHint(p), fit=Math.round(keyAvg(O,p));
+          const seen=L.lastPlays.includes(p.id);
+          return `<button class="playcard" onclick="liveCall('${p.id}')">
+            <div class="pl-top"><span class="pl-n">${p.sig&&ocFit?"⭐ ":""}${esc(p.n)}</span><span class="pl-t">${PT_ICON[p.t]}</span></div>
+            <div class="pl-meta"><span>${T(PT_LABEL[p.t])}</span><span>${T("risk")} ${"●".repeat(p.r+1)}</span></div>
+            <div class="pl-meta"><span>${p.k.join("+")} <b style="color:${ovrColor(fit)}">${fit}</b></span>${seen?`<span class="seen">${T("seen!")}</span>`:""}</div>
+            <div class="pl-hint"><span class="g">▲ ${T(DT_LABEL[h.best])}</span> · <span class="b">▼ ${T(DT_LABEL[h.worst])}</span></div>
+          </button>`;}).join("")}
+        </div>
+        <div class="muted" style="font-size:12.5px;margin-top:9px">${T("The defense reads your tendencies — repeat a play and it loses its bite. ⭐ = signature play, boosted by your OC.")}</div></div>`;
+    } else {
+      const tot=Object.values(L.aiTend).reduce((a,b)=>a+b,0);
+      const lean=tot>2?Object.entries(L.aiTend).sort((a,b)=>b[1]-a[1])[0]:null;
+      panel=`<div class="card"><h3>${T("Their ball — pick your call")}</h3>${zoneBar}${lastLine}
+        <div class="muted" style="font-size:13px;margin-bottom:9px">
+          ${T("They run {0} ({1}% pass).",OFF_SCHEMES[O.off].name,Math.round(OFF_SCHEMES[O.off].pass*100))}
+          ${lean?` ${T("Today they lean {0} ({1}/{2} plays).",T(PT_LABEL[lean[0]]),lean[1],tot)}`:""}
+        </div>
+        <div class="playgrid">
+        ${DEF_PLAYS[state.teams[state.userTeam].def].map(c=>{
+          const h=callHint(c);
+          return `<button class="playcard" onclick="liveCall('${c.id}')">
+            <div class="pl-top"><span class="pl-n">${esc(c.n)}</span></div>
+            <div class="pl-meta"><span>${T(DT_LABEL[c.t])}</span><span>${c.k.join("+")}</span></div>
+            <div class="pl-hint"><span class="g">▲ ${T("stops")} ${T(PT_LABEL[h.stops])}</span> · <span class="b">▼ ${T(PT_LABEL[h.concedes])}</span></div>
+          </button>`;}).join("")}
+        </div></div>`;
+    }
   }
   return `<div class="selectwrap" style="max-width:980px"><div class="topbar">
     ${badge(L.h)}
@@ -2211,14 +2450,14 @@ function renderLive(){
       <div class="stat"><div class="v">${L.sv}</div><div class="l">${abbrev(L.v)}</div></div>
     </div>
     ${badge(L.v)}
-    ${L.done?"":`<button class="btn-sm" onclick="liveSimRest()">Sim rest</button><button class="btn-sm danger" onclick="liveQuit()">Abandon</button>`}
+    ${L.done?"":`<button class="btn-sm" onclick="liveSimRest()">${T("Sim rest")}</button><button class="btn-sm danger" onclick="liveQuit()">${T("Abandon")}</button>`}
   </div>
   ${panel}
   <div class="card"><h3>${T("Drive Log")}</h3>
     ${L.log.map(d=>`<div class="boxline">
-      <span><b style="color:var(--muted)">${d.q==="OT"?"OT":"Q"+d.q}</b> · ${abbrev(d.off)} ball${d.offCall?` <span class="muted">(${OFF_CALLS[d.offCall]||d.offCall} vs ${DEF_CALLS[d.defCall]||d.defCall})</span>`:""} — ${esc(d.desc)}</span>
+      <span><b style="color:var(--muted)">${d.q==="OT"?"OT":"Q"+d.q}</b> · ${abbrev(d.off)}${d.zone!==undefined&&d.q!=="OT"?` <span class="muted" style="font-size:11px">${esc(T(ZONES[d.zone]||""))}</span>`:""}${d.playN&&d.dcallN?` <span class="muted">(${esc(d.playN)} vs ${esc(d.dcallN)})</span>`:""} — ${esc(d.desc)}</span>
       <span>${d.pts>0?`<b style="color:var(--good)">+${d.pts}</b> `:""}${d.sh}–${d.sv}</span>
-    </div>`).join("")||'<div class="muted">Kickoff coming up…</div>'}
+    </div>`).join("")||`<div class="muted">${T("Kickoff coming up…")}</div>`}
   </div></div>`;
 }
 
@@ -2553,6 +2792,7 @@ function renderStrategy(){
       <div class="sn">${s.name} <span>${ovrCell(fit)}</span></div>
       <div class="sd">${T(s.desc)}</div>
       <div class="sd">Pass ${Math.round(s.pass*100)}% · Tempo ${s.tempo>1.02?"fast":s.tempo<0.95?"slow":"normal"} · leans on ${Object.entries(s.w).sort((a,b)=>b[1]-a[1]).slice(0,2).map(x=>x[0]).join(" + ")}</div>
+      <div class="sd" style="margin-top:5px;font-size:12px;opacity:.85">📖 ${OFF_PLAYS[key].map(p=>p.sig?"⭐"+p.n:p.n).join(" · ")}</div>
     </div>`;
   };
   const defCard=key=>{
@@ -2562,6 +2802,7 @@ function renderStrategy(){
       <div class="sn">${s.name} <span>${ovrCell(fit)}</span></div>
       <div class="sd">${T(s.desc)}</div>
       <div class="sd">Leans on ${Object.entries(s.w).sort((a,b)=>b[1]-a[1]).slice(0,2).map(x=>x[0]).join(" + ")}</div>
+      <div class="sd" style="margin-top:5px;font-size:12px;opacity:.85">📖 ${DEF_PLAYS[key].map(c=>c.n).join(" · ")}</div>
     </div>`;
   };
   let scout="";
@@ -2816,6 +3057,35 @@ Object.assign(L10N.fr,{
   "The file could not be read.":"Le fichier n'a pas pu être lu.",
   // ---- live game ----
   "Drive Log":"Journal des drives",
+  "Your ball — pick the play":"Ton ballon — choisis le jeu",
+  "Their ball — pick your call":"Leur ballon — choisis ta défense",
+  "Drive {0}/{1}":"Drive {0}/{1}",
+  "Own territory":"Son camp","Midfield":"Milieu de terrain","Red zone":"Zone rouge",
+  "risk":"risque","seen!":"déjà vu !","stops":"stoppe",
+  "chains moved":"première tentative obtenue","big play":"gros gain","TO":"ballon perdu","STALL":"stoppé",
+  "punt away":"dégagement",
+  "Run":"Course","Short pass":"Passe courte","Deep shot":"Passe longue","Screen":"Écran","Trick play":"Jeu de fantaisie",
+  "Run stop":"Anti-course","Zone coverage":"Couverture de zone","Man coverage":"Couverture individuelle",
+  "Blitz":"Blitz","Prevent":"Prevent","Contain / spy":"Contain / espion",
+  "The defense reads your tendencies — repeat a play and it loses its bite. ⭐ = signature play, boosted by your OC.":
+    "La défense lit tes tendances — un jeu répété perd de son efficacité. ⭐ = jeu signature, bonifié par ton coordinateur.",
+  "They run {0} ({1}% pass).":"Ils jouent en {0} ({1}% de passes).",
+  "Today they lean {0} ({1}/{2} plays).":"Aujourd'hui ils privilégient {0} ({1} jeux sur {2}).",
+  "4th and {0} — the punt team comes on":"4e et {0} — l'équipe de dégagement entre",
+  "4th and {0} — the field goal is up… GOOD":"4e et {0} — le field goal s'envole… BON !",
+  "4th and {0} — the field goal sails wide":"4e et {0} — le field goal passe à côté",
+  "4th and {0} — converted, and punched in for the touchdown!":"4e et {0} — converti, et c'est le touchdown !",
+  "4th and {0} — converted! The drive rolls on":"4e et {0} — converti ! Le drive continue",
+  "4th and {0} — stuffed. Turnover on downs":"4e et {0} — stoppé net. Ballon rendu",
+  "The drive stalled in the red zone.":"Le drive a calé en zone rouge.",
+  "The drive stalled at midfield — the field goal would be a long one.":"Le drive a calé au milieu du terrain — le field goal serait très long.",
+  " — extra point good":" — transformation réussie",
+  " — the extra point is BLOCKED":" — la transformation est CONTRÉE",
+  " — two-point conversion GOOD!":" — conversion à 2 points RÉUSSIE !",
+  " — two-point try stopped short":" — tentative à 2 points stoppée",
+  "overtime possession — {0} point(s)":"possession de prolongation — {0} point(s)",
+  "walk-off field goal!":"field goal de la victoire !",
+  "Sim rest":"Simuler la fin","Abandon":"Abandonner","Kickoff coming up…":"Coup d'envoi imminent…",
   "🏈 Touchdown — extra point or two?":"🏈 Touchdown — transformation à 1 ou 2 points ?",
   // ---- sim pauses ----
   "⏸ Simulation paused — rivalry week against {0}.":"⏸ Simulation en pause — semaine du derby contre {0}.",

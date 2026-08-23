@@ -7,7 +7,7 @@ A college football general-management simulation game. Single-file web app — n
 ## Features
 
 - **32 fictional programs** across 4 conferences — pick a powerhouse or rebuild a bottom-feeder
-- **Coach mode**: drive-by-drive play-calling for every game, including the playoffs, with fourth-down and two-point decisions at the key moments
+- **Coach mode**: chess-like play-calling — every drive unfolds in three field zones, you pick from your scheme's full playbook (8 plays each, with signature plays) against a defense that reads your tendencies, plus fourth-down and two-point decisions
 - **Full playbooks**: 5 offensive × 4 defensive schemes with matchup dynamics and weekly gameplans
 - **Coaching staff market**: hire and lose coordinators (OC / DC / Recruiting / S&C) on a prestige-based salary pool
 - **Recruiting**: weekly interest battles against AI programs, recruit personalities, official visits, Signing Day, transfer portal with NIL points
