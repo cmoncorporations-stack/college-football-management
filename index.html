@@ -18,10 +18,14 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,800&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
   :root{
-    --bg:#0a0d12; --panel:#11161e; --panel2:#182029; --raise:#1e2833;
-    --line:#232d3a; --line2:#313d4d;
-    --text:#e9edf4; --muted:#97a3b4; --faint:#67748a;
-    --accent:#e6b23d; --good:#41b883; --bad:#e05d5d; --team:#1f4e79;
+    /* Palette taken from the Gridiron GM crest: navy structure, red banner, silver plate. */
+    --bg:#070b13; --panel:#0f1626; --panel2:#17203a; --raise:#1e2949;
+    --line:#232f4d; --line2:#33436e;
+    --text:#eef1f7; --muted:#9aa7bf; --faint:#6d7996;
+    --brand:#e01f2d; --brand-dk:#9d0f1a;      /* the red banner */
+    --navy:#1b2a4a; --silver:#e8ecf3;         /* the plate and its border */
+    --accent:#e8b73f;                          /* gold: ratings, trophies, highlights */
+    --good:#3fb87f; --bad:#ff6b6b; --team:#1f4e79;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{background:var(--bg); color:var(--text); font-family:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif; font-size:14.5px; line-height:1.45;}
@@ -33,8 +37,10 @@
 
   /* ===== app shell ===== */
   .shell{display:grid; grid-template-columns:238px minmax(0,1fr); min-height:100vh;}
-  .side{position:sticky; top:0; height:100vh; display:flex; flex-direction:column; gap:14px; padding:18px 14px 14px; border-right:1px solid var(--line);
-    background:linear-gradient(180deg, color-mix(in srgb, var(--team) 30%, var(--panel)) 0%, var(--panel) 36%);}
+  .side{position:sticky; top:0; height:100vh; display:flex; flex-direction:column; gap:14px; padding:16px 14px 14px;
+    border-right:1px solid var(--line2);
+    background:linear-gradient(180deg, color-mix(in srgb, var(--team) 34%, #101a2e) 0%, #0d1524 42%, var(--panel) 100%);
+    box-shadow:inset -1px 0 0 rgba(255,255,255,.05);}
   .brandmark{display:flex; justify-content:center; padding:2px 0 6px; filter:drop-shadow(0 3px 8px rgba(0,0,0,.6));}
   .brand{display:flex; gap:10px; align-items:center; padding:0 4px;}
   .brand .bn{font-weight:800; font-size:15px; line-height:1.2;}
@@ -45,22 +51,26 @@
   .nav{display:flex; flex-direction:column; gap:2px; flex:1; overflow-y:auto;}
   .nav a{display:flex; gap:10px; align-items:center; padding:8px 10px; border-radius:9px; color:var(--muted); font-weight:600; font-size:13.5px; cursor:pointer; border-left:3px solid transparent;}
   .nav a:hover{background:var(--panel2); color:var(--text);}
-  .nav a.on{background:var(--panel2); color:var(--text); border-left-color:var(--accent);}
+  .nav a.on{background:linear-gradient(90deg,rgba(224,31,45,.20),transparent); color:#fff; border-left-color:var(--brand);}
   .nav .ic{width:20px; text-align:center;}
   .sidefoot{border-top:1px solid var(--line); padding-top:12px; font-size:12px;}
   .sf-l{color:var(--faint); text-transform:uppercase; letter-spacing:.07em; font-size:10.5px; margin-bottom:6px;}
   .sf-v{margin-top:6px; font-weight:700;}
 
   .main{padding:20px 26px 48px; min-width:0; max-width:1280px;}
-  .pagehead{display:flex; justify-content:space-between; align-items:center; gap:14px; margin-bottom:16px; flex-wrap:wrap;}
+  .pagehead{display:flex; justify-content:space-between; align-items:center; gap:14px; margin-bottom:16px; flex-wrap:wrap;
+    border-bottom:2px solid var(--line2); padding-bottom:12px; position:relative;}
+  .pagehead::after{content:""; position:absolute; left:0; bottom:-2px; width:74px; height:2px; background:var(--brand);}
   .crumb{display:flex; gap:6px; margin-top:7px; flex-wrap:wrap;}
-  .chip{display:inline-block; background:var(--panel2); border:1px solid var(--line); color:var(--muted); border-radius:999px; padding:2px 11px; font-size:12px; font-weight:600;}
-  .chip.gold{color:var(--accent); border-color:color-mix(in srgb, var(--accent) 45%, var(--line));}
+  .chip{display:inline-block; background:var(--panel2); border:1px solid var(--line2); color:#b9c4d8;
+    border-radius:5px; padding:2px 10px; font-size:12px; font-weight:700; font-variant-numeric:tabular-nums;}
+  .chip.gold{color:#fff; background:linear-gradient(180deg,#e8202c,#b5121d); border-color:#f0525c;}
   .actions{display:flex; gap:8px; flex-wrap:wrap;}
 
   /* ===== KPI tiles ===== */
   .kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(152px,1fr)); gap:10px; margin-bottom:14px;}
-  .tile{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:12px 14px;}
+  .tile{background:linear-gradient(180deg,#16213a,var(--panel)); border:1px solid var(--line);
+    border-radius:11px; padding:12px 14px; border-top:2px solid var(--line2);}
   .tile .l{font-size:10.5px; color:var(--faint); text-transform:uppercase; letter-spacing:.07em; margin-bottom:4px;}
   .tile .v{font-size:22px; font-weight:800; line-height:1.1;}
   .tile .s{font-size:12px; color:var(--muted); margin-top:3px;}
@@ -75,7 +85,9 @@
   .fbar.l{background:var(--bad);}
 
   /* ===== live-game bar ===== */
-  .topbar{display:flex; align-items:center; gap:16px; background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:14px 18px; margin-bottom:14px; flex-wrap:wrap;}
+  .topbar{display:flex; align-items:center; gap:16px; background:linear-gradient(180deg,#16213a,#0d1524);
+    border:1px solid var(--line2); border-top:3px solid var(--brand); border-radius:12px;
+    padding:14px 18px; margin-bottom:14px; flex-wrap:wrap;}
   .teambadge{width:46px; height:46px; border-radius:11px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; color:#fff; flex:none; box-shadow:inset 0 -2px 0 rgba(0,0,0,.25);}
   .topinfo{flex:1; min-width:200px;}
   .topinfo .tname{font-size:18px; font-weight:800;}
@@ -84,17 +96,20 @@
   .stat{text-align:center;}
   .stat .v{font-size:22px; font-weight:800;}
   .stat .l{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px;}
-  .btn-advance{background:var(--accent); color:#161006; font-weight:800; padding:11px 20px; font-size:14.5px; box-shadow:0 2px 8px rgba(230,178,61,.22);}
+  .btn-advance{background:linear-gradient(180deg,#e8202c,#b5121d); color:#fff; font-weight:800; padding:11px 20px;
+    font-size:14.5px; box-shadow:0 2px 10px rgba(224,31,45,.32); border:1px solid #f0525c;
+    font-family:"Barlow Condensed",Arial Narrow,sans-serif; text-transform:uppercase; letter-spacing:.05em; font-size:16px;}
   .btn-advance:hover{filter:brightness(1.08);}
   .btn-sm{background:var(--panel2); color:var(--text); border:1px solid var(--line2); padding:6px 12px; font-size:13px;}
   .btn-sm:hover:not(:disabled){border-color:var(--accent);}
-  .btn-sm.active{background:var(--accent); color:#161006; border-color:var(--accent); font-weight:700;}
+  .btn-sm.active{background:linear-gradient(180deg,#e8202c,#b5121d); color:#fff; border-color:#f0525c; font-weight:700;}
   .btn-sm.danger{color:var(--bad); border-color:rgba(224,93,93,.4);}
 
   .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
   .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;}
   .gdash{display:grid; grid-template-columns:1.45fr 1fr; gap:14px;}
-  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px; margin-bottom:14px;}
+  .card{background:linear-gradient(180deg,#131d31,var(--panel)); border:1px solid var(--line);
+    border-radius:12px; padding:16px; margin-bottom:14px; box-shadow:0 1px 0 rgba(255,255,255,.04) inset;}
   .card h3{font-size:11.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--faint); margin-bottom:12px; font-weight:700;}
 
   table{width:100%; border-collapse:collapse; font-size:13.5px;}
@@ -115,10 +130,14 @@
   /* ===== team select ===== */
   .selectwrap{max-width:1180px; margin:0 auto; padding:24px 20px;}
   .confblock{margin-bottom:24px;}
-  .confblock h2{font-size:13px; color:var(--faint); text-transform:uppercase; letter-spacing:.1em; margin-bottom:10px;}
+  .confblock h2{font-size:15px; color:#fff; text-transform:uppercase; letter-spacing:.09em; margin-bottom:10px;
+    font-family:"Barlow Condensed",Arial Narrow,sans-serif; font-weight:800;
+    border-left:4px solid var(--brand); padding-left:10px;}
   .teamgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:10px;}
-  .teamcard{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:13px; display:flex; gap:12px; align-items:center; cursor:pointer; transition:border-color .15s, transform .1s;}
-  .teamcard:hover{border-color:var(--accent); transform:translateY(-1px);}
+  .teamcard{background:linear-gradient(180deg,#141f36,var(--panel)); border:1px solid var(--line);
+    border-radius:11px; padding:13px; display:flex; gap:12px; align-items:center; cursor:pointer;
+    transition:border-color .15s, transform .1s, box-shadow .15s;}
+  .teamcard:hover{border-color:var(--brand); transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.45);}
   .teamcard .tn{font-weight:700; font-size:14px;}
   .teamcard .tm{color:var(--muted); font-size:12px;}
 
@@ -156,13 +175,13 @@
   .nav .ic{width:22px; display:flex; align-items:center; justify-content:center;}
 
   /* ===== ESPN-style banner heads ===== */
-  .banner{display:flex; align-items:center; gap:10px; background:linear-gradient(90deg,#d50a0a,#a30707);
+  .banner{display:flex; align-items:center; gap:10px; background:linear-gradient(180deg,#e8202c,#b5121d);
     color:#fff; border-radius:9px 9px 0 0; padding:8px 14px; margin:-16px -16px 14px;
     font-family:"Barlow Condensed",Arial Narrow,sans-serif; font-weight:800; font-size:15px;
     text-transform:uppercase; letter-spacing:.06em;}
-  .card h3{font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--faint); margin-bottom:12px;
-    font-weight:800; font-family:"Barlow Condensed",Arial Narrow,sans-serif; font-size:14px;
-    display:flex; align-items:center; gap:7px;}
+  .card h3{text-transform:uppercase; letter-spacing:.09em; color:#b9c4d8; margin-bottom:12px;
+    font-weight:800; font-family:"Barlow Condensed",Arial Narrow,sans-serif; font-size:15px;
+    display:flex; align-items:center; gap:7px; padding-bottom:7px; border-bottom:1px solid var(--line);}
   h1{font-family:"Barlow Condensed",Arial Narrow,sans-serif; font-weight:800; letter-spacing:.01em;
     text-transform:uppercase; font-size:26px;}
   .stat .v,.tile .v,.bscore,.pc-ovr{font-family:"Barlow Condensed",Arial Narrow,sans-serif;}
@@ -423,7 +442,7 @@
     .side{position:static; height:auto; border-right:none; border-bottom:1px solid var(--line); gap:10px; padding:14px;}
     .nav{flex-direction:row; overflow-x:auto; padding-bottom:2px;}
     .nav a{white-space:nowrap; border-left:none; border-bottom:3px solid transparent; border-radius:9px 9px 0 0;}
-    .nav a.on{border-left:none; border-bottom-color:var(--accent);}
+    .nav a.on{border-left:none; border-bottom-color:var(--brand); background:rgba(224,31,45,.16);}
     .ctx{display:none;}
     .sidefoot{border:none; padding-top:0;}
     .sidefoot .sf-l,.sidefoot .meter,.sidefoot .sf-v{display:none;}
@@ -2379,31 +2398,67 @@ function IC(n,size,style){
 }
 
 /* ===== Gridiron GM mark — an ESPN-style broadcast shield ===== */
-function LOGO(w,tone){
-  const h=Math.round(w*1.26), dark=tone==="dark";
-  const plate=dark?"#12161d":"#f2f4f7", edge=dark?"#000":"#1a1f27", txt=dark?"#f2f4f7":"#12161d";
-  return `<svg viewBox="0 0 120 151" width="${w}" height="${h}" role="img" aria-label="Gridiron GM">
-  <defs>
-    <linearGradient id="lgP" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#fff" stop-opacity="${dark?.18:1}"/>
-      <stop offset=".5" stop-color="${plate}"/><stop offset="1" stop-color="${dark?"#0a0d12":"#c9ced6"}"/>
-    </linearGradient>
-    <linearGradient id="lgR" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ff2f2f"/><stop offset=".55" stop-color="#d50a0a"/><stop offset="1" stop-color="#9c0505"/>
-    </linearGradient>
-  </defs>
-  <path d="M9 8h102a5 5 0 0 1 5 5v82c0 25-33 41-56 52C37 136 4 120 4 95V13a5 5 0 0 1 5-5z" fill="${edge}"/>
-  <path d="M12 11h96a4 4 0 0 1 4 4v79c0 23-31 38-52 48-21-10-52-25-52-48V15a4 4 0 0 1 4-4z" fill="url(#lgP)"/>
-  <path d="M18 17h84a2 2 0 0 1 2 2v22H16V19a2 2 0 0 1 2-2z" fill="url(#lgR)"/>
-  <path d="M16 41h88v3H16z" fill="${edge}" opacity=".85"/>
-  <text x="60" y="36" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif"
-    font-weight="800" font-size="25" fill="#fff" letter-spacing="1.5" font-style="italic">GRIDIRON</text>
-  <text x="60" y="76" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif"
-    font-weight="800" font-size="38" fill="${txt}" letter-spacing="2">GM</text>
-  <text x="60" y="92" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif"
-    font-weight="700" font-size="11.5" fill="${txt}" opacity=".85" letter-spacing="1.6">COLLEGE FOOTBALL</text>
-  <path d="M31 100h4v18l-4 4zM89 100h-4v18l4 4z" fill="${edge}" opacity=".8"/>
-  <path d="M52 104h16l-8 7zM52 114h16l-8 7z" fill="#d50a0a"/>
+function LOGO(w){
+  const h=Math.round(w*1.16), u="lg"+Math.round(w), small=w<95;
+  const defs=`<defs>
+    <linearGradient id="nv${u}" x1=".1" y1="0" x2=".9" y2="1">
+      <stop offset="0" stop-color="#3d4f75"/><stop offset=".35" stop-color="#1e2c4c"/>
+      <stop offset=".7" stop-color="#16223c"/><stop offset="1" stop-color="#2b3a5e"/></linearGradient>
+    <linearGradient id="pl${u}" x1=".15" y1="0" x2=".85" y2="1">
+      <stop offset="0" stop-color="#ffffff"/><stop offset=".42" stop-color="#eef0f4"/>
+      <stop offset=".7" stop-color="#dce0e7"/><stop offset="1" stop-color="#f6f7fa"/></linearGradient>
+    <linearGradient id="rd${u}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff4b4b"/><stop offset=".16" stop-color="#e8202c"/>
+      <stop offset=".52" stop-color="#cf121e"/><stop offset=".54" stop-color="#c00f1b"/>
+      <stop offset="1" stop-color="#e02531"/></linearGradient>
+    <linearGradient id="sv${u}" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#c3c9d4"/>
+      <stop offset="1" stop-color="#ffffff"/></linearGradient>
+  </defs>`;
+  // shell: straight sides down to y=176, then a shallow point at y=232
+  const shell=`
+  <path d="M16 3h168a13 13 0 0 1 13 13v162L100 234 3 178V16A13 13 0 0 1 16 3z" fill="url(#sv${u})"/>
+  <path d="M18 8h164a10 10 0 0 1 10 10v157l-92 53-92-53V18a10 10 0 0 1 10-10z" fill="url(#nv${u})"/>
+  <path d="M18 8h164a10 10 0 0 1 10 10v6H8v-6A10 10 0 0 1 18 8z" fill="#ffffff" opacity=".2"/>
+  <rect x="20" y="19" width="160" height="53" rx="4" fill="#0d1524" opacity=".7"/>
+  <rect x="23" y="21" width="154" height="49" rx="3" fill="url(#rd${u})"/>
+  <rect x="25" y="23" width="150" height="19" rx="2" fill="#ffffff" opacity=".22"/>
+  <text x="100" y="57" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif"
+    font-weight="800" font-style="italic" font-size="35" fill="#ffffff" letter-spacing=".5"
+    style="paint-order:stroke" stroke="#8c0d16" stroke-width="1.4">GRIDIRON GM</text>`;
+  if(small){
+    // compact lockup: the mark stays readable when it is only a few dozen pixels wide
+    return `<svg viewBox="0 0 200 232" width="${w}" height="${h}" role="img" aria-label="Gridiron GM">
+      ${defs}${shell}
+      <path d="M22 80h156v92L100 217 22 172z" fill="#0d1524" opacity=".55"/>
+      <path d="M25 83h150v87l-75 43-75-43z" fill="url(#pl${u})"/>
+      <text x="101.5" y="136" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif"
+        font-weight="800" font-size="52" fill="#8f97a8" letter-spacing="-.5">COLLEGE</text>
+      <text x="100" y="134" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif"
+        font-weight="800" font-size="52" fill="#1b2438" letter-spacing="-.5">COLLEGE</text>
+      <text x="100" y="166" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif"
+        font-weight="800" font-size="28" fill="#161d2e" letter-spacing="3.6">FOOTBALL</text>
+    </svg>`;
+  }
+  return `<svg viewBox="0 0 200 232" width="${w}" height="${h}" role="img" aria-label="Gridiron GM — College Football Manager">
+  ${defs}${shell}
+  <path d="M22 80h156v92L100 217 22 172z" fill="#0d1524" opacity=".55"/>
+  <path d="M25 83h150v87l-75 43-75-43z" fill="url(#pl${u})"/>
+  <text x="101.5" y="129" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif"
+    font-weight="800" font-size="47" fill="#8f97a8" letter-spacing="-.5">COLLEGE</text>
+  <text x="100" y="127.5" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif"
+    font-weight="800" font-size="47" fill="#1b2438" letter-spacing="-.5">COLLEGE</text>
+  <text x="100" y="152" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif"
+    font-weight="800" font-size="25" fill="#161d2e" letter-spacing="3.4">FOOTBALL</text>
+  <rect x="43" y="160" width="114" height="2.6" fill="#aab2c0"/>
+  <rect x="43" y="160" width="114" height="1.1" fill="#ffffff"/>
+  <path d="M40 170h5.5v16H40zm8.5 0H54v16h-5.5zM146 170h5.5v16H146zm8.5 0h5.5v16h-5.5z" fill="#1b2a4a"/>
+  <text x="100" y="184" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,sans-serif"
+    font-weight="800" font-size="18" fill="#111827" letter-spacing="1.9">MANAGER</text>
+  <path d="M78 199q22-7 44 0-22 6-44 0z" fill="#c8cedb" opacity=".85"/>
+  <g stroke="#eef1f6" stroke-width="2.2" stroke-linecap="round">
+    <path d="M100 195v9M91 196v6.5M109 196v6.5M83 198v3M117 198v3"/></g>
+  <path d="M81 199h38" stroke="#aab2c0" stroke-width="1.2"/>
   </svg>`;
 }
 
@@ -2444,9 +2499,9 @@ function crestSVG(i,size){
       <stop offset="0" stop-color="#fff" stop-opacity=".26"/><stop offset=".48" stop-color="#fff" stop-opacity="0"/>
       <stop offset="1" stop-color="#000" stop-opacity=".34"/></linearGradient>
     <linearGradient id="mt${u}" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#fdf6dd"/><stop offset=".28" stop-color="#b9a15c"/>
-      <stop offset=".52" stop-color="#fff8e2"/><stop offset=".78" stop-color="#8d7736"/>
-      <stop offset="1" stop-color="#f2e6bd"/></linearGradient>
+      <stop offset="0" stop-color="#ffffff"/><stop offset=".3" stop-color="#9aa6bb"/>
+      <stop offset=".52" stop-color="#ffffff"/><stop offset=".76" stop-color="#7c889e"/>
+      <stop offset="1" stop-color="#eef1f6"/></linearGradient>
    </defs>
    <g clip-path="url(#cp${u})">
      <rect width="80" height="80" fill="${c1}"/>${divs}
