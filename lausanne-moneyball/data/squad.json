@@ -1,0 +1,580 @@
+{
+ "club_id": "527",
+ "season": "26/27",
+ "players": [
+  {
+   "id": "534398",
+   "name": "Melvin Mastil",
+   "slug": "melvin-mastil",
+   "position": "Goalkeeper",
+   "date_of_birth": "2000-02-19",
+   "age": 26,
+   "nationality": [
+    "Algeria",
+    "France"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 194,
+   "foot": "right",
+   "joined_on": "2021-07-01",
+   "signed_from": "FC Echallens Région",
+   "signed_from_id": "1763",
+   "contract": "2029-06-30",
+   "market_value": 1000000,
+   "status": ""
+  },
+  {
+   "id": "165435",
+   "name": "Thomas Castella",
+   "slug": "thomas-castella",
+   "position": "Goalkeeper",
+   "date_of_birth": "1993-06-30",
+   "age": 33,
+   "nationality": [
+    "Switzerland"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 185,
+   "foot": "right",
+   "joined_on": "2012-07-01",
+   "signed_from": "Neuchâtel Xamax FCS II",
+   "signed_from_id": "23728",
+   "contract": "2028-06-30",
+   "market_value": 100000,
+   "status": ""
+  },
+  {
+   "id": "1004412",
+   "name": "Emilien Grosso",
+   "slug": "emilien-grosso",
+   "position": "Goalkeeper",
+   "date_of_birth": "2006-12-13",
+   "age": 19,
+   "nationality": [
+    "Switzerland",
+    "Italy"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 197,
+   "foot": null,
+   "joined_on": "2026-07-01",
+   "signed_from": "FC Lausanne-Sport II",
+   "signed_from_id": "15446",
+   "contract": "2029-06-30",
+   "market_value": null,
+   "status": ""
+  },
+  {
+   "id": "707657",
+   "name": "Karim Sow",
+   "slug": "karim-sow",
+   "position": "Centre-Back",
+   "date_of_birth": "2003-05-22",
+   "age": 23,
+   "nationality": [
+    "Switzerland"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 199,
+   "foot": "right",
+   "joined_on": "2021-03-04",
+   "signed_from": "BSC Young Boys U18",
+   "signed_from_id": "14438",
+   "contract": "2028-06-30",
+   "market_value": 5000000,
+   "status": "Yellow card suspension – Super League – until 12/10/2026"
+  },
+  {
+   "id": "639712",
+   "name": "Étienne Youté Kinkoué",
+   "slug": "etienne-youte-kinkoue",
+   "position": "Centre-Back",
+   "date_of_birth": "2002-01-14",
+   "age": 24,
+   "nationality": [
+    "France",
+    "Cameroon"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 196,
+   "foot": "right",
+   "joined_on": "2026-09-03",
+   "signed_from": "Le Havre AC",
+   "signed_from_id": "738",
+   "contract": "2029-06-30",
+   "market_value": 2500000,
+   "status": ""
+  },
+  {
+   "id": "485965",
+   "name": "Nicolas Cozza",
+   "slug": "nicolas-cozza",
+   "position": "Centre-Back",
+   "date_of_birth": "1999-01-08",
+   "age": 27,
+   "nationality": [
+    "France",
+    "Italy"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 181,
+   "foot": "left",
+   "joined_on": "2026-08-30",
+   "signed_from": "VfL Wolfsburg",
+   "signed_from_id": "82",
+   "contract": "2029-06-30",
+   "market_value": 2500000,
+   "status": ""
+  },
+  {
+   "id": "911424",
+   "name": "Tyler Fredricson",
+   "slug": "tyler-fredricson",
+   "position": "Centre-Back",
+   "date_of_birth": "2005-02-23",
+   "age": 21,
+   "nationality": [
+    "England"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 188,
+   "foot": "right",
+   "joined_on": "2026-07-30",
+   "signed_from": "Manchester United",
+   "signed_from_id": "985",
+   "contract": "2029-06-30",
+   "market_value": 1500000,
+   "status": "Metatarsal fracture - Return expected on 31/12/2026"
+  },
+  {
+   "id": "923809",
+   "name": "Dircssi Ngonzo",
+   "slug": "dircssi-ngonzo",
+   "position": "Centre-Back",
+   "date_of_birth": "2005-07-31",
+   "age": 21,
+   "nationality": [
+    "Switzerland"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 189,
+   "foot": "left",
+   "joined_on": "2024-07-01",
+   "signed_from": "FC Lausanne-Sport II",
+   "signed_from_id": "15446",
+   "contract": "2029-06-30",
+   "market_value": 400000,
+   "status": ""
+  },
+  {
+   "id": "1060759",
+   "name": "Rodolfo Lippo",
+   "slug": "rodolfo-lippo",
+   "position": "Centre-Back",
+   "date_of_birth": "2004-05-13",
+   "age": 22,
+   "nationality": [
+    "Finland",
+    "Belgium"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 186,
+   "foot": null,
+   "joined_on": null,
+   "signed_from": "",
+   "signed_from_id": null,
+   "contract": null,
+   "market_value": 175000,
+   "status": ""
+  },
+  {
+   "id": "272640",
+   "name": "Morgan Poaty",
+   "slug": "morgan-poaty",
+   "position": "Left-Back",
+   "date_of_birth": "1997-07-15",
+   "age": 29,
+   "nationality": [
+    "Congo",
+    "France"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 177,
+   "foot": "left",
+   "joined_on": "2023-08-22",
+   "signed_from": "RFC Seraing",
+   "signed_from_id": "2715",
+   "contract": "2028-06-30",
+   "market_value": 800000,
+   "status": ""
+  },
+  {
+   "id": "994247",
+   "name": "Thomas Cordier",
+   "slug": "thomas-cordier",
+   "position": "Left-Back",
+   "date_of_birth": "2006-03-13",
+   "age": 20,
+   "nationality": [
+    "France"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 170,
+   "foot": "left",
+   "joined_on": "2026-07-31",
+   "signed_from": "Paris Saint-Germain Espoirs",
+   "signed_from_id": "43570",
+   "contract": "2029-06-30",
+   "market_value": null,
+   "status": ""
+  },
+  {
+   "id": "546880",
+   "name": "Brandon Soppy",
+   "slug": "brandon-soppy",
+   "position": "Right-Back",
+   "date_of_birth": "2002-02-21",
+   "age": 24,
+   "nationality": [
+    "France"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 180,
+   "foot": "right",
+   "joined_on": "2025-07-11",
+   "signed_from": ": Ablöse free transfer",
+   "signed_from_id": "41110",
+   "contract": "2028-06-30",
+   "market_value": 1800000,
+   "status": ""
+  },
+  {
+   "id": "1020507",
+   "name": "Theo Bergvall",
+   "slug": "theo-bergvall",
+   "position": "Right-Back",
+   "date_of_birth": "2004-09-21",
+   "age": 22,
+   "nationality": [
+    "Sweden"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 185,
+   "foot": "right",
+   "joined_on": "2026-01-19",
+   "signed_from": "Djurgårdens IF",
+   "signed_from_id": "1044",
+   "contract": "2029-06-30",
+   "market_value": 1000000,
+   "status": ""
+  },
+  {
+   "id": "668259",
+   "name": "Hamza Abdallah",
+   "slug": "hamza-abdallah",
+   "position": "Right-Back",
+   "date_of_birth": "2003-06-13",
+   "age": 23,
+   "nationality": [
+    "Comoros",
+    "France"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 177,
+   "foot": "right",
+   "joined_on": "2024-07-01",
+   "signed_from": "FC Lausanne-Sport II",
+   "signed_from_id": "15446",
+   "contract": "2027-06-30",
+   "market_value": 300000,
+   "status": ""
+  },
+  {
+   "id": "1133978",
+   "name": "Sékou Koné",
+   "slug": "sekou-kone",
+   "position": "Defensive Midfield",
+   "date_of_birth": "2006-02-03",
+   "age": 20,
+   "nationality": [
+    "Mali"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 176,
+   "foot": "right",
+   "joined_on": "2026-02-02",
+   "signed_from": "Manchester United U21",
+   "signed_from_id": "9251",
+   "contract": "2027-06-30",
+   "market_value": 1000000,
+   "status": "Red card suspension – Super League – until 26/10/2026"
+  },
+  {
+   "id": "183312",
+   "name": "Olivier Custodio",
+   "slug": "olivier-custodio",
+   "position": "Defensive Midfield",
+   "date_of_birth": "1995-02-10",
+   "age": 31,
+   "nationality": [
+    "Switzerland"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 180,
+   "foot": "right",
+   "joined_on": "2022-07-01",
+   "signed_from": ": Ablöse free transfer",
+   "signed_from_id": "2790",
+   "contract": null,
+   "market_value": 400000,
+   "status": "Team captain; Hamstring injury - Return unknown"
+  },
+  {
+   "id": "569375",
+   "name": "Koba Koindredi",
+   "slug": "koba-koindredi",
+   "position": "Central Midfield",
+   "date_of_birth": "2001-10-27",
+   "age": 24,
+   "nationality": [
+    "France"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 186,
+   "foot": "left",
+   "joined_on": "2026-09-01",
+   "signed_from": "Sporting CP",
+   "signed_from_id": "336",
+   "contract": "2029-06-30",
+   "market_value": 3000000,
+   "status": ""
+  },
+  {
+   "id": "382774",
+   "name": "Nicky Beloko",
+   "slug": "nicky-beloko",
+   "position": "Central Midfield",
+   "date_of_birth": "2000-02-16",
+   "age": 26,
+   "nationality": [
+    "Switzerland",
+    "Cameroon"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 184,
+   "foot": "right",
+   "joined_on": "2025-08-21",
+   "signed_from": "Austin FC",
+   "signed_from_id": "72309",
+   "contract": "2028-06-30",
+   "market_value": 800000,
+   "status": "unknown injury - Return unknown"
+  },
+  {
+   "id": "866282",
+   "name": "Souleymane N'Diaye",
+   "slug": "souleymane-ndiaye",
+   "position": "Central Midfield",
+   "date_of_birth": "2005-11-01",
+   "age": 20,
+   "nationality": [
+    "Switzerland",
+    "Senegal"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 189,
+   "foot": "right",
+   "joined_on": "2025-03-28",
+   "signed_from": "FC Lausanne-Sport II",
+   "signed_from_id": "15446",
+   "contract": "2027-06-30",
+   "market_value": 300000,
+   "status": ""
+  },
+  {
+   "id": "970137",
+   "name": "Beyatt Lekoueiry",
+   "slug": "beyatt-lekoueiry",
+   "position": "Attacking Midfield",
+   "date_of_birth": "2005-04-11",
+   "age": 21,
+   "nationality": [
+    "Mauritania"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 171,
+   "foot": "left",
+   "joined_on": "2025-02-07",
+   "signed_from": "NK Istra 1961",
+   "signed_from_id": "999",
+   "contract": "2028-06-30",
+   "market_value": 1500000,
+   "status": "Cruciate ligament tear - Return expected on 31/05/2027"
+  },
+  {
+   "id": "222859",
+   "name": "Florent Mollet",
+   "slug": "florent-mollet",
+   "position": "Attacking Midfield",
+   "date_of_birth": "1991-11-19",
+   "age": 34,
+   "nationality": [
+    "France"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 175,
+   "foot": "right",
+   "joined_on": "2025-10-04",
+   "signed_from": "Without Club",
+   "signed_from_id": "515",
+   "contract": "2027-06-30",
+   "market_value": 300000,
+   "status": ""
+  },
+  {
+   "id": "511801",
+   "name": "Alban Ajdini",
+   "slug": "alban-ajdini",
+   "position": "Right Winger",
+   "date_of_birth": "1999-07-09",
+   "age": 27,
+   "nationality": [
+    "Kosovo",
+    "Switzerland"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 180,
+   "foot": "right",
+   "joined_on": "2024-07-01",
+   "signed_from": "FC Stade-Lausanne-Ouchy",
+   "signed_from_id": "5499",
+   "contract": "2027-06-30",
+   "market_value": 500000,
+   "status": ""
+  },
+  {
+   "id": "1292635",
+   "name": "Ibrahim Bah Mendes",
+   "slug": "ibrahim-bah-mendes",
+   "position": "Right Winger",
+   "date_of_birth": "2005-11-22",
+   "age": 20,
+   "nationality": [
+    "Switzerland",
+    "Angola"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 180,
+   "foot": "right",
+   "joined_on": "2026-08-08",
+   "signed_from": "FC Lausanne-Sport II",
+   "signed_from_id": "15446",
+   "contract": "2029-06-30",
+   "market_value": 200000,
+   "status": ""
+  },
+  {
+   "id": "1060454",
+   "name": "Omar Janneh",
+   "slug": "omar-janneh",
+   "position": "Centre-Forward",
+   "date_of_birth": "2006-08-23",
+   "age": 20,
+   "nationality": [
+    "Spain",
+    "The Gambia"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 188,
+   "foot": "both",
+   "joined_on": "2026-01-15",
+   "signed_from": "Atlético Madrileño",
+   "signed_from_id": "3679",
+   "contract": "2030-06-30",
+   "market_value": 4000000,
+   "status": ""
+  },
+  {
+   "id": "1106860",
+   "name": "Enzo Molebe",
+   "slug": "enzo-molebe",
+   "position": "Centre-Forward",
+   "date_of_birth": "2007-09-18",
+   "age": 19,
+   "nationality": [
+    "France",
+    "DR Congo"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 178,
+   "foot": "right",
+   "joined_on": "2026-08-11",
+   "signed_from": "Olympique Lyon",
+   "signed_from_id": "1041",
+   "contract": "2027-06-30",
+   "market_value": 1500000,
+   "status": ""
+  },
+  {
+   "id": "1267429",
+   "name": "Levy Nene",
+   "slug": "levy-nene",
+   "position": "Centre-Forward",
+   "date_of_birth": "2006-03-17",
+   "age": 20,
+   "nationality": [
+    "Cote d'Ivoire",
+    "Mali"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 179,
+   "foot": null,
+   "joined_on": "2026-08-29",
+   "signed_from": "FC Nordsjaelland",
+   "signed_from_id": "2778",
+   "contract": "2027-06-30",
+   "market_value": 1000000,
+   "status": ""
+  },
+  {
+   "id": "638964",
+   "name": "Nathan Butler-Oyedeji",
+   "slug": "nathan-butler-oyedeji",
+   "position": "Centre-Forward",
+   "date_of_birth": "2003-01-04",
+   "age": 23,
+   "nationality": [
+    "England"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 177,
+   "foot": "right",
+   "joined_on": "2025-07-02",
+   "signed_from": "Arsenal FC U21",
+   "signed_from_id": "9249",
+   "contract": "2028-06-30",
+   "market_value": 800000,
+   "status": ""
+  },
+  {
+   "id": "847262",
+   "name": "Seydou Traoré",
+   "slug": "seydou-traore",
+   "position": "Centre-Forward",
+   "date_of_birth": "2004-12-05",
+   "age": 21,
+   "nationality": [
+    "Cote d'Ivoire"
+   ],
+   "current_club": "FC Lausanne-Sport",
+   "height": 185,
+   "foot": "right",
+   "joined_on": "2023-07-01",
+   "signed_from": "Racing Club Abidjan",
+   "signed_from_id": "85059",
+   "contract": "2027-06-30",
+   "market_value": 600000,
+   "status": ""
+  }
+ ]
+}
