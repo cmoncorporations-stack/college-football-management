@@ -72,7 +72,10 @@ class SofascoreClient:
             if wait > 0:
                 time.sleep(wait)
             self._last = time.time()
-            req = urllib.request.Request(API + path, headers={"User-Agent": UA, "Accept": "application/json"})
+            req = urllib.request.Request(API + path, headers={
+                "User-Agent": UA, "Accept": "application/json, text/plain, */*",
+                "Accept-Language": "fr-CH,fr;q=0.9,en;q=0.8",
+                "Origin": "https://www.sofascore.com", "Referer": "https://www.sofascore.com/"})
             try:
                 with urllib.request.urlopen(req, timeout=30) as r:
                     data = json.loads(r.read().decode())

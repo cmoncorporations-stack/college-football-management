@@ -2,7 +2,7 @@
 
 Système de recommandation de recrues (équipe masculine) qui croise trois sources :
 
-1. **Transfermarkt**, via [transfermarkt-api](https://github.com/felipeall/transfermarkt-api) : valeur marchande, contrats, transferts, blessures, stats de base.
+1. **Transfermarkt**, en lecture directe des pages de www.transfermarkt.com (`moneyball/tm_direct.py`, bibliothèque standard uniquement) ou via [transfermarkt-api](https://github.com/felipeall/transfermarkt-api) si `TM_API_URL` est défini : valeur marchande, contrats, transferts, statistiques de championnat (matchs, buts, passes, cartons, minutes), lieu de naissance, clubs formateurs.
 2. **API-Football** (api-sports.io) : l'API gratuite documentée retenue. Clé gratuite, 100 requêtes/jour, tous les points d'entrée, 1 100+ championnats dont Challenge League (208) et Super League (207). Par joueur et par saison : note moyenne, tirs, passes clés, duels, dribbles, cartons, date de naissance. Pas de xG au niveau saison.
    En option, **Sofascore** (sans API publique) ajoute xG et xA. FBref n'est plus une option : plus de données avancées depuis la fin de son accord Opta (janvier 2026).
 3. **Le cockpit Fanbase Manager d'Yverdon Sport** (Brevo + Metricool) : indice de pénétration du bassin, catégories CMON_SCORE, performances des campagnes, audiences sociales.
@@ -38,12 +38,17 @@ cd yverdon-moneyball
 python -m moneyball.recommend --demo
 open dashboard.html
 
-# 2. Données réelles Transfermarkt
-export TM_API_URL=http://localhost:8000   # conseillé : instance locale (docker run -p 8000:8000 transfermarkt-api)
-export API_FOOTBALL_KEY=...               # clé gratuite : https://dashboard.api-football.com
-python -m moneyball.scout --competitions C2 C1 FR3 FR2 BE2 --max-value 1500000 --max-age 29 --apifootball 208 207
+# 2. Données réelles Transfermarkt (lecture directe, rien à installer ; ≈ 1 h pour 4 championnats)
+python -m moneyball.scout --competitions C2 C1 FR3 FR2 --max-value 1500000 --max-age 29
 python -m moneyball.recommend
+
+# Variantes : instance transfermarkt-api pour profils/valeurs/transferts, enrichissement API-Football
+export TM_API_URL=http://localhost:8000   # docker run -p 8000:8000 transfermarkt-api
+export API_FOOTBALL_KEY=...               # clé gratuite : https://dashboard.api-football.com
+python -m moneyball.scout --competitions C2 C1 FR3 FR2 --apifootball 208 207
 ```
+
+Le vivier livré (`data/candidates.json`, 26.09.2026) est réel : Challenge League, Super League, Ligue 3 et Ligue 2 françaises, joueurs de 17 à 29 ans valant au plus 1,5 M€, deux saisons de championnat par joueur.
 
 `--apifootball` lit les statistiques saison de chaque championnat (20 joueurs par page ; Challenge + Super League ≈ 35 requêtes, sous les 100 du plan gratuit) et rattache chaque candidat Transfermarkt par **date de naissance exacte + nom**. `python -m moneyball.apifootball --find "Challenge League"` donne l'id d'un championnat ; `python -m moneyball.apifootball --merge` enrichit après coup.
 
@@ -51,14 +56,15 @@ python -m moneyball.recommend
 
 Tag Moneyball : un joueur à ≥ 900 minutes qui marque nettement moins que ses xG est étiqueté **Sous-performe ses xG** (occasion d'achat) ; l'inverse **Sur-performe ses xG** (saison de chance).
 
-`scout.py` trouve Yverdon Sport par recherche (ou `--club-id`), lit l'effectif pour calculer les besoins, parcourt les championnats demandés, filtre sur âge et valeur, puis récupère profil, stats, historique de valeur et transferts de chaque joueur (`--injuries` pour les blessures). Les réponses sont mises en cache 72 h dans `data/cache/`. L'instance publique `transfermarkt-api.fly.dev` est limitée en débit : pour un scan de plusieurs championnats, héberger sa propre instance.
+`scout.py` trouve Yverdon Sport par recherche (ou `--club-id`), lit l'effectif pour calculer les besoins, parcourt les championnats demandés, filtre sur âge et valeur, puis récupère profil, historique de valeur et transferts de chaque joueur. Les statistiques viennent de la page « Squad statistics » de chaque club (une page par club, championnat et saison : saison en cours + précédente, plus l'ancien club des joueurs arrivés depuis un an), car Transfermarkt rend désormais les statistiques individuelles côté client — `/players/{id}/stats` de transfermarkt-api renvoie une liste vide. Les pages sont mises en cache 72 h dans `data/cache/` ; Transfermarkt sert un captcha (HTTP 405) sur environ une requête sur deux, réessayé automatiquement. `--workers` règle le parallélisme (3 par défaut, cadence globale ≈ 1 requête/s).
 
 Codes compétition Transfermarkt usuels : `C1` Super League, `C2` Challenge League, `FR2` Ligue 2, `FR3` National, `BE2` Challenger Pro League, `A2` 2. Liga autrichienne, `L3` 3. Liga. Vérifier un code avec `/competitions/search/{nom}`.
 
 ## Fichiers
 
 ```
-moneyball/tm_client.py   client transfermarkt-api (cache, retries, rate limit)
+moneyball/tm_direct.py   lecture directe de www.transfermarkt.com (parseur HTML, cache, captcha)
+moneyball/tm_client.py   client transfermarkt-api (option, TM_API_URL)
 moneyball/scout.py       constitution du vivier + normalisation
 moneyball/apifootball.py API-Football : notes, tirs, passes clés… (API gratuite retenue)
 moneyball/sofascore.py   Sofascore : xG / xA / notes (optionnel, sans API publique)
@@ -74,7 +80,9 @@ tests/                   python -m unittest discover -s tests -t .
 ## Limites
 
 - Ni Transfermarkt ni Sofascore ne donnent l'audience des comptes joueurs : le potentiel média repose sur la présence d'un compte Instagram et sur la contribution offensive.
-- Les modules API-Football et Sofascore sont écrits d'après la documentation et les points d'entrée connus ; ils n'ont pas encore tourné depuis cet environnement (domaines bloqués). À vérifier au premier appel réel.
+- Sofascore répond `403 Forbidden` à toute requête hors navigateur (vérifié le 26.09.2026 avec plusieurs User-Agent et les en-têtes Origin/Referer) : le vivier livré n'a ni xG, ni xA, ni note ; la note Sport repose sur buts, passes, minutes et discipline Transfermarkt. Le module API-Football n'a pas tourné (pas de clé).
+- Statistiques Transfermarkt limitées au championnat des deux dernières saisons ; un joueur arrivé d'un championnat hors périmètre n'a que sa saison précédente dans son ancien club ; les blessures ne sont lues qu'avec transfermarkt-api (`--injuries`).
+- Début de saison 2026/27 : les minutes de la saison en cours sont encore faibles, le modèle s'appuie surtout sur 2025/26.
 - L'âge des fans n'est pas modélisé (date de naissance renseignée à 36 % dans Brevo).
 - Périmètre : équipe masculine uniquement.
 - L'indemnité estimée est un ordre de grandeur, pas une offre.

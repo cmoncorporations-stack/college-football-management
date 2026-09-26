@@ -36,6 +36,7 @@ def run(use_demo: bool, today: date, top: int = 60) -> dict:
         "demo": bool(cand.get("demo")),
         "source": cand.get("source"),
         "competitions": cand.get("competitions"),
+        "saison": cand.get("season"),
         "vivier": len(cand["players"]),
         "poids_defaut": DEFAULT_WEIGHTS,
         "fan_dna": dna,

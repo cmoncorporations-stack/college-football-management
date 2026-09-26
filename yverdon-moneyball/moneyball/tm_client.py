@@ -1,9 +1,12 @@
 """Client minimal pour transfermarkt-api (https://github.com/felipeall/transfermarkt-api).
 
-Aucune dépendance externe : urllib + cache disque JSON. L'instance publique
-(https://transfermarkt-api.fly.dev) est limitée en débit ; pour un usage
-régulier, héberger sa propre instance (docker run -p 8000:8000 ...) et
-définir TM_API_URL=http://localhost:8000.
+Aucune dépendance externe : urllib + cache disque JSON. Utilisé par scout.py
+seulement si TM_API_URL est défini ; sinon `tm_direct.py` lit les pages de
+www.transfermarkt.com directement. Constaté le 26.09.2026 : l'instance
+publique https://transfermarkt-api.fly.dev répond 500 sur tous les points
+d'entrée, et `/players/{id}/stats` renvoie une liste vide quelle que soit
+l'instance (Transfermarkt rend ces tableaux côté client) — les statistiques
+sont donc toujours lues par `tm_direct.club_stats`.
 """
 from __future__ import annotations
 

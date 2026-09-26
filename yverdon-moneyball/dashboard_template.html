@@ -198,7 +198,7 @@ footer li{margin-bottom:5px}
   <ul>
     <li><strong>API-Football</strong> (api-sports.io, plan gratuit, clé documentée) : note moyenne, tirs, passes clés, duels, dribbles, cartons et date de naissance par joueur et par saison, Challenge League (208) et Super League (207).</li>
     <li><strong>Sofascore</strong> (optionnel, sans API publique) : xG, xA et note par saison, tournois 216 et 215.</li>
-    <li><strong>Transfermarkt</strong> via <a href="https://github.com/felipeall/transfermarkt-api" style="color:var(--accent-ink)">transfermarkt-api</a> : profils, statistiques, historique de valeur, transferts, blessures. Valeurs en euros.</li>
+    <li><strong>Transfermarkt</strong> (lecture directe des pages, ou <a href="https://github.com/felipeall/transfermarkt-api" style="color:var(--accent-ink)">transfermarkt-api</a>) : profils, statistiques de championnat des deux dernières saisons, historique de valeur, transferts. Valeurs en euros. <span id="srcTm"></span></li>
     <li><strong>Cockpit Fanbase Manager Yverdon Sport</strong> : indice de pénétration, catégories CMON_SCORE, campagnes Brevo, audiences Metricool. <span id="srcDate"></span></li>
   </ul>
   <h3>Limites</h3>
@@ -226,6 +226,7 @@ const DATA=/*__DATA__*/null;
   if(DATA.demo) $("demo").hidden=false;
   $("eyebrow").textContent=`Yverdon Sport · Cellule recrutement · Vivier ${DATA.vivier} joueurs · ${new Date(DATA.genere).toLocaleDateString("fr-CH")}`;
   $("srcDate").textContent=`Relevé du ${new Date(DNA.releve).toLocaleDateString("fr-CH")}.`;
+  if(!DATA.demo) $("srcTm").textContent=`Vivier relevé le ${new Date(DATA.genere).toLocaleDateString("fr-CH")} : ${(DATA.competitions||[]).join(", ")}${DATA.saison?" · saison "+DATA.saison:""}.`;
 
   // ADN fan
   const maxW=Math.max(...Object.values(DNA.weights));
