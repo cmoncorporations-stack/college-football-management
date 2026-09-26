@@ -223,6 +223,36 @@ class DefenderTest(unittest.TestCase):
         self.assertIsNone(d_c["confiance_note"])
 
 
+class MarketValueEstimateTest(unittest.TestCase):
+    """C12 : valeur manquante estimée par la régression, poids Valeur divisé par deux."""
+
+    def test_estimate_and_halved_weight(self):
+        pool = [player(id=str(i), market_value=200_000 + 20_000 * i, age=20 + i % 9) for i in range(30)]
+        unknown = player(id="u", market_value=None, age=24)
+        pool.append(unknown)
+        sport = {p["id"]: 60.0 for p in pool}
+        est = model.estimate_market_values(pool, sport)
+        self.assertEqual(set(est), {"u"})
+        self.assertGreater(est["u"], 100_000)
+        self.assertLess(est["u"], 1_000_000)
+        needs = {"ATT": {"besoin": 0.5}}
+        weights = {"ancrage": 0.32, "fidelite": 0.23, "media": 0.18, "francophonie": 0.13, "lien_club": 0.14}
+        ranked = model.score_pool(pool, weights, needs, TODAY)
+        u = next(r for r in ranked if r["id"] == "u")
+        self.assertTrue(u["market_value_estimated"])
+        self.assertEqual(u["market_value_source"], "regression")
+        self.assertEqual(u["market_value"], est["u"])
+        self.assertIn("Valeur estimée", u["tags"])
+        s = u["scores"]
+        w = model.DEFAULT_WEIGHTS
+        expected = (w["sport"] * s["sport"] + 0.5 * w["valeur"] * s["valeur"] + w["fan"] * s["fan"]) \
+            / (w["sport"] + 0.5 * w["valeur"] + w["fan"]) * (0.85 + 0.30 * 0.5)
+        self.assertAlmostEqual(s["final"], expected, places=1)
+        known = next(r for r in ranked if r["id"] == "0")
+        self.assertFalse(known["market_value_estimated"])
+        self.assertEqual(known["market_value_source"], "transfermarkt")
+
+
 class NormalizeTest(unittest.TestCase):
     def test_transfermarkt_payload_shape(self):
         profile = {"name": "A B", "url": "https://www.transfermarkt.com/x", "age": 22,

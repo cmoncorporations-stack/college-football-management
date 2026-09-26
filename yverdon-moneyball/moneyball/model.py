@@ -561,17 +561,15 @@ def _ols(X: list[list[float]], y: list[float]) -> list[float]:
     return beta
 
 
-def undervaluation(players: list[dict], sport: dict[str, float]) -> dict[str, float]:
-    """Régression log(valeur) ~ sport + âge + âge² + ligue + poste : résidu négatif = sous-évalué.
+def value_regression(players: list[dict], sport: dict[str, float]) -> dict | None:
+    """Régression log(valeur) ~ sport + âge + âge² + ligue + poste sur les joueurs à valeur connue.
 
-    Les effets fixes ligue et poste évitent qu'un joueur de National (valeurs
-    médianes trois fois plus basses qu'en Super League) ou un gardien paraisse
-    sous-évalué par construction. Retourne un score 0-1 (1 = le plus sous-évalué
-    du vivier) ; 0,5 pour les joueurs sans valeur marchande connue.
+    Retourne {"predict": f(joueur) -> valeur estimée (EUR), "resid": {id: résidu}} ou None
+    si moins de 20 valeurs connues.
     """
     known = [p for p in players if p.get("market_value")]
     if len(known) < 20:
-        return {p["id"]: 0.5 for p in players}
+        return None
     leagues = sorted({p.get("league_id") or "?" for p in known})[1:]
     groups = ["DEF", "MID", "ATT"]
 
@@ -586,11 +584,37 @@ def undervaluation(players: list[dict], sport: dict[str, float]) -> dict[str, fl
     y = [math.log(p["market_value"]) for p in known]
     beta = _ols(X, y)
     resid = {p["id"]: yi - sum(b * x for b, x in zip(beta, r)) for p, r, yi in zip(known, X, y)}
+    return {"predict": lambda p: int(round(math.exp(sum(b * x for b, x in zip(beta, row(p)))), -3)),
+            "resid": resid, "n": len(known)}
+
+
+def estimate_market_values(players: list[dict], sport: dict[str, float]) -> dict[str, int]:
+    """Valeur marchande estimée par la régression pour les joueurs sans valeur Transfermarkt."""
+    reg = value_regression(players, sport)
+    if not reg:
+        return {}
+    return {p["id"]: reg["predict"](p) for p in players if not p.get("market_value")}
+
+
+def undervaluation(players: list[dict], sport: dict[str, float]) -> dict[str, float]:
+    """Régression log(valeur) ~ sport + âge + âge² + ligue + poste : résidu négatif = sous-évalué.
+
+    Les effets fixes ligue et poste évitent qu'un joueur de National (valeurs
+    médianes trois fois plus basses qu'en Super League) ou un gardien paraisse
+    sous-évalué par construction. Retourne un score 0-1 (1 = le plus sous-évalué
+    du vivier) ; un joueur sans valeur connue reçoit le rang du résidu nul (sa valeur
+    estimée est, par construction, celle que la régression prédit).
+    """
+    reg = value_regression(players, sport)
+    if not reg:
+        return {p["id"]: 0.5 for p in players}
+    resid = reg["resid"]
     order = sorted(resid, key=resid.get)
     n = len(order)
     out = {pid: round(1 - i / max(1, n - 1), 3) for i, pid in enumerate(order)}
+    zero_rank = round(1 - sum(1 for v in resid.values() if v < 0) / max(1, n - 1), 3)
     for p in players:
-        out.setdefault(p["id"], 0.5)
+        out.setdefault(p["id"], zero_rank)
     return out
 
 
@@ -679,9 +703,13 @@ def score_pool(players: list[dict], fan_weights: dict, needs: dict, today: date,
     for p in players:
         sport[p["id"]], sport_detail[p["id"]] = sport_score(p, baselines)
     underval = undervaluation(players, sport)
+    estimates = estimate_market_values(players, sport)
 
     out = []
-    for p in players:
+    for raw_p in players:
+        estimated = not raw_p.get("market_value") and raw_p["id"] in estimates
+        # Valeur manquante : estimée par la régression, signalée comme telle, poids Valeur divisé par deux.
+        p = {**raw_p, "market_value": estimates[raw_p["id"]]} if estimated else raw_p
         vc = value_components(p, today)
         valeur = 100 * (0.40 * underval[p["id"]] + 0.25 * vc["contrat"] +
                         0.15 * vc["tendance_score"] + 0.20 * vc["plus_value_score"])
@@ -689,7 +717,9 @@ def score_pool(players: list[dict], fan_weights: dict, needs: dict, today: date,
         fan = 100 * sum(fan_weights[k] * fc[k] for k in fan_weights)
         group = position_group(p.get("position"))
         need = needs.get(group, {}).get("besoin", 0.5)
-        base = weights["sport"] * sport[p["id"]] + weights["valeur"] * valeur + weights["fan"] * fan
+        w_valeur = weights["valeur"] * (0.5 if estimated else 1.0)
+        base = (weights["sport"] * sport[p["id"]] + w_valeur * valeur + weights["fan"] * fan) \
+            / (weights["sport"] + w_valeur + weights["fan"])
         final = base * (0.85 + 0.30 * need)
 
         tags = []
@@ -707,7 +737,9 @@ def score_pool(players: list[dict], fan_weights: dict, needs: dict, today: date,
             tags.append("Enfant du pays")
         if sport_detail[p["id"]]["minutes_total"] < SHRINK_MINUTES:
             tags.append("Échantillon faible")
-        if not p.get("market_value"):
+        if estimated:
+            tags.append("Valeur estimée")
+        elif not p.get("market_value"):
             tags.append("Valeur inconnue")
         if sport_detail[p["id"]].get("confiance_note") == "faible":
             tags.append("Confiance faible")
@@ -727,7 +759,9 @@ def score_pool(players: list[dict], fan_weights: dict, needs: dict, today: date,
             "sous_poste": sub_group(p.get("position")),
             "age": p.get("age"), "club": p.get("club"), "league_id": p.get("league_id"),
             "nationalites": p.get("citizenship", []), "naissance": p.get("birth_city"),
-            "market_value": p.get("market_value"), "indemnite_estimee": estimated_fee(p, today),
+            "market_value": p.get("market_value"), "market_value_estimated": estimated,
+            "market_value_source": "regression" if estimated else ("transfermarkt" if p.get("market_value") else None),
+            "indemnite_estimee": estimated_fee(p, today),
             "valeur_projetee_24m": vc["valeur_projetee_24m"],
             "contract_expires": p.get("contract_expires"), "url": p.get("url"),
             "scores": {"sport": round(sport[p["id"]], 1), "valeur": round(valeur, 1),
