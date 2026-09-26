@@ -182,6 +182,47 @@ class GoalkeeperTest(unittest.TestCase):
         self.assertGreater(s_full, 0)
 
 
+class DefenderTest(unittest.TestCase):
+    """C2 : centraux notés sur les résultats défensifs de l'équipe, latéraux à moitié sur l'offensive."""
+
+    def pool(self):
+        cbs = [cb(f"c{i}", team_conceded=20 + i * 2) for i in range(25)]
+        fbs = [cb(f"f{i}", team_conceded=20 + i * 2, position="Left-Back", goals=i % 5, assists=i % 3) for i in range(25)]
+        return cbs + fbs
+
+    def test_sub_groups(self):
+        self.assertEqual(model.sub_group("Centre-Back"), "CB")
+        self.assertEqual(model.sub_group("Left-Back"), "FB")
+        self.assertEqual(model.sub_group("Right-Back"), "FB")
+        self.assertEqual(model.sub_group("Defender"), "CB")
+        self.assertEqual(model.sub_group("Goalkeeper"), "GK")
+
+    def test_centre_back_not_ranked_on_goals(self):
+        base = model.pool_baselines(self.pool())
+        self.assertGreaterEqual(base["CB"]["def_n"], 20)
+        scorer = cb("s", team_conceded=40, goals=8)
+        silent = cb("q", team_conceded=40, goals=0)
+        s1, d1 = model.sport_score(scorer, base)
+        s2, d2 = model.sport_score(silent, base)
+        self.assertEqual(s1, s2)
+        self.assertEqual(d1["confiance_note"], "faible")
+        self.assertLessEqual(d1["confiance"], 0.5)
+        tight = cb("t", team_conceded=22)
+        leaky = cb("l", team_conceded=66)
+        self.assertGreater(model.sport_score(tight, base)[0], model.sport_score(leaky, base)[0])
+
+    def test_full_back_half_offensive(self):
+        base = model.pool_baselines(self.pool())
+        self.assertGreaterEqual(base["FB"]["n"], 20)
+        creative = cb("cr", position="Right-Back", team_conceded=40, goals=4, assists=6)
+        plain = cb("pl", position="Right-Back", team_conceded=40, goals=0, assists=0)
+        s_c, d_c = model.sport_score(creative, base)
+        s_p, d_p = model.sport_score(plain, base)
+        self.assertGreater(s_c, s_p)
+        self.assertEqual(d_c["rang_defensif"], d_p["rang_defensif"])
+        self.assertIsNone(d_c["confiance_note"])
+
+
 class NormalizeTest(unittest.TestCase):
     def test_transfermarkt_payload_shape(self):
         profile = {"name": "A B", "url": "https://www.transfermarkt.com/x", "age": 22,

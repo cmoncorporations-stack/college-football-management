@@ -272,8 +272,14 @@ def pool_baselines(players: list[dict]) -> dict:
             idx, _ = gk_defence_index(st)
             if idx is not None:
                 by_group.setdefault("GK", []).append(idx)
+        elif g in ("CB", "FB"):
+            d = team_defence_index(st)
+            if d is not None:
+                by_group.setdefault(g + ":def", []).append(d)
+            if g == "FB":
+                by_group.setdefault("FB", []).append(_ga90_c2(p, st))
         else:
-            by_group.setdefault(position_group(p.get("position")), []).append(_ga90_c2(p, st))
+            by_group.setdefault(g, []).append(_ga90_c2(p, st))
     out = {}
     for g, vals in by_group.items():
         vals.sort()
@@ -371,10 +377,57 @@ def sport_score_gk(p: dict, baselines: dict | None = None) -> tuple[float, dict]
     return score, detail
 
 
+def sport_score_def(p: dict, baselines: dict | None = None) -> tuple[float, dict]:
+    """Note Sport d'un défenseur, par sous-poste.
+
+    Central (CB) : résultats défensifs de l'équipe (buts encaissés/90 vs médiane de la ligue)
+    → percentile entre centraux → 55 % ; disponibilité 30 % ; discipline 15 % (cartons en
+    négatif) ; confiance plafonnée à 0,5 et notée « faible » (source Transfermarkt seule,
+    aucune donnée individuelle de défense).
+    Latéral (FB) : 50 % profil défensif (même formule) + 50 % production offensive (buts +
+    0,7 passes, percentile entre latéraux) → 55 % ; disponibilité 35 % ; discipline 10 %.
+    """
+    st = recent_stats(p)
+    c = _common(p, st)
+    g = sub_group(p.get("position"))
+    b = (baselines or {}).get(g, {})
+    d_idx = team_defence_index(st)
+    ref_def = b.get("def_values") if b.get("def_n", 0) >= 20 else None
+    if d_idx is None:
+        rank_def, def_note = 0.5, "faible"
+    else:
+        rank_def = _shrunk_rank(ref_def, b.get("def_median"), d_idx, c["confidence"], d_idx)
+        def_note = None
+    if g == "CB":
+        quality = rank_def
+        raw = 0.55 * quality + 0.30 * c["availability"] + 0.15 * c["discipline"]
+        confidence, note, rank_prod = min(c["confidence"], 0.5), "faible", None
+    else:
+        ref_off = b.get("values") if b.get("n", 0) >= 20 else None
+        observed = c["g_a_90"] * st["coef"]
+        rank_prod = _shrunk_rank(ref_off, b.get("median"), observed, c["confidence"],
+                                 _clip(observed / EXPECTED_G_A_90["DEF"] / 1.3))
+        quality = 0.5 * rank_def + 0.5 * rank_prod
+        raw = 0.55 * quality + 0.35 * c["availability"] + 0.10 * c["discipline"]
+        confidence, note = c["confidence"], def_note
+        if note:
+            confidence = min(confidence, 0.5)
+    score = _finish(raw, c)
+    detail = _detail(st, c, confidence, note, sous_poste=g, rang_defensif=round(rank_def, 2),
+                     rang_production=None if rank_prod is None else round(rank_prod, 2),
+                     reference="vivier" if (ref_def or (g == "FB" and b.get("n", 0) >= 20)) else "fixe",
+                     equipe_encaisses_90=round(st["team_c90"], 2) if st.get("team_c90") else None,
+                     ligue_encaisses_90=round(st["league_c90"], 2) if st.get("league_c90") else None,
+                     indice_defensif=None if d_idx is None else round(d_idx, 3))
+    return score, detail
+
+
 def sport_score(p: dict, baselines: dict | None = None) -> tuple[float, dict]:
     group = position_group(p.get("position"))
     if group == "GK":
         return sport_score_gk(p, baselines)
+    if group == "DEF":
+        return sport_score_def(p, baselines)
     st = recent_stats(p)
     c = _common(p, st)
     availability, discipline, confidence, g_a_90 = c["availability"], c["discipline"], c["confidence"], c["g_a_90"]
@@ -404,7 +457,7 @@ def sport_score(p: dict, baselines: dict | None = None) -> tuple[float, dict]:
         prod = _percentile(ref["values"], shrunk)
     else:
         prod = _clip(prod_basis * st["coef"] / EXPECTED_G_A_90[group] / 1.3)
-    w_prod = {"DEF": 0.25, "MID": 0.45, "ATT": 0.60}[group]
+    w_prod = {"MID": 0.45, "ATT": 0.60}[group]
     raw = w_prod * prod + (0.9 - w_prod) * availability + 0.10 * discipline
     if rating_score is not None:
         raw = 0.67 * raw + 0.33 * rating_score
@@ -704,6 +757,7 @@ def score_pool(players: list[dict], fan_weights: dict, needs: dict, today: date,
 
         out.append({
             "id": p["id"], "name": p["name"], "position": p.get("position"), "groupe": group,
+            "sous_poste": sub_group(p.get("position")),
             "age": p.get("age"), "club": p.get("club"), "league_id": p.get("league_id"),
             "nationalites": p.get("citizenship", []), "naissance": p.get("birth_city"),
             "market_value": p.get("market_value"), "indemnite_estimee": estimated_fee(p, today),
