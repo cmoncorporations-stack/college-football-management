@@ -105,6 +105,7 @@ tbody tr.open{background:var(--surface2)}
 .tag.local{border-color:var(--fan);color:var(--fan)}
 .tag.under{border-color:var(--valeur);color:var(--valeur)}
 .tag.weak{border-style:dashed;color:var(--ink3)}
+.morebtn{font:inherit;font-size:13px;margin-left:8px;padding:4px 12px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--accent-ink);cursor:pointer}
 .detail td{background:var(--surface2);text-align:left;padding:16px 18px}
 .dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .dgrid h3{margin-bottom:6px}
@@ -256,7 +257,7 @@ const DATA=/*__DATA__*/null;
   try{Object.assign(st,JSON.parse(localStorage.getItem("ysmb")||"{}"))}catch(e){}
   for(const k of ["wS","wV","wF","fee","budget","age"]) $(k).value=st[k];
   $("pos").value=st.pos; $("fFree").checked=st.fFree; $("fLocal").checked=st.fLocal;
-  let openId=null;
+  let openId=null, shown=150;
 
   function score(j){
     const t=(st.wS+st.wV+st.wF)||1, s=j.scores;
@@ -295,7 +296,7 @@ const DATA=/*__DATA__*/null;
   function render(){
     $("oS").textContent=st.wS;$("oV").textContent=st.wV;$("oF").textContent=st.wF;
     $("oFee").textContent=eur(+st.fee);$("oBud").textContent=eur(+st.budget);$("oAge").textContent=st.age+" ans";
-    const list=filtered();
+    const all=filtered(), list=all.slice(0,shown);
     $("rows").innerHTML=list.length?list.map(({j,f},i)=>`<tr class="row${openId===j.id?" open":""}" data-id="${esc(j.id)}" tabindex="0" aria-expanded="${openId===j.id}">
       <td class="l rk">${i+1}</td>
       <td class="l"><div class="pname">${esc(j.name)}</div><div class="psub">${esc(j.position)} · ${j.age} ans</div></td>
@@ -304,13 +305,14 @@ const DATA=/*__DATA__*/null;
       <td>${j.scores.besoin.toFixed(2)}</td><td>${eur(j.market_value)}</td><td>${eur(j.indemnite_estimee)}</td>
       <td class="l"><div class="tags">${j.tags.map(t=>`<span class="tag ${tagCls(t)}">${esc(t)}</span>`).join("")}</div></td>
       <td class="final">${f.toFixed(1)}</td></tr>${openId===j.id?detail(j):""}`).join(""):`<tr><td colspan="9" class="empty">Aucun joueur ne passe ces filtres. Relevez l'indemnité max ou l'âge max.</td></tr>`;
-    $("count").textContent=`${list.length} joueur${list.length>1?"s":""} sur ${J.length} affichés.`;
+    $("count").innerHTML=`${list.length} joueur${list.length>1?"s":""} affiché${list.length>1?"s":""} sur ${all.length} retenu${all.length>1?"s":""} (vivier ${J.length}).`+(all.length>shown?` <button type="button" id="more" class="morebtn">Afficher 150 de plus</button>`:"");
+    const mb=$("more"); if(mb) mb.addEventListener("click",()=>{shown+=150;render()});
     renderPlan();
     try{localStorage.setItem("ysmb",JSON.stringify(st))}catch(e){}
   }
-  for(const k of ["wS","wV","wF","fee","budget","age"]) $(k).addEventListener("input",e=>{st[k]=+e.target.value;render()});
-  $("pos").addEventListener("change",e=>{st.pos=e.target.value;render()});
-  for(const k of ["fFree","fLocal"]) $(k).addEventListener("change",e=>{st[k]=e.target.checked;render()});
+  for(const k of ["wS","wV","wF","fee","budget","age"]) $(k).addEventListener("input",e=>{st[k]=+e.target.value;shown=150;render()});
+  $("pos").addEventListener("change",e=>{st.pos=e.target.value;shown=150;render()});
+  for(const k of ["fFree","fLocal"]) $(k).addEventListener("change",e=>{st[k]=e.target.checked;shown=150;render()});
   const toggle=tr=>{if(!tr)return;openId=openId===tr.dataset.id?null:tr.dataset.id;render()};
   $("rows").addEventListener("click",e=>{if(e.target.closest("a"))return;toggle(e.target.closest("tr.row"))});
   $("rows").addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();toggle(e.target.closest("tr.row"))}});
