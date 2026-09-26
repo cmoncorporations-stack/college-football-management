@@ -1,5 +1,5 @@
 {
- "genere": "2026-09-25",
+ "genere": "2026-09-26",
  "demo": true,
  "source": "demo",
  "competitions": [
@@ -92,1667 +92,117 @@
  },
  "joueurs": [
   {
-   "id": "DEMO-052",
-   "name": "Luca Lambert",
-   "position": "Goalkeeper",
-   "groupe": "GK",
-   "age": 23,
-   "club": "Démo Alpes FC",
-   "league_id": "C2",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Morges",
-   "market_value": 250000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2027-02-22",
-   "url": null,
-   "scores": {
-    "sport": 69.3,
-    "valeur": 89.4,
-    "fan": 81.6,
-    "besoin": 0.5,
-    "final": 78.4
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.0,
-     "minutes_saison": 1536,
-     "niveau": 1.0,
-     "disponibilite": 0.64,
-     "buts": 0,
-     "passes": 0,
-     "matchs": 44
-    },
-    "valeur": {
-     "contrat": 1.0,
-     "revente": 0.8,
-     "tendance": 1.5,
-     "mois_contrat": 4.9,
-     "sous_evaluation": 0.81
-    },
-    "fan": {
-     "ancrage": 0.85,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.55,
-     "lien_club": 0.6,
-     "origine": "Vaud",
-     "lien": "Foot suisse",
-     "tenure": 3.3
-    }
-   },
-   "tags": [
-    "Libre / pré-contrat",
-    "Sous-évalué",
-    "Valeur en hausse",
-    "Enfant du pays"
-   ]
-  },
-  {
-   "id": "DEMO-021",
-   "name": "Maxime Bianchi",
-   "position": "Centre-Forward",
-   "groupe": "ATT",
-   "age": 31,
-   "club": "Olympique Démo",
-   "league_id": "FR2",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Fribourg",
-   "market_value": 270000,
-   "indemnite_estimee": 143000,
-   "contract_expires": "2027-07-22",
-   "url": null,
-   "scores": {
-    "sport": 86.4,
-    "valeur": 68.9,
-    "fan": 81.1,
-    "besoin": 0.34,
-    "final": 76.0
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.54,
-     "minutes_saison": 1401,
-     "niveau": 1.45,
-     "disponibilite": 0.58,
-     "buts": 12,
-     "passes": 7,
-     "matchs": 38
-    },
-    "valeur": {
-     "contrat": 0.8,
-     "revente": 0.1,
-     "tendance": 1.25,
-     "mois_contrat": 9.9,
-     "sous_evaluation": 0.684
-    },
-    "fan": {
-     "ancrage": 0.7,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 1.0,
-     "lien_club": 0.3,
-     "origine": "Romandie",
-     "lien": "Foot francophone",
-     "tenure": 12.0
-    }
-   },
-   "tags": [
-    "Fin de contrat < 12 mois",
-    "Valeur en hausse"
-   ]
-  },
-  {
-   "id": "DEMO-045",
-   "name": "Jonas Bianchi",
-   "position": "Attacking Midfield",
-   "groupe": "MID",
-   "age": 24,
-   "club": "Démo Sporting",
-   "league_id": "C1",
-   "nationalites": [
-    "France"
-   ],
-   "naissance": "Besançon",
-   "market_value": 440000,
-   "indemnite_estimee": 337000,
-   "contract_expires": "2028-08-25",
-   "url": null,
-   "scores": {
-    "sport": 91.2,
-    "valeur": 61.2,
-    "fan": 63.2,
-    "besoin": 0.51,
-    "final": 75.4
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.26,
-     "minutes_saison": 1726,
-     "niveau": 1.45,
-     "disponibilite": 0.72,
-     "buts": 5,
-     "passes": 7,
-     "matchs": 42
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 0.8,
-     "tendance": 0.42,
-     "mois_contrat": 23.0,
-     "sous_evaluation": 0.646
-    },
-    "fan": {
-     "ancrage": 0.4,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.34,
-     "lien_club": 0.6,
-     "origine": "Frontalier",
-     "lien": "Foot suisse",
-     "tenure": 4.0
-    }
-   },
-   "tags": [
-    "Valeur en hausse"
-   ]
-  },
-  {
-   "id": "DEMO-073",
-   "name": "Luca Moreau",
+   "id": "DEMO-051",
+   "name": "Quentin Bovet",
    "position": "Left-Back",
    "groupe": "DEF",
-   "age": 19,
-   "club": "Démo Alpes FC",
-   "league_id": "C2",
-   "nationalites": [
-    "Belgium"
-   ],
-   "naissance": "Liège",
-   "market_value": 420000,
-   "indemnite_estimee": 371000,
-   "contract_expires": "2029-03-13",
-   "url": null,
-   "scores": {
-    "sport": 93.5,
-    "valeur": 60.1,
-    "fan": 60.1,
-    "besoin": 0.5,
-    "final": 75.1
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.17,
-     "minutes_saison": 2176,
-     "niveau": 1.0,
-     "disponibilite": 0.91,
-     "buts": 4,
-     "passes": 6,
-     "matchs": 63
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 1.0,
-     "tendance": -0.09,
-     "mois_contrat": 29.6,
-     "sous_evaluation": 0.797
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.7,
-     "lien_club": 0.6,
-     "origine": "International",
-     "lien": "Foot suisse",
-     "tenure": 5.0
-    }
-   },
-   "tags": []
-  },
-  {
-   "id": "DEMO-035",
-   "name": "Dario Bamba",
-   "position": "Right Winger",
-   "groupe": "ATT",
-   "age": 23,
-   "club": "FC Démo Métropole",
-   "league_id": "C1",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Yverdon-les-Bains",
-   "market_value": 700000,
-   "indemnite_estimee": 345000,
-   "contract_expires": "2027-05-23",
-   "url": null,
-   "scores": {
-    "sport": 82.6,
-    "valeur": 54.1,
-    "fan": 96.0,
-    "besoin": 0.34,
-    "final": 73.7
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.56,
-     "minutes_saison": 1528,
-     "niveau": 1.45,
-     "disponibilite": 0.64,
-     "buts": 10,
-     "passes": 13,
-     "matchs": 41
-    },
-    "valeur": {
-     "contrat": 0.8,
-     "revente": 0.8,
-     "tendance": -0.31,
-     "mois_contrat": 7.9,
-     "sous_evaluation": 0.456
-    },
-    "fan": {
-     "ancrage": 1.0,
-     "francophonie": 1.0,
-     "fidelite": 0.83,
-     "media": 1.0,
-     "lien_club": 1.0,
-     "origine": "Bassin nord-vaudois",
-     "lien": "Ancien d'Yverdon",
-     "tenure": 2.5
-    }
-   },
-   "tags": [
-    "Fin de contrat < 12 mois",
-    "Enfant du pays",
-    "Retour au club"
-   ]
-  },
-  {
-   "id": "DEMO-042",
-   "name": "Kevin Meier",
-   "position": "Left-Back",
-   "groupe": "DEF",
-   "age": 27,
-   "club": "Olympique Démo",
-   "league_id": "FR2",
-   "nationalites": [
-    "France",
-    "Senegal"
-   ],
-   "naissance": "Paris",
-   "market_value": 170000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2027-02-22",
-   "url": null,
-   "scores": {
-    "sport": 85.6,
-    "valeur": 66.3,
-    "fan": 58.4,
-    "besoin": 0.5,
-    "final": 73.0
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.1,
-     "minutes_saison": 1578,
-     "niveau": 1.45,
-     "disponibilite": 0.66,
-     "buts": 2,
-     "passes": 2,
-     "matchs": 48
-    },
-    "valeur": {
-     "contrat": 1.0,
-     "revente": 0.3,
-     "tendance": -0.43,
-     "mois_contrat": 4.9,
-     "sous_evaluation": 0.886
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 1.0,
-     "fidelite": 0.75,
-     "media": 0.64,
-     "lien_club": 1.0,
-     "origine": "International",
-     "lien": "Ancien d'Yverdon",
-     "tenure": 2.2
-    }
-   },
-   "tags": [
-    "Libre / pré-contrat",
-    "Sous-évalué",
-    "Retour au club"
-   ]
-  },
-  {
-   "id": "DEMO-043",
-   "name": "Noah Diallo",
-   "position": "Attacking Midfield",
-   "groupe": "MID",
-   "age": 31,
-   "club": "US Démo Franche-Comté",
-   "league_id": "FR3",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Payerne",
-   "market_value": 230000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2026-12-24",
-   "url": null,
-   "scores": {
-    "sport": 77.6,
-    "valeur": 61.9,
-    "fan": 72.7,
-    "besoin": 0.51,
-    "final": 71.9
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.36,
-     "minutes_saison": 1760,
-     "niveau": 1.0,
-     "disponibilite": 0.73,
-     "buts": 7,
-     "passes": 10,
-     "matchs": 49
-    },
-    "valeur": {
-     "contrat": 1.0,
-     "revente": 0.1,
-     "tendance": -0.15,
-     "mois_contrat": 3.0,
-     "sous_evaluation": 0.709
-    },
-    "fan": {
-     "ancrage": 1.0,
-     "francophonie": 1.0,
-     "fidelite": 0.67,
-     "media": 0.43,
-     "lien_club": 0.3,
-     "origine": "Bassin nord-vaudois",
-     "lien": "Foot francophone",
-     "tenure": 2.0
-    }
-   },
-   "tags": [
-    "Libre / pré-contrat",
-    "Enfant du pays"
-   ]
-  },
-  {
-   "id": "DEMO-017",
-   "name": "Arthur Dubois",
-   "position": "Right-Back",
-   "groupe": "DEF",
-   "age": 24,
-   "club": "US Démo Franche-Comté",
-   "league_id": "FR3",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Zürich",
-   "market_value": 100000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2027-02-22",
-   "url": null,
-   "scores": {
-    "sport": 67.2,
-    "valeur": 90.5,
-    "fan": 52.1,
-    "besoin": 0.5,
-    "final": 70.4
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.07,
-     "minutes_saison": 1662,
-     "niveau": 1.0,
-     "disponibilite": 0.69,
-     "buts": 2,
-     "passes": 1,
-     "matchs": 45
-    },
-    "valeur": {
-     "contrat": 1.0,
-     "revente": 0.8,
-     "tendance": 0.25,
-     "mois_contrat": 4.9,
-     "sous_evaluation": 0.962
-    },
-    "fan": {
-     "ancrage": 0.45,
-     "francophonie": 0.6,
-     "fidelite": 0.58,
-     "media": 0.18,
-     "lien_club": 1.0,
-     "origine": "Suisse",
-     "lien": "Ancien d'Yverdon",
-     "tenure": 1.8
-    }
-   },
-   "tags": [
-    "Libre / pré-contrat",
-    "Sous-évalué",
-    "Retour au club"
-   ]
-  },
-  {
-   "id": "DEMO-076",
-   "name": "Malik Dubois",
-   "position": "Central Midfield",
-   "groupe": "MID",
-   "age": 24,
-   "club": "Démo Sporting",
-   "league_id": "C1",
-   "nationalites": [
-    "France"
-   ],
-   "naissance": "Besançon",
-   "market_value": 930000,
-   "indemnite_estimee": 491000,
-   "contract_expires": "2027-07-22",
-   "url": null,
-   "scores": {
-    "sport": 81.3,
-    "valeur": 51.4,
-    "fan": 71.3,
-    "besoin": 0.51,
-    "final": 70.0
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.25,
-     "minutes_saison": 1036,
-     "niveau": 1.45,
-     "disponibilite": 0.43,
-     "buts": 3,
-     "passes": 4,
-     "matchs": 30
-    },
-    "valeur": {
-     "contrat": 0.8,
-     "revente": 0.8,
-     "tendance": -0.09,
-     "mois_contrat": 9.9,
-     "sous_evaluation": 0.278
-    },
-    "fan": {
-     "ancrage": 0.4,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.78,
-     "lien_club": 0.6,
-     "origine": "Frontalier",
-     "lien": "Foot suisse",
-     "tenure": 4.5
-    }
-   },
-   "tags": [
-    "Fin de contrat < 12 mois"
-   ]
-  },
-  {
-   "id": "DEMO-030",
-   "name": "Quentin Bamba",
-   "position": "Goalkeeper",
-   "groupe": "GK",
-   "age": 29,
-   "club": "FC Démo Lac-Léman",
-   "league_id": "C2",
-   "nationalites": [
-    "Senegal"
-   ],
-   "naissance": "Dakar",
-   "market_value": 450000,
-   "indemnite_estimee": 238000,
-   "contract_expires": "2027-07-22",
-   "url": null,
-   "scores": {
-    "sport": 95.0,
-    "valeur": 56.3,
-    "fan": 37.7,
-    "besoin": 0.5,
-    "final": 69.1
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.0,
-     "minutes_saison": 2288,
-     "niveau": 1.0,
-     "disponibilite": 0.95,
-     "buts": 0,
-     "passes": 0,
-     "matchs": 57
-    },
-    "valeur": {
-     "contrat": 0.8,
-     "revente": 0.3,
-     "tendance": -0.1,
-     "mois_contrat": 9.9,
-     "sous_evaluation": 0.595
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 1.0,
-     "fidelite": 0.5,
-     "media": 0.11,
-     "lien_club": 0.6,
-     "origine": "International",
-     "lien": "Foot suisse",
-     "tenure": 1.5
-    }
-   },
-   "tags": [
-    "Fin de contrat < 12 mois"
-   ]
-  },
-  {
-   "id": "DEMO-054",
-   "name": "Marco Diallo",
-   "position": "Attacking Midfield",
-   "groupe": "MID",
-   "age": 29,
-   "club": "Olympique Démo",
-   "league_id": "FR2",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Lausanne",
-   "market_value": 200000,
-   "indemnite_estimee": 200000,
-   "contract_expires": "2029-09-29",
-   "url": null,
-   "scores": {
-    "sport": 62.7,
-    "valeur": 58.9,
-    "fan": 82.8,
-    "besoin": 0.51,
-    "final": 66.8
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.42,
-     "minutes_saison": 442,
-     "niveau": 1.45,
-     "disponibilite": 0.18,
-     "buts": 2,
-     "passes": 3,
-     "matchs": 11
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 0.3,
-     "tendance": 0.67,
-     "mois_contrat": 36.1,
-     "sous_evaluation": 0.734
-    },
-    "fan": {
-     "ancrage": 0.85,
-     "francophonie": 1.0,
-     "fidelite": 0.92,
-     "media": 0.93,
-     "lien_club": 0.3,
-     "origine": "Vaud",
-     "lien": "Foot francophone",
-     "tenure": 2.8
-    }
-   },
-   "tags": [
-    "Valeur en hausse",
-    "Enfant du pays"
-   ]
-  },
-  {
-   "id": "DEMO-069",
-   "name": "Kylian Mottier",
-   "position": "Centre-Back",
-   "groupe": "DEF",
-   "age": 23,
-   "club": "SC Démo Rhin",
-   "league_id": "C2",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Lausanne",
-   "market_value": 630000,
-   "indemnite_estimee": 310000,
-   "contract_expires": "2027-05-23",
-   "url": null,
-   "scores": {
-    "sport": 61.7,
-    "valeur": 58.8,
-    "fan": 82.9,
-    "besoin": 0.5,
-    "final": 66.1
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.08,
-     "minutes_saison": 1518,
-     "niveau": 1.0,
-     "disponibilite": 0.63,
-     "buts": 2,
-     "passes": 1,
-     "matchs": 43
-    },
-    "valeur": {
-     "contrat": 0.8,
-     "revente": 0.8,
-     "tendance": 0.11,
-     "mois_contrat": 7.9,
-     "sous_evaluation": 0.367
-    },
-    "fan": {
-     "ancrage": 0.85,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.62,
-     "lien_club": 0.6,
-     "origine": "Vaud",
-     "lien": "Foot suisse",
-     "tenure": 3.0
-    }
-   },
-   "tags": [
-    "Fin de contrat < 12 mois",
-    "Enfant du pays"
-   ]
-  },
-  {
-   "id": "DEMO-046",
-   "name": "Adrien Favre",
-   "position": "Goalkeeper",
-   "groupe": "GK",
-   "age": 19,
+   "age": 22,
    "club": "AC Démo Jura",
    "league_id": "C2",
    "nationalites": [
     "Switzerland"
    ],
-   "naissance": "Zürich",
-   "market_value": 80000,
+   "naissance": "Lausanne",
+   "market_value": 1190000,
    "indemnite_estimee": 0,
-   "contract_expires": "2026-12-24",
+   "contract_expires": "2026-12-25",
    "url": null,
    "scores": {
-    "sport": 45.3,
-    "valeur": 99.0,
-    "fan": 62.2,
+    "sport": 83.0,
+    "valeur": 59.2,
+    "fan": 84.2,
     "besoin": 0.5,
-    "final": 65.6
+    "final": 76.2
    },
    "detail": {
     "sport": {
-     "g_a_90": 0.0,
-     "minutes_saison": 786,
+     "g_a_90": 0.15,
+     "minutes_saison": 1892,
      "niveau": 1.0,
-     "disponibilite": 0.33,
-     "buts": 0,
-     "passes": 0,
-     "matchs": 21
+     "disponibilite": 0.79,
+     "buts": 3,
+     "passes": 5,
+     "matchs": 45,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.23,
+     "xg": 2.32,
+     "xa": 1.61,
+     "note_sofascore": 7.32,
+     "saison_sofascore": "25/26"
     },
     "valeur": {
      "contrat": 1.0,
      "revente": 1.0,
-     "tendance": 0.6,
+     "tendance": -0.37,
      "mois_contrat": 3.0,
-     "sous_evaluation": 0.975
-    },
-    "fan": {
-     "ancrage": 0.45,
-     "francophonie": 0.5,
-     "fidelite": 1.0,
-     "media": 0.55,
-     "lien_club": 0.6,
-     "origine": "Suisse",
-     "lien": "Foot suisse",
-     "tenure": 3.0
-    }
-   },
-   "tags": [
-    "Libre / pré-contrat",
-    "Sous-évalué",
-    "Valeur en hausse"
-   ]
-  },
-  {
-   "id": "DEMO-015",
-   "name": "Kevin Brunner",
-   "position": "Left-Back",
-   "groupe": "DEF",
-   "age": 24,
-   "club": "AC Démo Jura",
-   "league_id": "C2",
-   "nationalites": [
-    "Germany"
-   ],
-   "naissance": "München",
-   "market_value": 240000,
-   "indemnite_estimee": 127000,
-   "contract_expires": "2027-07-22",
-   "url": null,
-   "scores": {
-    "sport": 73.1,
-    "valeur": 67.7,
-    "fan": 48.1,
-    "besoin": 0.5,
-    "final": 65.2
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.12,
-     "minutes_saison": 1867,
-     "niveau": 1.0,
-     "disponibilite": 0.78,
-     "buts": 2,
-     "passes": 4,
-     "matchs": 58
-    },
-    "valeur": {
-     "contrat": 0.8,
-     "revente": 0.8,
-     "tendance": -0.38,
-     "mois_contrat": 9.9,
-     "sous_evaluation": 0.835
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 0.15,
-     "fidelite": 1.0,
-     "media": 0.65,
-     "lien_club": 0.6,
-     "origine": "International",
-     "lien": "Foot suisse",
-     "tenure": 11.0
-    }
-   },
-   "tags": [
-    "Fin de contrat < 12 mois",
-    "Sous-évalué"
-   ]
-  },
-  {
-   "id": "DEMO-041",
-   "name": "Noah Guignard",
-   "position": "Left-Back",
-   "groupe": "DEF",
-   "age": 31,
-   "club": "Olympique Démo",
-   "league_id": "FR2",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Lausanne",
-   "market_value": 220000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2027-02-22",
-   "url": null,
-   "scores": {
-    "sport": 64.0,
-    "valeur": 67.3,
-    "fan": 63.6,
-    "besoin": 0.5,
-    "final": 64.9
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.09,
-     "minutes_saison": 1338,
-     "niveau": 1.45,
-     "disponibilite": 0.56,
-     "buts": 2,
-     "passes": 1,
-     "matchs": 40
-    },
-    "valeur": {
-     "contrat": 1.0,
-     "revente": 0.1,
-     "tendance": 0.22,
-     "mois_contrat": 4.9,
-     "sous_evaluation": 0.658
+     "sous_evaluation": 0.418
     },
     "fan": {
      "ancrage": 0.85,
      "francophonie": 1.0,
-     "fidelite": 0.33,
-     "media": 0.63,
-     "lien_club": 0.3,
-     "origine": "Vaud",
-     "lien": "Foot francophone",
-     "tenure": 1.0
-    }
-   },
-   "tags": [
-    "Libre / pré-contrat",
-    "Enfant du pays"
-   ]
-  },
-  {
-   "id": "DEMO-025",
-   "name": "Ibrahima Brunner",
-   "position": "Left-Back",
-   "groupe": "DEF",
-   "age": 23,
-   "club": "Démo Sporting",
-   "league_id": "C1",
-   "nationalites": [
-    "Germany"
-   ],
-   "naissance": "München",
-   "market_value": 1350000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2027-02-22",
-   "url": null,
-   "scores": {
-    "sport": 84.4,
-    "valeur": 52.0,
-    "fan": 40.0,
-    "besoin": 0.5,
-    "final": 63.6
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.11,
-     "minutes_saison": 1812,
-     "niveau": 1.45,
-     "disponibilite": 0.76,
-     "buts": 3,
-     "passes": 2,
-     "matchs": 48
-    },
-    "valeur": {
-     "contrat": 1.0,
-     "revente": 0.8,
-     "tendance": -0.03,
-     "mois_contrat": 4.9,
-     "sous_evaluation": 0.139
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 0.15,
      "fidelite": 1.0,
-     "media": 0.21,
+     "media": 0.69,
      "lien_club": 0.6,
-     "origine": "International",
+     "origine": "Vaud",
      "lien": "Foot suisse",
      "tenure": 9.0
     }
    },
    "tags": [
-    "Libre / pré-contrat"
-   ]
-  },
-  {
-   "id": "DEMO-009",
-   "name": "Nils Bianchi",
-   "position": "Centre-Back",
-   "groupe": "DEF",
-   "age": 31,
-   "club": "AS Démo Savoie",
-   "league_id": "FR3",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Orbe",
-   "market_value": 410000,
-   "indemnite_estimee": 216000,
-   "contract_expires": "2027-07-22",
-   "url": null,
-   "scores": {
-    "sport": 63.2,
-    "valeur": 46.5,
-    "fan": 83.8,
-    "besoin": 0.5,
-    "final": 63.3
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.08,
-     "minutes_saison": 1513,
-     "niveau": 1.0,
-     "disponibilite": 0.63,
-     "buts": 2,
-     "passes": 1,
-     "matchs": 45
-    },
-    "valeur": {
-     "contrat": 0.8,
-     "revente": 0.1,
-     "tendance": -0.11,
-     "mois_contrat": 9.9,
-     "sous_evaluation": 0.43
-    },
-    "fan": {
-     "ancrage": 1.0,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.62,
-     "lien_club": 0.3,
-     "origine": "Bassin nord-vaudois",
-     "lien": "Foot francophone",
-     "tenure": 3.0
-    }
-   },
-   "tags": [
-    "Fin de contrat < 12 mois",
+    "Libre / pré-contrat",
     "Enfant du pays"
    ]
   },
   {
-   "id": "DEMO-020",
-   "name": "Nils Morel",
+   "id": "DEMO-018",
+   "name": "Maxime Traoré",
    "position": "Centre-Back",
    "groupe": "DEF",
    "age": 19,
-   "club": "FC Démo Broye",
-   "league_id": "CHPL",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Lausanne",
-   "market_value": 470000,
-   "indemnite_estimee": 231000,
-   "contract_expires": "2027-05-23",
-   "url": null,
-   "scores": {
-    "sport": 51.7,
-    "valeur": 64.7,
-    "fan": 81.0,
-    "besoin": 0.5,
-    "final": 62.9
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.08,
-     "minutes_saison": 1586,
-     "niveau": 0.7,
-     "disponibilite": 0.66,
-     "buts": 2,
-     "passes": 1,
-     "matchs": 37
-    },
-    "valeur": {
-     "contrat": 0.8,
-     "revente": 1.0,
-     "tendance": -0.13,
-     "mois_contrat": 7.9,
-     "sous_evaluation": 0.557
-    },
-    "fan": {
-     "ancrage": 0.85,
-     "francophonie": 1.0,
-     "fidelite": 0.92,
-     "media": 0.62,
-     "lien_club": 0.6,
-     "origine": "Vaud",
-     "lien": "Foot suisse",
-     "tenure": 2.8
-    }
-   },
-   "tags": [
-    "Fin de contrat < 12 mois",
-    "Enfant du pays"
-   ]
-  },
-  {
-   "id": "DEMO-039",
-   "name": "Adrien Favre",
-   "position": "Left Winger",
-   "groupe": "ATT",
-   "age": 30,
-   "club": "RFC Démo Wallonie",
-   "league_id": "BE2",
-   "nationalites": [
-    "France"
-   ],
-   "naissance": "Besançon",
-   "market_value": 400000,
-   "indemnite_estimee": 197000,
-   "contract_expires": "2027-05-23",
-   "url": null,
-   "scores": {
-    "sport": 73.3,
-    "valeur": 52.3,
-    "fan": 69.2,
-    "besoin": 0.34,
-    "final": 62.8
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.37,
-     "minutes_saison": 2432,
-     "niveau": 1.05,
-     "disponibilite": 1.0,
-     "buts": 11,
-     "passes": 13,
-     "matchs": 73
-    },
-    "valeur": {
-     "contrat": 0.8,
-     "revente": 0.1,
-     "tendance": -0.05,
-     "mois_contrat": 7.9,
-     "sous_evaluation": 0.544
-    },
-    "fan": {
-     "ancrage": 0.4,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.88,
-     "lien_club": 0.3,
-     "origine": "Frontalier",
-     "lien": "Foot francophone",
-     "tenure": 3.0
-    }
-   },
-   "tags": [
-    "Fin de contrat < 12 mois"
-   ]
-  },
-  {
-   "id": "DEMO-070",
-   "name": "Rayan Jaquier",
-   "position": "Central Midfield",
-   "groupe": "MID",
-   "age": 28,
-   "club": "Démo Sporting",
+   "club": "FC Démo Métropole",
    "league_id": "C1",
-   "nationalites": [
-    "Senegal"
-   ],
-   "naissance": "Dakar",
-   "market_value": 540000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2026-12-24",
-   "url": null,
-   "scores": {
-    "sport": 71.5,
-    "valeur": 48.4,
-    "fan": 61.0,
-    "besoin": 0.51,
-    "final": 62.1
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.23,
-     "minutes_saison": 1286,
-     "niveau": 1.45,
-     "disponibilite": 0.54,
-     "buts": 3,
-     "passes": 5,
-     "matchs": 31
-    },
-    "valeur": {
-     "contrat": 1.0,
-     "revente": 0.3,
-     "tendance": -0.39,
-     "mois_contrat": 3.0,
-     "sous_evaluation": 0.418
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.75,
-     "lien_club": 0.6,
-     "origine": "International",
-     "lien": "Foot suisse",
-     "tenure": 4.0
-    }
-   },
-   "tags": [
-    "Libre / pré-contrat"
-   ]
-  },
-  {
-   "id": "DEMO-011",
-   "name": "Arthur Rossi",
-   "position": "Left-Back",
-   "groupe": "DEF",
-   "age": 27,
-   "club": "Démo Sporting",
-   "league_id": "C1",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Lausanne",
-   "market_value": 1300000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2026-12-24",
-   "url": null,
-   "scores": {
-    "sport": 65.4,
-    "valeur": 45.0,
-    "fan": 76.1,
-    "besoin": 0.5,
-    "final": 61.9
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.15,
-     "minutes_saison": 1224,
-     "niveau": 1.45,
-     "disponibilite": 0.51,
-     "buts": 2,
-     "passes": 3,
-     "matchs": 33
-    },
-    "valeur": {
-     "contrat": 1.0,
-     "revente": 0.3,
-     "tendance": 0.17,
-     "mois_contrat": 3.0,
-     "sous_evaluation": 0.051
-    },
-    "fan": {
-     "ancrage": 0.85,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.25,
-     "lien_club": 0.6,
-     "origine": "Vaud",
-     "lien": "Foot suisse",
-     "tenure": 10.0
-    }
-   },
-   "tags": [
-    "Libre / pré-contrat",
-    "Enfant du pays"
-   ]
-  },
-  {
-   "id": "DEMO-040",
-   "name": "Dario Moreau",
-   "position": "Centre-Forward",
-   "groupe": "ATT",
-   "age": 26,
-   "club": "Démo Alpes FC",
-   "league_id": "C2",
-   "nationalites": [
-    "Cote d'Ivoire"
-   ],
-   "naissance": "Abidjan",
-   "market_value": 1090000,
-   "indemnite_estimee": 653000,
-   "contract_expires": "2027-11-19",
-   "url": null,
-   "scores": {
-    "sport": 78.7,
-    "valeur": 45.8,
-    "fan": 62.7,
-    "besoin": 0.34,
-    "final": 61.7
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.71,
-     "minutes_saison": 1398,
-     "niveau": 1.0,
-     "disponibilite": 0.58,
-     "buts": 15,
-     "passes": 10,
-     "matchs": 38
-    },
-    "valeur": {
-     "contrat": 0.5,
-     "revente": 0.55,
-     "tendance": 0.85,
-     "mois_contrat": 13.8,
-     "sous_evaluation": 0.127
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.56,
-     "lien_club": 1.0,
-     "origine": "International",
-     "lien": "Ancien d'Yverdon",
-     "tenure": 3.0
-    }
-   },
-   "tags": [
-    "Valeur en hausse",
-    "Retour au club"
-   ]
-  },
-  {
-   "id": "DEMO-019",
-   "name": "Nils Sow",
-   "position": "Left Winger",
-   "groupe": "ATT",
-   "age": 19,
-   "club": "US Démo Franche-Comté",
-   "league_id": "FR3",
-   "nationalites": [
-    "Germany"
-   ],
-   "naissance": "München",
-   "market_value": 410000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2026-12-24",
-   "url": null,
-   "scores": {
-    "sport": 57.6,
-    "valeur": 82.1,
-    "fan": 54.3,
-    "besoin": 0.34,
-    "final": 61.1
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.37,
-     "minutes_saison": 1340,
-     "niveau": 1.0,
-     "disponibilite": 0.56,
-     "buts": 6,
-     "passes": 7,
-     "matchs": 33
-    },
-    "valeur": {
-     "contrat": 1.0,
-     "revente": 1.0,
-     "tendance": 0.37,
-     "mois_contrat": 3.0,
-     "sous_evaluation": 0.62
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 0.6,
-     "fidelite": 1.0,
-     "media": 0.88,
-     "lien_club": 0.3,
-     "origine": "International",
-     "lien": "Foot francophone",
-     "tenure": 4.5
-    }
-   },
-   "tags": [
-    "Libre / pré-contrat",
-    "Valeur en hausse"
-   ]
-  },
-  {
-   "id": "DEMO-055",
-   "name": "Karim Traoré",
-   "position": "Left Winger",
-   "groupe": "ATT",
-   "age": 28,
-   "club": "Démo Alpes FC",
-   "league_id": "C2",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Morges",
-   "market_value": 90000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2027-02-22",
-   "url": null,
-   "scores": {
-    "sport": 53.1,
-    "valeur": 68.5,
-    "fan": 77.9,
-    "besoin": 0.34,
-    "final": 60.8
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.27,
-     "minutes_saison": 1662,
-     "niveau": 1.0,
-     "disponibilite": 0.69,
-     "buts": 5,
-     "passes": 7,
-     "matchs": 46
-    },
-    "valeur": {
-     "contrat": 1.0,
-     "revente": 0.3,
-     "tendance": -0.4,
-     "mois_contrat": 4.9,
-     "sous_evaluation": 0.924
-    },
-    "fan": {
-     "ancrage": 0.85,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.35,
-     "lien_club": 0.6,
-     "origine": "Vaud",
-     "lien": "Foot suisse",
-     "tenure": 6.0
-    }
-   },
-   "tags": [
-    "Libre / pré-contrat",
-    "Sous-évalué",
-    "Enfant du pays"
-   ]
-  },
-  {
-   "id": "DEMO-007",
-   "name": "Moussa Camara",
-   "position": "Centre-Forward",
-   "groupe": "ATT",
-   "age": 28,
-   "club": "AS Démo Savoie",
-   "league_id": "FR3",
-   "nationalites": [
-    "France"
-   ],
-   "naissance": "Lyon",
-   "market_value": 110000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2026-12-24",
-   "url": null,
-   "scores": {
-    "sport": 64.4,
-    "valeur": 75.5,
-    "fan": 44.0,
-    "besoin": 0.34,
-    "final": 59.6
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.38,
-     "minutes_saison": 2003,
-     "niveau": 1.0,
-     "disponibilite": 0.83,
-     "buts": 12,
-     "passes": 7,
-     "matchs": 56
-    },
-    "valeur": {
-     "contrat": 1.0,
-     "revente": 0.3,
-     "tendance": 0.0,
-     "mois_contrat": 3.0,
-     "sous_evaluation": 0.899
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 1.0,
-     "fidelite": 0.67,
-     "media": 0.45,
-     "lien_club": 0.3,
-     "origine": "International",
-     "lien": "Foot francophone",
-     "tenure": 2.0
-    }
-   },
-   "tags": [
-    "Libre / pré-contrat",
-    "Sous-évalué"
-   ]
-  },
-  {
-   "id": "DEMO-033",
-   "name": "Kylian Traoré",
-   "position": "Centre-Back",
-   "groupe": "DEF",
-   "age": 28,
-   "club": "Démo Sporting",
-   "league_id": "C1",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Genève",
-   "market_value": 230000,
-   "indemnite_estimee": 176000,
-   "contract_expires": "2028-08-25",
-   "url": null,
-   "scores": {
-    "sport": 59.3,
-    "valeur": 48.2,
-    "fan": 73.7,
-    "besoin": 0.5,
-    "final": 59.6
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.06,
-     "minutes_saison": 1282,
-     "niveau": 1.45,
-     "disponibilite": 0.53,
-     "buts": 1,
-     "passes": 1,
-     "matchs": 36
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 0.3,
-     "tendance": 0.1,
-     "mois_contrat": 23.0,
-     "sous_evaluation": 0.671
-    },
-    "fan": {
-     "ancrage": 0.7,
-     "francophonie": 1.0,
-     "fidelite": 0.83,
-     "media": 0.6,
-     "lien_club": 0.6,
-     "origine": "Romandie",
-     "lien": "Foot suisse",
-     "tenure": 2.5
-    }
-   },
-   "tags": []
-  },
-  {
-   "id": "DEMO-051",
-   "name": "Loïc Cuendet",
-   "position": "Right Winger",
-   "groupe": "ATT",
-   "age": 24,
-   "club": "RFC Démo Wallonie",
-   "league_id": "BE2",
-   "nationalites": [
-    "Belgium"
-   ],
-   "naissance": "Liège",
-   "market_value": 1560000,
-   "indemnite_estimee": 935000,
-   "contract_expires": "2027-11-19",
-   "url": null,
-   "scores": {
-    "sport": 90.8,
-    "valeur": 36.0,
-    "fan": 42.0,
-    "besoin": 0.34,
-    "final": 59.2
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.58,
-     "minutes_saison": 2105,
-     "niveau": 1.05,
-     "disponibilite": 0.88,
-     "buts": 14,
-     "passes": 19,
-     "matchs": 55
-    },
-    "valeur": {
-     "contrat": 0.5,
-     "revente": 0.8,
-     "tendance": -0.1,
-     "mois_contrat": 13.8,
-     "sous_evaluation": 0.089
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 1.0,
-     "fidelite": 0.5,
-     "media": 0.56,
-     "lien_club": 0.3,
-     "origine": "International",
-     "lien": "Foot francophone",
-     "tenure": 1.5
-    }
-   },
-   "tags": []
-  },
-  {
-   "id": "DEMO-048",
-   "name": "Amadou Keller",
-   "position": "Left Winger",
-   "groupe": "ATT",
-   "age": 31,
-   "club": "Démo Alpes FC",
-   "league_id": "C2",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Fribourg",
-   "market_value": 740000,
-   "indemnite_estimee": 443000,
-   "contract_expires": "2027-11-19",
-   "url": null,
-   "scores": {
-    "sport": 74.7,
-    "valeur": 28.8,
-    "fan": 76.2,
-    "besoin": 0.34,
-    "final": 58.4
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.45,
-     "minutes_saison": 2060,
-     "niveau": 1.0,
-     "disponibilite": 0.86,
-     "buts": 11,
-     "passes": 14,
-     "matchs": 62
-    },
-    "valeur": {
-     "contrat": 0.5,
-     "revente": 0.1,
-     "tendance": -0.14,
-     "mois_contrat": 13.8,
-     "sous_evaluation": 0.19
-    },
-    "fan": {
-     "ancrage": 0.7,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.52,
-     "lien_club": 0.6,
-     "origine": "Romandie",
-     "lien": "Foot suisse",
-     "tenure": 3.0
-    }
-   },
-   "tags": []
-  },
-  {
-   "id": "DEMO-066",
-   "name": "Quentin Mendy",
-   "position": "Right-Back",
-   "groupe": "DEF",
-   "age": 28,
-   "club": "FC Démo Broye",
-   "league_id": "CHPL",
    "nationalites": [
     "Switzerland"
    ],
    "naissance": "Zürich",
-   "market_value": 410000,
-   "indemnite_estimee": 216000,
-   "contract_expires": "2027-07-22",
+   "market_value": 2720000,
+   "indemnite_estimee": 2720000,
+   "contract_expires": "2029-09-30",
    "url": null,
    "scores": {
-    "sport": 65.6,
-    "valeur": 52.6,
-    "fan": 51.5,
+    "sport": 100.0,
+    "valeur": 49.6,
+    "fan": 63.8,
     "besoin": 0.5,
-    "final": 58.2
+    "final": 75.8
    },
    "detail": {
     "sport": {
-     "g_a_90": 0.16,
-     "minutes_saison": 1654,
-     "niveau": 0.7,
-     "disponibilite": 0.69,
+     "g_a_90": 0.1,
+     "minutes_saison": 2572,
+     "niveau": 1.45,
+     "disponibilite": 1.0,
      "buts": 3,
      "passes": 4,
-     "matchs": 41
+     "matchs": 73,
+     "source": "transfermarkt"
     },
     "valeur": {
-     "contrat": 0.8,
-     "revente": 0.3,
-     "tendance": -0.11,
-     "mois_contrat": 9.9,
-     "sous_evaluation": 0.506
+     "contrat": 0.2,
+     "revente": 1.0,
+     "tendance": 0.84,
+     "mois_contrat": 36.1,
+     "sous_evaluation": 0.241
     },
     "fan": {
      "ancrage": 0.45,
      "francophonie": 0.5,
-     "fidelite": 0.78,
-     "media": 0.25,
+     "fidelite": 1.0,
+     "media": 0.64,
      "lien_club": 0.6,
      "origine": "Suisse",
      "lien": "Foot suisse",
-     "tenure": 2.3
-    }
-   },
-   "tags": [
-    "Fin de contrat < 12 mois"
-   ]
-  },
-  {
-   "id": "DEMO-004",
-   "name": "Enzo Morel",
-   "position": "Right-Back",
-   "groupe": "DEF",
-   "age": 24,
-   "club": "FC Démo Lac-Léman",
-   "league_id": "C2",
-   "nationalites": [
-    "Senegal"
-   ],
-   "naissance": "Dakar",
-   "market_value": 910000,
-   "indemnite_estimee": 910000,
-   "contract_expires": "2029-09-29",
-   "url": null,
-   "scores": {
-    "sport": 66.0,
-    "valeur": 42.5,
-    "fan": 60.3,
-    "besoin": 0.5,
-    "final": 57.5
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.17,
-     "minutes_saison": 2569,
-     "niveau": 1.0,
-     "disponibilite": 1.0,
-     "buts": 5,
-     "passes": 7,
-     "matchs": 63
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 0.8,
-     "tendance": 0.42,
-     "mois_contrat": 36.1,
-     "sous_evaluation": 0.177
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.71,
-     "lien_club": 0.6,
-     "origine": "International",
-     "lien": "Foot suisse",
-     "tenure": 3.3
+     "tenure": 3.0
     }
    },
    "tags": [
@@ -1760,166 +210,422 @@
    ]
   },
   {
-   "id": "DEMO-034",
-   "name": "Quentin Pittet",
-   "position": "Right-Back",
-   "groupe": "DEF",
-   "age": 21,
+   "id": "DEMO-005",
+   "name": "Arthur Camara",
+   "position": "Attacking Midfield",
+   "groupe": "MID",
+   "age": 31,
    "club": "AC Démo Jura",
    "league_id": "C2",
    "nationalites": [
-    "Cote d'Ivoire"
+    "Switzerland"
    ],
-   "naissance": "Abidjan",
-   "market_value": 920000,
-   "indemnite_estimee": 486000,
-   "contract_expires": "2027-07-22",
+   "naissance": "Orbe",
+   "market_value": 570000,
+   "indemnite_estimee": 382000,
+   "contract_expires": "2028-03-19",
    "url": null,
    "scores": {
-    "sport": 60.1,
-    "valeur": 50.4,
-    "fan": 59.4,
-    "besoin": 0.5,
-    "final": 57.0
+    "sport": 90.1,
+    "valeur": 39.3,
+    "fan": 92.2,
+    "besoin": 0.51,
+    "final": 75.6
    },
    "detail": {
     "sport": {
-     "g_a_90": 0.12,
-     "minutes_saison": 2132,
+     "g_a_90": 0.51,
+     "minutes_saison": 2212,
      "niveau": 1.0,
-     "disponibilite": 0.89,
-     "buts": 3,
-     "passes": 4,
-     "matchs": 54
+     "disponibilite": 0.92,
+     "buts": 13,
+     "passes": 17,
+     "matchs": 56,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.51,
+     "xg": 6.05,
+     "xa": 12.41,
+     "note_sofascore": 7.31,
+     "saison_sofascore": "25/26"
     },
     "valeur": {
-     "contrat": 0.8,
-     "revente": 1.0,
-     "tendance": -0.21,
-     "mois_contrat": 9.9,
-     "sous_evaluation": 0.241
+     "contrat": 0.5,
+     "revente": 0.1,
+     "tendance": -0.2,
+     "mois_contrat": 17.7,
+     "sous_evaluation": 0.481
     },
     "fan": {
-     "ancrage": 0.1,
+     "ancrage": 1.0,
      "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.66,
-     "lien_club": 0.6,
-     "origine": "International",
-     "lien": "Foot suisse",
-     "tenure": 11.0
+     "fidelite": 0.67,
+     "media": 1.0,
+     "lien_club": 1.0,
+     "origine": "Bassin nord-vaudois",
+     "lien": "Ancien d'Yverdon",
+     "tenure": 2.0
     }
    },
    "tags": [
-    "Fin de contrat < 12 mois"
+    "Enfant du pays",
+    "Retour au club"
    ]
   },
   {
-   "id": "DEMO-031",
-   "name": "Ibrahima Meier",
-   "position": "Centre-Forward",
-   "groupe": "ATT",
-   "age": 21,
-   "club": "RFC Démo Wallonie",
-   "league_id": "BE2",
+   "id": "DEMO-022",
+   "name": "Rayan Perrin",
+   "position": "Centre-Back",
+   "groupe": "DEF",
+   "age": 27,
+   "club": "US Démo Franche-Comté",
+   "league_id": "FR3",
    "nationalites": [
     "Switzerland"
    ],
-   "naissance": "Payerne",
-   "market_value": 90000,
+   "naissance": "Yverdon-les-Bains",
+   "market_value": 130000,
    "indemnite_estimee": 0,
-   "contract_expires": "2026-12-24",
+   "contract_expires": "2026-12-25",
    "url": null,
    "scores": {
-    "sport": 28.7,
-    "valeur": 92.2,
-    "fan": 74.7,
-    "besoin": 0.34,
-    "final": 56.4
+    "sport": 69.3,
+    "valeur": 70.4,
+    "fan": 92.4,
+    "besoin": 0.5,
+    "final": 75.4
    },
    "detail": {
     "sport": {
-     "g_a_90": 0.37,
-     "minutes_saison": 1204,
-     "niveau": 1.05,
-     "disponibilite": 0.5,
-     "buts": 7,
-     "passes": 4,
-     "matchs": 33
+     "g_a_90": 0.04,
+     "minutes_saison": 1890,
+     "niveau": 1.0,
+     "disponibilite": 0.79,
+     "buts": 1,
+     "passes": 1,
+     "matchs": 55,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.09,
+     "xg": 0.91,
+     "xa": 1.23,
+     "note_sofascore": 6.83,
+     "saison_sofascore": "25/26"
     },
     "valeur": {
      "contrat": 1.0,
-     "revente": 1.0,
-     "tendance": 0.29,
+     "revente": 0.3,
+     "tendance": -0.28,
      "mois_contrat": 3.0,
      "sous_evaluation": 0.911
     },
     "fan": {
      "ancrage": 1.0,
      "francophonie": 1.0,
-     "fidelite": 0.75,
-     "media": 0.44,
-     "lien_club": 0.3,
+     "fidelite": 1.0,
+     "media": 0.59,
+     "lien_club": 1.0,
      "origine": "Bassin nord-vaudois",
-     "lien": "Foot francophone",
-     "tenure": 2.2
+     "lien": "Ancien d'Yverdon",
+     "tenure": 3.0
     }
    },
    "tags": [
     "Libre / pré-contrat",
     "Sous-évalué",
+    "Enfant du pays",
+    "Retour au club"
+   ]
+  },
+  {
+   "id": "DEMO-026",
+   "name": "Malik Sow",
+   "position": "Goalkeeper",
+   "groupe": "GK",
+   "age": 22,
+   "club": "Olympique Démo",
+   "league_id": "FR2",
+   "nationalites": [
+    "France"
+   ],
+   "naissance": "Pontarlier",
+   "market_value": 1680000,
+   "indemnite_estimee": 0,
+   "contract_expires": "2026-12-25",
+   "url": null,
+   "scores": {
+    "sport": 95.5,
+    "valeur": 61.4,
+    "fan": 55.0,
+    "besoin": 0.5,
+    "final": 75.2
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.0,
+     "minutes_saison": 1405,
+     "niveau": 1.45,
+     "disponibilite": 0.59,
+     "buts": 0,
+     "passes": 0,
+     "matchs": 38,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.02,
+     "xg": 0.4,
+     "xa": 0.0,
+     "note_sofascore": 7.72,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 1.0,
+     "revente": 1.0,
+     "tendance": -0.16,
+     "mois_contrat": 3.0,
+     "sous_evaluation": 0.367
+    },
+    "fan": {
+     "ancrage": 0.4,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.11,
+     "lien_club": 0.3,
+     "origine": "Frontalier",
+     "lien": "Foot francophone",
+     "tenure": 3.0
+    }
+   },
+   "tags": [
+    "Libre / pré-contrat"
+   ]
+  },
+  {
+   "id": "DEMO-041",
+   "name": "Tim Sow",
+   "position": "Centre-Forward",
+   "groupe": "ATT",
+   "age": 21,
+   "club": "Démo Sporting",
+   "league_id": "C1",
+   "nationalites": [
+    "France"
+   ],
+   "naissance": "Besançon",
+   "market_value": 710000,
+   "indemnite_estimee": 543000,
+   "contract_expires": "2028-08-26",
+   "url": null,
+   "scores": {
+    "sport": 88.1,
+    "valeur": 68.4,
+    "fan": 71.2,
+    "besoin": 0.34,
+    "final": 74.2
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.49,
+     "minutes_saison": 1050,
+     "niveau": 1.45,
+     "disponibilite": 0.44,
+     "buts": 8,
+     "passes": 5,
+     "matchs": 30,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.65,
+     "xg": 1.71,
+     "xa": 0.63,
+     "note_sofascore": 7.06,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 1.0,
+     "tendance": 1.09,
+     "mois_contrat": 23.0,
+     "sous_evaluation": 0.709
+    },
+    "fan": {
+     "ancrage": 0.4,
+     "francophonie": 1.0,
+     "fidelite": 0.83,
+     "media": 0.99,
+     "lien_club": 0.6,
+     "origine": "Frontalier",
+     "lien": "Foot suisse",
+     "tenure": 2.5
+    }
+   },
+   "tags": [
+    "Valeur en hausse"
+   ]
+  },
+  {
+   "id": "DEMO-049",
+   "name": "Florian Bianchi",
+   "position": "Centre-Forward",
+   "groupe": "ATT",
+   "age": 20,
+   "club": "FC Démo Lac-Léman",
+   "league_id": "C2",
+   "nationalites": [
+    "France"
+   ],
+   "naissance": "Pontarlier",
+   "market_value": 430000,
+   "indemnite_estimee": 258000,
+   "contract_expires": "2027-11-20",
+   "url": null,
+   "scores": {
+    "sport": 77.0,
+    "valeur": 81.4,
+    "fan": 75.3,
+    "besoin": 0.34,
+    "final": 74.2
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.73,
+     "minutes_saison": 1356,
+     "niveau": 1.0,
+     "disponibilite": 0.56,
+     "buts": 15,
+     "passes": 10,
+     "matchs": 40,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 0.5,
+     "revente": 1.0,
+     "tendance": 0.79,
+     "mois_contrat": 13.8,
+     "sous_evaluation": 0.848
+    },
+    "fan": {
+     "ancrage": 0.4,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 1.0,
+     "lien_club": 0.6,
+     "origine": "Frontalier",
+     "lien": "Foot suisse",
+     "tenure": 5.0
+    }
+   },
+   "tags": [
+    "Sous-évalué",
+    "Valeur en hausse"
+   ]
+  },
+  {
+   "id": "DEMO-034",
+   "name": "Quentin Moreau",
+   "position": "Attacking Midfield",
+   "groupe": "MID",
+   "age": 25,
+   "club": "US Démo Franche-Comté",
+   "league_id": "FR3",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Lausanne",
+   "market_value": 620000,
+   "indemnite_estimee": 0,
+   "contract_expires": "2027-02-23",
+   "url": null,
+   "scores": {
+    "sport": 72.1,
+    "valeur": 62.1,
+    "fan": 84.9,
+    "besoin": 0.51,
+    "final": 72.5
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.43,
+     "minutes_saison": 1284,
+     "niveau": 1.0,
+     "disponibilite": 0.53,
+     "buts": 6,
+     "passes": 9,
+     "matchs": 31,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.43,
+     "xg": 4.91,
+     "xa": 5.0,
+     "note_sofascore": 7.16,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 1.0,
+     "revente": 0.55,
+     "tendance": -0.05,
+     "mois_contrat": 4.9,
+     "sous_evaluation": 0.494
+    },
+    "fan": {
+     "ancrage": 0.85,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.94,
+     "lien_club": 0.3,
+     "origine": "Vaud",
+     "lien": "Foot francophone",
+     "tenure": 4.0
+    }
+   },
+   "tags": [
+    "Libre / pré-contrat",
     "Enfant du pays"
    ]
   },
   {
-   "id": "DEMO-044",
-   "name": "Maxime Moreau",
-   "position": "Right-Back",
-   "groupe": "DEF",
-   "age": 31,
-   "club": "Olympique Démo",
-   "league_id": "FR2",
+   "id": "DEMO-058",
+   "name": "Adrien Favre",
+   "position": "Central Midfield",
+   "groupe": "MID",
+   "age": 30,
+   "club": "Démo Sporting",
+   "league_id": "C1",
    "nationalites": [
-    "Germany"
+    "Switzerland"
    ],
-   "naissance": "München",
-   "market_value": 120000,
-   "indemnite_estimee": 80000,
-   "contract_expires": "2028-03-18",
+   "naissance": "Genève",
+   "market_value": 200000,
+   "indemnite_estimee": 134000,
+   "contract_expires": "2028-03-19",
    "url": null,
    "scores": {
-    "sport": 72.2,
-    "valeur": 50.3,
-    "fan": 34.0,
-    "besoin": 0.5,
-    "final": 56.1
+    "sport": 78.1,
+    "valeur": 52.2,
+    "fan": 80.2,
+    "besoin": 0.51,
+    "final": 71.1
    },
    "detail": {
     "sport": {
-     "g_a_90": 0.08,
-     "minutes_saison": 1392,
+     "g_a_90": 0.21,
+     "minutes_saison": 1234,
      "niveau": 1.45,
-     "disponibilite": 0.58,
-     "buts": 1,
-     "passes": 2,
-     "matchs": 35
+     "disponibilite": 0.51,
+     "buts": 3,
+     "passes": 4,
+     "matchs": 34,
+     "source": "transfermarkt"
     },
     "valeur": {
      "contrat": 0.5,
      "revente": 0.1,
-     "tendance": -0.43,
+     "tendance": -0.26,
      "mois_contrat": 17.7,
-     "sous_evaluation": 0.873
+     "sous_evaluation": 0.835
     },
     "fan": {
-     "ancrage": 0.1,
-     "francophonie": 0.6,
-     "fidelite": 0.33,
-     "media": 0.62,
-     "lien_club": 0.3,
-     "origine": "International",
-     "lien": "Foot francophone",
-     "tenure": 1.0
+     "ancrage": 0.7,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.74,
+     "lien_club": 0.6,
+     "origine": "Romandie",
+     "lien": "Foot suisse",
+     "tenure": 5.0
     }
    },
    "tags": [
@@ -1927,100 +633,2302 @@
    ]
   },
   {
-   "id": "DEMO-002",
-   "name": "Malik Fontaine",
+   "id": "DEMO-043",
+   "name": "Julien Brunner",
    "position": "Goalkeeper",
    "groupe": "GK",
-   "age": 30,
-   "club": "Démo Alpes FC",
-   "league_id": "C2",
+   "age": 20,
+   "club": "Démo Sporting",
+   "league_id": "C1",
    "nationalites": [
-    "France"
+    "Portugal"
    ],
-   "naissance": "Besançon",
-   "market_value": 670000,
-   "indemnite_estimee": 354000,
-   "contract_expires": "2027-07-22",
+   "naissance": "Porto",
+   "market_value": 260000,
+   "indemnite_estimee": 199000,
+   "contract_expires": "2028-08-26",
    "url": null,
    "scores": {
-    "sport": 61.3,
-    "valeur": 44.4,
-    "fan": 57.3,
+    "sport": 83.5,
+    "valeur": 71.1,
+    "fan": 46.3,
     "besoin": 0.5,
-    "final": 55.2
+    "final": 70.5
    },
    "detail": {
     "sport": {
      "g_a_90": 0.0,
-     "minutes_saison": 1668,
-     "niveau": 1.0,
+     "minutes_saison": 1658,
+     "niveau": 1.45,
      "disponibilite": 0.69,
      "buts": 0,
      "passes": 0,
-     "matchs": 45
+     "matchs": 43,
+     "source": "transfermarkt"
     },
     "valeur": {
-     "contrat": 0.8,
-     "revente": 0.1,
-     "tendance": 0.31,
-     "mois_contrat": 9.9,
-     "sous_evaluation": 0.165
+     "contrat": 0.2,
+     "revente": 1.0,
+     "tendance": 0.18,
+     "mois_contrat": 23.0,
+     "sous_evaluation": 0.937
+    },
+    "fan": {
+     "ancrage": 0.1,
+     "francophonie": 0.15,
+     "fidelite": 1.0,
+     "media": 0.55,
+     "lien_club": 0.6,
+     "origine": "International",
+     "lien": "Foot suisse",
+     "tenure": 3.0
+    }
+   },
+   "tags": [
+    "Sous-évalué"
+   ]
+  },
+  {
+   "id": "DEMO-020",
+   "name": "Florian Morel",
+   "position": "Centre-Back",
+   "groupe": "DEF",
+   "age": 26,
+   "club": "Démo Alpes FC",
+   "league_id": "C2",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Fribourg",
+   "market_value": 130000,
+   "indemnite_estimee": 78000,
+   "contract_expires": "2027-11-20",
+   "url": null,
+   "scores": {
+    "sport": 68.1,
+    "valeur": 66.3,
+    "fan": 69.7,
+    "besoin": 0.5,
+    "final": 68.0
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.07,
+     "minutes_saison": 1832,
+     "niveau": 1.0,
+     "disponibilite": 0.76,
+     "buts": 2,
+     "passes": 1,
+     "matchs": 47,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 0.5,
+     "revente": 0.55,
+     "tendance": -0.07,
+     "mois_contrat": 13.8,
+     "sous_evaluation": 0.924
+    },
+    "fan": {
+     "ancrage": 0.7,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.17,
+     "lien_club": 0.6,
+     "origine": "Romandie",
+     "lien": "Foot suisse",
+     "tenure": 3.7
+    }
+   },
+   "tags": [
+    "Sous-évalué"
+   ]
+  },
+  {
+   "id": "DEMO-037",
+   "name": "Malik Bamba",
+   "position": "Goalkeeper",
+   "groupe": "GK",
+   "age": 19,
+   "club": "US Démo Franche-Comté",
+   "league_id": "FR3",
+   "nationalites": [
+    "France"
+   ],
+   "naissance": "Lyon",
+   "market_value": 1210000,
+   "indemnite_estimee": 725000,
+   "contract_expires": "2027-11-20",
+   "url": null,
+   "scores": {
+    "sport": 84.6,
+    "valeur": 55.7,
+    "fan": 49.5,
+    "besoin": 0.5,
+    "final": 67.1
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.0,
+     "minutes_saison": 2075,
+     "niveau": 1.0,
+     "disponibilite": 0.86,
+     "buts": 0,
+     "passes": 0,
+     "matchs": 62,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.0,
+     "xg": 0.11,
+     "xa": 0.0,
+     "note_sofascore": 7.58,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.5,
+     "revente": 1.0,
+     "tendance": -0.1,
+     "mois_contrat": 13.8,
+     "sous_evaluation": 0.506
+    },
+    "fan": {
+     "ancrage": 0.1,
+     "francophonie": 1.0,
+     "fidelite": 0.83,
+     "media": 0.55,
+     "lien_club": 0.3,
+     "origine": "International",
+     "lien": "Foot francophone",
+     "tenure": 2.5
+    }
+   },
+   "tags": []
+  },
+  {
+   "id": "DEMO-015",
+   "name": "Amadou Jaquier",
+   "position": "Left-Back",
+   "groupe": "DEF",
+   "age": 28,
+   "club": "Démo Sporting",
+   "league_id": "C1",
+   "nationalites": [
+    "France"
+   ],
+   "naissance": "Besançon",
+   "market_value": 590000,
+   "indemnite_estimee": 590000,
+   "contract_expires": "2029-09-30",
+   "url": null,
+   "scores": {
+    "sport": 88.0,
+    "valeur": 39.6,
+    "fan": 61.0,
+    "besoin": 0.5,
+    "final": 66.7
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.12,
+     "minutes_saison": 1642,
+     "niveau": 1.45,
+     "disponibilite": 0.68,
+     "buts": 3,
+     "passes": 2,
+     "matchs": 43,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 0.3,
+     "tendance": -0.03,
+     "mois_contrat": 36.1,
+     "sous_evaluation": 0.519
     },
     "fan": {
      "ancrage": 0.4,
      "francophonie": 1.0,
-     "fidelite": 0.58,
-     "media": 0.55,
+     "fidelite": 1.0,
+     "media": 0.22,
      "lien_club": 0.6,
      "origine": "Frontalier",
+     "lien": "Foot suisse",
+     "tenure": 4.5
+    }
+   },
+   "tags": []
+  },
+  {
+   "id": "DEMO-075",
+   "name": "Arthur Oberson",
+   "position": "Attacking Midfield",
+   "groupe": "MID",
+   "age": 22,
+   "club": "RFC Démo Wallonie",
+   "league_id": "BE2",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Payerne",
+   "market_value": 20000,
+   "indemnite_estimee": 18000,
+   "contract_expires": "2029-03-14",
+   "url": null,
+   "scores": {
+    "sport": 57.6,
+    "valeur": 63.3,
+    "fan": 85.8,
+    "besoin": 0.51,
+    "final": 66.6
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.2,
+     "minutes_saison": 1730,
+     "niveau": 1.05,
+     "disponibilite": 0.72,
+     "buts": 4,
+     "passes": 5,
+     "matchs": 42,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.2,
+     "xg": 1.9,
+     "xa": 2.64,
+     "note_sofascore": 6.58,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 1.0,
+     "tendance": -0.33,
+     "mois_contrat": 29.6,
+     "sous_evaluation": 1.0
+    },
+    "fan": {
+     "ancrage": 1.0,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.73,
+     "lien_club": 0.3,
+     "origine": "Bassin nord-vaudois",
+     "lien": "Foot francophone",
+     "tenure": 3.0
+    }
+   },
+   "tags": [
+    "Sous-évalué",
+    "Enfant du pays"
+   ]
+  },
+  {
+   "id": "DEMO-027",
+   "name": "Amadou Perrin",
+   "position": "Centre-Forward",
+   "groupe": "ATT",
+   "age": 30,
+   "club": "FC Démo Lac-Léman",
+   "league_id": "C2",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Lausanne",
+   "market_value": 490000,
+   "indemnite_estimee": 490000,
+   "contract_expires": "2029-09-30",
+   "url": null,
+   "scores": {
+    "sport": 90.0,
+    "valeur": 31.5,
+    "fan": 79.2,
+    "besoin": 0.34,
+    "final": 66.4
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.73,
+     "minutes_saison": 1788,
+     "niveau": 1.0,
+     "disponibilite": 0.74,
+     "buts": 20,
+     "passes": 13,
+     "matchs": 44,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.89,
+     "xg": 6.92,
+     "xa": 1.93,
+     "note_sofascore": 7.46,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 0.1,
+     "tendance": -0.34,
+     "mois_contrat": 36.1,
+     "sous_evaluation": 0.544
+    },
+    "fan": {
+     "ancrage": 0.85,
+     "francophonie": 1.0,
+     "fidelite": 0.89,
+     "media": 0.56,
+     "lien_club": 0.6,
+     "origine": "Vaud",
+     "lien": "Foot suisse",
+     "tenure": 2.7
+    }
+   },
+   "tags": [
+    "Enfant du pays"
+   ]
+  },
+  {
+   "id": "DEMO-002",
+   "name": "Samuel Keller",
+   "position": "Centre-Forward",
+   "groupe": "ATT",
+   "age": 27,
+   "club": "FC Démo Lac-Léman",
+   "league_id": "C2",
+   "nationalites": [
+    "France"
+   ],
+   "naissance": "Pontarlier",
+   "market_value": 200000,
+   "indemnite_estimee": 0,
+   "contract_expires": "2026-12-25",
+   "url": null,
+   "scores": {
+    "sport": 72.9,
+    "valeur": 66.5,
+    "fan": 66.7,
+    "besoin": 0.34,
+    "final": 66.1
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.45,
+     "minutes_saison": 1324,
+     "niveau": 1.0,
+     "disponibilite": 0.55,
+     "buts": 9,
+     "passes": 6,
+     "matchs": 32,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.53,
+     "xg": 10.11,
+     "xa": 4.93,
+     "note_sofascore": 7.09,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 1.0,
+     "revente": 0.3,
+     "tendance": -0.39,
+     "mois_contrat": 3.0,
+     "sous_evaluation": 0.873
+    },
+    "fan": {
+     "ancrage": 0.4,
+     "francophonie": 1.0,
+     "fidelite": 0.67,
+     "media": 0.95,
+     "lien_club": 0.6,
+     "origine": "Frontalier",
+     "lien": "Foot suisse",
+     "tenure": 2.0
+    }
+   },
+   "tags": [
+    "Libre / pré-contrat",
+    "Sous-évalué",
+    "Sous-performe ses xG"
+   ]
+  },
+  {
+   "id": "DEMO-052",
+   "name": "Bastien Sow",
+   "position": "Left-Back",
+   "groupe": "DEF",
+   "age": 29,
+   "club": "RFC Démo Wallonie",
+   "league_id": "BE2",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Lausanne",
+   "market_value": 140000,
+   "indemnite_estimee": 94000,
+   "contract_expires": "2028-03-19",
+   "url": null,
+   "scores": {
+    "sport": 59.8,
+    "valeur": 60.1,
+    "fan": 79.7,
+    "besoin": 0.5,
+    "final": 64.9
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.13,
+     "minutes_saison": 1453,
+     "niveau": 1.05,
+     "disponibilite": 0.61,
+     "buts": 2,
+     "passes": 3,
+     "matchs": 39,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.14,
+     "xg": 1.07,
+     "xa": 0.65,
+     "note_sofascore": 6.53,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.5,
+     "revente": 0.3,
+     "tendance": -0.07,
+     "mois_contrat": 17.7,
+     "sous_evaluation": 0.861
+    },
+    "fan": {
+     "ancrage": 0.85,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.66,
+     "lien_club": 0.3,
+     "origine": "Vaud",
+     "lien": "Foot francophone",
+     "tenure": 3.7
+    }
+   },
+   "tags": [
+    "Sous-évalué",
+    "Enfant du pays"
+   ]
+  },
+  {
+   "id": "DEMO-023",
+   "name": "Ibrahima Rochat",
+   "position": "Centre-Forward",
+   "groupe": "ATT",
+   "age": 21,
+   "club": "RFC Démo Wallonie",
+   "league_id": "BE2",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Neuchâtel",
+   "market_value": 640000,
+   "indemnite_estimee": 490000,
+   "contract_expires": "2028-08-26",
+   "url": null,
+   "scores": {
+    "sport": 77.6,
+    "valeur": 49.2,
+    "fan": 72.1,
+    "besoin": 0.34,
+    "final": 64.4
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.44,
+     "minutes_saison": 1976,
+     "niveau": 1.05,
+     "disponibilite": 0.82,
+     "buts": 13,
+     "passes": 9,
+     "matchs": 49,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 1.0,
+     "tendance": -0.33,
+     "mois_contrat": 23.0,
+     "sous_evaluation": 0.646
+    },
+    "fan": {
+     "ancrage": 0.7,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.51,
+     "lien_club": 0.3,
+     "origine": "Romandie",
+     "lien": "Foot francophone",
+     "tenure": 3.0
+    }
+   },
+   "tags": []
+  },
+  {
+   "id": "DEMO-078",
+   "name": "Luca Camara",
+   "position": "Attacking Midfield",
+   "groupe": "MID",
+   "age": 31,
+   "club": "Démo Sporting",
+   "league_id": "C1",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Zürich",
+   "market_value": 710000,
+   "indemnite_estimee": 375000,
+   "contract_expires": "2027-07-23",
+   "url": null,
+   "scores": {
+    "sport": 86.6,
+    "valeur": 37.3,
+    "fan": 55.4,
+    "besoin": 0.51,
+    "final": 64.2
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.39,
+     "minutes_saison": 1219,
+     "niveau": 1.45,
+     "disponibilite": 0.51,
+     "buts": 5,
+     "passes": 8,
+     "matchs": 31,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.52,
+     "xg": 4.78,
+     "xa": 6.52,
+     "note_sofascore": 7.23,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.8,
+     "revente": 0.1,
+     "tendance": -0.29,
+     "mois_contrat": 9.9,
+     "sous_evaluation": 0.291
+    },
+    "fan": {
+     "ancrage": 0.45,
+     "francophonie": 0.5,
+     "fidelite": 0.78,
+     "media": 0.46,
+     "lien_club": 0.6,
+     "origine": "Suisse",
+     "lien": "Foot suisse",
+     "tenure": 2.3
+    }
+   },
+   "tags": [
+    "Fin de contrat < 12 mois"
+   ]
+  },
+  {
+   "id": "DEMO-044",
+   "name": "Samuel Lambert",
+   "position": "Central Midfield",
+   "groupe": "MID",
+   "age": 25,
+   "club": "Démo Alpes FC",
+   "league_id": "C2",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Zürich",
+   "market_value": 400000,
+   "indemnite_estimee": 400000,
+   "contract_expires": "2029-09-30",
+   "url": null,
+   "scores": {
+    "sport": 75.6,
+    "valeur": 51.7,
+    "fan": 57.6,
+    "besoin": 0.51,
+    "final": 64.1
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.21,
+     "minutes_saison": 2174,
+     "niveau": 1.0,
+     "disponibilite": 0.91,
+     "buts": 6,
+     "passes": 6,
+     "matchs": 56,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 0.55,
+     "tendance": 0.05,
+     "mois_contrat": 36.1,
+     "sous_evaluation": 0.684
+    },
+    "fan": {
+     "ancrage": 0.45,
+     "francophonie": 0.5,
+     "fidelite": 1.0,
+     "media": 0.3,
+     "lien_club": 0.6,
+     "origine": "Suisse",
+     "lien": "Foot suisse",
+     "tenure": 3.5
+    }
+   },
+   "tags": []
+  },
+  {
+   "id": "DEMO-014",
+   "name": "Elias Mottier",
+   "position": "Attacking Midfield",
+   "groupe": "MID",
+   "age": 20,
+   "club": "SC Démo Rhin",
+   "league_id": "C2",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Zürich",
+   "market_value": 1140000,
+   "indemnite_estimee": 764000,
+   "contract_expires": "2028-03-19",
+   "url": null,
+   "scores": {
+    "sport": 74.8,
+    "valeur": 45.2,
+    "fan": 64.5,
+    "besoin": 0.51,
+    "final": 63.5
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.48,
+     "minutes_saison": 949,
+     "niveau": 1.0,
+     "disponibilite": 0.4,
+     "buts": 6,
+     "passes": 6,
+     "matchs": 29,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.61,
+     "xg": 1.54,
+     "xa": 1.06,
+     "note_sofascore": 7.31,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.5,
+     "revente": 1.0,
+     "tendance": -0.51,
+     "mois_contrat": 17.7,
+     "sous_evaluation": 0.443
+    },
+    "fan": {
+     "ancrage": 0.45,
+     "francophonie": 0.5,
+     "fidelite": 0.75,
+     "media": 0.99,
+     "lien_club": 0.6,
+     "origine": "Suisse",
+     "lien": "Foot suisse",
+     "tenure": 2.2
+    }
+   },
+   "tags": []
+  },
+  {
+   "id": "DEMO-067",
+   "name": "Loïc Cuendet",
+   "position": "Left Winger",
+   "groupe": "ATT",
+   "age": 31,
+   "club": "FC Démo Métropole",
+   "league_id": "C1",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Neuchâtel",
+   "market_value": 380000,
+   "indemnite_estimee": 380000,
+   "contract_expires": "2029-09-30",
+   "url": null,
+   "scores": {
+    "sport": 80.6,
+    "valeur": 47.8,
+    "fan": 64.2,
+    "besoin": 0.34,
+    "final": 63.5
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.32,
+     "minutes_saison": 1388,
+     "niveau": 1.45,
+     "disponibilite": 0.58,
+     "buts": 5,
+     "passes": 7,
+     "matchs": 33,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.41,
+     "xg": 0.71,
+     "xa": 1.99,
+     "note_sofascore": 6.74,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 0.1,
+     "tendance": 0.81,
+     "mois_contrat": 36.1,
+     "sous_evaluation": 0.532
+    },
+    "fan": {
+     "ancrage": 0.7,
+     "francophonie": 1.0,
+     "fidelite": 0.58,
+     "media": 0.4,
+     "lien_club": 0.6,
+     "origine": "Romandie",
      "lien": "Foot suisse",
      "tenure": 1.8
     }
    },
    "tags": [
-    "Fin de contrat < 12 mois",
     "Valeur en hausse"
    ]
   },
   {
-   "id": "DEMO-047",
-   "name": "Karim Cuendet",
+   "id": "DEMO-003",
+   "name": "Amadou Moreau",
+   "position": "Goalkeeper",
+   "groupe": "GK",
+   "age": 24,
+   "club": "Démo Alpes FC",
+   "league_id": "C2",
+   "nationalites": [
+    "Germany"
+   ],
+   "naissance": "München",
+   "market_value": 100000,
+   "indemnite_estimee": 0,
+   "contract_expires": "2027-02-23",
+   "url": null,
+   "scores": {
+    "sport": 61.5,
+    "valeur": 79.8,
+    "fan": 46.3,
+    "besoin": 0.5,
+    "final": 63.2
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.0,
+     "minutes_saison": 1626,
+     "niveau": 1.0,
+     "disponibilite": 0.68,
+     "buts": 0,
+     "passes": 0,
+     "matchs": 45,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.0,
+     "xg": 0.0,
+     "xa": 0.0,
+     "note_sofascore": 6.75,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 1.0,
+     "revente": 0.8,
+     "tendance": -0.29,
+     "mois_contrat": 4.9,
+     "sous_evaluation": 0.962
+    },
+    "fan": {
+     "ancrage": 0.1,
+     "francophonie": 0.15,
+     "fidelite": 1.0,
+     "media": 0.55,
+     "lien_club": 0.6,
+     "origine": "International",
+     "lien": "Foot suisse",
+     "tenure": 3.0
+    }
+   },
+   "tags": [
+    "Libre / pré-contrat",
+    "Sous-évalué"
+   ]
+  },
+  {
+   "id": "DEMO-053",
+   "name": "Amadou Bianchi",
+   "position": "Left-Back",
+   "groupe": "DEF",
+   "age": 19,
+   "club": "FC Démo Métropole",
+   "league_id": "C1",
+   "nationalites": [
+    "Belgium"
+   ],
+   "naissance": "Liège",
+   "market_value": 690000,
+   "indemnite_estimee": 528000,
+   "contract_expires": "2028-08-26",
+   "url": null,
+   "scores": {
+    "sport": 68.8,
+    "valeur": 53.4,
+    "fan": 64.6,
+    "besoin": 0.5,
+    "final": 63.1
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.12,
+     "minutes_saison": 998,
+     "niveau": 1.45,
+     "disponibilite": 0.42,
+     "buts": 2,
+     "passes": 1,
+     "matchs": 27,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.17,
+     "xg": 2.2,
+     "xa": 0.0,
+     "note_sofascore": 6.87,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 1.0,
+     "tendance": -0.07,
+     "mois_contrat": 23.0,
+     "sous_evaluation": 0.62
+    },
+    "fan": {
+     "ancrage": 0.1,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.66,
+     "lien_club": 1.0,
+     "origine": "International",
+     "lien": "Ancien d'Yverdon",
+     "tenure": 3.0
+    }
+   },
+   "tags": [
+    "Retour au club"
+   ]
+  },
+  {
+   "id": "DEMO-006",
+   "name": "Adrien Camara",
+   "position": "Defensive Midfield",
+   "groupe": "MID",
+   "age": 26,
+   "club": "AS Démo Savoie",
+   "league_id": "FR3",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Genève",
+   "market_value": 820000,
+   "indemnite_estimee": 820000,
+   "contract_expires": "2029-09-30",
+   "url": null,
+   "scores": {
+    "sport": 73.6,
+    "valeur": 31.1,
+    "fan": 75.7,
+    "besoin": 0.51,
+    "final": 61.5
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.21,
+     "minutes_saison": 1251,
+     "niveau": 1.0,
+     "disponibilite": 0.52,
+     "buts": 3,
+     "passes": 4,
+     "matchs": 34,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.31,
+     "xg": 1.86,
+     "xa": 2.59,
+     "note_sofascore": 7.25,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 0.55,
+     "tendance": -0.24,
+     "mois_contrat": 36.1,
+     "sous_evaluation": 0.316
+    },
+    "fan": {
+     "ancrage": 0.7,
+     "francophonie": 1.0,
+     "fidelite": 0.58,
+     "media": 0.74,
+     "lien_club": 1.0,
+     "origine": "Romandie",
+     "lien": "Ancien d'Yverdon",
+     "tenure": 1.8
+    }
+   },
+   "tags": [
+    "Retour au club"
+   ]
+  },
+  {
+   "id": "DEMO-008",
+   "name": "Mattéo Favre",
+   "position": "Central Midfield",
+   "groupe": "MID",
+   "age": 21,
+   "club": "FC Démo Lac-Léman",
+   "league_id": "C2",
+   "nationalites": [
+    "Germany"
+   ],
+   "naissance": "München",
+   "market_value": 890000,
+   "indemnite_estimee": 470000,
+   "contract_expires": "2027-07-23",
+   "url": null,
+   "scores": {
+    "sport": 65.0,
+    "valeur": 59.0,
+    "fan": 56.7,
+    "besoin": 0.51,
+    "final": 61.3
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.31,
+     "minutes_saison": 990,
+     "niveau": 1.0,
+     "disponibilite": 0.41,
+     "buts": 4,
+     "passes": 4,
+     "matchs": 26,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.26,
+     "xg": 1.46,
+     "xa": 0.71,
+     "note_sofascore": 7.47,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.8,
+     "revente": 1.0,
+     "tendance": -0.16,
+     "mois_contrat": 9.9,
+     "sous_evaluation": 0.43
+    },
+    "fan": {
+     "ancrage": 0.1,
+     "francophonie": 0.15,
+     "fidelite": 1.0,
+     "media": 0.83,
+     "lien_club": 1.0,
+     "origine": "International",
+     "lien": "Ancien d'Yverdon",
+     "tenure": 3.7
+    }
+   },
+   "tags": [
+    "Fin de contrat < 12 mois",
+    "Retour au club"
+   ]
+  },
+  {
+   "id": "DEMO-056",
+   "name": "Julien Sow",
    "position": "Centre-Forward",
    "groupe": "ATT",
    "age": 31,
    "club": "FC Démo Broye",
    "league_id": "CHPL",
    "nationalites": [
-    "France"
+    "Switzerland"
    ],
-   "naissance": "Lyon",
-   "market_value": 180000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2027-02-22",
+   "naissance": "Zürich",
+   "market_value": 500000,
+   "indemnite_estimee": 264000,
+   "contract_expires": "2027-07-23",
    "url": null,
    "scores": {
-    "sport": 41.5,
-    "valeur": 71.8,
-    "fan": 65.6,
+    "sport": 82.5,
+    "valeur": 43.3,
+    "fan": 57.2,
     "besoin": 0.34,
-    "final": 53.9
+    "final": 61.3
    },
    "detail": {
     "sport": {
-     "g_a_90": 0.63,
-     "minutes_saison": 438,
+     "g_a_90": 0.8,
+     "minutes_saison": 2641,
      "niveau": 0.7,
-     "disponibilite": 0.18,
-     "buts": 4,
-     "passes": 3,
-     "matchs": 10
+     "disponibilite": 1.0,
+     "buts": 33,
+     "passes": 20,
+     "matchs": 70,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.92,
+     "xg": 19.27,
+     "xa": 9.1,
+     "note_sofascore": 7.28,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.8,
+     "revente": 0.1,
+     "tendance": -0.32,
+     "mois_contrat": 9.9,
+     "sous_evaluation": 0.456
+    },
+    "fan": {
+     "ancrage": 0.45,
+     "francophonie": 0.5,
+     "fidelite": 0.78,
+     "media": 0.56,
+     "lien_club": 0.6,
+     "origine": "Suisse",
+     "lien": "Foot suisse",
+     "tenure": 2.3
+    }
+   },
+   "tags": [
+    "Fin de contrat < 12 mois"
+   ]
+  },
+  {
+   "id": "DEMO-028",
+   "name": "Malik Jaquier",
+   "position": "Centre-Forward",
+   "groupe": "ATT",
+   "age": 30,
+   "club": "AC Démo Jura",
+   "league_id": "C2",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Genève",
+   "market_value": 100000,
+   "indemnite_estimee": 0,
+   "contract_expires": "2027-02-23",
+   "url": null,
+   "scores": {
+    "sport": 42.7,
+    "valeur": 79.4,
+    "fan": 82.6,
+    "besoin": 0.34,
+    "final": 60.6
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.36,
+     "minutes_saison": 1898,
+     "niveau": 1.0,
+     "disponibilite": 0.79,
+     "buts": 11,
+     "passes": 6,
+     "matchs": 53,
+     "source": "transfermarkt"
     },
     "valeur": {
      "contrat": 1.0,
      "revente": 0.1,
-     "tendance": 0.8,
+     "tendance": 0.67,
      "mois_contrat": 4.9,
+     "sous_evaluation": 0.823
+    },
+    "fan": {
+     "ancrage": 0.7,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.87,
+     "lien_club": 0.6,
+     "origine": "Romandie",
+     "lien": "Foot suisse",
+     "tenure": 3.0
+    }
+   },
+   "tags": [
+    "Libre / pré-contrat",
+    "Sous-évalué",
+    "Valeur en hausse"
+   ]
+  },
+  {
+   "id": "DEMO-012",
+   "name": "Loïc Chappuis",
+   "position": "Centre-Forward",
+   "groupe": "ATT",
+   "age": 21,
+   "club": "US Démo Franche-Comté",
+   "league_id": "FR3",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Genève",
+   "market_value": 450000,
+   "indemnite_estimee": 344000,
+   "contract_expires": "2028-08-26",
+   "url": null,
+   "scores": {
+    "sport": 63.5,
+    "valeur": 61.8,
+    "fan": 65.4,
+    "besoin": 0.34,
+    "final": 60.4
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.51,
+     "minutes_saison": 1802,
+     "niveau": 1.0,
+     "disponibilite": 0.75,
+     "buts": 14,
+     "passes": 9,
+     "matchs": 47,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.42,
+     "xg": 7.59,
+     "xa": 3.75,
+     "note_sofascore": 7.05,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 1.0,
+     "tendance": 0.25,
+     "mois_contrat": 23.0,
+     "sous_evaluation": 0.671
+    },
+    "fan": {
+     "ancrage": 0.7,
+     "francophonie": 1.0,
+     "fidelite": 0.67,
+     "media": 0.56,
+     "lien_club": 0.3,
+     "origine": "Romandie",
+     "lien": "Foot francophone",
+     "tenure": 2.0
+    }
+   },
+   "tags": []
+  },
+  {
+   "id": "DEMO-009",
+   "name": "Maxime Rochat",
+   "position": "Goalkeeper",
+   "groupe": "GK",
+   "age": 23,
+   "club": "AC Démo Jura",
+   "league_id": "C2",
+   "nationalites": [
+    "France"
+   ],
+   "naissance": "Pontarlier",
+   "market_value": 280000,
+   "indemnite_estimee": 214000,
+   "contract_expires": "2028-08-26",
+   "url": null,
+   "scores": {
+    "sport": 57.1,
+    "valeur": 67.9,
+    "fan": 56.4,
+    "besoin": 0.5,
+    "final": 60.2
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.0,
+     "minutes_saison": 1195,
+     "niveau": 1.0,
+     "disponibilite": 0.5,
+     "buts": 0,
+     "passes": 0,
+     "matchs": 36,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.0,
+     "xg": 0.0,
+     "xa": 0.0,
+     "note_sofascore": 7.03,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 0.8,
+     "tendance": 1.15,
+     "mois_contrat": 23.0,
+     "sous_evaluation": 0.772
+    },
+    "fan": {
+     "ancrage": 0.4,
+     "francophonie": 1.0,
+     "fidelite": 0.89,
+     "media": 0.11,
+     "lien_club": 0.6,
+     "origine": "Frontalier",
+     "lien": "Foot suisse",
+     "tenure": 2.7
+    }
+   },
+   "tags": [
+    "Valeur en hausse"
+   ]
+  },
+  {
+   "id": "DEMO-017",
+   "name": "Enzo Fontaine",
+   "position": "Left-Back",
+   "groupe": "DEF",
+   "age": 22,
+   "club": "US Démo Franche-Comté",
+   "league_id": "FR3",
+   "nationalites": [
+    "France"
+   ],
+   "naissance": "Lyon",
+   "market_value": 1540000,
+   "indemnite_estimee": 1178000,
+   "contract_expires": "2028-08-26",
+   "url": null,
+   "scores": {
+    "sport": 75.6,
+    "valeur": 31.1,
+    "fan": 65.3,
+    "besoin": 0.5,
+    "final": 59.7
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.17,
+     "minutes_saison": 2184,
+     "niveau": 1.0,
+     "disponibilite": 0.91,
+     "buts": 4,
+     "passes": 6,
+     "matchs": 62,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.23,
+     "xg": 4.92,
+     "xa": 2.79,
+     "note_sofascore": 7.33,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 1.0,
+     "tendance": -0.3,
+     "mois_contrat": 23.0,
+     "sous_evaluation": 0.177
+    },
+    "fan": {
+     "ancrage": 0.1,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.7,
+     "lien_club": 1.0,
+     "origine": "International",
+     "lien": "Ancien d'Yverdon",
+     "tenure": 4.5
+    }
+   },
+   "tags": [
+    "Retour au club"
+   ]
+  },
+  {
+   "id": "DEMO-025",
+   "name": "Kevin Moreau",
+   "position": "Defensive Midfield",
+   "groupe": "MID",
+   "age": 24,
+   "club": "AS Démo Savoie",
+   "league_id": "FR3",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Bern",
+   "market_value": 480000,
+   "indemnite_estimee": 288000,
+   "contract_expires": "2027-11-20",
+   "url": null,
+   "scores": {
+    "sport": 64.9,
+    "valeur": 53.6,
+    "fan": 55.5,
+    "besoin": 0.51,
+    "final": 59.3
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.14,
+     "minutes_saison": 1933,
+     "niveau": 1.0,
+     "disponibilite": 0.81,
+     "buts": 4,
+     "passes": 3,
+     "matchs": 52,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.14,
+     "xg": 2.51,
+     "xa": 1.26,
+     "note_sofascore": 7.23,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.5,
+     "revente": 0.8,
+     "tendance": -0.19,
+     "mois_contrat": 13.8,
+     "sous_evaluation": 0.57
+    },
+    "fan": {
+     "ancrage": 0.45,
+     "francophonie": 0.6,
+     "fidelite": 0.33,
+     "media": 0.68,
+     "lien_club": 1.0,
+     "origine": "Suisse",
+     "lien": "Ancien d'Yverdon",
+     "tenure": 1.0
+    }
+   },
+   "tags": [
+    "Retour au club"
+   ]
+  },
+  {
+   "id": "DEMO-055",
+   "name": "Noah Pittet",
+   "position": "Attacking Midfield",
+   "groupe": "MID",
+   "age": 25,
+   "club": "AC Démo Jura",
+   "league_id": "C2",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Neuchâtel",
+   "market_value": 180000,
+   "indemnite_estimee": 108000,
+   "contract_expires": "2027-11-20",
+   "url": null,
+   "scores": {
+    "sport": 49.5,
+    "valeur": 54.4,
+    "fan": 81.5,
+    "besoin": 0.51,
+    "final": 59.2
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.29,
+     "minutes_saison": 1071,
+     "niveau": 1.0,
+     "disponibilite": 0.45,
+     "buts": 4,
+     "passes": 4,
+     "matchs": 30,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 0.5,
+     "revente": 0.55,
+     "tendance": -0.44,
+     "mois_contrat": 13.8,
+     "sous_evaluation": 0.81
+    },
+    "fan": {
+     "ancrage": 0.7,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.81,
+     "lien_club": 0.6,
+     "origine": "Romandie",
+     "lien": "Foot suisse",
+     "tenure": 3.0
+    }
+   },
+   "tags": [
+    "Sous-évalué"
+   ]
+  },
+  {
+   "id": "DEMO-029",
+   "name": "Moussa Mottier",
+   "position": "Right-Back",
+   "groupe": "DEF",
+   "age": 24,
+   "club": "RFC Démo Wallonie",
+   "league_id": "BE2",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Orbe",
+   "market_value": 1360000,
+   "indemnite_estimee": 1202000,
+   "contract_expires": "2029-03-14",
+   "url": null,
+   "scores": {
+    "sport": 58.7,
+    "valeur": 30.3,
+    "fan": 94.2,
+    "besoin": 0.5,
+    "final": 59.1
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.15,
+     "minutes_saison": 1006,
+     "niveau": 1.05,
+     "disponibilite": 0.42,
+     "buts": 2,
+     "passes": 2,
+     "matchs": 27,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.17,
+     "xg": 1.2,
+     "xa": 1.04,
+     "note_sofascore": 7.44,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 0.8,
+     "tendance": 0.01,
+     "mois_contrat": 29.6,
+     "sous_evaluation": 0.076
+    },
+    "fan": {
+     "ancrage": 1.0,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.69,
+     "lien_club": 1.0,
+     "origine": "Bassin nord-vaudois",
+     "lien": "Ancien d'Yverdon",
+     "tenure": 3.0
+    }
+   },
+   "tags": [
+    "Enfant du pays",
+    "Retour au club"
+   ]
+  },
+  {
+   "id": "DEMO-004",
+   "name": "Jonas Mendy",
+   "position": "Right Winger",
+   "groupe": "ATT",
+   "age": 31,
+   "club": "FC Démo Métropole",
+   "league_id": "C1",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Lausanne",
+   "market_value": 450000,
+   "indemnite_estimee": 302000,
+   "contract_expires": "2028-03-19",
+   "url": null,
+   "scores": {
+    "sport": 65.9,
+    "valeur": 41.4,
+    "fan": 77.6,
+    "besoin": 0.34,
+    "final": 58.5
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.49,
+     "minutes_saison": 944,
+     "niveau": 1.45,
+     "disponibilite": 0.39,
+     "buts": 6,
+     "passes": 6,
+     "matchs": 26,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.27,
+     "xg": 0.92,
+     "xa": 1.5,
+     "note_sofascore": 7.03,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.5,
+     "revente": 0.1,
+     "tendance": 0.18,
+     "mois_contrat": 17.7,
+     "sous_evaluation": 0.342
+    },
+    "fan": {
+     "ancrage": 0.85,
+     "francophonie": 1.0,
+     "fidelite": 0.83,
+     "media": 0.55,
+     "lien_club": 0.6,
+     "origine": "Vaud",
+     "lien": "Foot suisse",
+     "tenure": 2.5
+    }
+   },
+   "tags": [
+    "Enfant du pays"
+   ]
+  },
+  {
+   "id": "DEMO-010",
+   "name": "Luca Oberson",
+   "position": "Right Winger",
+   "groupe": "ATT",
+   "age": 27,
+   "club": "FC Démo Métropole",
+   "league_id": "C1",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Zürich",
+   "market_value": 330000,
+   "indemnite_estimee": 253000,
+   "contract_expires": "2028-08-26",
+   "url": null,
+   "scores": {
+    "sport": 69.8,
+    "valeur": 43.7,
+    "fan": 67.9,
+    "besoin": 0.34,
+    "final": 58.5
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.35,
+     "minutes_saison": 978,
+     "niveau": 1.45,
+     "disponibilite": 0.41,
+     "buts": 4,
+     "passes": 5,
+     "matchs": 22,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 0.3,
+     "tendance": -0.06,
+     "mois_contrat": 23.0,
      "sous_evaluation": 0.633
+    },
+    "fan": {
+     "ancrage": 0.45,
+     "francophonie": 0.5,
+     "fidelite": 1.0,
+     "media": 0.86,
+     "lien_club": 0.6,
+     "origine": "Suisse",
+     "lien": "Foot suisse",
+     "tenure": 3.0
+    }
+   },
+   "tags": []
+  },
+  {
+   "id": "DEMO-054",
+   "name": "Moussa Sow",
+   "position": "Central Midfield",
+   "groupe": "MID",
+   "age": 28,
+   "club": "FC Démo Broye",
+   "league_id": "CHPL",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Neuchâtel",
+   "market_value": 150000,
+   "indemnite_estimee": 79000,
+   "contract_expires": "2027-07-23",
+   "url": null,
+   "scores": {
+    "sport": 40.6,
+    "valeur": 71.1,
+    "fan": 75.0,
+    "besoin": 0.51,
+    "final": 58.5
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.2,
+     "minutes_saison": 1140,
+     "niveau": 0.7,
+     "disponibilite": 0.48,
+     "buts": 3,
+     "passes": 3,
+     "matchs": 32,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.27,
+     "xg": 1.83,
+     "xa": 2.61,
+     "note_sofascore": 6.97,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.8,
+     "revente": 0.3,
+     "tendance": 0.36,
+     "mois_contrat": 9.9,
+     "sous_evaluation": 0.734
+    },
+    "fan": {
+     "ancrage": 0.7,
+     "francophonie": 1.0,
+     "fidelite": 0.56,
+     "media": 0.73,
+     "lien_club": 1.0,
+     "origine": "Romandie",
+     "lien": "Ancien d'Yverdon",
+     "tenure": 1.7
+    }
+   },
+   "tags": [
+    "Fin de contrat < 12 mois",
+    "Valeur en hausse",
+    "Retour au club"
+   ]
+  },
+  {
+   "id": "DEMO-080",
+   "name": "Enzo Rochat",
+   "position": "Left-Back",
+   "groupe": "DEF",
+   "age": 24,
+   "club": "FC Démo Broye",
+   "league_id": "CHPL",
+   "nationalites": [
+    "France"
+   ],
+   "naissance": "Lyon",
+   "market_value": 590000,
+   "indemnite_estimee": 521000,
+   "contract_expires": "2029-03-14",
+   "url": null,
+   "scores": {
+    "sport": 74.2,
+    "valeur": 39.3,
+    "fan": 52.2,
+    "besoin": 0.5,
+    "final": 58.2
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.17,
+     "minutes_saison": 2018,
+     "niveau": 0.7,
+     "disponibilite": 0.84,
+     "buts": 5,
+     "passes": 4,
+     "matchs": 48,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.1,
+     "xg": 1.77,
+     "xa": 1.82,
+     "note_sofascore": 7.57,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 0.8,
+     "tendance": -0.52,
+     "mois_contrat": 29.6,
+     "sous_evaluation": 0.557
+    },
+    "fan": {
+     "ancrage": 0.1,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.27,
+     "lien_club": 0.6,
+     "origine": "International",
+     "lien": "Foot suisse",
+     "tenure": 7.0
+    }
+   },
+   "tags": []
+  },
+  {
+   "id": "DEMO-032",
+   "name": "Quentin Favre",
+   "position": "Centre-Back",
+   "groupe": "DEF",
+   "age": 29,
+   "club": "Démo Alpes FC",
+   "league_id": "C2",
+   "nationalites": [
+    "France"
+   ],
+   "naissance": "Besançon",
+   "market_value": 30000,
+   "indemnite_estimee": 16000,
+   "contract_expires": "2027-07-23",
+   "url": null,
+   "scores": {
+    "sport": 40.0,
+    "valeur": 84.0,
+    "fan": 59.3,
+    "besoin": 0.5,
+    "final": 58.0
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.02,
+     "minutes_saison": 1271,
+     "niveau": 1.0,
+     "disponibilite": 0.53,
+     "buts": 0,
+     "passes": 1,
+     "matchs": 29,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 0.8,
+     "revente": 0.3,
+     "tendance": 0.5,
+     "mois_contrat": 9.9,
+     "sous_evaluation": 0.987
+    },
+    "fan": {
+     "ancrage": 0.4,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.13,
+     "lien_club": 0.6,
+     "origine": "Frontalier",
+     "lien": "Foot suisse",
+     "tenure": 7.0
+    }
+   },
+   "tags": [
+    "Fin de contrat < 12 mois",
+    "Sous-évalué",
+    "Valeur en hausse"
+   ]
+  },
+  {
+   "id": "DEMO-079",
+   "name": "Théo Bianchi",
+   "position": "Left Winger",
+   "groupe": "ATT",
+   "age": 23,
+   "club": "Démo Alpes FC",
+   "league_id": "C2",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Fribourg",
+   "market_value": 490000,
+   "indemnite_estimee": 0,
+   "contract_expires": "2026-12-25",
+   "url": null,
+   "scores": {
+    "sport": 41.0,
+    "valeur": 70.7,
+    "fan": 82.1,
+    "besoin": 0.34,
+    "final": 57.3
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.32,
+     "minutes_saison": 1881,
+     "niveau": 1.0,
+     "disponibilite": 0.78,
+     "buts": 7,
+     "passes": 9,
+     "matchs": 54,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.27,
+     "xg": 3.67,
+     "xa": 4.12,
+     "note_sofascore": 6.61,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 1.0,
+     "revente": 0.8,
+     "tendance": 0.4,
+     "mois_contrat": 3.0,
+     "sous_evaluation": 0.392
+    },
+    "fan": {
+     "ancrage": 0.7,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.84,
+     "lien_club": 0.6,
+     "origine": "Romandie",
+     "lien": "Foot suisse",
+     "tenure": 3.0
+    }
+   },
+   "tags": [
+    "Libre / pré-contrat",
+    "Valeur en hausse"
+   ]
+  },
+  {
+   "id": "DEMO-077",
+   "name": "Malik Meier",
+   "position": "Right-Back",
+   "groupe": "DEF",
+   "age": 28,
+   "club": "US Démo Franche-Comté",
+   "league_id": "FR3",
+   "nationalites": [
+    "France"
+   ],
+   "naissance": "Lyon",
+   "market_value": 100000,
+   "indemnite_estimee": 0,
+   "contract_expires": "2026-12-25",
+   "url": null,
+   "scores": {
+    "sport": 60.0,
+    "valeur": 73.6,
+    "fan": 31.1,
+    "besoin": 0.5,
+    "final": 56.9
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.07,
+     "minutes_saison": 1479,
+     "niveau": 1.0,
+     "disponibilite": 0.62,
+     "buts": 1,
+     "passes": 2,
+     "matchs": 37,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 1.0,
+     "revente": 0.3,
+     "tendance": -0.09,
+     "mois_contrat": 3.0,
+     "sous_evaluation": 0.899
+    },
+    "fan": {
+     "ancrage": 0.1,
+     "francophonie": 1.0,
+     "fidelite": 0.33,
+     "media": 0.18,
+     "lien_club": 0.3,
+     "origine": "International",
+     "lien": "Foot francophone",
+     "tenure": 1.0
+    }
+   },
+   "tags": [
+    "Libre / pré-contrat",
+    "Sous-évalué"
+   ]
+  },
+  {
+   "id": "DEMO-011",
+   "name": "Rayan Leroy",
+   "position": "Centre-Back",
+   "groupe": "DEF",
+   "age": 31,
+   "club": "SC Démo Rhin",
+   "league_id": "C2",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Genève",
+   "market_value": 390000,
+   "indemnite_estimee": 206000,
+   "contract_expires": "2027-07-23",
+   "url": null,
+   "scores": {
+    "sport": 58.4,
+    "valeur": 37.2,
+    "fan": 76.9,
+    "besoin": 0.5,
+    "final": 56.7
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.13,
+     "minutes_saison": 852,
+     "niveau": 1.0,
+     "disponibilite": 0.36,
+     "buts": 1,
+     "passes": 2,
+     "matchs": 24,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.2,
+     "xg": 0.0,
+     "xa": 1.18,
+     "note_sofascore": 7.1,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.8,
+     "revente": 0.1,
+     "tendance": -0.37,
+     "mois_contrat": 9.9,
+     "sous_evaluation": 0.329
+    },
+    "fan": {
+     "ancrage": 0.7,
+     "francophonie": 1.0,
+     "fidelite": 0.92,
+     "media": 0.66,
+     "lien_club": 0.6,
+     "origine": "Romandie",
+     "lien": "Foot suisse",
+     "tenure": 2.8
+    }
+   },
+   "tags": [
+    "Fin de contrat < 12 mois"
+   ]
+  },
+  {
+   "id": "DEMO-074",
+   "name": "Moussa Keller",
+   "position": "Attacking Midfield",
+   "groupe": "MID",
+   "age": 20,
+   "club": "Olympique Démo",
+   "league_id": "FR2",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Orbe",
+   "market_value": 830000,
+   "indemnite_estimee": 409000,
+   "contract_expires": "2027-05-24",
+   "url": null,
+   "scores": {
+    "sport": 41.0,
+    "valeur": 58.0,
+    "fan": 79.9,
+    "besoin": 0.51,
+    "final": 56.0
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.33,
+     "minutes_saison": 1166,
+     "niveau": 1.45,
+     "disponibilite": 0.49,
+     "buts": 5,
+     "passes": 5,
+     "matchs": 31,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 0.8,
+     "revente": 1.0,
+     "tendance": 0.22,
+     "mois_contrat": 7.9,
+     "sous_evaluation": 0.215
+    },
+    "fan": {
+     "ancrage": 1.0,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.41,
+     "lien_club": 0.3,
+     "origine": "Bassin nord-vaudois",
+     "lien": "Foot francophone",
+     "tenure": 3.3
+    }
+   },
+   "tags": [
+    "Fin de contrat < 12 mois",
+    "Enfant du pays"
+   ]
+  },
+  {
+   "id": "DEMO-063",
+   "name": "Moussa Oberson",
+   "position": "Centre-Back",
+   "groupe": "DEF",
+   "age": 24,
+   "club": "Démo Sporting",
+   "league_id": "C1",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Zürich",
+   "market_value": 1430000,
+   "indemnite_estimee": 0,
+   "contract_expires": "2027-02-23",
+   "url": null,
+   "scores": {
+    "sport": 61.5,
+    "valeur": 41.2,
+    "fan": 63.1,
+    "besoin": 0.5,
+    "final": 55.8
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.05,
+     "minutes_saison": 1437,
+     "niveau": 1.45,
+     "disponibilite": 0.6,
+     "buts": 1,
+     "passes": 1,
+     "matchs": 40,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 1.0,
+     "revente": 0.8,
+     "tendance": -0.47,
+     "mois_contrat": 4.9,
+     "sous_evaluation": 0.089
+    },
+    "fan": {
+     "ancrage": 0.45,
+     "francophonie": 0.5,
+     "fidelite": 1.0,
+     "media": 0.6,
+     "lien_club": 0.6,
+     "origine": "Suisse",
+     "lien": "Foot suisse",
+     "tenure": 10.0
+    }
+   },
+   "tags": [
+    "Libre / pré-contrat"
+   ]
+  },
+  {
+   "id": "DEMO-007",
+   "name": "Adrien Cuendet",
+   "position": "Centre-Forward",
+   "groupe": "ATT",
+   "age": 25,
+   "club": "SC Démo Rhin",
+   "league_id": "C2",
+   "nationalites": [
+    "Italy"
+   ],
+   "naissance": "Milano",
+   "market_value": 200000,
+   "indemnite_estimee": 0,
+   "contract_expires": "2026-12-25",
+   "url": null,
+   "scores": {
+    "sport": 53.2,
+    "valeur": 66.6,
+    "fan": 58.1,
+    "besoin": 0.34,
+    "final": 55.6
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.4,
+     "minutes_saison": 798,
+     "niveau": 1.0,
+     "disponibilite": 0.33,
+     "buts": 5,
+     "passes": 3,
+     "matchs": 19,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.52,
+     "xg": 4.87,
+     "xa": 2.74,
+     "note_sofascore": 6.54,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 1.0,
+     "revente": 0.55,
+     "tendance": -0.43,
+     "mois_contrat": 3.0,
+     "sous_evaluation": 0.797
+    },
+    "fan": {
+     "ancrage": 0.1,
+     "francophonie": 0.15,
+     "fidelite": 1.0,
+     "media": 0.91,
+     "lien_club": 1.0,
+     "origine": "International",
+     "lien": "Ancien d'Yverdon",
+     "tenure": 3.5
+    }
+   },
+   "tags": [
+    "Libre / pré-contrat",
+    "Retour au club"
+   ]
+  },
+  {
+   "id": "DEMO-062",
+   "name": "Nils Bovet",
+   "position": "Centre-Forward",
+   "groupe": "ATT",
+   "age": 22,
+   "club": "AS Démo Savoie",
+   "league_id": "FR3",
+   "nationalites": [
+    "Italy"
+   ],
+   "naissance": "Milano",
+   "market_value": 260000,
+   "indemnite_estimee": 0,
+   "contract_expires": "2027-02-23",
+   "url": null,
+   "scores": {
+    "sport": 52.2,
+    "valeur": 77.7,
+    "fan": 45.7,
+    "besoin": 0.34,
+    "final": 55.4
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.33,
+     "minutes_saison": 1284,
+     "niveau": 1.0,
+     "disponibilite": 0.54,
+     "buts": 6,
+     "passes": 5,
+     "matchs": 31,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 1.0,
+     "revente": 1.0,
+     "tendance": -0.19,
+     "mois_contrat": 4.9,
+     "sous_evaluation": 0.785
+    },
+    "fan": {
+     "ancrage": 0.1,
+     "francophonie": 0.6,
+     "fidelite": 1.0,
+     "media": 0.41,
+     "lien_club": 0.3,
+     "origine": "International",
+     "lien": "Foot francophone",
+     "tenure": 3.0
+    }
+   },
+   "tags": [
+    "Libre / pré-contrat"
+   ]
+  },
+  {
+   "id": "DEMO-046",
+   "name": "Rayan Diallo",
+   "position": "Centre-Back",
+   "groupe": "DEF",
+   "age": 23,
+   "club": "AC Démo Jura",
+   "league_id": "C2",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Payerne",
+   "market_value": 610000,
+   "indemnite_estimee": 300000,
+   "contract_expires": "2027-05-24",
+   "url": null,
+   "scores": {
+    "sport": 43.8,
+    "valeur": 61.7,
+    "fan": 67.6,
+    "besoin": 0.5,
+    "final": 55.1
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.05,
+     "minutes_saison": 618,
+     "niveau": 1.0,
+     "disponibilite": 0.26,
+     "buts": 0,
+     "passes": 1,
+     "matchs": 17,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.11,
+     "xg": 0.51,
+     "xa": 0.0,
+     "note_sofascore": 7.24,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.8,
+     "revente": 0.8,
+     "tendance": 0.45,
+     "mois_contrat": 7.9,
+     "sous_evaluation": 0.266
+    },
+    "fan": {
+     "ancrage": 1.0,
+     "francophonie": 1.0,
+     "fidelite": 0.5,
+     "media": 0.16,
+     "lien_club": 0.6,
+     "origine": "Bassin nord-vaudois",
+     "lien": "Foot suisse",
+     "tenure": 1.5
+    }
+   },
+   "tags": [
+    "Fin de contrat < 12 mois",
+    "Valeur en hausse",
+    "Enfant du pays"
+   ]
+  },
+  {
+   "id": "DEMO-057",
+   "name": "Mattéo Brunner",
+   "position": "Right Winger",
+   "groupe": "ATT",
+   "age": 27,
+   "club": "SC Démo Rhin",
+   "league_id": "C2",
+   "nationalites": [
+    "France",
+    "Senegal"
+   ],
+   "naissance": "Paris",
+   "market_value": 1180000,
+   "indemnite_estimee": 1043000,
+   "contract_expires": "2029-03-14",
+   "url": null,
+   "scores": {
+    "sport": 77.7,
+    "valeur": 20.8,
+    "fan": 65.6,
+    "besoin": 0.34,
+    "final": 54.8
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.54,
+     "minutes_saison": 1604,
+     "niveau": 1.0,
+     "disponibilite": 0.67,
+     "buts": 10,
+     "passes": 13,
+     "matchs": 43,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 0.3,
+     "tendance": -0.21,
+     "mois_contrat": 29.6,
+     "sous_evaluation": 0.139
     },
     "fan": {
      "ancrage": 0.1,
@@ -2030,391 +2938,125 @@
      "lien_club": 0.6,
      "origine": "International",
      "lien": "Foot suisse",
-     "tenure": 6.0
-    }
-   },
-   "tags": [
-    "Libre / pré-contrat",
-    "Valeur en hausse"
-   ]
-  },
-  {
-   "id": "DEMO-056",
-   "name": "Enzo Lambert",
-   "position": "Centre-Back",
-   "groupe": "DEF",
-   "age": 28,
-   "club": "Démo Alpes FC",
-   "league_id": "C2",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Zürich",
-   "market_value": 110000,
-   "indemnite_estimee": 74000,
-   "contract_expires": "2028-03-18",
-   "url": null,
-   "scores": {
-    "sport": 46.7,
-    "valeur": 63.4,
-    "fan": 55.6,
-    "besoin": 0.5,
-    "final": 53.9
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.06,
-     "minutes_saison": 1199,
-     "niveau": 1.0,
-     "disponibilite": 0.5,
-     "buts": 1,
-     "passes": 1,
-     "matchs": 38
-    },
-    "valeur": {
-     "contrat": 0.5,
-     "revente": 0.3,
-     "tendance": 0.1,
-     "mois_contrat": 17.7,
-     "sous_evaluation": 0.861
-    },
-    "fan": {
-     "ancrage": 0.45,
-     "francophonie": 0.5,
-     "fidelite": 0.67,
-     "media": 0.61,
-     "lien_club": 0.6,
-     "origine": "Suisse",
-     "lien": "Foot suisse",
-     "tenure": 2.0
-    }
-   },
-   "tags": [
-    "Sous-évalué"
-   ]
-  },
-  {
-   "id": "DEMO-012",
-   "name": "Amadou Bovet",
-   "position": "Goalkeeper",
-   "groupe": "GK",
-   "age": 29,
-   "club": "Olympique Démo",
-   "league_id": "FR2",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Neuchâtel",
-   "market_value": 1190000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2026-12-24",
-   "url": null,
-   "scores": {
-    "sport": 54.1,
-    "valeur": 37.0,
-    "fan": 72.8,
-    "besoin": 0.5,
-    "final": 53.7
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.0,
-     "minutes_saison": 1722,
-     "niveau": 1.45,
-     "disponibilite": 0.72,
-     "buts": 0,
-     "passes": 0,
-     "matchs": 51
-    },
-    "valeur": {
-     "contrat": 1.0,
-     "revente": 0.3,
-     "tendance": -0.17,
-     "mois_contrat": 3.0,
-     "sous_evaluation": 0.025
-    },
-    "fan": {
-     "ancrage": 0.7,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.55,
-     "lien_club": 0.3,
-     "origine": "Romandie",
-     "lien": "Foot francophone",
      "tenure": 3.0
-    }
-   },
-   "tags": [
-    "Libre / pré-contrat"
-   ]
-  },
-  {
-   "id": "DEMO-053",
-   "name": "Florian Dubois",
-   "position": "Attacking Midfield",
-   "groupe": "MID",
-   "age": 23,
-   "club": "FC Démo Lac-Léman",
-   "league_id": "C2",
-   "nationalites": [
-    "Germany"
-   ],
-   "naissance": "München",
-   "market_value": 180000,
-   "indemnite_estimee": 180000,
-   "contract_expires": "2029-09-29",
-   "url": null,
-   "scores": {
-    "sport": 51.3,
-    "valeur": 58.1,
-    "fan": 51.3,
-    "besoin": 0.51,
-    "final": 53.5
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.3,
-     "minutes_saison": 1006,
-     "niveau": 1.0,
-     "disponibilite": 0.42,
-     "buts": 4,
-     "passes": 4,
-     "matchs": 32
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 0.8,
-     "tendance": -0.14,
-     "mois_contrat": 36.1,
-     "sous_evaluation": 0.848
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 0.15,
-     "fidelite": 1.0,
-     "media": 0.82,
-     "lien_club": 0.6,
-     "origine": "International",
-     "lien": "Foot suisse",
-     "tenure": 3.5
-    }
-   },
-   "tags": [
-    "Sous-évalué"
-   ]
-  },
-  {
-   "id": "DEMO-010",
-   "name": "Luca Jaquier",
-   "position": "Central Midfield",
-   "groupe": "MID",
-   "age": 21,
-   "club": "RFC Démo Wallonie",
-   "league_id": "BE2",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Neuchâtel",
-   "market_value": 180000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2027-02-22",
-   "url": null,
-   "scores": {
-    "sport": 28.6,
-    "valeur": 76.2,
-    "fan": 68.7,
-    "besoin": 0.51,
-    "final": 53.1
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.1,
-     "minutes_saison": 756,
-     "niveau": 1.05,
-     "disponibilite": 0.32,
-     "buts": 1,
-     "passes": 1,
-     "matchs": 23
-    },
-    "valeur": {
-     "contrat": 1.0,
-     "revente": 1.0,
-     "tendance": -0.18,
-     "mois_contrat": 4.9,
-     "sous_evaluation": 0.747
-    },
-    "fan": {
-     "ancrage": 0.7,
-     "francophonie": 1.0,
-     "fidelite": 0.75,
-     "media": 0.64,
-     "lien_club": 0.3,
-     "origine": "Romandie",
-     "lien": "Foot francophone",
-     "tenure": 2.2
-    }
-   },
-   "tags": [
-    "Libre / pré-contrat"
-   ]
-  },
-  {
-   "id": "DEMO-068",
-   "name": "Quentin Dubois",
-   "position": "Centre-Back",
-   "groupe": "DEF",
-   "age": 29,
-   "club": "AS Démo Savoie",
-   "league_id": "FR3",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Genève",
-   "market_value": 260000,
-   "indemnite_estimee": 230000,
-   "contract_expires": "2029-03-13",
-   "url": null,
-   "scores": {
-    "sport": 56.7,
-    "valeur": 36.5,
-    "fan": 64.4,
-    "besoin": 0.5,
-    "final": 52.6
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.08,
-     "minutes_saison": 2263,
-     "niveau": 1.0,
-     "disponibilite": 0.94,
-     "buts": 2,
-     "passes": 3,
-     "matchs": 68
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 0.3,
-     "tendance": -0.37,
-     "mois_contrat": 29.6,
-     "sous_evaluation": 0.608
-    },
-    "fan": {
-     "ancrage": 0.7,
-     "francophonie": 1.0,
-     "fidelite": 0.58,
-     "media": 0.62,
-     "lien_club": 0.3,
-     "origine": "Romandie",
-     "lien": "Foot francophone",
-     "tenure": 1.8
     }
    },
    "tags": []
   },
   {
-   "id": "DEMO-049",
-   "name": "Noah Sow",
-   "position": "Right Winger",
-   "groupe": "ATT",
-   "age": 24,
-   "club": "AC Démo Jura",
-   "league_id": "C2",
-   "nationalites": [
-    "France"
-   ],
-   "naissance": "Besançon",
-   "market_value": 20000,
-   "indemnite_estimee": 20000,
-   "contract_expires": "2029-09-29",
-   "url": null,
-   "scores": {
-    "sport": 45.3,
-    "valeur": 67.0,
-    "fan": 55.0,
-    "besoin": 0.34,
-    "final": 51.6
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.22,
-     "minutes_saison": 1700,
-     "niveau": 1.0,
-     "disponibilite": 0.71,
-     "buts": 4,
-     "passes": 6,
-     "matchs": 46
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 0.8,
-     "tendance": 0.0,
-     "mois_contrat": 36.1,
-     "sous_evaluation": 1.0
-    },
-    "fan": {
-     "ancrage": 0.4,
-     "francophonie": 1.0,
-     "fidelite": 0.67,
-     "media": 0.31,
-     "lien_club": 0.6,
-     "origine": "Frontalier",
-     "lien": "Foot suisse",
-     "tenure": 2.0
-    }
-   },
-   "tags": [
-    "Sous-évalué"
-   ]
-  },
-  {
-   "id": "DEMO-061",
-   "name": "Amadou Bovet",
-   "position": "Centre-Forward",
-   "groupe": "ATT",
+   "id": "DEMO-050",
+   "name": "Ibrahima Guignard",
+   "position": "Goalkeeper",
+   "groupe": "GK",
    "age": 26,
-   "club": "FC Démo Lac-Léman",
-   "league_id": "C2",
+   "club": "FC Démo Métropole",
+   "league_id": "C1",
    "nationalites": [
-    "Switzerland"
+    "Italy"
    ],
-   "naissance": "Morges",
-   "market_value": 840000,
-   "indemnite_estimee": 742000,
-   "contract_expires": "2029-03-13",
+   "naissance": "Milano",
+   "market_value": 1890000,
+   "indemnite_estimee": 1446000,
+   "contract_expires": "2028-08-26",
    "url": null,
    "scores": {
-    "sport": 53.5,
-    "valeur": 32.0,
-    "fan": 81.1,
-    "besoin": 0.34,
-    "final": 51.4
+    "sport": 82.0,
+    "valeur": 26.6,
+    "fan": 36.3,
+    "besoin": 0.5,
+    "final": 54.0
    },
    "detail": {
     "sport": {
-     "g_a_90": 0.44,
-     "minutes_saison": 1112,
-     "niveau": 1.0,
-     "disponibilite": 0.46,
-     "buts": 8,
-     "passes": 4,
-     "matchs": 29
+     "g_a_90": 0.0,
+     "minutes_saison": 1660,
+     "niveau": 1.45,
+     "disponibilite": 0.69,
+     "buts": 0,
+     "passes": 0,
+     "matchs": 51,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.0,
+     "xg": 0.0,
+     "xa": 0.0,
+     "note_sofascore": 7.19,
+     "saison_sofascore": "25/26"
     },
     "valeur": {
      "contrat": 0.2,
      "revente": 0.55,
-     "tendance": 0.24,
-     "mois_contrat": 29.6,
-     "sous_evaluation": 0.101
+     "tendance": 0.07,
+     "mois_contrat": 23.0,
+     "sous_evaluation": 0.051
     },
     "fan": {
-     "ancrage": 0.85,
-     "francophonie": 1.0,
-     "fidelite": 0.67,
-     "media": 0.94,
+     "ancrage": 0.1,
+     "francophonie": 0.15,
+     "fidelite": 0.92,
+     "media": 0.11,
      "lien_club": 0.6,
-     "origine": "Vaud",
+     "origine": "International",
      "lien": "Foot suisse",
-     "tenure": 2.0
+     "tenure": 2.8
+    }
+   },
+   "tags": []
+  },
+  {
+   "id": "DEMO-030",
+   "name": "Maxime Camara",
+   "position": "Defensive Midfield",
+   "groupe": "MID",
+   "age": 31,
+   "club": "AC Démo Jura",
+   "league_id": "C2",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Payerne",
+   "market_value": 140000,
+   "indemnite_estimee": 107000,
+   "contract_expires": "2028-08-26",
+   "url": null,
+   "scores": {
+    "sport": 45.4,
+    "valeur": 36.8,
+    "fan": 88.1,
+    "besoin": 0.51,
+    "final": 53.7
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.1,
+     "minutes_saison": 1496,
+     "niveau": 1.0,
+     "disponibilite": 0.62,
+     "buts": 2,
+     "passes": 2,
+     "matchs": 44,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.13,
+     "xg": 1.61,
+     "xa": 0.0,
+     "note_sofascore": 6.85,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 0.1,
+     "tendance": -0.3,
+     "mois_contrat": 23.0,
+     "sous_evaluation": 0.658
+    },
+    "fan": {
+     "ancrage": 1.0,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.64,
+     "lien_club": 0.6,
+     "origine": "Bassin nord-vaudois",
+     "lien": "Foot suisse",
+     "tenure": 3.0
     }
    },
    "tags": [
@@ -2422,109 +3064,59 @@
    ]
   },
   {
-   "id": "DEMO-038",
-   "name": "Ibrahima Perrin",
-   "position": "Right-Back",
-   "groupe": "DEF",
-   "age": 29,
-   "club": "FC Démo Broye",
-   "league_id": "CHPL",
+   "id": "DEMO-071",
+   "name": "Loïc Sow",
+   "position": "Central Midfield",
+   "groupe": "MID",
+   "age": 24,
+   "club": "RFC Démo Wallonie",
+   "league_id": "BE2",
    "nationalites": [
-    "Belgium"
+    "Portugal"
    ],
-   "naissance": "Liège",
-   "market_value": 240000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2027-02-22",
+   "naissance": "Porto",
+   "market_value": 310000,
+   "indemnite_estimee": 153000,
+   "contract_expires": "2027-05-24",
    "url": null,
    "scores": {
-    "sport": 45.4,
-    "valeur": 57.3,
-    "fan": 54.6,
-    "besoin": 0.5,
-    "final": 51.3
+    "sport": 48.5,
+    "valeur": 60.2,
+    "fan": 51.2,
+    "besoin": 0.51,
+    "final": 52.8
    },
    "detail": {
     "sport": {
-     "g_a_90": 0.14,
-     "minutes_saison": 1294,
-     "niveau": 0.7,
-     "disponibilite": 0.54,
+     "g_a_90": 0.17,
+     "minutes_saison": 1061,
+     "niveau": 1.05,
+     "disponibilite": 0.44,
      "buts": 2,
      "passes": 3,
-     "matchs": 31
-    },
-    "valeur": {
-     "contrat": 1.0,
-     "revente": 0.3,
-     "tendance": -0.27,
-     "mois_contrat": 4.9,
-     "sous_evaluation": 0.582
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 1.0,
-     "fidelite": 0.78,
-     "media": 0.68,
-     "lien_club": 0.6,
-     "origine": "International",
-     "lien": "Foot suisse",
-     "tenure": 2.3
-    }
-   },
-   "tags": [
-    "Libre / pré-contrat"
-   ]
-  },
-  {
-   "id": "DEMO-003",
-   "name": "Tim Pittet",
-   "position": "Attacking Midfield",
-   "groupe": "MID",
-   "age": 31,
-   "club": "FC Démo Broye",
-   "league_id": "CHPL",
-   "nationalites": [
-    "France",
-    "Senegal"
-   ],
-   "naissance": "Paris",
-   "market_value": 210000,
-   "indemnite_estimee": 111000,
-   "contract_expires": "2027-07-22",
-   "url": null,
-   "scores": {
-    "sport": 38.8,
-    "valeur": 57.6,
-    "fan": 65.3,
-    "besoin": 0.51,
-    "final": 51.2
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.48,
-     "minutes_saison": 1956,
-     "niveau": 0.7,
-     "disponibilite": 0.81,
-     "buts": 11,
-     "passes": 14,
-     "matchs": 57
+     "matchs": 33,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.18,
+     "xg": 1.28,
+     "xa": 0.83,
+     "note_sofascore": 7.09,
+     "saison_sofascore": "25/26"
     },
     "valeur": {
      "contrat": 0.8,
-     "revente": 0.1,
-     "tendance": 0.17,
-     "mois_contrat": 9.9,
-     "sous_evaluation": 0.57
+     "revente": 0.8,
+     "tendance": -0.28,
+     "mois_contrat": 7.9,
+     "sous_evaluation": 0.595
     },
     "fan": {
      "ancrage": 0.1,
-     "francophonie": 1.0,
+     "francophonie": 0.6,
      "fidelite": 1.0,
-     "media": 0.98,
-     "lien_club": 0.6,
+     "media": 0.71,
+     "lien_club": 0.3,
      "origine": "International",
-     "lien": "Foot suisse",
+     "lien": "Foot francophone",
      "tenure": 3.0
     }
    },
@@ -2533,8 +3125,241 @@
    ]
   },
   {
+   "id": "DEMO-040",
+   "name": "Elias Leroy",
+   "position": "Right Winger",
+   "groupe": "ATT",
+   "age": 22,
+   "club": "RFC Démo Wallonie",
+   "league_id": "BE2",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Bern",
+   "market_value": 1450000,
+   "indemnite_estimee": 972000,
+   "contract_expires": "2028-03-19",
+   "url": null,
+   "scores": {
+    "sport": 68.9,
+    "valeur": 37.9,
+    "fan": 52.1,
+    "besoin": 0.34,
+    "final": 52.7
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.56,
+     "minutes_saison": 992,
+     "niveau": 1.05,
+     "disponibilite": 0.41,
+     "buts": 6,
+     "passes": 9,
+     "matchs": 25,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 0.5,
+     "revente": 1.0,
+     "tendance": -0.28,
+     "mois_contrat": 17.7,
+     "sous_evaluation": 0.152
+    },
+    "fan": {
+     "ancrage": 0.45,
+     "francophonie": 0.6,
+     "fidelite": 0.67,
+     "media": 0.56,
+     "lien_club": 0.3,
+     "origine": "Suisse",
+     "lien": "Foot francophone",
+     "tenure": 2.0
+    }
+   },
+   "tags": []
+  },
+  {
+   "id": "DEMO-065",
+   "name": "Nils Leroy",
+   "position": "Attacking Midfield",
+   "groupe": "MID",
+   "age": 21,
+   "club": "Démo Alpes FC",
+   "league_id": "C2",
+   "nationalites": [
+    "France",
+    "Senegal"
+   ],
+   "naissance": "Paris",
+   "market_value": 310000,
+   "indemnite_estimee": 153000,
+   "contract_expires": "2027-05-24",
+   "url": null,
+   "scores": {
+    "sport": 34.6,
+    "valeur": 78.3,
+    "fan": 52.6,
+    "besoin": 0.51,
+    "final": 52.4
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.2,
+     "minutes_saison": 1274,
+     "niveau": 1.0,
+     "disponibilite": 0.53,
+     "buts": 3,
+     "passes": 4,
+     "matchs": 33,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 0.8,
+     "revente": 1.0,
+     "tendance": 1.58,
+     "mois_contrat": 7.9,
+     "sous_evaluation": 0.582
+    },
+    "fan": {
+     "ancrage": 0.1,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.29,
+     "lien_club": 0.6,
+     "origine": "International",
+     "lien": "Foot suisse",
+     "tenure": 3.0
+    }
+   },
+   "tags": [
+    "Fin de contrat < 12 mois",
+    "Valeur en hausse"
+   ]
+  },
+  {
+   "id": "DEMO-016",
+   "name": "Nils Brunner",
+   "position": "Left Winger",
+   "groupe": "ATT",
+   "age": 26,
+   "club": "FC Démo Métropole",
+   "league_id": "C1",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Lausanne",
+   "market_value": 1190000,
+   "indemnite_estimee": 586000,
+   "contract_expires": "2027-05-24",
+   "url": null,
+   "scores": {
+    "sport": 48.2,
+    "valeur": 33.6,
+    "fan": 89.9,
+    "besoin": 0.34,
+    "final": 51.6
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.57,
+     "minutes_saison": 1408,
+     "niveau": 1.45,
+     "disponibilite": 0.59,
+     "buts": 10,
+     "passes": 11,
+     "matchs": 39,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.46,
+     "xg": 4.86,
+     "xa": 6.42,
+     "note_sofascore": 7.21,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.8,
+     "revente": 0.55,
+     "tendance": -0.28,
+     "mois_contrat": 7.9,
+     "sous_evaluation": 0.025
+    },
+    "fan": {
+     "ancrage": 0.85,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 1.0,
+     "lien_club": 0.6,
+     "origine": "Vaud",
+     "lien": "Foot suisse",
+     "tenure": 3.0
+    }
+   },
+   "tags": [
+    "Fin de contrat < 12 mois",
+    "Enfant du pays"
+   ]
+  },
+  {
+   "id": "DEMO-047",
+   "name": "Luca Morel",
+   "position": "Attacking Midfield",
+   "groupe": "MID",
+   "age": 23,
+   "club": "SC Démo Rhin",
+   "league_id": "C2",
+   "nationalites": [
+    "Portugal"
+   ],
+   "naissance": "Porto",
+   "market_value": 800000,
+   "indemnite_estimee": 707000,
+   "contract_expires": "2029-03-14",
+   "url": null,
+   "scores": {
+    "sport": 58.8,
+    "valeur": 38.2,
+    "fan": 50.9,
+    "besoin": 0.51,
+    "final": 50.8
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.28,
+     "minutes_saison": 1634,
+     "niveau": 1.0,
+     "disponibilite": 0.68,
+     "buts": 6,
+     "passes": 6,
+     "matchs": 49,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.21,
+     "xg": 0.82,
+     "xa": 1.51,
+     "note_sofascore": 6.78,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 0.8,
+     "tendance": -0.05,
+     "mois_contrat": 29.6,
+     "sous_evaluation": 0.304
+    },
+    "fan": {
+     "ancrage": 0.1,
+     "francophonie": 0.15,
+     "fidelite": 1.0,
+     "media": 0.8,
+     "lien_club": 0.6,
+     "origine": "International",
+     "lien": "Foot suisse",
+     "tenure": 3.0
+    }
+   },
+   "tags": []
+  },
+  {
    "id": "DEMO-001",
-   "name": "Hugo Camara",
+   "name": "Arthur Guignard",
    "position": "Centre-Forward",
    "groupe": "ATT",
    "age": 29,
@@ -2546,14 +3371,14 @@
    "naissance": "Zürich",
    "market_value": 150000,
    "indemnite_estimee": 133000,
-   "contract_expires": "2029-03-13",
+   "contract_expires": "2029-03-14",
    "url": null,
    "scores": {
     "sport": 44.9,
-    "valeur": 52.9,
+    "valeur": 51.5,
     "fan": 70.4,
     "besoin": 0.34,
-    "final": 51.1
+    "final": 50.7
    },
    "detail": {
     "sport": {
@@ -2563,14 +3388,15 @@
      "disponibilite": 0.48,
      "buts": 9,
      "passes": 6,
-     "matchs": 30
+     "matchs": 30,
+     "source": "transfermarkt"
     },
     "valeur": {
      "contrat": 0.2,
      "revente": 0.3,
      "tendance": 0.15,
      "mois_contrat": 29.6,
-     "sous_evaluation": 0.759
+     "sous_evaluation": 0.722
     },
     "fan": {
      "ancrage": 0.45,
@@ -2586,981 +3412,281 @@
    "tags": []
   },
   {
-   "id": "DEMO-036",
-   "name": "Nils Bovet",
-   "position": "Left-Back",
-   "groupe": "DEF",
-   "age": 22,
-   "club": "SC Démo Rhin",
-   "league_id": "C2",
+   "id": "DEMO-048",
+   "name": "Noah Bianchi",
+   "position": "Goalkeeper",
+   "groupe": "GK",
+   "age": 23,
+   "club": "US Démo Franche-Comté",
+   "league_id": "FR3",
    "nationalites": [
     "France"
    ],
-   "naissance": "Besançon",
-   "market_value": 570000,
-   "indemnite_estimee": 301000,
-   "contract_expires": "2027-07-22",
+   "naissance": "Pontarlier",
+   "market_value": 800000,
+   "indemnite_estimee": 479000,
+   "contract_expires": "2027-11-20",
    "url": null,
    "scores": {
-    "sport": 43.6,
-    "valeur": 53.7,
-    "fan": 60.4,
+    "sport": 50.4,
+    "valeur": 46.0,
+    "fan": 55.0,
     "besoin": 0.5,
-    "final": 50.8
+    "final": 50.2
    },
    "detail": {
     "sport": {
-     "g_a_90": 0.08,
-     "minutes_saison": 902,
+     "g_a_90": 0.0,
+     "minutes_saison": 1552,
      "niveau": 1.0,
-     "disponibilite": 0.38,
-     "buts": 1,
-     "passes": 1,
-     "matchs": 21
+     "disponibilite": 0.65,
+     "buts": 0,
+     "passes": 0,
+     "matchs": 38,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.0,
+     "xg": 0.0,
+     "xa": 0.0,
+     "note_sofascore": 7.01,
+     "saison_sofascore": "25/26"
     },
     "valeur": {
-     "contrat": 0.8,
-     "revente": 1.0,
-     "tendance": -0.17,
-     "mois_contrat": 9.9,
-     "sous_evaluation": 0.304
+     "contrat": 0.5,
+     "revente": 0.8,
+     "tendance": 0.19,
+     "mois_contrat": 13.8,
+     "sous_evaluation": 0.19
     },
     "fan": {
      "ancrage": 0.4,
      "francophonie": 1.0,
      "fidelite": 1.0,
-     "media": 0.19,
-     "lien_club": 0.6,
+     "media": 0.11,
+     "lien_club": 0.3,
      "origine": "Frontalier",
-     "lien": "Foot suisse",
-     "tenure": 3.0
+     "lien": "Foot francophone",
+     "tenure": 4.0
     }
    },
-   "tags": [
-    "Fin de contrat < 12 mois"
-   ]
+   "tags": []
   },
   {
-   "id": "DEMO-075",
-   "name": "Rayan Bovet",
-   "position": "Left Winger",
-   "groupe": "ATT",
-   "age": 31,
-   "club": "FC Démo Métropole",
+   "id": "DEMO-059",
+   "name": "Malik Keller",
+   "position": "Central Midfield",
+   "groupe": "MID",
+   "age": 21,
+   "club": "Démo Sporting",
    "league_id": "C1",
    "nationalites": [
-    "Switzerland"
+    "Belgium"
    ],
-   "naissance": "Bern",
-   "market_value": 70000,
-   "indemnite_estimee": 47000,
-   "contract_expires": "2028-03-18",
+   "naissance": "Liège",
+   "market_value": 800000,
+   "indemnite_estimee": 479000,
+   "contract_expires": "2027-11-20",
    "url": null,
    "scores": {
-    "sport": 49.0,
-    "valeur": 51.5,
-    "fan": 63.7,
-    "besoin": 0.34,
-    "final": 50.8
+    "sport": 45.5,
+    "valeur": 46.4,
+    "fan": 60.8,
+    "besoin": 0.51,
+    "final": 49.7
    },
    "detail": {
     "sport": {
-     "g_a_90": 0.27,
-     "minutes_saison": 452,
+     "g_a_90": 0.22,
+     "minutes_saison": 856,
      "niveau": 1.45,
-     "disponibilite": 0.19,
+     "disponibilite": 0.36,
      "buts": 2,
-     "passes": 1,
-     "matchs": 12
+     "passes": 3,
+     "matchs": 21,
+     "source": "transfermarkt"
     },
     "valeur": {
      "contrat": 0.5,
-     "revente": 0.1,
-     "tendance": -0.5,
-     "mois_contrat": 17.7,
-     "sous_evaluation": 0.937
+     "revente": 1.0,
+     "tendance": -0.01,
+     "mois_contrat": 13.8,
+     "sous_evaluation": 0.228
     },
     "fan": {
-     "ancrage": 0.45,
-     "francophonie": 0.5,
+     "ancrage": 0.1,
+     "francophonie": 1.0,
      "fidelite": 1.0,
-     "media": 0.35,
-     "lien_club": 1.0,
-     "origine": "Suisse",
-     "lien": "Ancien d'Yverdon",
-     "tenure": 3.0
+     "media": 0.74,
+     "lien_club": 0.6,
+     "origine": "International",
+     "lien": "Foot suisse",
+     "tenure": 3.5
     }
    },
-   "tags": [
-    "Sous-évalué",
-    "Retour au club"
-   ]
+   "tags": []
   },
   {
-   "id": "DEMO-062",
-   "name": "Jonas Dubois",
-   "position": "Left Winger",
-   "groupe": "ATT",
-   "age": 23,
-   "club": "AS Démo Savoie",
-   "league_id": "FR3",
+   "id": "DEMO-069",
+   "name": "Amadou Keller",
+   "position": "Centre-Back",
+   "groupe": "DEF",
+   "age": 27,
+   "club": "AC Démo Jura",
+   "league_id": "C2",
    "nationalites": [
-    "Germany"
+    "France",
+    "Senegal"
    ],
-   "naissance": "München",
-   "market_value": 890000,
-   "indemnite_estimee": 787000,
-   "contract_expires": "2029-03-13",
+   "naissance": "Paris",
+   "market_value": 590000,
+   "indemnite_estimee": 395000,
+   "contract_expires": "2028-03-19",
    "url": null,
    "scores": {
-    "sport": 62.6,
-    "valeur": 40.9,
-    "fan": 50.9,
-    "besoin": 0.34,
-    "final": 50.6
+    "sport": 54.1,
+    "valeur": 32.5,
+    "fan": 58.6,
+    "besoin": 0.5,
+    "final": 48.7
    },
    "detail": {
     "sport": {
-     "g_a_90": 0.46,
-     "minutes_saison": 1391,
+     "g_a_90": 0.08,
+     "minutes_saison": 1984,
      "niveau": 1.0,
-     "disponibilite": 0.58,
-     "buts": 8,
-     "passes": 9,
-     "matchs": 34
+     "disponibilite": 0.83,
+     "buts": 2,
+     "passes": 2,
+     "matchs": 53,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.07,
+     "xg": 1.13,
+     "xa": 1.09,
+     "note_sofascore": 6.66,
+     "saison_sofascore": "25/26"
     },
     "valeur": {
-     "contrat": 0.2,
-     "revente": 0.8,
-     "tendance": 0.29,
-     "mois_contrat": 29.6,
+     "contrat": 0.5,
+     "revente": 0.3,
+     "tendance": -0.13,
+     "mois_contrat": 17.7,
      "sous_evaluation": 0.203
     },
     "fan": {
      "ancrage": 0.1,
-     "francophonie": 0.6,
-     "fidelite": 0.78,
-     "media": 0.97,
-     "lien_club": 0.3,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.62,
+     "lien_club": 0.6,
      "origine": "International",
-     "lien": "Foot francophone",
-     "tenure": 2.3
+     "lien": "Foot suisse",
+     "tenure": 3.0
     }
    },
    "tags": []
   },
   {
    "id": "DEMO-064",
-   "name": "Karim Brunner",
-   "position": "Centre-Back",
-   "groupe": "DEF",
-   "age": 23,
-   "club": "FC Démo Broye",
-   "league_id": "CHPL",
+   "name": "Florian Mottier",
+   "position": "Goalkeeper",
+   "groupe": "GK",
+   "age": 31,
+   "club": "RFC Démo Wallonie",
+   "league_id": "BE2",
    "nationalites": [
-    "France"
+    "Switzerland"
    ],
-   "naissance": "Besançon",
-   "market_value": 330000,
-   "indemnite_estimee": 221000,
-   "contract_expires": "2028-03-18",
+   "naissance": "Morges",
+   "market_value": 480000,
+   "indemnite_estimee": 236000,
+   "contract_expires": "2027-05-24",
    "url": null,
    "scores": {
-    "sport": 35.7,
-    "valeur": 60.2,
-    "fan": 65.8,
+    "sport": 45.6,
+    "valeur": 32.3,
+    "fan": 72.6,
     "besoin": 0.5,
-    "final": 50.6
+    "final": 48.4
    },
    "detail": {
     "sport": {
-     "g_a_90": 0.07,
-     "minutes_saison": 1042,
-     "niveau": 0.7,
-     "disponibilite": 0.43,
-     "buts": 1,
-     "passes": 1,
-     "matchs": 31
+     "g_a_90": 0.0,
+     "minutes_saison": 1204,
+     "niveau": 1.05,
+     "disponibilite": 0.5,
+     "buts": 0,
+     "passes": 0,
+     "matchs": 30,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 0.8,
+     "revente": 0.1,
+     "tendance": -0.19,
+     "mois_contrat": 7.9,
+     "sous_evaluation": 0.114
+    },
+    "fan": {
+     "ancrage": 0.85,
+     "francophonie": 1.0,
+     "fidelite": 0.78,
+     "media": 0.55,
+     "lien_club": 0.3,
+     "origine": "Vaud",
+     "lien": "Foot francophone",
+     "tenure": 2.3
+    }
+   },
+   "tags": [
+    "Fin de contrat < 12 mois",
+    "Enfant du pays"
+   ]
+  },
+  {
+   "id": "DEMO-061",
+   "name": "Rayan Dubois",
+   "position": "Goalkeeper",
+   "groupe": "GK",
+   "age": 24,
+   "club": "FC Démo Lac-Léman",
+   "league_id": "C2",
+   "nationalites": [
+    "Belgium"
+   ],
+   "naissance": "Liège",
+   "market_value": 240000,
+   "indemnite_estimee": 161000,
+   "contract_expires": "2028-03-19",
+   "url": null,
+   "scores": {
+    "sport": 36.6,
+    "valeur": 55.4,
+    "fan": 57.4,
+    "besoin": 0.5,
+    "final": 47.4
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.0,
+     "minutes_saison": 1438,
+     "niveau": 1.0,
+     "disponibilite": 0.6,
+     "buts": 0,
+     "passes": 0,
+     "matchs": 35,
+     "source": "transfermarkt"
     },
     "valeur": {
      "contrat": 0.5,
      "revente": 0.8,
-     "tendance": 0.22,
+     "tendance": -0.17,
      "mois_contrat": 17.7,
-     "sous_evaluation": 0.532
-    },
-    "fan": {
-     "ancrage": 0.4,
-     "francophonie": 1.0,
-     "fidelite": 0.89,
-     "media": 0.62,
-     "lien_club": 0.6,
-     "origine": "Frontalier",
-     "lien": "Foot suisse",
-     "tenure": 2.7
-    }
-   },
-   "tags": []
-  },
-  {
-   "id": "DEMO-050",
-   "name": "Hugo Favre",
-   "position": "Right-Back",
-   "groupe": "DEF",
-   "age": 29,
-   "club": "Démo Alpes FC",
-   "league_id": "C2",
-   "nationalites": [
-    "France"
-   ],
-   "naissance": "Besançon",
-   "market_value": 130000,
-   "indemnite_estimee": 64000,
-   "contract_expires": "2027-05-23",
-   "url": null,
-   "scores": {
-    "sport": 28.3,
-    "valeur": 68.3,
-    "fan": 69.2,
-    "besoin": 0.5,
-    "final": 50.5
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.13,
-     "minutes_saison": 842,
-     "niveau": 1.0,
-     "disponibilite": 0.35,
-     "buts": 1,
-     "passes": 2,
-     "matchs": 26
-    },
-    "valeur": {
-     "contrat": 0.8,
-     "revente": 0.3,
-     "tendance": 0.3,
-     "mois_contrat": 7.9,
-     "sous_evaluation": 0.696
-    },
-    "fan": {
-     "ancrage": 0.4,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.67,
-     "lien_club": 0.6,
-     "origine": "Frontalier",
-     "lien": "Foot suisse",
-     "tenure": 4.5
-    }
-   },
-   "tags": [
-    "Fin de contrat < 12 mois",
-    "Valeur en hausse"
-   ]
-  },
-  {
-   "id": "DEMO-057",
-   "name": "Yanis Oberson",
-   "position": "Centre-Forward",
-   "groupe": "ATT",
-   "age": 29,
-   "club": "SC Démo Rhin",
-   "league_id": "C2",
-   "nationalites": [
-    "France",
-    "Senegal"
-   ],
-   "naissance": "Paris",
-   "market_value": 170000,
-   "indemnite_estimee": 102000,
-   "contract_expires": "2027-11-19",
-   "url": null,
-   "scores": {
-    "sport": 49.0,
-    "valeur": 48.5,
-    "fan": 63.1,
-    "besoin": 0.34,
-    "final": 49.8
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.34,
-     "minutes_saison": 1745,
-     "niveau": 1.0,
-     "disponibilite": 0.73,
-     "buts": 9,
-     "passes": 6,
-     "matchs": 43
-    },
-    "valeur": {
-     "contrat": 0.5,
-     "revente": 0.3,
-     "tendance": -0.37,
-     "mois_contrat": 13.8,
-     "sous_evaluation": 0.722
+     "sous_evaluation": 0.608
     },
     "fan": {
      "ancrage": 0.1,
      "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.86,
-     "lien_club": 0.6,
-     "origine": "International",
-     "lien": "Foot suisse",
-     "tenure": 4.0
-    }
-   },
-   "tags": []
-  },
-  {
-   "id": "DEMO-037",
-   "name": "Enzo Bamba",
-   "position": "Goalkeeper",
-   "groupe": "GK",
-   "age": 28,
-   "club": "FC Démo Métropole",
-   "league_id": "C1",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Bern",
-   "market_value": 130000,
-   "indemnite_estimee": 130000,
-   "contract_expires": "2029-09-29",
-   "url": null,
-   "scores": {
-    "sport": 35.2,
-    "valeur": 60.9,
-    "fan": 62.2,
-    "besoin": 0.5,
-    "final": 49.6
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.0,
-     "minutes_saison": 1316,
-     "niveau": 1.45,
-     "disponibilite": 0.55,
-     "buts": 0,
-     "passes": 0,
-     "matchs": 32
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 0.3,
-     "tendance": 0.62,
-     "mois_contrat": 36.1,
-     "sous_evaluation": 0.785
-    },
-    "fan": {
-     "ancrage": 0.45,
-     "francophonie": 0.5,
      "fidelite": 1.0,
      "media": 0.55,
-     "lien_club": 0.6,
-     "origine": "Suisse",
-     "lien": "Foot suisse",
-     "tenure": 4.0
-    }
-   },
-   "tags": [
-    "Valeur en hausse"
-   ]
-  },
-  {
-   "id": "DEMO-071",
-   "name": "Quentin Moreau",
-   "position": "Right-Back",
-   "groupe": "DEF",
-   "age": 30,
-   "club": "FC Démo Lac-Léman",
-   "league_id": "C2",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Fribourg",
-   "market_value": 390000,
-   "indemnite_estimee": 192000,
-   "contract_expires": "2027-05-23",
-   "url": null,
-   "scores": {
-    "sport": 43.2,
-    "valeur": 41.9,
-    "fan": 70.3,
-    "besoin": 0.5,
-    "final": 49.6
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.1,
-     "minutes_saison": 1042,
-     "niveau": 1.0,
-     "disponibilite": 0.43,
-     "buts": 1,
-     "passes": 2,
-     "matchs": 29
-    },
-    "valeur": {
-     "contrat": 0.8,
-     "revente": 0.1,
-     "tendance": -0.11,
-     "mois_contrat": 7.9,
-     "sous_evaluation": 0.316
-    },
-    "fan": {
-     "ancrage": 0.7,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.2,
-     "lien_club": 0.6,
-     "origine": "Romandie",
-     "lien": "Foot suisse",
-     "tenure": 4.0
-    }
-   },
-   "tags": [
-    "Fin de contrat < 12 mois"
-   ]
-  },
-  {
-   "id": "DEMO-072",
-   "name": "Malik Chappuis",
-   "position": "Goalkeeper",
-   "groupe": "GK",
-   "age": 19,
-   "club": "Démo Alpes FC",
-   "league_id": "C2",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Bern",
-   "market_value": 550000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2027-02-22",
-   "url": null,
-   "scores": {
-    "sport": 36.8,
-    "valeur": 61.1,
-    "fan": 54.5,
-    "besoin": 0.5,
-    "final": 48.5
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.0,
-     "minutes_saison": 1241,
-     "niveau": 1.0,
-     "disponibilite": 0.52,
-     "buts": 0,
-     "passes": 0,
-     "matchs": 38
-    },
-    "valeur": {
-     "contrat": 1.0,
-     "revente": 1.0,
-     "tendance": -0.15,
-     "mois_contrat": 4.9,
-     "sous_evaluation": 0.354
-    },
-    "fan": {
-     "ancrage": 0.45,
-     "francophonie": 0.5,
-     "fidelite": 0.67,
-     "media": 0.55,
-     "lien_club": 0.6,
-     "origine": "Suisse",
-     "lien": "Foot suisse",
-     "tenure": 2.0
-    }
-   },
-   "tags": [
-    "Libre / pré-contrat"
-   ]
-  },
-  {
-   "id": "DEMO-026",
-   "name": "Karim Koné",
-   "position": "Attacking Midfield",
-   "groupe": "MID",
-   "age": 19,
-   "club": "RFC Démo Wallonie",
-   "league_id": "BE2",
-   "nationalites": [
-    "Cote d'Ivoire"
-   ],
-   "naissance": "Abidjan",
-   "market_value": 1560000,
-   "indemnite_estimee": 768000,
-   "contract_expires": "2027-05-23",
-   "url": null,
-   "scores": {
-    "sport": 56.1,
-    "valeur": 38.0,
-    "fan": 46.0,
-    "besoin": 0.51,
-    "final": 48.3
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.49,
-     "minutes_saison": 1529,
-     "niveau": 1.05,
-     "disponibilite": 0.64,
-     "buts": 9,
-     "passes": 11,
-     "matchs": 49
-    },
-    "valeur": {
-     "contrat": 0.8,
-     "revente": 1.0,
-     "tendance": -0.51,
-     "mois_contrat": 7.9,
-     "sous_evaluation": 0.076
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 1.0,
-     "fidelite": 0.33,
-     "media": 0.99,
-     "lien_club": 0.3,
-     "origine": "International",
-     "lien": "Foot francophone",
-     "tenure": 1.0
-    }
-   },
-   "tags": [
-    "Fin de contrat < 12 mois"
-   ]
-  },
-  {
-   "id": "DEMO-027",
-   "name": "Bastien Camara",
-   "position": "Centre-Forward",
-   "groupe": "ATT",
-   "age": 25,
-   "club": "FC Démo Broye",
-   "league_id": "CHPL",
-   "nationalites": [
-    "Senegal"
-   ],
-   "naissance": "Dakar",
-   "market_value": 390000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2027-02-22",
-   "url": null,
-   "scores": {
-    "sport": 35.4,
-    "valeur": 59.0,
-    "fan": 65.6,
-    "besoin": 0.34,
-    "final": 47.6
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.58,
-     "minutes_saison": 421,
-     "niveau": 0.7,
-     "disponibilite": 0.18,
-     "buts": 4,
-     "passes": 2,
-     "matchs": 11
-    },
-    "valeur": {
-     "contrat": 1.0,
-     "revente": 0.55,
-     "tendance": 0.03,
-     "mois_contrat": 4.9,
-     "sous_evaluation": 0.38
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 1.0,
-     "lien_club": 0.6,
-     "origine": "International",
-     "lien": "Foot suisse",
-     "tenure": 4.0
-    }
-   },
-   "tags": [
-    "Libre / pré-contrat"
-   ]
-  },
-  {
-   "id": "DEMO-013",
-   "name": "Samuel Oberson",
-   "position": "Centre-Forward",
-   "groupe": "ATT",
-   "age": 25,
-   "club": "SC Démo Rhin",
-   "league_id": "C2",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Fribourg",
-   "market_value": 20000,
-   "indemnite_estimee": 10000,
-   "contract_expires": "2027-05-23",
-   "url": null,
-   "scores": {
-    "sport": 23.7,
-    "valeur": 77.7,
-    "fan": 63.6,
-    "besoin": 0.34,
-    "final": 47.5
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.14,
-     "minutes_saison": 846,
-     "niveau": 1.0,
-     "disponibilite": 0.35,
-     "buts": 2,
-     "passes": 1,
-     "matchs": 21
-    },
-    "valeur": {
-     "contrat": 0.8,
-     "revente": 0.55,
-     "tendance": 0.0,
-     "mois_contrat": 7.9,
-     "sous_evaluation": 0.987
-    },
-    "fan": {
-     "ancrage": 0.7,
-     "francophonie": 1.0,
-     "fidelite": 0.33,
-     "media": 0.68,
-     "lien_club": 0.6,
-     "origine": "Romandie",
-     "lien": "Foot suisse",
-     "tenure": 1.0
-    }
-   },
-   "tags": [
-    "Fin de contrat < 12 mois",
-    "Sous-évalué"
-   ]
-  },
-  {
-   "id": "DEMO-016",
-   "name": "Amadou Jaquier",
-   "position": "Left-Back",
-   "groupe": "DEF",
-   "age": 31,
-   "club": "FC Démo Métropole",
-   "league_id": "C1",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Zürich",
-   "market_value": 940000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2027-02-22",
-   "url": null,
-   "scores": {
-    "sport": 45.1,
-    "valeur": 43.4,
-    "fan": 55.1,
-    "besoin": 0.5,
-    "final": 47.1
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.18,
-     "minutes_saison": 1638,
-     "niveau": 1.45,
-     "disponibilite": 0.68,
-     "buts": 3,
-     "passes": 5,
-     "matchs": 52
-    },
-    "valeur": {
-     "contrat": 1.0,
-     "revente": 0.1,
-     "tendance": 0.27,
-     "mois_contrat": 4.9,
-     "sous_evaluation": 0.038
-    },
-    "fan": {
-     "ancrage": 0.45,
-     "francophonie": 0.5,
-     "fidelite": 0.92,
-     "media": 0.27,
-     "lien_club": 0.6,
-     "origine": "Suisse",
-     "lien": "Foot suisse",
-     "tenure": 2.8
-    }
-   },
-   "tags": [
-    "Libre / pré-contrat"
-   ]
-  },
-  {
-   "id": "DEMO-024",
-   "name": "Samuel Cuendet",
-   "position": "Left-Back",
-   "groupe": "DEF",
-   "age": 20,
-   "club": "AC Démo Jura",
-   "league_id": "C2",
-   "nationalites": [
-    "France"
-   ],
-   "naissance": "Besançon",
-   "market_value": 1410000,
-   "indemnite_estimee": 1246000,
-   "contract_expires": "2029-03-13",
-   "url": null,
-   "scores": {
-    "sport": 49.2,
-    "valeur": 31.2,
-    "fan": 61.5,
-    "besoin": 0.5,
-    "final": 46.9
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.15,
-     "minutes_saison": 2478,
-     "niveau": 1.0,
-     "disponibilite": 1.0,
-     "buts": 5,
-     "passes": 5,
-     "matchs": 72
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 1.0,
-     "tendance": -0.07,
-     "mois_contrat": 29.6,
-     "sous_evaluation": 0.063
-    },
-    "fan": {
-     "ancrage": 0.4,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.25,
-     "lien_club": 0.6,
-     "origine": "Frontalier",
-     "lien": "Foot suisse",
-     "tenure": 3.3
-    }
-   },
-   "tags": []
-  },
-  {
-   "id": "DEMO-067",
-   "name": "Florian Bovet",
-   "position": "Centre-Back",
-   "groupe": "DEF",
-   "age": 29,
-   "club": "AS Démo Savoie",
-   "league_id": "FR3",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Neuchâtel",
-   "market_value": 120000,
-   "indemnite_estimee": 59000,
-   "contract_expires": "2027-05-23",
-   "url": null,
-   "scores": {
-    "sport": 29.4,
-    "valeur": 58.7,
-    "fan": 61.5,
-    "besoin": 0.5,
-    "final": 46.2
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.04,
-     "minutes_saison": 787,
-     "niveau": 1.0,
-     "disponibilite": 0.33,
-     "buts": 0,
-     "passes": 1,
-     "matchs": 20
-    },
-    "valeur": {
-     "contrat": 0.8,
-     "revente": 0.3,
-     "tendance": -0.33,
-     "mois_contrat": 7.9,
-     "sous_evaluation": 0.772
-    },
-    "fan": {
-     "ancrage": 0.7,
-     "francophonie": 1.0,
-     "fidelite": 0.83,
-     "media": 0.15,
-     "lien_club": 0.3,
-     "origine": "Romandie",
-     "lien": "Foot francophone",
-     "tenure": 2.5
-    }
-   },
-   "tags": [
-    "Fin de contrat < 12 mois"
-   ]
-  },
-  {
-   "id": "DEMO-080",
-   "name": "Loïc Traoré",
-   "position": "Central Midfield",
-   "groupe": "MID",
-   "age": 31,
-   "club": "SC Démo Rhin",
-   "league_id": "C2",
-   "nationalites": [
-    "France",
-    "Senegal"
-   ],
-   "naissance": "Paris",
-   "market_value": 340000,
-   "indemnite_estimee": 340000,
-   "contract_expires": "2029-09-29",
-   "url": null,
-   "scores": {
-    "sport": 55.3,
-    "valeur": 24.8,
-    "fan": 54.8,
-    "besoin": 0.51,
-    "final": 46.2
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.33,
-     "minutes_saison": 1022,
-     "niveau": 1.0,
-     "disponibilite": 0.43,
-     "buts": 4,
-     "passes": 5,
-     "matchs": 27
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 0.1,
-     "tendance": -0.47,
-     "mois_contrat": 36.1,
-     "sous_evaluation": 0.443
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.41,
-     "lien_club": 0.6,
-     "origine": "International",
-     "lien": "Foot suisse",
-     "tenure": 3.3
-    }
-   },
-   "tags": []
-  },
-  {
-   "id": "DEMO-029",
-   "name": "Malik Bianchi",
-   "position": "Centre-Back",
-   "groupe": "DEF",
-   "age": 20,
-   "club": "AS Démo Savoie",
-   "league_id": "FR3",
-   "nationalites": [
-    "Senegal"
-   ],
-   "naissance": "Dakar",
-   "market_value": 450000,
-   "indemnite_estimee": 302000,
-   "contract_expires": "2028-03-18",
-   "url": null,
-   "scores": {
-    "sport": 30.2,
-    "valeur": 63.2,
-    "fan": 54.2,
-    "besoin": 0.5,
-    "final": 46.1
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.05,
-     "minutes_saison": 1542,
-     "niveau": 1.0,
-     "disponibilite": 0.64,
-     "buts": 1,
-     "passes": 1,
-     "matchs": 39
-    },
-    "valeur": {
-     "contrat": 0.5,
-     "revente": 1.0,
-     "tendance": 0.96,
-     "mois_contrat": 17.7,
-     "sous_evaluation": 0.392
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.59,
-     "lien_club": 0.3,
-     "origine": "International",
-     "lien": "Foot francophone",
-     "tenure": 3.0
-    }
-   },
-   "tags": [
-    "Valeur en hausse"
-   ]
-  },
-  {
-   "id": "DEMO-079",
-   "name": "Mattéo Meier",
-   "position": "Right Winger",
-   "groupe": "ATT",
-   "age": 30,
-   "club": "FC Démo Métropole",
-   "league_id": "C1",
-   "nationalites": [
-    "France",
-    "Senegal"
-   ],
-   "naissance": "Paris",
-   "market_value": 320000,
-   "indemnite_estimee": 283000,
-   "contract_expires": "2029-03-13",
-   "url": null,
-   "scores": {
-    "sport": 50.3,
-    "valeur": 30.8,
-    "fan": 63.6,
-    "besoin": 0.34,
-    "final": 45.5
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.38,
-     "minutes_saison": 2266,
-     "niveau": 1.45,
-     "disponibilite": 0.94,
-     "buts": 10,
-     "passes": 13,
-     "matchs": 57
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 0.1,
-     "tendance": -0.22,
-     "mois_contrat": 29.6,
-     "sous_evaluation": 0.468
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.89,
      "lien_club": 0.6,
      "origine": "International",
      "lien": "Foot suisse",
@@ -3570,164 +3696,55 @@
    "tags": []
   },
   {
-   "id": "DEMO-060",
-   "name": "Kevin Meier",
-   "position": "Centre-Forward",
-   "groupe": "ATT",
-   "age": 19,
-   "club": "FC Démo Lac-Léman",
-   "league_id": "C2",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Bern",
-   "market_value": 80000,
-   "indemnite_estimee": 71000,
-   "contract_expires": "2029-03-13",
-   "url": null,
-   "scores": {
-    "sport": 25.4,
-    "valeur": 62.5,
-    "fan": 67.9,
-    "besoin": 0.34,
-    "final": 44.9
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.34,
-     "minutes_saison": 487,
-     "niveau": 1.0,
-     "disponibilite": 0.2,
-     "buts": 3,
-     "passes": 1,
-     "matchs": 11
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 1.0,
-     "tendance": -0.27,
-     "mois_contrat": 29.6,
-     "sous_evaluation": 0.949
-    },
-    "fan": {
-     "ancrage": 0.45,
-     "francophonie": 0.5,
-     "fidelite": 1.0,
-     "media": 0.86,
-     "lien_club": 0.6,
-     "origine": "Suisse",
-     "lien": "Foot suisse",
-     "tenure": 4.0
-    }
-   },
-   "tags": [
-    "Sous-évalué"
-   ]
-  },
-  {
-   "id": "DEMO-059",
-   "name": "Enzo Brunner",
-   "position": "Centre-Back",
-   "groupe": "DEF",
-   "age": 29,
-   "club": "Démo Alpes FC",
-   "league_id": "C2",
+   "id": "DEMO-073",
+   "name": "Loïc Leroy",
+   "position": "Defensive Midfield",
+   "groupe": "MID",
+   "age": 27,
+   "club": "US Démo Franche-Comté",
+   "league_id": "FR3",
    "nationalites": [
     "France"
    ],
-   "naissance": "Lyon",
-   "market_value": 340000,
-   "indemnite_estimee": 167000,
-   "contract_expires": "2027-05-23",
+   "naissance": "Besançon",
+   "market_value": 350000,
+   "indemnite_estimee": 210000,
+   "contract_expires": "2027-11-20",
    "url": null,
    "scores": {
-    "sport": 33.5,
-    "valeur": 48.2,
-    "fan": 59.0,
-    "besoin": 0.5,
-    "final": 44.3
+    "sport": 41.3,
+    "valeur": 52.2,
+    "fan": 49.1,
+    "besoin": 0.51,
+    "final": 46.7
    },
    "detail": {
     "sport": {
      "g_a_90": 0.09,
-     "minutes_saison": 1619,
+     "minutes_saison": 1374,
      "niveau": 1.0,
-     "disponibilite": 0.67,
+     "disponibilite": 0.57,
      "buts": 2,
-     "passes": 2,
-     "matchs": 44
-    },
-    "valeur": {
-     "contrat": 0.8,
-     "revente": 0.3,
-     "tendance": 0.0,
-     "mois_contrat": 7.9,
-     "sous_evaluation": 0.342
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.64,
-     "lien_club": 0.6,
-     "origine": "International",
-     "lien": "Foot suisse",
-     "tenure": 4.0
-    }
-   },
-   "tags": [
-    "Fin de contrat < 12 mois"
-   ]
-  },
-  {
-   "id": "DEMO-023",
-   "name": "Samuel Cuendet",
-   "position": "Left Winger",
-   "groupe": "ATT",
-   "age": 23,
-   "club": "AS Démo Savoie",
-   "league_id": "FR3",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Zürich",
-   "market_value": 300000,
-   "indemnite_estimee": 201000,
-   "contract_expires": "2028-03-18",
-   "url": null,
-   "scores": {
-    "sport": 23.6,
-    "valeur": 63.7,
-    "fan": 64.5,
-    "besoin": 0.34,
-    "final": 43.7
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.3,
-     "minutes_saison": 1398,
-     "niveau": 1.0,
-     "disponibilite": 0.58,
-     "buts": 5,
-     "passes": 6,
-     "matchs": 37
+     "passes": 1,
+     "matchs": 34,
+     "source": "transfermarkt"
     },
     "valeur": {
      "contrat": 0.5,
-     "revente": 0.8,
-     "tendance": 0.76,
-     "mois_contrat": 17.7,
-     "sous_evaluation": 0.481
+     "revente": 0.3,
+     "tendance": 0.52,
+     "mois_contrat": 13.8,
+     "sous_evaluation": 0.38
     },
     "fan": {
-     "ancrage": 0.45,
-     "francophonie": 0.6,
-     "fidelite": 1.0,
-     "media": 0.82,
+     "ancrage": 0.4,
+     "francophonie": 1.0,
+     "fidelite": 0.33,
+     "media": 0.63,
      "lien_club": 0.3,
-     "origine": "Suisse",
+     "origine": "Frontalier",
      "lien": "Foot francophone",
-     "tenure": 3.0
+     "tenure": 1.0
     }
    },
    "tags": [
@@ -3735,270 +3752,178 @@
    ]
   },
   {
-   "id": "DEMO-074",
-   "name": "Kylian Bianchi",
-   "position": "Goalkeeper",
-   "groupe": "GK",
-   "age": 29,
-   "club": "AS Démo Savoie",
-   "league_id": "FR3",
-   "nationalites": [
-    "France",
-    "Senegal"
-   ],
-   "naissance": "Paris",
-   "market_value": 310000,
-   "indemnite_estimee": 237000,
-   "contract_expires": "2028-08-25",
-   "url": null,
-   "scores": {
-    "sport": 46.7,
-    "valeur": 37.5,
-    "fan": 45.4,
-    "besoin": 0.5,
-    "final": 43.6
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.0,
-     "minutes_saison": 1116,
-     "niveau": 1.0,
-     "disponibilite": 0.47,
-     "buts": 0,
-     "passes": 0,
-     "matchs": 29
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 0.3,
-     "tendance": -0.09,
-     "mois_contrat": 23.0,
-     "sous_evaluation": 0.494
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.11,
-     "lien_club": 0.3,
-     "origine": "International",
-     "lien": "Foot francophone",
-     "tenure": 3.0
-    }
-   },
-   "tags": []
-  },
-  {
-   "id": "DEMO-014",
-   "name": "Tim Keller",
-   "position": "Left Winger",
-   "groupe": "ATT",
-   "age": 22,
-   "club": "US Démo Franche-Comté",
-   "league_id": "FR3",
-   "nationalites": [
-    "Cote d'Ivoire"
-   ],
-   "naissance": "Abidjan",
-   "market_value": 400000,
-   "indemnite_estimee": 354000,
-   "contract_expires": "2029-03-13",
-   "url": null,
-   "scores": {
-    "sport": 44.0,
-    "valeur": 41.6,
-    "fan": 50.5,
-    "besoin": 0.34,
-    "final": 42.7
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.31,
-     "minutes_saison": 842,
-     "niveau": 1.0,
-     "disponibilite": 0.35,
-     "buts": 3,
-     "passes": 4,
-     "matchs": 21
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 1.0,
-     "tendance": -0.46,
-     "mois_contrat": 29.6,
-     "sous_evaluation": 0.519
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.39,
-     "lien_club": 0.3,
-     "origine": "International",
-     "lien": "Foot francophone",
-     "tenure": 3.0
-    }
-   },
-   "tags": []
-  },
-  {
-   "id": "DEMO-018",
-   "name": "Nils Guignard",
+   "id": "DEMO-076",
+   "name": "Nils Moreau",
    "position": "Centre-Back",
    "groupe": "DEF",
-   "age": 19,
-   "club": "AS Démo Savoie",
-   "league_id": "FR3",
+   "age": 23,
+   "club": "RFC Démo Wallonie",
+   "league_id": "BE2",
    "nationalites": [
     "Germany"
    ],
    "naissance": "München",
-   "market_value": 610000,
-   "indemnite_estimee": 365000,
-   "contract_expires": "2027-11-19",
+   "market_value": 440000,
+   "indemnite_estimee": 0,
+   "contract_expires": "2026-12-25",
    "url": null,
    "scores": {
-    "sport": 40.0,
-    "valeur": 43.2,
-    "fan": 45.2,
+    "sport": 35.9,
+    "valeur": 73.2,
+    "fan": 32.7,
     "besoin": 0.5,
-    "final": 42.3
+    "final": 46.3
    },
    "detail": {
     "sport": {
-     "g_a_90": 0.05,
-     "minutes_saison": 1208,
-     "niveau": 1.0,
-     "disponibilite": 0.5,
+     "g_a_90": 0.0,
+     "minutes_saison": 408,
+     "niveau": 1.05,
+     "disponibilite": 0.17,
      "buts": 0,
-     "passes": 2,
-     "matchs": 30
+     "passes": 0,
+     "matchs": 10,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.22,
+     "xg": 0.78,
+     "xa": 0.0,
+     "note_sofascore": 6.66,
+     "saison_sofascore": "25/26"
     },
     "valeur": {
-     "contrat": 0.5,
-     "revente": 1.0,
-     "tendance": -0.37,
-     "mois_contrat": 13.8,
-     "sous_evaluation": 0.329
+     "contrat": 1.0,
+     "revente": 0.8,
+     "tendance": 1.0,
+     "mois_contrat": 3.0,
+     "sous_evaluation": 0.405
     },
     "fan": {
      "ancrage": 0.1,
      "francophonie": 0.6,
-     "fidelite": 0.83,
-     "media": 0.6,
+     "fidelite": 0.33,
+     "media": 0.55,
      "lien_club": 0.3,
      "origine": "International",
      "lien": "Foot francophone",
-     "tenure": 2.5
+     "tenure": 1.0
     }
    },
-   "tags": []
+   "tags": [
+    "Libre / pré-contrat",
+    "Valeur en hausse"
+   ]
   },
   {
-   "id": "DEMO-065",
-   "name": "Samuel Oberson",
+   "id": "DEMO-021",
+   "name": "Karim Mottier",
    "position": "Defensive Midfield",
    "groupe": "MID",
-   "age": 26,
+   "age": 21,
    "club": "Démo Alpes FC",
    "league_id": "C2",
    "nationalites": [
     "Switzerland"
    ],
-   "naissance": "Orbe",
-   "market_value": 1310000,
-   "indemnite_estimee": 1002000,
-   "contract_expires": "2028-08-25",
+   "naissance": "Bern",
+   "market_value": 110000,
+   "indemnite_estimee": 66000,
+   "contract_expires": "2027-11-20",
    "url": null,
    "scores": {
-    "sport": 27.6,
-    "valeur": 20.6,
-    "fan": 94.0,
+    "sport": 23.1,
+    "valeur": 65.9,
+    "fan": 63.4,
     "besoin": 0.51,
-    "final": 42.2
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.15,
-     "minutes_saison": 743,
-     "niveau": 1.0,
-     "disponibilite": 0.31,
-     "buts": 1,
-     "passes": 2,
-     "matchs": 19
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 0.55,
-     "tendance": -0.13,
-     "mois_contrat": 23.0,
-     "sous_evaluation": 0.0
-    },
-    "fan": {
-     "ancrage": 1.0,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.68,
-     "lien_club": 1.0,
-     "origine": "Bassin nord-vaudois",
-     "lien": "Ancien d'Yverdon",
-     "tenure": 6.0
-    }
-   },
-   "tags": [
-    "Enfant du pays",
-    "Retour au club"
-   ]
-  },
-  {
-   "id": "DEMO-008",
-   "name": "Ibrahima Moreau",
-   "position": "Centre-Back",
-   "groupe": "DEF",
-   "age": 21,
-   "club": "AC Démo Jura",
-   "league_id": "C2",
-   "nationalites": [
-    "Germany"
-   ],
-   "naissance": "München",
-   "market_value": 550000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2026-12-24",
-   "url": null,
-   "scores": {
-    "sport": 27.4,
-    "valeur": 51.5,
-    "fan": 52.8,
-    "besoin": 0.5,
-    "final": 41.0
+    "final": 46.2
    },
    "detail": {
     "sport": {
      "g_a_90": 0.08,
-     "minutes_saison": 764,
+     "minutes_saison": 824,
      "niveau": 1.0,
-     "disponibilite": 0.32,
+     "disponibilite": 0.34,
      "buts": 0,
      "passes": 2,
-     "matchs": 20
+     "matchs": 26,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.13,
+     "xg": 0.84,
+     "xa": 0.95,
+     "note_sofascore": 6.52,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.5,
+     "revente": 1.0,
+     "tendance": -0.35,
+     "mois_contrat": 13.8,
+     "sous_evaluation": 0.886
+    },
+    "fan": {
+     "ancrage": 0.45,
+     "francophonie": 0.5,
+     "fidelite": 1.0,
+     "media": 0.62,
+     "lien_club": 0.6,
+     "origine": "Suisse",
+     "lien": "Foot suisse",
+     "tenure": 3.3
+    }
+   },
+   "tags": [
+    "Sous-évalué"
+   ]
+  },
+  {
+   "id": "DEMO-042",
+   "name": "Ibrahima Pittet",
+   "position": "Centre-Back",
+   "groupe": "DEF",
+   "age": 25,
+   "club": "FC Démo Broye",
+   "league_id": "CHPL",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Neuchâtel",
+   "market_value": 510000,
+   "indemnite_estimee": 0,
+   "contract_expires": "2027-02-23",
+   "url": null,
+   "scores": {
+    "sport": 25.3,
+    "valeur": 43.6,
+    "fan": 84.0,
+    "besoin": 0.5,
+    "final": 45.4
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.12,
+     "minutes_saison": 512,
+     "niveau": 0.7,
+     "disponibilite": 0.21,
+     "buts": 0,
+     "passes": 2,
+     "matchs": 14,
+     "source": "transfermarkt"
     },
     "valeur": {
      "contrat": 1.0,
-     "revente": 1.0,
-     "tendance": -0.43,
-     "mois_contrat": 3.0,
-     "sous_evaluation": 0.253
+     "revente": 0.55,
+     "tendance": -0.24,
+     "mois_contrat": 4.9,
+     "sous_evaluation": 0.127
     },
     "fan": {
-     "ancrage": 0.1,
-     "francophonie": 0.15,
+     "ancrage": 0.7,
+     "francophonie": 1.0,
      "fidelite": 1.0,
-     "media": 0.62,
+     "media": 0.66,
      "lien_club": 1.0,
-     "origine": "International",
+     "origine": "Romandie",
      "lien": "Ancien d'Yverdon",
-     "tenure": 3.5
+     "tenure": 3.0
     }
    },
    "tags": [
@@ -4007,268 +3932,114 @@
    ]
   },
   {
-   "id": "DEMO-077",
-   "name": "Luca Favre",
-   "position": "Centre-Back",
-   "groupe": "DEF",
-   "age": 25,
-   "club": "AC Démo Jura",
-   "league_id": "C2",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Zürich",
-   "market_value": 120000,
-   "indemnite_estimee": 92000,
-   "contract_expires": "2028-08-25",
-   "url": null,
-   "scores": {
-    "sport": 23.6,
-    "valeur": 58.0,
-    "fan": 50.9,
-    "besoin": 0.5,
-    "final": 40.7
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.05,
-     "minutes_saison": 960,
-     "niveau": 1.0,
-     "disponibilite": 0.4,
-     "buts": 1,
-     "passes": 0,
-     "matchs": 25
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 0.55,
-     "tendance": 0.09,
-     "mois_contrat": 23.0,
-     "sous_evaluation": 0.823
-    },
-    "fan": {
-     "ancrage": 0.45,
-     "francophonie": 0.5,
-     "fidelite": 0.83,
-     "media": 0.15,
-     "lien_club": 0.6,
-     "origine": "Suisse",
-     "lien": "Foot suisse",
-     "tenure": 2.5
-    }
-   },
-   "tags": [
-    "Sous-évalué"
-   ]
-  },
-  {
-   "id": "DEMO-078",
-   "name": "Malik Fontaine",
-   "position": "Central Midfield",
-   "groupe": "MID",
-   "age": 25,
-   "club": "AS Démo Savoie",
-   "league_id": "FR3",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Zürich",
-   "market_value": 650000,
-   "indemnite_estimee": 497000,
-   "contract_expires": "2028-08-25",
-   "url": null,
-   "scores": {
-    "sport": 39.4,
-    "valeur": 29.0,
-    "fan": 55.1,
-    "besoin": 0.51,
-    "final": 40.3
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.23,
-     "minutes_saison": 2304,
-     "niveau": 1.0,
-     "disponibilite": 0.96,
-     "buts": 6,
-     "passes": 8,
-     "matchs": 67
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 0.55,
-     "tendance": -0.02,
-     "mois_contrat": 23.0,
-     "sous_evaluation": 0.152
-    },
-    "fan": {
-     "ancrage": 0.45,
-     "francophonie": 0.6,
-     "fidelite": 1.0,
-     "media": 0.31,
-     "lien_club": 0.3,
-     "origine": "Suisse",
-     "lien": "Foot francophone",
-     "tenure": 5.0
-    }
-   },
-   "tags": []
-  },
-  {
-   "id": "DEMO-032",
-   "name": "Luca Dubois",
-   "position": "Centre-Back",
-   "groupe": "DEF",
-   "age": 30,
-   "club": "RFC Démo Wallonie",
-   "league_id": "BE2",
-   "nationalites": [
-    "France"
-   ],
-   "naissance": "Besançon",
-   "market_value": 580000,
-   "indemnite_estimee": 444000,
-   "contract_expires": "2028-08-25",
-   "url": null,
-   "scores": {
-    "sport": 44.2,
-    "valeur": 13.8,
-    "fan": 64.1,
-    "besoin": 0.5,
-    "final": 40.0
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.06,
-     "minutes_saison": 1288,
-     "niveau": 1.05,
-     "disponibilite": 0.54,
-     "buts": 1,
-     "passes": 1,
-     "matchs": 37
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 0.1,
-     "tendance": -0.36,
-     "mois_contrat": 23.0,
-     "sous_evaluation": 0.114
-    },
-    "fan": {
-     "ancrage": 0.4,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.6,
-     "lien_club": 0.3,
-     "origine": "Frontalier",
-     "lien": "Foot francophone",
-     "tenure": 5.0
-    }
-   },
-   "tags": []
-  },
-  {
-   "id": "DEMO-006",
-   "name": "Quentin Guignard",
+   "id": "DEMO-031",
+   "name": "Théo Rochat",
    "position": "Defensive Midfield",
    "groupe": "MID",
+   "age": 23,
+   "club": "Démo Sporting",
+   "league_id": "C1",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Genève",
+   "market_value": 890000,
+   "indemnite_estimee": 533000,
+   "contract_expires": "2027-11-20",
+   "url": null,
+   "scores": {
+    "sport": 31.6,
+    "valeur": 38.0,
+    "fan": 78.4,
+    "besoin": 0.51,
+    "final": 45.3
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.11,
+     "minutes_saison": 428,
+     "niveau": 1.45,
+     "disponibilite": 0.18,
+     "buts": 1,
+     "passes": 0,
+     "matchs": 12,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 0.5,
+     "revente": 0.8,
+     "tendance": 0.05,
+     "mois_contrat": 13.8,
+     "sous_evaluation": 0.063
+    },
+    "fan": {
+     "ancrage": 0.7,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.64,
+     "lien_club": 0.6,
+     "origine": "Romandie",
+     "lien": "Foot suisse",
+     "tenure": 3.0
+    }
+   },
+   "tags": []
+  },
+  {
+   "id": "DEMO-019",
+   "name": "Ibrahima Chappuis",
+   "position": "Right-Back",
+   "groupe": "DEF",
    "age": 27,
    "club": "FC Démo Lac-Léman",
    "league_id": "C2",
    "nationalites": [
-    "Belgium"
+    "Senegal"
    ],
-   "naissance": "Liège",
-   "market_value": 580000,
-   "indemnite_estimee": 513000,
-   "contract_expires": "2029-03-13",
+   "naissance": "Dakar",
+   "market_value": 660000,
+   "indemnite_estimee": 0,
+   "contract_expires": "2026-12-25",
    "url": null,
    "scores": {
-    "sport": 45.0,
-    "valeur": 19.7,
-    "fan": 52.5,
-    "besoin": 0.51,
-    "final": 39.4
+    "sport": 52.6,
+    "valeur": 40.9,
+    "fan": 35.9,
+    "besoin": 0.5,
+    "final": 44.9
    },
    "detail": {
     "sport": {
-     "g_a_90": 0.17,
-     "minutes_saison": 1105,
+     "g_a_90": 0.14,
+     "minutes_saison": 1104,
      "niveau": 1.0,
      "disponibilite": 0.46,
      "buts": 2,
-     "passes": 3,
-     "matchs": 29
+     "passes": 2,
+     "matchs": 35,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.14,
+     "xg": 1.91,
+     "xa": 1.36,
+     "note_sofascore": 6.71,
+     "saison_sofascore": "25/26"
     },
     "valeur": {
-     "contrat": 0.2,
+     "contrat": 1.0,
      "revente": 0.3,
-     "tendance": -0.42,
-     "mois_contrat": 29.6,
-     "sous_evaluation": 0.215
+     "tendance": -0.26,
+     "mois_contrat": 3.0,
+     "sous_evaluation": 0.165
     },
     "fan": {
      "ancrage": 0.1,
      "francophonie": 1.0,
-     "fidelite": 0.67,
-     "media": 0.7,
+     "fidelite": 0.33,
+     "media": 0.23,
      "lien_club": 0.6,
      "origine": "International",
      "lien": "Foot suisse",
-     "tenure": 2.0
-    }
-   },
-   "tags": []
-  },
-  {
-   "id": "DEMO-005",
-   "name": "Arthur Bovet",
-   "position": "Goalkeeper",
-   "groupe": "GK",
-   "age": 22,
-   "club": "FC Démo Lac-Léman",
-   "league_id": "C2",
-   "nationalites": [
-    "Switzerland"
-   ],
-   "naissance": "Bern",
-   "market_value": 350000,
-   "indemnite_estimee": 0,
-   "contract_expires": "2027-02-22",
-   "url": null,
-   "scores": {
-    "sport": 19.1,
-    "valeur": 57.0,
-    "fan": 54.1,
-    "besoin": 0.5,
-    "final": 39.2
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.0,
-     "minutes_saison": 472,
-     "niveau": 1.0,
-     "disponibilite": 0.2,
-     "buts": 0,
-     "passes": 0,
-     "matchs": 12
-    },
-    "valeur": {
-     "contrat": 1.0,
-     "revente": 1.0,
-     "tendance": -0.46,
-     "mois_contrat": 4.9,
-     "sous_evaluation": 0.405
-    },
-    "fan": {
-     "ancrage": 0.45,
-     "francophonie": 0.5,
-     "fidelite": 1.0,
-     "media": 0.11,
-     "lien_club": 0.6,
-     "origine": "Suisse",
-     "lien": "Foot suisse",
-     "tenure": 3.7
+     "tenure": 1.0
     }
    },
    "tags": [
@@ -4276,158 +4047,118 @@
    ]
   },
   {
-   "id": "DEMO-058",
-   "name": "Arthur Fontaine",
-   "position": "Right-Back",
+   "id": "DEMO-036",
+   "name": "Amadou Rochat",
+   "position": "Left-Back",
    "groupe": "DEF",
-   "age": 27,
-   "club": "RFC Démo Wallonie",
-   "league_id": "BE2",
+   "age": 19,
+   "club": "AS Démo Savoie",
+   "league_id": "FR3",
    "nationalites": [
     "Switzerland"
    ],
-   "naissance": "Zürich",
-   "market_value": 1020000,
-   "indemnite_estimee": 781000,
-   "contract_expires": "2028-08-25",
+   "naissance": "Lausanne",
+   "market_value": 530000,
+   "indemnite_estimee": 261000,
+   "contract_expires": "2027-05-24",
    "url": null,
    "scores": {
-    "sport": 27.8,
-    "valeur": 30.0,
-    "fan": 62.7,
+    "sport": 19.8,
+    "valeur": 55.4,
+    "fan": 77.7,
     "besoin": 0.5,
-    "final": 37.2
+    "final": 44.9
    },
    "detail": {
     "sport": {
-     "g_a_90": 0.19,
-     "minutes_saison": 570,
-     "niveau": 1.05,
-     "disponibilite": 0.24,
-     "buts": 1,
-     "passes": 2,
-     "matchs": 15
+     "g_a_90": 0.0,
+     "minutes_saison": 320,
+     "niveau": 1.0,
+     "disponibilite": 0.13,
+     "buts": 0,
+     "passes": 0,
+     "matchs": 8,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.0,
+     "xg": 0.0,
+     "xa": 0.0,
+     "note_sofascore": 7.14,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.8,
+     "revente": 1.0,
+     "tendance": -0.04,
+     "mois_contrat": 7.9,
+     "sous_evaluation": 0.278
+    },
+    "fan": {
+     "ancrage": 0.85,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.55,
+     "lien_club": 0.3,
+     "origine": "Vaud",
+     "lien": "Foot francophone",
+     "tenure": 3.0
+    }
+   },
+   "tags": [
+    "Fin de contrat < 12 mois",
+    "Enfant du pays"
+   ]
+  },
+  {
+   "id": "DEMO-072",
+   "name": "Loïc Koné",
+   "position": "Left Winger",
+   "groupe": "ATT",
+   "age": 28,
+   "club": "US Démo Franche-Comté",
+   "league_id": "FR3",
+   "nationalites": [
+    "Senegal"
+   ],
+   "naissance": "Dakar",
+   "market_value": 140000,
+   "indemnite_estimee": 140000,
+   "contract_expires": "2029-09-30",
+   "url": null,
+   "scores": {
+    "sport": 37.5,
+    "valeur": 52.7,
+    "fan": 58.1,
+    "besoin": 0.34,
+    "final": 44.9
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.28,
+     "minutes_saison": 820,
+     "niveau": 1.0,
+     "disponibilite": 0.34,
+     "buts": 3,
+     "passes": 3,
+     "matchs": 22,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.2,
+     "xg": 1.8,
+     "xa": 1.22,
+     "note_sofascore": 6.8,
+     "saison_sofascore": "25/26"
     },
     "valeur": {
      "contrat": 0.2,
      "revente": 0.3,
-     "tendance": 0.62,
-     "mois_contrat": 23.0,
-     "sous_evaluation": 0.013
-    },
-    "fan": {
-     "ancrage": 0.45,
-     "francophonie": 0.6,
-     "fidelite": 1.0,
-     "media": 0.72,
-     "lien_club": 0.3,
-     "origine": "Suisse",
-     "lien": "Foot francophone",
-     "tenure": 7.0
-    }
-   },
-   "tags": [
-    "Valeur en hausse"
-   ]
-  },
-  {
-   "id": "DEMO-022",
-   "name": "Arthur Chappuis",
-   "position": "Centre-Forward",
-   "groupe": "ATT",
-   "age": 30,
-   "club": "RFC Démo Wallonie",
-   "league_id": "BE2",
-   "nationalites": [
-    "Cote d'Ivoire"
-   ],
-   "naissance": "Abidjan",
-   "market_value": 380000,
-   "indemnite_estimee": 291000,
-   "contract_expires": "2028-08-25",
-   "url": null,
-   "scores": {
-    "sport": 34.9,
-    "valeur": 27.7,
-    "fan": 52.5,
-    "besoin": 0.34,
-    "final": 35.4
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.44,
-     "minutes_saison": 1464,
-     "niveau": 1.05,
-     "disponibilite": 0.61,
-     "buts": 10,
-     "passes": 6,
-     "matchs": 42
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 0.1,
-     "tendance": 0.03,
-     "mois_contrat": 23.0,
-     "sous_evaluation": 0.266
+     "tendance": 0.17,
+     "mois_contrat": 36.1,
+     "sous_evaluation": 0.747
     },
     "fan": {
      "ancrage": 0.1,
      "francophonie": 1.0,
      "fidelite": 1.0,
-     "media": 0.5,
-     "lien_club": 0.3,
-     "origine": "International",
-     "lien": "Foot francophone",
-     "tenure": 4.0
-    }
-   },
-   "tags": []
-  },
-  {
-   "id": "DEMO-063",
-   "name": "Arthur Fontaine",
-   "position": "Right Winger",
-   "groupe": "ATT",
-   "age": 22,
-   "club": "AS Démo Savoie",
-   "league_id": "FR3",
-   "nationalites": [
-    "Cote d'Ivoire"
-   ],
-   "naissance": "Abidjan",
-   "market_value": 590000,
-   "indemnite_estimee": 521000,
-   "contract_expires": "2029-03-13",
-   "url": null,
-   "scores": {
-    "sport": 30.0,
-    "valeur": 32.8,
-    "fan": 51.4,
-    "besoin": 0.34,
-    "final": 34.5
-   },
-   "detail": {
-    "sport": {
-     "g_a_90": 0.36,
-     "minutes_saison": 1350,
-     "niveau": 1.0,
-     "disponibilite": 0.56,
-     "buts": 6,
-     "passes": 7,
-     "matchs": 35
-    },
-    "valeur": {
-     "contrat": 0.2,
-     "revente": 1.0,
-     "tendance": -0.31,
-     "mois_contrat": 29.6,
-     "sous_evaluation": 0.228
-    },
-    "fan": {
-     "ancrage": 0.1,
-     "francophonie": 1.0,
-     "fidelite": 1.0,
-     "media": 0.44,
+     "media": 0.8,
      "lien_club": 0.3,
      "origine": "International",
      "lien": "Foot francophone",
@@ -4437,50 +4168,56 @@
    "tags": []
   },
   {
-   "id": "DEMO-028",
-   "name": "Hugo Diallo",
-   "position": "Central Midfield",
-   "groupe": "MID",
-   "age": 26,
-   "club": "SC Démo Rhin",
+   "id": "DEMO-035",
+   "name": "Jonas Oberson",
+   "position": "Right Winger",
+   "groupe": "ATT",
+   "age": 31,
+   "club": "FC Démo Lac-Léman",
    "league_id": "C2",
    "nationalites": [
-    "France"
+    "Belgium"
    ],
-   "naissance": "Lyon",
-   "market_value": 390000,
-   "indemnite_estimee": 345000,
-   "contract_expires": "2029-03-13",
+   "naissance": "Liège",
+   "market_value": 130000,
+   "indemnite_estimee": 130000,
+   "contract_expires": "2029-09-30",
    "url": null,
    "scores": {
-    "sport": 27.4,
-    "valeur": 27.7,
-    "fan": 51.5,
-    "besoin": 0.51,
-    "final": 33.6
+    "sport": 45.8,
+    "valeur": 42.9,
+    "fan": 54.2,
+    "besoin": 0.34,
+    "final": 44.8
    },
    "detail": {
     "sport": {
-     "g_a_90": 0.13,
-     "minutes_saison": 590,
+     "g_a_90": 0.3,
+     "minutes_saison": 760,
      "niveau": 1.0,
-     "disponibilite": 0.25,
-     "buts": 1,
-     "passes": 1,
-     "matchs": 18
+     "disponibilite": 0.32,
+     "buts": 3,
+     "passes": 3,
+     "matchs": 20,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.39,
+     "xg": 1.18,
+     "xa": 0.68,
+     "note_sofascore": 6.7,
+     "saison_sofascore": "25/26"
     },
     "valeur": {
      "contrat": 0.2,
-     "revente": 0.55,
-     "tendance": -0.36,
-     "mois_contrat": 29.6,
-     "sous_evaluation": 0.291
+     "revente": 0.1,
+     "tendance": -0.07,
+     "mois_contrat": 36.1,
+     "sous_evaluation": 0.696
     },
     "fan": {
      "ancrage": 0.1,
      "francophonie": 1.0,
      "fidelite": 1.0,
-     "media": 0.23,
+     "media": 0.38,
      "lien_club": 0.6,
      "origine": "International",
      "lien": "Foot suisse",
@@ -4488,6 +4225,587 @@
     }
    },
    "tags": []
+  },
+  {
+   "id": "DEMO-070",
+   "name": "Tim Moreau",
+   "position": "Right Winger",
+   "groupe": "ATT",
+   "age": 28,
+   "club": "SC Démo Rhin",
+   "league_id": "C2",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Zürich",
+   "market_value": 310000,
+   "indemnite_estimee": 237000,
+   "contract_expires": "2028-08-26",
+   "url": null,
+   "scores": {
+    "sport": 45.8,
+    "valeur": 40.4,
+    "fan": 55.8,
+    "besoin": 0.34,
+    "final": 44.4
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.34,
+     "minutes_saison": 1294,
+     "niveau": 1.0,
+     "disponibilite": 0.54,
+     "buts": 5,
+     "passes": 7,
+     "matchs": 39,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.3,
+     "xg": 3.28,
+     "xa": 4.72,
+     "note_sofascore": 7.11,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 0.3,
+     "tendance": 0.11,
+     "mois_contrat": 23.0,
+     "sous_evaluation": 0.468
+    },
+    "fan": {
+     "ancrage": 0.45,
+     "francophonie": 0.5,
+     "fidelite": 0.83,
+     "media": 0.42,
+     "lien_club": 0.6,
+     "origine": "Suisse",
+     "lien": "Foot suisse",
+     "tenure": 2.5
+    }
+   },
+   "tags": []
+  },
+  {
+   "id": "DEMO-066",
+   "name": "Théo Sow",
+   "position": "Defensive Midfield",
+   "groupe": "MID",
+   "age": 19,
+   "club": "FC Démo Lac-Léman",
+   "league_id": "C2",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Zürich",
+   "market_value": 1210000,
+   "indemnite_estimee": 0,
+   "contract_expires": "2027-02-23",
+   "url": null,
+   "scores": {
+    "sport": 28.5,
+    "valeur": 61.5,
+    "fan": 50.2,
+    "besoin": 0.51,
+    "final": 44.0
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.16,
+     "minutes_saison": 1718,
+     "niveau": 1.0,
+     "disponibilite": 0.72,
+     "buts": 4,
+     "passes": 3,
+     "matchs": 42,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 1.0,
+     "revente": 1.0,
+     "tendance": 0.95,
+     "mois_contrat": 4.9,
+     "sous_evaluation": 0.038
+    },
+    "fan": {
+     "ancrage": 0.45,
+     "francophonie": 0.5,
+     "fidelite": 0.5,
+     "media": 0.25,
+     "lien_club": 1.0,
+     "origine": "Suisse",
+     "lien": "Ancien d'Yverdon",
+     "tenure": 1.5
+    }
+   },
+   "tags": [
+    "Libre / pré-contrat",
+    "Valeur en hausse",
+    "Retour au club"
+   ]
+  },
+  {
+   "id": "DEMO-024",
+   "name": "Malik Bovet",
+   "position": "Defensive Midfield",
+   "groupe": "MID",
+   "age": 23,
+   "club": "US Démo Franche-Comté",
+   "league_id": "FR3",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Zürich",
+   "market_value": 150000,
+   "indemnite_estimee": 133000,
+   "contract_expires": "2029-03-14",
+   "url": null,
+   "scores": {
+    "sport": 21.3,
+    "valeur": 58.8,
+    "fan": 61.0,
+    "besoin": 0.51,
+    "final": 42.6
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.09,
+     "minutes_saison": 1236,
+     "niveau": 1.0,
+     "disponibilite": 0.52,
+     "buts": 1,
+     "passes": 2,
+     "matchs": 32,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 0.8,
+     "tendance": 0.07,
+     "mois_contrat": 29.6,
+     "sous_evaluation": 0.759
+    },
+    "fan": {
+     "ancrage": 0.45,
+     "francophonie": 0.6,
+     "fidelite": 1.0,
+     "media": 0.63,
+     "lien_club": 0.3,
+     "origine": "Suisse",
+     "lien": "Foot francophone",
+     "tenure": 3.0
+    }
+   },
+   "tags": []
+  },
+  {
+   "id": "DEMO-045",
+   "name": "Moussa Sow",
+   "position": "Right Winger",
+   "groupe": "ATT",
+   "age": 26,
+   "club": "US Démo Franche-Comté",
+   "league_id": "FR3",
+   "nationalites": [
+    "Cote d'Ivoire"
+   ],
+   "naissance": "Abidjan",
+   "market_value": 1110000,
+   "indemnite_estimee": 0,
+   "contract_expires": "2026-12-25",
+   "url": null,
+   "scores": {
+    "sport": 42.3,
+    "valeur": 39.0,
+    "fan": 56.1,
+    "besoin": 0.34,
+    "final": 42.6
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.4,
+     "minutes_saison": 1411,
+     "niveau": 1.0,
+     "disponibilite": 0.59,
+     "buts": 7,
+     "passes": 8,
+     "matchs": 38,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 1.0,
+     "revente": 0.55,
+     "tendance": -0.24,
+     "mois_contrat": 3.0,
+     "sous_evaluation": 0.013
+    },
+    "fan": {
+     "ancrage": 0.1,
+     "francophonie": 1.0,
+     "fidelite": 0.83,
+     "media": 0.91,
+     "lien_club": 0.3,
+     "origine": "International",
+     "lien": "Foot francophone",
+     "tenure": 2.5
+    }
+   },
+   "tags": [
+    "Libre / pré-contrat"
+   ]
+  },
+  {
+   "id": "DEMO-033",
+   "name": "Luca Oberson",
+   "position": "Right-Back",
+   "groupe": "DEF",
+   "age": 22,
+   "club": "Démo Sporting",
+   "league_id": "C1",
+   "nationalites": [
+    "France",
+    "Senegal"
+   ],
+   "naissance": "Paris",
+   "market_value": 40000,
+   "indemnite_estimee": 35000,
+   "contract_expires": "2029-03-14",
+   "url": null,
+   "scores": {
+    "sport": 16.8,
+    "valeur": 65.0,
+    "fan": 49.8,
+    "besoin": 0.5,
+    "final": 39.5
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.03,
+     "minutes_saison": 1012,
+     "niveau": 1.45,
+     "disponibilite": 0.42,
+     "buts": 0,
+     "passes": 1,
+     "matchs": 25,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.03,
+     "xg": 0.0,
+     "xa": 0.72,
+     "note_sofascore": 6.18,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 1.0,
+     "tendance": -0.2,
+     "mois_contrat": 29.6,
+     "sous_evaluation": 0.975
+    },
+    "fan": {
+     "ancrage": 0.1,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.14,
+     "lien_club": 0.6,
+     "origine": "International",
+     "lien": "Foot suisse",
+     "tenure": 5.5
+    }
+   },
+   "tags": [
+    "Sous-évalué"
+   ]
+  },
+  {
+   "id": "DEMO-039",
+   "name": "Bastien Perrin",
+   "position": "Central Midfield",
+   "groupe": "MID",
+   "age": 31,
+   "club": "FC Démo Broye",
+   "league_id": "CHPL",
+   "nationalites": [
+    "Switzerland"
+   ],
+   "naissance": "Fribourg",
+   "market_value": 20000,
+   "indemnite_estimee": 20000,
+   "contract_expires": "2029-09-30",
+   "url": null,
+   "scores": {
+    "sport": 18.8,
+    "valeur": 47.8,
+    "fan": 63.6,
+    "besoin": 0.51,
+    "final": 38.8
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.15,
+     "minutes_saison": 418,
+     "niveau": 0.7,
+     "disponibilite": 0.17,
+     "buts": 0,
+     "passes": 2,
+     "matchs": 11,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 0.1,
+     "tendance": -0.33,
+     "mois_contrat": 36.1,
+     "sous_evaluation": 0.949
+    },
+    "fan": {
+     "ancrage": 0.7,
+     "francophonie": 1.0,
+     "fidelite": 0.67,
+     "media": 0.25,
+     "lien_club": 0.6,
+     "origine": "Romandie",
+     "lien": "Foot suisse",
+     "tenure": 2.0
+    }
+   },
+   "tags": [
+    "Sous-évalué"
+   ]
+  },
+  {
+   "id": "DEMO-013",
+   "name": "Julien Pittet",
+   "position": "Centre-Back",
+   "groupe": "DEF",
+   "age": 26,
+   "club": "Démo Alpes FC",
+   "league_id": "C2",
+   "nationalites": [
+    "France",
+    "Senegal"
+   ],
+   "naissance": "Paris",
+   "market_value": 360000,
+   "indemnite_estimee": 275000,
+   "contract_expires": "2028-08-26",
+   "url": null,
+   "scores": {
+    "sport": 29.2,
+    "valeur": 43.4,
+    "fan": 50.0,
+    "besoin": 0.5,
+    "final": 38.6
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.04,
+     "minutes_saison": 1820,
+     "niveau": 1.0,
+     "disponibilite": 0.76,
+     "buts": 1,
+     "passes": 1,
+     "matchs": 53,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.01,
+     "xg": 0.22,
+     "xa": 0.0,
+     "note_sofascore": 6.9,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 0.55,
+     "tendance": 1.0,
+     "mois_contrat": 23.0,
+     "sous_evaluation": 0.253
+    },
+    "fan": {
+     "ancrage": 0.1,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.15,
+     "lien_club": 0.6,
+     "origine": "International",
+     "lien": "Foot suisse",
+     "tenure": 3.0
+    }
+   },
+   "tags": [
+    "Valeur en hausse"
+   ]
+  },
+  {
+   "id": "DEMO-068",
+   "name": "Enzo Lambert",
+   "position": "Centre-Back",
+   "groupe": "DEF",
+   "age": 30,
+   "club": "Démo Sporting",
+   "league_id": "C1",
+   "nationalites": [
+    "Italy"
+   ],
+   "naissance": "Milano",
+   "market_value": 1040000,
+   "indemnite_estimee": 623000,
+   "contract_expires": "2027-11-20",
+   "url": null,
+   "scores": {
+    "sport": 46.8,
+    "valeur": 19.9,
+    "fan": 44.2,
+    "besoin": 0.5,
+    "final": 38.1
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.11,
+     "minutes_saison": 1434,
+     "niveau": 1.45,
+     "disponibilite": 0.6,
+     "buts": 2,
+     "passes": 2,
+     "matchs": 34,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.09,
+     "xg": 1.79,
+     "xa": 0.79,
+     "note_sofascore": 7.67,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.5,
+     "revente": 0.1,
+     "tendance": -0.21,
+     "mois_contrat": 13.8,
+     "sous_evaluation": 0.0
+    },
+    "fan": {
+     "ancrage": 0.1,
+     "francophonie": 0.15,
+     "fidelite": 0.83,
+     "media": 0.65,
+     "lien_club": 0.6,
+     "origine": "International",
+     "lien": "Foot suisse",
+     "tenure": 2.5
+    }
+   },
+   "tags": []
+  },
+  {
+   "id": "DEMO-038",
+   "name": "Elias Dubois",
+   "position": "Centre-Back",
+   "groupe": "DEF",
+   "age": 28,
+   "club": "AC Démo Jura",
+   "league_id": "C2",
+   "nationalites": [
+    "Senegal"
+   ],
+   "naissance": "Dakar",
+   "market_value": 480000,
+   "indemnite_estimee": 424000,
+   "contract_expires": "2029-03-14",
+   "url": null,
+   "scores": {
+    "sport": 30.2,
+    "valeur": 19.3,
+    "fan": 51.1,
+    "besoin": 0.5,
+    "final": 32.1
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.11,
+     "minutes_saison": 1390,
+     "niveau": 1.0,
+     "disponibilite": 0.58,
+     "buts": 2,
+     "passes": 2,
+     "matchs": 40,
+     "source": "transfermarkt + sofascore",
+     "xg_a_90": 0.06,
+     "xg": 0.56,
+     "xa": 0.0,
+     "note_sofascore": 7.24,
+     "saison_sofascore": "25/26"
+    },
+    "valeur": {
+     "contrat": 0.2,
+     "revente": 0.3,
+     "tendance": -0.21,
+     "mois_contrat": 29.6,
+     "sous_evaluation": 0.101
+    },
+    "fan": {
+     "ancrage": 0.1,
+     "francophonie": 1.0,
+     "fidelite": 1.0,
+     "media": 0.21,
+     "lien_club": 0.6,
+     "origine": "International",
+     "lien": "Foot suisse",
+     "tenure": 9.0
+    }
+   },
+   "tags": []
+  },
+  {
+   "id": "DEMO-060",
+   "name": "Ibrahima Bianchi",
+   "position": "Right-Back",
+   "groupe": "DEF",
+   "age": 30,
+   "club": "SC Démo Rhin",
+   "league_id": "C2",
+   "nationalites": [
+    "Germany"
+   ],
+   "naissance": "München",
+   "market_value": 170000,
+   "indemnite_estimee": 84000,
+   "contract_expires": "2027-05-24",
+   "url": null,
+   "scores": {
+    "sport": 13.1,
+    "valeur": 40.4,
+    "fan": 39.6,
+    "besoin": 0.5,
+    "final": 27.9
+   },
+   "detail": {
+    "sport": {
+     "g_a_90": 0.06,
+     "minutes_saison": 542,
+     "niveau": 1.0,
+     "disponibilite": 0.23,
+     "buts": 0,
+     "passes": 1,
+     "matchs": 13,
+     "source": "transfermarkt"
+    },
+    "valeur": {
+     "contrat": 0.8,
+     "revente": 0.1,
+     "tendance": -0.26,
+     "mois_contrat": 7.9,
+     "sous_evaluation": 0.354
+    },
+    "fan": {
+     "ancrage": 0.1,
+     "francophonie": 0.15,
+     "fidelite": 0.67,
+     "media": 0.6,
+     "lien_club": 0.6,
+     "origine": "International",
+     "lien": "Foot suisse",
+     "tenure": 2.0
+    }
+   },
+   "tags": [
+    "Fin de contrat < 12 mois"
+   ]
   }
  ]
 }

@@ -143,17 +143,36 @@ def sport_score(p: dict) -> tuple[float, dict]:
     g_a_90 = (st["g"] + 0.7 * st["a"]) / st["minutes"] * 90 if st["minutes"] else 0.0
     discipline = _clip(1 - (st["cards"] / max(1, st["apps"])) / 0.5)
 
+    # Sofascore, quand il est là : la production attendue (xG + xA) remplace les buts
+    # réels, moins bruités sur une saison, et la note Sofascore entre pour un tiers.
+    sofa = p.get("sofascore") or {}
+    xg_a_90 = None
+    if sofa.get("minutes") and sofa.get("xg") is not None:
+        xg_a_90 = (sofa["xg"] + 0.7 * (sofa.get("xa") or 0)) / sofa["minutes"] * 90
+    rating = sofa.get("rating")
+    rating_score = _clip((rating - 6.0) / 1.6) if rating else None   # 6,0 → 0 ; 7,6 → 1
+
     if group == "GK":
         raw = 0.75 * availability + 0.25 * discipline
+        if rating_score is not None:
+            raw = 0.5 * raw + 0.5 * rating_score
     else:
-        prod = _clip(g_a_90 * st["coef"] / EXPECTED_G_A_90[group] / 1.3)
+        prod_basis = xg_a_90 if xg_a_90 is not None else g_a_90
+        prod = _clip(prod_basis * st["coef"] / EXPECTED_G_A_90[group] / 1.3)
         w_prod = {"DEF": 0.25, "MID": 0.45, "ATT": 0.60}[group]
         raw = w_prod * prod + (0.9 - w_prod) * availability + 0.10 * discipline
+        if rating_score is not None:
+            raw = 0.67 * raw + 0.33 * rating_score
     raw = raw * (0.55 + 0.45 * level) * (1 - injury_penalty)
     score = round(100 * _clip(raw / 0.85), 1)
-    return score, {"g_a_90": round(g_a_90, 2), "minutes_saison": round(st["minutes_per_season"]),
-                   "niveau": round(st["coef"], 2), "disponibilite": round(availability, 2),
-                   "buts": st["g"], "passes": st["a"], "matchs": st["apps"]}
+    detail = {"g_a_90": round(g_a_90, 2), "minutes_saison": round(st["minutes_per_season"]),
+              "niveau": round(st["coef"], 2), "disponibilite": round(availability, 2),
+              "buts": st["g"], "passes": st["a"], "matchs": st["apps"], "source": "transfermarkt"}
+    if sofa:
+        detail.update({"source": "transfermarkt + sofascore", "xg_a_90": None if xg_a_90 is None else round(xg_a_90, 2),
+                       "xg": sofa.get("xg"), "xa": sofa.get("xa"), "note_sofascore": rating,
+                       "saison_sofascore": sofa.get("season")})
+    return score, detail
 
 
 # --------------------------------------------------------------------------- VALEUR
@@ -356,6 +375,14 @@ def score_pool(players: list[dict], fan_weights: dict, needs: dict, today: date,
             tags.append("Enfant du pays")
         if fc["_lien"] == "Ancien d'Yverdon":
             tags.append("Retour au club")
+        sofa = p.get("sofascore") or {}
+        if sofa.get("xg") is not None and sofa.get("goals") is not None and sofa.get("minutes", 0) >= 900:
+            # Moneyball : un joueur qui marque nettement moins que ses xG est une occasion,
+            # un joueur qui marque nettement plus vit sur une saison de chance.
+            if sofa["goals"] < 0.8 * sofa["xg"] - 1:
+                tags.append("Sous-performe ses xG")
+            elif sofa["goals"] > 1.3 * sofa["xg"] + 1:
+                tags.append("Sur-performe ses xG")
 
         out.append({
             "id": p["id"], "name": p["name"], "position": p.get("position"), "groupe": group,

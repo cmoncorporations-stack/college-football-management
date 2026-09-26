@@ -91,6 +91,8 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--min-age", type=int, default=17)
     ap.add_argument("--injuries", action="store_true", help="Récupère aussi l'historique de blessures (+1 appel/joueur)")
     ap.add_argument("--limit", type=int, default=0, help="Limite de joueurs détaillés (0 = tous), pour tester")
+    ap.add_argument("--sofascore", nargs="*", type=int, metavar="TOURNOI",
+                    help="Enrichit avec Sofascore (xG, xA, note) ; ids de tournoi, défaut 216 215")
     args = ap.parse_args(argv)
 
     tm = TransfermarktClient()
@@ -129,6 +131,16 @@ def main(argv: list[str] | None = None) -> None:
             print(f"  ! {row.get('name')} ({pid}) ignoré : {e}")
         if i % 25 == 0:
             print(f"  {i}/{len(shortlist)}")
+
+    if args.sofascore is not None:
+        from .sofascore import SofascoreClient, collect, merge_into_candidates
+        sc = SofascoreClient()
+        sofa = {}
+        for t in (args.sofascore or [216, 215]):
+            block = collect(sc, t, None, True)
+            sofa[f"{t}/{block['season']}"] = block
+        (DATA / "sofascore.json").write_text(json.dumps(sofa, ensure_ascii=False, indent=1))
+        print(f"Sofascore : {merge_into_candidates(candidates, sofa)}/{len(candidates)} candidats enrichis")
 
     out = {"source": "transfermarkt-api", "base_url": tm.base_url, "genere": date.today().isoformat(),
            "competitions": args.competitions, "filtres": {"max_value": args.max_value,
