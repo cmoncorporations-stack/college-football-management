@@ -709,7 +709,8 @@ def score_pool(players: list[dict], fan_weights: dict, needs: dict, today: date,
     for raw_p in players:
         estimated = not raw_p.get("market_value") and raw_p["id"] in estimates
         # Valeur manquante : estimée par la régression, signalée comme telle, poids Valeur divisé par deux.
-        p = {**raw_p, "market_value": estimates[raw_p["id"]]} if estimated else raw_p
+        # (sans historique : la tendance 12 mois d'une valeur estimée n'a pas de sens, elle vaut 0)
+        p = {**raw_p, "market_value": estimates[raw_p["id"]], "mv_history": []} if estimated else raw_p
         vc = value_components(p, today)
         valeur = 100 * (0.40 * underval[p["id"]] + 0.25 * vc["contrat"] +
                         0.15 * vc["tendance_score"] + 0.20 * vc["plus_value_score"])

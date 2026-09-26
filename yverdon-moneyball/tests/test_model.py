@@ -228,7 +228,7 @@ class MarketValueEstimateTest(unittest.TestCase):
 
     def test_estimate_and_halved_weight(self):
         pool = [player(id=str(i), market_value=200_000 + 20_000 * i, age=20 + i % 9) for i in range(30)]
-        unknown = player(id="u", market_value=None, age=24)
+        unknown = player(id="u", market_value=None, age=24, mv_history=[["2025-06-01", 25_000]])
         pool.append(unknown)
         sport = {p["id"]: 60.0 for p in pool}
         est = model.estimate_market_values(pool, sport)
@@ -243,6 +243,8 @@ class MarketValueEstimateTest(unittest.TestCase):
         self.assertEqual(u["market_value_source"], "regression")
         self.assertEqual(u["market_value"], est["u"])
         self.assertIn("Valeur estimée", u["tags"])
+        self.assertEqual(u["detail"]["valeur"]["tendance"], 0)   # pas de tendance sur une valeur estimée
+        self.assertNotIn("Valeur doublée", u["tags"])
         s = u["scores"]
         w = model.DEFAULT_WEIGHTS
         expected = (w["sport"] * s["sport"] + 0.5 * w["valeur"] * s["valeur"] + w["fan"] * s["fan"]) \
