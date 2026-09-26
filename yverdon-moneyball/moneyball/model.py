@@ -28,10 +28,44 @@ LEAGUE_COEF = {
     "BE1": 1.70, "BE2": 1.05,               # Belgique
     "L2": 1.75, "L3": 1.20,                 # Allemagne
     "A1": 1.35, "A2": 0.95,                 # Autriche
-    "IT2": 1.60, "IT3": 1.00,               # Italie
+    "IT1": 2.10, "IT2": 1.60, "IT3": 1.00,  # Italie
     "LUX1": 0.60,
+    "NL1": 1.80, "NL2": 1.10, "PO1": 1.50, "PO2": 0.90, "ES1": 2.10, "ES2": 1.60,
+    "GB1": 2.50, "GB2": 1.70, "PL1": 1.40, "DK1": 1.30, "DK2": 0.80, "SE1": 1.20, "NO1": 1.20,
+    "RO1": 1.10, "BU1": 0.90, "MLS1": 1.40, "TR1": 1.60, "GR1": 1.40, "SER1": 1.00, "KR1": 1.10,
 }
+# Divisions inférieures et groupes régionaux : préfixe du code Transfermarkt → coefficient.
+LEAGUE_PREFIX_COEF = (
+    ("FR4", 0.65),   # National 2 (groupes A-C)
+    ("FR5", 0.45),   # National 3
+    ("CHC", 0.45),   # 1re Ligue Classic (groupes 1-3)
+    ("CIR", 0.30),   # 2e Ligue interrégionale
+    ("C19", 0.35),   # U19 Elite League suisse
+    ("F19", 0.35),   # National U19 français
+    ("GB21", 0.70),  # Premier League 2
+    ("IT3", 0.90),   # Serie C
+    ("E3G", 0.90),   # Primera Federación
+    ("E4G", 0.60),   # Segunda Federación
+    ("RL", 0.70),    # Regionalliga allemande
+    ("BE3", 0.60),   # 1ste Nationale
+    ("PT23", 0.60),  # Liga Next Gen U23
+)
 DEFAULT_COEF = 0.8
+SWISS_LEAGUES = {"C1", "C2", "CHPL", "CHC1", "CHC2", "CHC3", "CIR1", "CIR2", "C191", "S1PO"}
+FRENCH_LANG_LEAGUES = {"FR1", "FR2", "FR3", "BE1", "BE2", "LUX1", "FR4A", "FR4B", "FR4C",
+                       "FR5A", "FR5B", "FR5C", "FR5D", "FR5E", "FR5F", "FR5G", "FR5H", "F19B", "F19C", "F19F"}
+
+
+def league_coef(competition_id: str | None) -> float | None:
+    """Coefficient de niveau d'un championnat, None si inconnu (coupes, « Total », …)."""
+    if not competition_id:
+        return None
+    if competition_id in LEAGUE_COEF:
+        return LEAGUE_COEF[competition_id]
+    for prefix, coef in LEAGUE_PREFIX_COEF:
+        if competition_id.startswith(prefix):
+            return coef
+    return None
 
 POSITION_GROUPS = {
     "GK": ("goalkeeper", "gardien"),
@@ -75,8 +109,6 @@ FRANCOPHONE = {
     "morocco", "maroc", "algeria", "algérie", "tunisia", "tunisie", "mauritania",
     "burundi", "rwanda", "guadeloupe", "martinique", "french guiana", "reunion",
 }
-SWISS_LEAGUES = {"C1", "C2", "CHPL"}
-FRENCH_LANG_LEAGUES = {"FR1", "FR2", "FR3", "BE1", "BE2", "LUX1"}
 
 
 def position_group(position: str | None) -> str:
@@ -118,9 +150,9 @@ def recent_stats(p: dict, seasons: int = 2) -> dict:
                 "minutes_per_season": 0}
     keys = sorted({_season_key(r["season"]) for r in rows}, reverse=True)[:seasons]
     rows = [r for r in rows if _season_key(r["season"]) in keys]
-    league_rows = [r for r in rows if r.get("competition_id") in LEAGUE_COEF] or rows
+    league_rows = [r for r in rows if league_coef(r.get("competition_id")) is not None] or rows
     minutes = sum(r["minutes"] for r in league_rows)
-    coef = (sum(LEAGUE_COEF.get(r.get("competition_id"), DEFAULT_COEF) * r["minutes"]
+    coef = (sum((league_coef(r.get("competition_id")) or DEFAULT_COEF) * r["minutes"]
                 for r in league_rows) / minutes) if minutes else DEFAULT_COEF
     return {
         "minutes": minutes,

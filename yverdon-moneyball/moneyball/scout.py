@@ -27,7 +27,7 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 from pathlib import Path
 
-from .model import LEAGUE_COEF
+from .model import league_coef
 from .tm_client import TransfermarktClient
 from .tm_direct import TransfermarktDirect, current_season
 
@@ -101,7 +101,7 @@ def find_yverdon(tm, club_id: str | None) -> str:
 def league_option(options: list[dict], season: int | str) -> tuple[str | None, str | None]:
     """Parmi les couples (compétition, saison) d'un club, le championnat d'une saison donnée."""
     rows = [o for o in options if o.get("code") and o.get("season") == str(season)]
-    known = [o for o in rows if o["code"] in LEAGUE_COEF]
+    known = [o for o in rows if league_coef(o["code"]) is not None]
     if known:
         return known[0]["code"], known[0]["label"]
     for o in rows:
@@ -190,7 +190,7 @@ def main(argv: list[str] | None = None) -> None:
             print(f"{comp} : aucun club trouvé — code de compétition à vérifier")
         print(f"{comp} ({block.get('name')}) : {len(block.get('clubs', []))} clubs")
         clubs.extend((comp, c) for c in block.get("clubs", []) if c["id"] != ys_id)
-    scanned_ids = {c["id"] for _, c in clubs} | {ys_id}
+    scanned_ids = {c["id"] for _, c in clubs}   # Yverdon lui-même compte comme « ancien club » pour ses partants
 
     squads = list(pool.map(lambda cc: tm.club_players(cc[1]["id"], season), clubs))
     shortlist: list[tuple[str, dict]] = []
