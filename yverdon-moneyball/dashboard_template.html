@@ -140,6 +140,7 @@ footer li{margin-bottom:5px}
   <div class="lab" id="eyebrow">Yverdon Sport · Cellule recrutement</div>
   <h1 style="margin-top:6px">Money<span>ball</span> YS</h1>
   <p class="intro">Recrutement guidé par la donnée : la performance et la valeur marchande viennent de Transfermarkt, l'adéquation avec la fanbase vient du cockpit Fanbase Manager (Brevo + Metricool). Chaque joueur reçoit trois notes sur 100, pondérées par le besoin de l'effectif à son poste.</p>
+  <p class="psub" id="meta" style="margin:10px 0 0"></p>
   <div class="demo" id="demo" hidden><b>Vivier de démonstration — joueurs et clubs fictifs.</b> L'API Transfermarkt n'était pas joignable depuis l'environnement de génération. Les signaux fans, eux, sont les vrais chiffres du cockpit. Lancer <code>python -m moneyball.scout</code> puis <code>python -m moneyball.recommend</code> pour remplacer ce vivier par les données Transfermarkt réelles.</div>
 </header>
 
@@ -160,7 +161,7 @@ footer li{margin-bottom:5px}
 
 <section>
   <div class="shead"><h2>Plan <span>mercato</span></h2>
-    <p>Meilleure option par ligne dans l'enveloppe fixée, deux recrues sur les lignes où le besoin dépasse 0,45. Suit les réglages du tableau de chasse.</p></div>
+    <p>Meilleure option par ligne dans l'enveloppe fixée, deux recrues sur les lignes où le besoin dépasse 0,45. Suit les réglages du tableau de chasse. Les joueurs à valeur marchande estimée (*) en sont exclus et comptés à part.</p></div>
   <div class="plan" id="plan"></div>
   <div class="totals" id="totals"></div>
 </section>
@@ -182,32 +183,40 @@ footer li{margin-bottom:5px}
       <label class="chk" for="fLocal"><input type="checkbox" id="fLocal"> Profil romand</label></div>
   </div>
   <div class="tw"><table>
-    <thead><tr><th class="l">#</th><th class="l">Joueur</th><th class="l">Club</th><th class="l">Notes</th><th>Besoin</th><th>Valeur TM</th><th>Indemnité est.</th><th class="l">Signaux</th><th>Note</th></tr></thead>
+    <thead><tr><th class="l">#</th><th class="l">Joueur</th><th class="l">Club</th><th class="l">Notes</th><th>Confiance</th><th>Besoin</th><th>Valeur TM</th><th>Indemnité est.</th><th class="l">Signaux</th><th>Note</th></tr></thead>
     <tbody id="rows"></tbody>
   </table></div>
   <p class="psub" id="count" style="margin-top:10px"></p>
+  <p class="psub">Confiance : part de l'échantillon (minutes) derrière la note Sport ; « faible » pour les défenseurs centraux (aucune donnée individuelle de défense, seulement les résultats de l'équipe) et pour les gardiens sans donnée de buts encaissés. (*) valeur marchande absente de Transfermarkt, estimée par la régression du modèle : poids de la note Valeur divisé par deux, joueur exclu du plan mercato automatique.</p>
 </section>
 
 <footer>
   <h3 style="margin-top:0">Méthode</h3>
   <ul>
-    <li><strong>Sport</strong> : production par 90 minutes rapportée à l'attendu du poste, dans l'ordre des sources disponibles : xG + 0,7 × xA (Sofascore), sinon buts + 0,7 × passes + 0,1 × passe clé (API-Football), sinon buts + 0,7 × passes (Transfermarkt) ; la note moyenne de la saison compte pour un tiers quand elle existe ; plus la disponibilité (minutes par saison) et la discipline, sur les deux dernières saisons de championnat. Le tout est corrigé par le niveau de la ligue (Challenge League = 1,00 ; Super League = 1,45 ; National = 1,00 ; Ligue 2 = 1,45) et par les jours de blessure.</li>
-    <li><strong>Valeur</strong> : 40 % sous-évaluation (résidu d'une régression log(valeur marchande) ~ note sportive + âge + âge² + ligue + poste sur tout le vivier, pour ne pas confondre « joue en National » et « sous-évalué »), 25 % levier contractuel (≤ 6 mois = libre ou pré-contrat), 15 % tendance de la valeur sur 12 mois, 20 % plus-value nette attendue : valeur projetée à 24 mois (courbe d'âge par ligne, pic à 26 ans pour milieux et attaquants, 27 pour défenseurs, 29 pour gardiens, modulée par l'élan des 12 derniers mois) moins l'indemnité estimée, rapportée à la valeur actuelle.</li>
-    <li><strong>Fan fit</strong> : ancrage régional (lieu de naissance, club formateur), francophonie, fidélité (durée moyenne par club), potentiel média (réseaux sociaux + spectacle offensif) et lien avec le club, pondérés par l'ADN fan ci-dessus.</li>
+    <li><strong>Sport</strong> (source : Transfermarkt seul, deux dernières saisons de championnat) : chaque ligne est notée dans son sous-poste, par rang percentile dans le vivier (joueurs à 900 minutes et plus), après rétrécissement vers la médiane du sous-poste quand l'échantillon est court (confiance = minutes / (minutes + 900)).
+      <ul>
+        <li><em>Milieux, attaquants</em> : production (buts + 0,7 × passes) par 90 minutes en équivalent Challenge League (× niveau) → percentile ; 45 % (milieux) ou 60 % (attaquants) de la note, le reste en disponibilité (minutes par saison / 2 400) et discipline (10 %).</li>
+        <li><em>Gardiens</em> : jamais de production offensive. Indice défensif = taux de clean sheets + terme « buts encaissés » : pour un gardien qui partage le poste (moins de 85 % des minutes de l'équipe), 1 − (ses buts encaissés / 90 ÷ ceux de l'équipe), borné à ± 0,5 ; pour un titulaire unique (rapport égal à 1 par construction), le rang de l'équipe au classement, de −0,3 (dernier) à +0,3 (premier). Percentile entre gardiens seulement → 65 % ; disponibilité plafonnée à 25 % ; discipline 10 %. Sans donnée de buts encaissés : médiane des gardiens et confiance « faible ».</li>
+        <li><em>Défenseurs centraux</em> : résultats défensifs de l'équipe — buts encaissés par match de l'équipe comparés à la médiane de la ligue (0,5 = médiane ; 1 = deux fois moins ; 0 = deux fois plus) → percentile entre centraux → 55 % ; disponibilité 30 % ; cartons en négatif (discipline 15 %). Transfermarkt ne donne aucune donnée individuelle de défense : confiance plafonnée à 50 % et affichée « faible ».</li>
+        <li><em>Latéraux</em> : 50 % profil défensif (même formule que les centraux) + 50 % production offensive (buts + 0,7 × passes, percentile entre latéraux) → 55 % ; disponibilité 35 % ; discipline 10 %.</li>
+      </ul>
+      Le tout est multiplié par (0,55 + 0,45 × niveau), niveau = coefficient de ligue / 1,45 (Super League ≈ 1, borné entre 0,3 et 1,2), et par (1 − jours de blessure / 180, au plus 0,5), puis divisé par 0,85 et borné à 100.</li>
+    <li><strong>Coefficients de ligue.</strong> Le niveau d'un joueur est la moyenne des coefficients de ses championnats pondérée par ses minutes, sur ses deux dernières saisons avec des minutes, en ne gardant que les compétitions à coefficient connu (coupes et lignes « Total » ignorées ; 0,8 si aucune n'est connue). Référence Challenge League = 1,00. Codes Transfermarkt exacts : <span id="coefExact"></span>. Divisions inférieures, par préfixe de code : <span id="coefPrefix"></span>. Exemple recalculable : 1 080 minutes en Challenge League (1,00) et 900 minutes en 1re Ligue Classic (0,45) → (1 080 × 1,00 + 900 × 0,45) / 1 980 = 0,75.</li>
+    <li><strong>Valeur</strong> : 40 % sous-évaluation (résidu d'une régression log(valeur marchande) ~ note sportive + âge + âge² + ligue + poste sur tout le vivier, pour ne pas confondre « joue en National » et « sous-évalué »), 25 % levier contractuel (≤ 6 mois = libre ou pré-contrat), 15 % tendance de la valeur sur 12 mois, 20 % plus-value nette attendue : valeur projetée à 24 mois (courbe d'âge par ligne, pic à 26 ans pour milieux et attaquants, 27 pour défenseurs, 29 pour gardiens, modulée par l'élan des 12 derniers mois) moins l'indemnité estimée, rapportée à la valeur actuelle. Un joueur sans valeur Transfermarkt reçoit la valeur prédite par cette régression, marquée (*) : sa note Valeur pèse moitié moins dans la note finale et il est exclu du plan mercato automatique.</li>
+    <li><strong>Fan fit</strong> : ancrage régional (lieu de naissance normalisé — Genf, Genève et Geneva sont la même ville — rattaché à sa commune, son canton et sa zone : bassin nord-vaudois 1,00, Vaud 0,85, Romandie 0,70, Suisse 0,45, frontalier 0,40, international 0,10 ; un club formateur d'Yverdon vaut bassin, un club formateur romand vaut Romandie, et l'on retient la meilleure des deux lectures pour tous), francophonie, fidélité (durée moyenne par club), potentiel média (réseaux sociaux + spectacle offensif) et lien avec le club, pondérés par l'ADN fan ci-dessus.</li>
     <li><strong>Note finale</strong> = moyenne pondérée des trois notes × (0,85 + 0,30 × besoin du poste).</li>
     <li><strong>Indemnité estimée</strong> = 0 à six mois de la fin de contrat, sinon 35 à 100 % de la valeur marchande selon la durée restante. C'est un ordre de grandeur, pas une offre.</li>
   </ul>
   <h3>Sources</h3>
   <ul>
-    <li><strong>API-Football</strong> (api-sports.io, plan gratuit, clé documentée) : note moyenne, tirs, passes clés, duels, dribbles, cartons et date de naissance par joueur et par saison, Challenge League (208) et Super League (207).</li>
-    <li><strong>Sofascore</strong> (optionnel, sans API publique) : xG, xA et note par saison, tournois 216 et 215.</li>
-    <li><strong>Transfermarkt</strong> (lecture directe des pages, ou <a href="https://github.com/felipeall/transfermarkt-api" style="color:var(--accent-ink)">transfermarkt-api</a>) : profils, statistiques de championnat des deux dernières saisons, historique de valeur, transferts. Valeurs en euros. <span id="srcTm"></span></li>
+    <li><strong>Transfermarkt</strong> (lecture directe des pages www.transfermarkt.com) : profils, statistiques de championnat des deux dernières saisons (page « Squad statistics » de chaque club), buts encaissés et clean sheets des gardiens (page « Clean sheets » de chaque compétition, vue détaillée), classements (buts encaissés et rang de chaque équipe), historique de valeur, transferts. Valeurs en euros. <span id="srcTm"></span></li>
     <li><strong>Cockpit Fanbase Manager Yverdon Sport</strong> : indice de pénétration, catégories CMON_SCORE, campagnes Brevo, audiences Metricool. <span id="srcDate"></span></li>
   </ul>
   <h3>Limites</h3>
   <ul>
-    <li>Ni Transfermarkt ni Sofascore ne donnent le volume d'abonnés des joueurs : le potentiel média se fonde sur la présence d'un compte, pas sur son audience.</li>
-    <li>API-Football ne publie pas de xG au niveau saison : la passe clé sert de proxy de création (0,1 xA en moyenne). Les xG n'entrent que si l'enrichissement Sofascore, sans API publique, est activé. Sans aucun enrichissement, la note Sport retombe sur buts et passes Transfermarkt.</li>
+    <li>Sources prévues, non actives sur ce vivier : Sofascore (xG, xA, note ; répond 403 hors navigateur) et API-Football (note, tirs, passes clés ; pas de clé). Sans elles, la note Sport repose sur buts, passes, minutes, discipline, buts encaissés et résultats d'équipe Transfermarkt.</li>
+    <li>Transfermarkt ne donne aucune statistique défensive individuelle (duels, interceptions) : les défenseurs centraux sont notés sur les résultats de leur équipe, d'où une confiance « faible ». Un gardien titulaire unique est noté sur le classement de son équipe, pas sur ses arrêts.</li>
+    <li>Transfermarkt ne donne pas le volume d'abonnés des joueurs : le potentiel média se fonde sur la présence d'un compte, pas sur son audience.</li>
     <li>La base CRM du club ne donne pas l'âge des fans (date de naissance renseignée à 36 %) : l'adéquation générationnelle n'est pas modélisée.</li>
     <li>Périmètre : équipe masculine uniquement.</li>
     <li>Un outil d'aide à la décision : il trie un vivier, il ne remplace ni la vidéo ni l'observation en match.</li>
@@ -227,9 +236,15 @@ const DATA=/*__DATA__*/null;
   const ROMAND=["Bassin nord-vaudois","Vaud","Romandie"];
 
   if(DATA.demo) $("demo").hidden=false;
-  $("eyebrow").textContent=`Yverdon Sport · Cellule recrutement · Vivier ${DATA.vivier} joueurs · ${new Date(DATA.genere).toLocaleDateString("fr-CH")}`;
+  const dateFr=d=>d?new Date(d).toLocaleDateString("fr-CH"):"—";
+  $("eyebrow").textContent=`Yverdon Sport · Cellule recrutement · Vivier ${DATA.vivier} joueurs · données Transfermarkt du ${dateFr(DATA.date_donnees||DATA.genere)}`;
+  const SRC=DATA.sources||{};
+  $("meta").textContent=`Modèle ${DATA.version_modele||"—"} · calcul du ${dateFr(DATA.genere)} · données du ${dateFr(DATA.date_donnees)} · sources utilisées : Transfermarkt ${SRC.transfermarkt_stats??"—"} / ${SRC.vivier??DATA.vivier} joueurs avec statistiques, ${SRC.gardiens_buts_encaisses??0} / ${SRC.gardiens??"—"} gardiens avec buts encaissés ; Sofascore : ${SRC.sofascore??0} ; API-Football : ${SRC.api_football??0}${DATA.valeurs_estimees?` · ${DATA.valeurs_estimees} valeur${DATA.valeurs_estimees>1?"s":""} marchande${DATA.valeurs_estimees>1?"s":""} estimée${DATA.valeurs_estimees>1?"s":""} (*)`:""}.`;
   $("srcDate").textContent=`Relevé du ${new Date(DNA.releve).toLocaleDateString("fr-CH")}.`;
-  if(!DATA.demo) $("srcTm").textContent=`Vivier relevé le ${new Date(DATA.genere).toLocaleDateString("fr-CH")} : ${(DATA.competitions||[]).join(", ")}${DATA.saison?" · saison "+DATA.saison:""}.`;
+  if(!DATA.demo) $("srcTm").textContent=`Vivier relevé le ${dateFr(DATA.date_donnees||DATA.genere)} : ${(DATA.competitions||[]).join(", ")}${DATA.saison?" · saison "+DATA.saison:""} · ${SRC.transfermarkt_stats??"—"} / ${SRC.vivier??DATA.vivier} joueurs avec statistiques, ${SRC.gardiens_buts_encaisses??0} / ${SRC.gardiens??"—"} gardiens avec buts encaissés, ${SRC.transfermarkt_equipe??0} joueurs avec les résultats de leur équipe.`;
+  const CO=DATA.coefficients_ligue||{exacts:{},prefixes:{}};
+  const fmtC=o=>Object.entries(o).map(([k,v])=>`${k} ${v.toFixed(2)}`).join(", ");
+  $("coefExact").textContent=fmtC(CO.exacts); $("coefPrefix").textContent=fmtC(CO.prefixes);
 
   // ADN fan
   const maxW=Math.max(...Object.values(DNA.weights));
@@ -261,18 +276,19 @@ const DATA=/*__DATA__*/null;
   let openId=null, shown=150;
 
   function score(j){
-    const t=(st.wS+st.wV+st.wF)||1, s=j.scores;
-    return (st.wS*s.sport+st.wV*s.valeur+st.wF*s.fan)/t*(0.85+0.30*s.besoin);
+    const wV=j.market_value_estimated?st.wV/2:st.wV, t=(st.wS+wV+st.wF)||1, s=j.scores;
+    return (st.wS*s.sport+wV*s.valeur+st.wF*s.fan)/t*(0.85+0.30*s.besoin);
   }
-  function tagCls(t){return /Libre|Fin de/.test(t)?"free":/pays|Retour/.test(t)?"local":/Sous-/.test(t)?"under":/faible|inconnue|baisse/.test(t)?"weak":""}
+  function tagCls(t){return /Libre|Fin de/.test(t)?"free":/pays|Retour/.test(t)?"local":/Sous-/.test(t)?"under":/faible|inconnue|estimée|baisse/.test(t)?"weak":""}
   // « Sous-performe ses xG » est une occasion Moneyball : même couleur que « Sous-évalué »
   function mini(s){return `<div class="mini">${[["S",s.sport,"--sport"],["V",s.valeur,"--valeur"],["F",s.fan,"--fan"]].map(([l,v,c])=>
     `<div><span>${l}</span><span class="t"><i style="width:${v}%;background:var(${c})"></i></span><span class="num">${Math.round(v)}</span></div>`).join("")}</div>`}
   function kv(a){return a.map(([k,v])=>`<div class="kv"><span>${k}</span><span class="num">${v}</span></div>`).join("")}
+  const conf=j=>j.detail.sport.confiance_note==="faible"?"faible":Math.round(j.detail.sport.confiance*100)+" %";
   function detail(j){const d=j.detail, pct=v=>Math.round(v*100)+" %";
-    return `<tr class="detail"><td colspan="9"><div class="dgrid">
-      <div><h3 class="s">Sport · ${j.scores.sport}</h3>${kv([...(d.sport.xg!=null?[["(xG + 0,7 xA) / 90 · Sofascore",d.sport.xg_a_90],["xG · xA",d.sport.xg+" · "+d.sport.xa]]:d.sport.passes_cles!=null?[["(Buts + 0,7 passes + 0,1 passe clé) / 90",d.sport.xg_a_90],["Passes clés",d.sport.passes_cles]]:[]),...(d.sport.note?[["Note moyenne ("+esc(d.sport.source.replace("transfermarkt + ",""))+")",d.sport.note]]:[]),["(Buts + 0,7 passes) / 90",d.sport.g_a_90],["Buts · passes",d.sport.buts+" · "+d.sport.passes],...(d.sport.rang_production!=null?[["Rang de production dans le vivier",pct(d.sport.rang_production)]]:[]),["Matchs (2 saisons)",d.sport.matchs],["Minutes (2 saisons)",d.sport.minutes_total],["Confiance de l'échantillon",pct(d.sport.confiance)],["Niveau de ligue",d.sport.niveau],["Disponibilité",pct(d.sport.disponibilite)]])}</div>
-      <div><h3 class="v">Valeur · ${j.scores.valeur}</h3>${kv([["Sous-évaluation (rang)",pct(d.valeur.sous_evaluation)],["Tendance 12 mois",(d.valeur.tendance>=0?"+":"")+Math.round(d.valeur.tendance*100)+" %"],["Mois de contrat restants",d.valeur.mois_contrat??"—"],["Fin de contrat",j.contract_expires??"—"],["Valeur projetée à 24 mois",eur(d.valeur.valeur_projetee_24m)],["Plus-value nette attendue",d.valeur.plus_value==null?"—":(d.valeur.plus_value>=0?"+":"")+Math.round(d.valeur.plus_value*100)+" % de la valeur"],["Coût net (indemnité − revente)",d.valeur.cout_net==null?"—":eur(d.valeur.cout_net)]])}</div>
+    return `<tr class="detail"><td colspan="10"><div class="dgrid">
+      <div><h3 class="s">Sport · ${j.scores.sport}</h3>${kv([...(j.groupe==="GK"?[["Buts encaissés · clean sheets (2 saisons)",d.sport.buts_encaisses==null?"aucune donnée":d.sport.buts_encaisses+" · "+d.sport.clean_sheets],["Buts encaissés / 90 (gardien · équipe · médiane ligue)",[d.sport.buts_encaisses_90,d.sport.equipe_encaisses_90,d.sport.ligue_encaisses_90].map(v=>v==null?"—":v).join(" · ")],["Lecture",esc(d.sport.mode_gardien||"—")],["Rang défensif entre gardiens",pct(d.sport.rang_defensif)]]:j.groupe==="DEF"?[["Sous-poste",j.sous_poste==="CB"?"central":"latéral"],["Buts encaissés / 90 (équipe · médiane ligue)",[d.sport.equipe_encaisses_90,d.sport.ligue_encaisses_90].map(v=>v==null?"—":v).join(" · ")],["Rang défensif dans le sous-poste",pct(d.sport.rang_defensif)],...(d.sport.rang_production!=null?[["(Buts + 0,7 passes) / 90",d.sport.g_a_90],["Rang offensif entre latéraux",pct(d.sport.rang_production)]]:[])]:[["(Buts + 0,7 passes) / 90",d.sport.g_a_90],["Buts · passes",d.sport.buts+" · "+d.sport.passes],...(d.sport.rang_production!=null?[["Rang de production dans le vivier",pct(d.sport.rang_production)]]:[])]),["Matchs (2 saisons)",d.sport.matchs],["Minutes (2 saisons)",d.sport.minutes_total],["Confiance de la note Sport",conf(j)+(d.sport.confiance_note==="faible"?" ("+pct(d.sport.confiance)+" d'échantillon)":"")],["Niveau de ligue",d.sport.niveau],["Disponibilité",pct(d.sport.disponibilite)]])}</div>
+      <div><h3 class="v">Valeur · ${j.scores.valeur}${j.market_value_estimated?" *":""}</h3>${kv([...(j.market_value_estimated?[["Valeur marchande","estimée "+eur(j.market_value)+" (régression, absente de Transfermarkt)"]]:[]),["Sous-évaluation (rang)",pct(d.valeur.sous_evaluation)],["Tendance 12 mois",(d.valeur.tendance>=0?"+":"")+Math.round(d.valeur.tendance*100)+" %"],["Mois de contrat restants",d.valeur.mois_contrat??"—"],["Fin de contrat",j.contract_expires??"—"],["Valeur projetée à 24 mois",eur(d.valeur.valeur_projetee_24m)],["Plus-value nette attendue",d.valeur.plus_value==null?"—":(d.valeur.plus_value>=0?"+":"")+Math.round(d.valeur.plus_value*100)+" % de la valeur"],["Coût net (indemnité − revente)",d.valeur.cout_net==null?"—":eur(d.valeur.cout_net)]])}</div>
       <div><h3 class="f">Fan fit · ${j.scores.fan}</h3>${kv([["Origine",esc(d.fan.origine)+(j.naissance?" ("+esc(j.naissance)+")":"")],["Nationalités",esc(j.nationalites.join(", "))],["Francophonie",pct(d.fan.francophonie)],["Durée moyenne par club",d.fan.tenure+" ans"],["Potentiel média",pct(d.fan.media)],["Lien club",esc(d.fan.lien)]])}</div>
     </div>${j.url?`<p style="margin:12px 0 0"><a href="${esc(j.url)}" style="color:var(--accent-ink)">Fiche Transfermarkt</a></p>`:""}</td></tr>`}
 
@@ -282,7 +298,8 @@ const DATA=/*__DATA__*/null;
       &&(!st.fLocal||ROMAND.includes(j.detail.fan.origine))).map(j=>({j,f:score(j)})).sort((a,b)=>b.f-a.f);
   }
   function renderPlan(){
-    const all=J.filter(j=>(j.age??0)<=st.age).map(j=>({j,f:score(j)})).sort((a,b)=>b.f-a.f);
+    const all=J.filter(j=>(j.age??0)<=st.age&&!j.market_value_estimated).map(j=>({j,f:score(j)})).sort((a,b)=>b.f-a.f);
+    const excluded=J.filter(j=>(j.age??0)<=st.age&&j.market_value_estimated).length;
     let left=st.budget; const picks=[];
     const order=["GK","DEF","MID","ATT"].sort((a,b)=>NEEDS[b].besoin-NEEDS[a].besoin);
     for(const g of order){const n=NEEDS[g].besoin>0.45?2:1;let c=0;
@@ -292,7 +309,7 @@ const DATA=/*__DATA__*/null;
       `<div class="slot"><span class="sc num">${p.f.toFixed(1)}</span><div class="lab">${esc(p.j.position)}</div><div class="who">${esc(p.j.name)}</div><div class="meta">${p.j.age} ans · ${esc(p.j.club)}</div><div class="meta">Indemnité ${eur(p.j.indemnite_estimee)} · fan fit ${Math.round(p.j.scores.fan)}</div></div>`).join("")}</div>`).join("");
     const real=picks.filter(p=>!p.none), cost=real.reduce((s,p)=>s+p.j.indemnite_estimee,0);
     const fan=real.length?real.reduce((s,p)=>s+p.j.scores.fan,0)/real.length:0;
-    $("totals").innerHTML=`<span><b class="num">${real.length}</b>recrues</span><span><b class="num">${eur(cost)}</b>d'indemnités estimées</span><span><b class="num">${eur(st.budget-cost)}</b>restants</span><span><b class="num">${Math.round(fan)}</b>fan fit moyen</span><span><b class="num">${real.filter(p=>ROMAND.includes(p.j.detail.fan.origine)).length}</b>profils romands</span>`;
+    $("totals").innerHTML=`<span><b class="num">${real.length}</b>recrues</span><span><b class="num">${eur(cost)}</b>d'indemnités estimées</span><span><b class="num">${eur(st.budget-cost)}</b>restants</span><span><b class="num">${Math.round(fan)}</b>fan fit moyen</span><span><b class="num">${real.filter(p=>ROMAND.includes(p.j.detail.fan.origine)).length}</b>profils romands</span><span><b class="num">${excluded}</b>joueur${excluded>1?"s":""} à valeur estimée, hors plan automatique</span>`;
   }
   function render(){
     $("oS").textContent=st.wS;$("oV").textContent=st.wV;$("oF").textContent=st.wF;
@@ -303,9 +320,10 @@ const DATA=/*__DATA__*/null;
       <td class="l"><div class="pname">${esc(j.name)}</div><div class="psub">${esc(j.position)} · ${j.age} ans</div></td>
       <td class="l"><div>${esc(j.club)}</div><div class="psub">${esc(j.league_id)}</div></td>
       <td class="l">${mini(j.scores)}</td>
-      <td>${j.scores.besoin.toFixed(2)}</td><td>${eur(j.market_value)}</td><td>${eur(j.indemnite_estimee)}</td>
+      <td>${conf(j)}</td>
+      <td>${j.scores.besoin.toFixed(2)}</td><td>${eur(j.market_value)}${j.market_value_estimated?" *":""}</td><td>${eur(j.indemnite_estimee)}</td>
       <td class="l"><div class="tags">${j.tags.map(t=>`<span class="tag ${tagCls(t)}">${esc(t)}</span>`).join("")}</div></td>
-      <td class="final">${f.toFixed(1)}</td></tr>${openId===j.id?detail(j):""}`).join(""):`<tr><td colspan="9" class="empty">Aucun joueur ne passe ces filtres. Relevez l'indemnité max ou l'âge max.</td></tr>`;
+      <td class="final">${f.toFixed(1)}</td></tr>${openId===j.id?detail(j):""}`).join(""):`<tr><td colspan="10" class="empty">Aucun joueur ne passe ces filtres. Relevez l'indemnité max ou l'âge max.</td></tr>`;
     $("count").innerHTML=`${list.length} joueur${list.length>1?"s":""} affiché${list.length>1?"s":""} sur ${all.length} retenu${all.length>1?"s":""} (vivier ${J.length}).`+(all.length>shown?` <button type="button" id="more" class="morebtn">Afficher 150 de plus</button>`:"");
     const mb=$("more"); if(mb) mb.addEventListener("click",()=>{shown+=150;render()});
     renderPlan();
