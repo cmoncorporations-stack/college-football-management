@@ -43,6 +43,7 @@ def normalize(pid: str, league_id: str, row: dict, profile: dict, stats: list[di
         "url": profile.get("url"),
         "position": (profile.get("position") or {}).get("main") or row.get("position"),
         "age": profile.get("age") or row.get("age"),
+        "date_of_birth": profile.get("date_of_birth") or row.get("date_of_birth"),
         "citizenship": profile.get("citizenship") or row.get("nationality") or [],
         "birth_city": pob.get("city"),
         "birth_country": pob.get("country"),
@@ -91,6 +92,8 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--min-age", type=int, default=17)
     ap.add_argument("--injuries", action="store_true", help="Récupère aussi l'historique de blessures (+1 appel/joueur)")
     ap.add_argument("--limit", type=int, default=0, help="Limite de joueurs détaillés (0 = tous), pour tester")
+    ap.add_argument("--apifootball", nargs="*", type=int, metavar="LIGUE",
+                    help="Enrichit avec API-Football (note, passes clés, tirs…) ; ids de ligue, défaut 208 207. Clé : API_FOOTBALL_KEY")
     ap.add_argument("--sofascore", nargs="*", type=int, metavar="TOURNOI",
                     help="Enrichit avec Sofascore (xG, xA, note) ; ids de tournoi, défaut 216 215")
     args = ap.parse_args(argv)
@@ -131,6 +134,17 @@ def main(argv: list[str] | None = None) -> None:
             print(f"  ! {row.get('name')} ({pid}) ignoré : {e}")
         if i % 25 == 0:
             print(f"  {i}/{len(shortlist)}")
+
+    if args.apifootball is not None:
+        from .apifootball import ApiFootballClient, collect as af_collect, merge_into_candidates as af_merge
+        af = ApiFootballClient()
+        today = date.today()
+        season = int(args.season) if args.season else (today.year if today.month >= 7 else today.year - 1)
+        blocks = {}
+        for league in (args.apifootball or [208, 207]):
+            blocks[f"{league}/{season}"] = af_collect(af, league, season)
+        (DATA / "apifootball.json").write_text(json.dumps(blocks, ensure_ascii=False, indent=1))
+        print(f"API-Football : {af_merge(candidates, blocks)}/{len(candidates)} candidats enrichis")
 
     if args.sofascore is not None:
         from .sofascore import SofascoreClient, collect, merge_into_candidates

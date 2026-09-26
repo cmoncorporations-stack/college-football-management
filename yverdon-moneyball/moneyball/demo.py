@@ -74,17 +74,22 @@ def _player(rng: random.Random, i: int, today: date) -> dict:
                   "to": "Club fictif", "fee": None} for j, y in enumerate(moves)]
     youth = ["Yverdon-Sport FC Jeunesse"] if (city in ("Yverdon-les-Bains", "Orbe") and rng.random() < 0.6) else []
     social = ["https://www.instagram.com/demo"] if rng.random() < 0.65 else []
-    # Bloc Sofascore fictif pour deux tiers des joueurs, au format de sofascore.py
+    # Bloc `perf` fictif pour deux tiers des joueurs : moitié au format API-Football
+    # (note + passes clés, pas de xG), moitié au format Sofascore (xG + xA)
     sofa = None
     if rng.random() < 0.66:
         s0 = stats[0]
         xg = max(0.0, s0["goals"] * rng.uniform(0.6, 1.5) + rng.uniform(-1, 1))
         sofa = {"season": stats[0]["season"], "minutes": s0["minutes"], "apps": s0["appearances"],
-                "goals": s0["goals"], "assists": s0["assists"], "xg": round(xg, 2),
-                "xa": round(max(0.0, s0["assists"] * rng.uniform(0.6, 1.4)), 2),
+                "goals": s0["goals"], "assists": s0["assists"],
                 "rating": round(6.3 + 1.4 * talent + rng.uniform(-0.3, 0.3), 2)}
+        if rng.random() < 0.5:
+            sofa.update({"source": "sofascore", "xg": round(xg, 2),
+                         "xa": round(max(0.0, s0["assists"] * rng.uniform(0.6, 1.4)), 2)})
+        else:
+            sofa.update({"source": "api-football", "key_passes": int(s0["assists"] * rng.uniform(4, 9) + rng.randint(0, 10))})
     return {
-        "sofascore": sofa,"id": f"DEMO-{i:03d}", "name": f"{rng.choice(FIRST)} {rng.choice(LAST)}", "url": None,
+        "perf": sofa, "id": f"DEMO-{i:03d}", "name": f"{rng.choice(FIRST)} {rng.choice(LAST)}", "url": None,
             "position": pos, "age": age, "citizenship": cits, "birth_city": city, "birth_country": country,
             "market_value": mv, "mv_history": hist, "contract_expires": contract.isoformat(),
             "club": club, "league_id": league, "stats": stats, "transfers": transfers,

@@ -143,13 +143,19 @@ def sport_score(p: dict) -> tuple[float, dict]:
     g_a_90 = (st["g"] + 0.7 * st["a"]) / st["minutes"] * 90 if st["minutes"] else 0.0
     discipline = _clip(1 - (st["cards"] / max(1, st["apps"])) / 0.5)
 
-    # Sofascore, quand il est là : la production attendue (xG + xA) remplace les buts
-    # réels, moins bruités sur une saison, et la note Sofascore entre pour un tiers.
-    sofa = p.get("sofascore") or {}
+    # Bloc `perf` (API-Football ou Sofascore) : la note moyenne entre pour un tiers,
+    # et la production attendue remplace les buts réels quand la source la donne
+    # (xG + 0,7 xA, Sofascore) ; sinon buts + 0,7 passes + 0,1 passe clé, la passe
+    # clé valant en moyenne un dixième de xA (API-Football).
+    perf = p.get("perf") or p.get("sofascore") or {}
     xg_a_90 = None
-    if sofa.get("minutes") and sofa.get("xg") is not None:
-        xg_a_90 = (sofa["xg"] + 0.7 * (sofa.get("xa") or 0)) / sofa["minutes"] * 90
-    rating = sofa.get("rating")
+    if perf.get("minutes"):
+        if perf.get("xg") is not None:
+            xg_a_90 = (perf["xg"] + 0.7 * (perf.get("xa") or 0)) / perf["minutes"] * 90
+        elif perf.get("key_passes") is not None:
+            xg_a_90 = ((perf.get("goals") or 0) + 0.7 * (perf.get("assists") or 0)
+                       + 0.1 * perf["key_passes"]) / perf["minutes"] * 90
+    rating = perf.get("rating")
     rating_score = _clip((rating - 6.0) / 1.6) if rating else None   # 6,0 → 0 ; 7,6 → 1
 
     if group == "GK":
@@ -168,10 +174,11 @@ def sport_score(p: dict) -> tuple[float, dict]:
     detail = {"g_a_90": round(g_a_90, 2), "minutes_saison": round(st["minutes_per_season"]),
               "niveau": round(st["coef"], 2), "disponibilite": round(availability, 2),
               "buts": st["g"], "passes": st["a"], "matchs": st["apps"], "source": "transfermarkt"}
-    if sofa:
-        detail.update({"source": "transfermarkt + sofascore", "xg_a_90": None if xg_a_90 is None else round(xg_a_90, 2),
-                       "xg": sofa.get("xg"), "xa": sofa.get("xa"), "note_sofascore": rating,
-                       "saison_sofascore": sofa.get("season")})
+    if perf:
+        detail.update({"source": "transfermarkt + " + (perf.get("source") or "sofascore"),
+                       "xg_a_90": None if xg_a_90 is None else round(xg_a_90, 2),
+                       "xg": perf.get("xg"), "xa": perf.get("xa"), "passes_cles": perf.get("key_passes"),
+                       "note": rating, "saison_perf": perf.get("season")})
     return score, detail
 
 
@@ -375,8 +382,8 @@ def score_pool(players: list[dict], fan_weights: dict, needs: dict, today: date,
             tags.append("Enfant du pays")
         if fc["_lien"] == "Ancien d'Yverdon":
             tags.append("Retour au club")
-        sofa = p.get("sofascore") or {}
-        if sofa.get("xg") is not None and sofa.get("goals") is not None and sofa.get("minutes", 0) >= 900:
+        sofa = p.get("perf") or p.get("sofascore") or {}
+        if sofa.get("xg") is not None and sofa.get("goals") is not None and (sofa.get("minutes") or 0) >= 900:
             # Moneyball : un joueur qui marque nettement moins que ses xG est une occasion,
             # un joueur qui marque nettement plus vit sur une saison de chance.
             if sofa["goals"] < 0.8 * sofa["xg"] - 1:

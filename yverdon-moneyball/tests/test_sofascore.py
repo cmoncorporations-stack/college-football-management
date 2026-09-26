@@ -35,13 +35,13 @@ class SofascoreTest(unittest.TestCase):
                            "rating": 6.4, "minutes": 900, "goals": 1, "assists": 0})
         cands = [tm_player("Luca Perrin", 24), tm_player("Inconnu Total", 22)]
         self.assertEqual(merge_into_candidates(cands, sofa), 1)
-        self.assertEqual(cands[0]["sofascore"]["sofascore_id"], 1)
-        self.assertNotIn("sofascore", cands[1])
+        self.assertEqual(cands[0]["perf"]["sofascore_id"], 1)
+        self.assertNotIn("perf", cands[1])
 
     def test_xg_replaces_goals_in_sport_score(self):
         # Même joueur Transfermarkt ; Sofascore dit qu'il a créé bien plus que ses 4 buts
         plain = tm_player("A", 24)
-        rich = tm_player("A", 24, sofascore={"xg": 11.0, "xa": 4.0, "minutes": 2500, "rating": 7.4,
+        rich = tm_player("A", 24, perf={"source": "sofascore", "xg": 11.0, "xa": 4.0, "minutes": 2500, "rating": 7.4,
                                              "goals": 4, "assists": 2, "season": "26/27"})
         s_plain, d_plain = model.sport_score(plain)
         s_rich, d_rich = model.sport_score(rich)
@@ -51,7 +51,7 @@ class SofascoreTest(unittest.TestCase):
         self.assertAlmostEqual(d_rich["xg_a_90"], (11 + 0.7 * 4) / 2500 * 90, places=2)
 
     def test_underperformance_tag(self):
-        p = tm_player("B", 24, sofascore={"xg": 9.0, "xa": 1.0, "minutes": 2000, "rating": 6.9,
+        p = tm_player("B", 24, perf={"source": "sofascore", "xg": 9.0, "xa": 1.0, "minutes": 2000, "rating": 6.9,
                                           "goals": 4, "assists": 1, "season": "26/27"})
         needs = {"ATT": {"besoin": 0.5}}
         ranked = model.score_pool([p] + [tm_player(f"f{i}", 25) for i in range(5)],

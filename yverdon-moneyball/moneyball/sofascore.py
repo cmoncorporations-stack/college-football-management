@@ -12,7 +12,7 @@ Pour un autre championnat, ouvrir sa page Sofascore et relever le nombre en fin 
 
 Sortie : data/sofascore.json — { "<tournament>/<season>": {joueurs...} } — puis
 `merge_into_candidates` rattache chaque joueur Transfermarkt à sa ligne Sofascore
-(nom normalisé + année de naissance) et ajoute un bloc `sofascore` à sa fiche.
+(nom normalisé + année de naissance) et ajoute un bloc `perf` (source sofascore) à sa fiche.
 """
 from __future__ import annotations
 
@@ -144,7 +144,7 @@ def collect(client: SofascoreClient, tournament: int, season_name: str | None, w
 
 
 def merge_into_candidates(candidates: list[dict], sofa: dict) -> int:
-    """Ajoute un bloc `sofascore` à chaque candidat retrouvé. Retourne le nombre d'appariements."""
+    """Ajoute un bloc `perf` à chaque candidat retrouvé. Retourne le nombre d'appariements."""
     by_name: dict[str, list[dict]] = {}
     for block in sofa.values():
         for rec in block["players"].values():
@@ -164,7 +164,7 @@ def merge_into_candidates(candidates: list[dict], sofa: dict) -> int:
             by = date.today().year - p["age"]
         best = next((c for c in cands if by and c.get("birth_year") in (by, by - 1)), None) or (cands[0] if len(cands) == 1 else None)
         if best:
-            p["sofascore"] = best
+            p["perf"] = {**best, "source": "sofascore"}
             hits += 1
     return hits
 

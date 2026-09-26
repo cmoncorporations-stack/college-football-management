@@ -188,7 +188,7 @@ footer li{margin-bottom:5px}
 <footer>
   <h3 style="margin-top:0">Méthode</h3>
   <ul>
-    <li><strong>Sport</strong> : xG + 0,7 × xA par 90 minutes (Sofascore) quand ils existent, sinon buts + 0,7 × passes décisives (Transfermarkt), rapportés à l'attendu du poste ; la note Sofascore compte pour un tiers quand elle est disponible ; plus la disponibilité (minutes par saison) et la discipline, sur les deux dernières saisons de championnat. Le tout est corrigé par le niveau de la ligue (Challenge League = 1,00 ; Super League = 1,45 ; National = 1,00 ; Ligue 2 = 1,45) et par les jours de blessure.</li>
+    <li><strong>Sport</strong> : production par 90 minutes rapportée à l'attendu du poste, dans l'ordre des sources disponibles : xG + 0,7 × xA (Sofascore), sinon buts + 0,7 × passes + 0,1 × passe clé (API-Football), sinon buts + 0,7 × passes (Transfermarkt) ; la note moyenne de la saison compte pour un tiers quand elle existe ; plus la disponibilité (minutes par saison) et la discipline, sur les deux dernières saisons de championnat. Le tout est corrigé par le niveau de la ligue (Challenge League = 1,00 ; Super League = 1,45 ; National = 1,00 ; Ligue 2 = 1,45) et par les jours de blessure.</li>
     <li><strong>Valeur</strong> : 40 % sous-évaluation (résidu d'une régression log(valeur marchande) ~ note sportive + âge sur tout le vivier), 25 % levier contractuel (≤ 6 mois = libre ou pré-contrat), 20 % tendance de la valeur sur 12 mois, 15 % potentiel de revente selon l'âge.</li>
     <li><strong>Fan fit</strong> : ancrage régional (lieu de naissance, club formateur), francophonie, fidélité (durée moyenne par club), potentiel média (réseaux sociaux + spectacle offensif) et lien avec le club, pondérés par l'ADN fan ci-dessus.</li>
     <li><strong>Note finale</strong> = moyenne pondérée des trois notes × (0,85 + 0,30 × besoin du poste).</li>
@@ -196,14 +196,15 @@ footer li{margin-bottom:5px}
   </ul>
   <h3>Sources</h3>
   <ul>
-    <li><strong>Sofascore</strong> : xG, xA, note par saison et statistiques détaillées, Challenge League et Super League (tournois 216 et 215).</li>
+    <li><strong>API-Football</strong> (api-sports.io, plan gratuit, clé documentée) : note moyenne, tirs, passes clés, duels, dribbles, cartons et date de naissance par joueur et par saison, Challenge League (208) et Super League (207).</li>
+    <li><strong>Sofascore</strong> (optionnel, sans API publique) : xG, xA et note par saison, tournois 216 et 215.</li>
     <li><strong>Transfermarkt</strong> via <a href="https://github.com/felipeall/transfermarkt-api" style="color:var(--accent-ink)">transfermarkt-api</a> : profils, statistiques, historique de valeur, transferts, blessures. Valeurs en euros.</li>
     <li><strong>Cockpit Fanbase Manager Yverdon Sport</strong> : indice de pénétration, catégories CMON_SCORE, campagnes Brevo, audiences Metricool. <span id="srcDate"></span></li>
   </ul>
   <h3>Limites</h3>
   <ul>
     <li>Ni Transfermarkt ni Sofascore ne donnent le volume d'abonnés des joueurs : le potentiel média se fonde sur la présence d'un compte, pas sur son audience.</li>
-    <li>Sofascore n'a pas d'API publique : les xG, xA et notes sont lus sur les points d'entrée de son application, pour un usage interne au club. Sans appariement Sofascore, la note Sport retombe sur buts et passes Transfermarkt.</li>
+    <li>API-Football ne publie pas de xG au niveau saison : la passe clé sert de proxy de création (0,1 xA en moyenne). Les xG n'entrent que si l'enrichissement Sofascore, sans API publique, est activé. Sans aucun enrichissement, la note Sport retombe sur buts et passes Transfermarkt.</li>
     <li>La base CRM du club ne donne pas l'âge des fans (date de naissance renseignée à 36 %) : l'adéquation générationnelle n'est pas modélisée.</li>
     <li>Périmètre : équipe masculine uniquement.</li>
     <li>Un outil d'aide à la décision : il trie un vivier, il ne remplace ni la vidéo ni l'observation en match.</li>
@@ -266,7 +267,7 @@ const DATA=/*__DATA__*/null;
   function kv(a){return a.map(([k,v])=>`<div class="kv"><span>${k}</span><span class="num">${v}</span></div>`).join("")}
   function detail(j){const d=j.detail, pct=v=>Math.round(v*100)+" %";
     return `<tr class="detail"><td colspan="9"><div class="dgrid">
-      <div><h3 class="s">Sport · ${j.scores.sport}</h3>${kv([...(d.sport.xg_a_90!=null?[["(xG + 0,7 xA) / 90 · Sofascore",d.sport.xg_a_90],["xG · xA",d.sport.xg+" · "+d.sport.xa]]:[]),...(d.sport.note_sofascore?[["Note Sofascore",d.sport.note_sofascore]]:[]),["(Buts + 0,7 passes) / 90",d.sport.g_a_90],["Buts · passes",d.sport.buts+" · "+d.sport.passes],["Matchs (2 saisons)",d.sport.matchs],["Minutes par saison",d.sport.minutes_saison],["Niveau de ligue",d.sport.niveau],["Disponibilité",pct(d.sport.disponibilite)]])}</div>
+      <div><h3 class="s">Sport · ${j.scores.sport}</h3>${kv([...(d.sport.xg!=null?[["(xG + 0,7 xA) / 90 · Sofascore",d.sport.xg_a_90],["xG · xA",d.sport.xg+" · "+d.sport.xa]]:d.sport.passes_cles!=null?[["(Buts + 0,7 passes + 0,1 passe clé) / 90",d.sport.xg_a_90],["Passes clés",d.sport.passes_cles]]:[]),...(d.sport.note?[["Note moyenne ("+esc(d.sport.source.replace("transfermarkt + ",""))+")",d.sport.note]]:[]),["(Buts + 0,7 passes) / 90",d.sport.g_a_90],["Buts · passes",d.sport.buts+" · "+d.sport.passes],["Matchs (2 saisons)",d.sport.matchs],["Minutes par saison",d.sport.minutes_saison],["Niveau de ligue",d.sport.niveau],["Disponibilité",pct(d.sport.disponibilite)]])}</div>
       <div><h3 class="v">Valeur · ${j.scores.valeur}</h3>${kv([["Sous-évaluation (rang)",pct(d.valeur.sous_evaluation)],["Tendance 12 mois",(d.valeur.tendance>=0?"+":"")+Math.round(d.valeur.tendance*100)+" %"],["Mois de contrat restants",d.valeur.mois_contrat??"—"],["Fin de contrat",j.contract_expires??"—"],["Revente (âge)",pct(d.valeur.revente)]])}</div>
       <div><h3 class="f">Fan fit · ${j.scores.fan}</h3>${kv([["Origine",esc(d.fan.origine)+(j.naissance?" ("+esc(j.naissance)+")":"")],["Nationalités",esc(j.nationalites.join(", "))],["Francophonie",pct(d.fan.francophonie)],["Durée moyenne par club",d.fan.tenure+" ans"],["Potentiel média",pct(d.fan.media)],["Lien club",esc(d.fan.lien)]])}</div>
     </div>${j.url?`<p style="margin:12px 0 0"><a href="${esc(j.url)}" style="color:var(--accent-ink)">Fiche Transfermarkt</a></p>`:""}</td></tr>`}

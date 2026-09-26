@@ -3,14 +3,15 @@
 Système de recommandation de recrues (équipe masculine) qui croise trois sources :
 
 1. **Transfermarkt**, via [transfermarkt-api](https://github.com/felipeall/transfermarkt-api) : valeur marchande, contrats, transferts, blessures, stats de base.
-2. **Sofascore** : xG, xA, note par saison et statistiques détaillées (Challenge League, Super League). Source gratuite retenue parce qu'elle couvre les ligues de second rang avec des données attendues, ce que FBref ne fait plus depuis la fin de son accord Opta (janvier 2026).
+2. **API-Football** (api-sports.io) : l'API gratuite documentée retenue. Clé gratuite, 100 requêtes/jour, tous les points d'entrée, 1 100+ championnats dont Challenge League (208) et Super League (207). Par joueur et par saison : note moyenne, tirs, passes clés, duels, dribbles, cartons, date de naissance. Pas de xG au niveau saison.
+   En option, **Sofascore** (sans API publique) ajoute xG et xA. FBref n'est plus une option : plus de données avancées depuis la fin de son accord Opta (janvier 2026).
 3. **Le cockpit Fanbase Manager d'Yverdon Sport** (Brevo + Metricool) : indice de pénétration du bassin, catégories CMON_SCORE, performances des campagnes, audiences sociales.
 
 Chaque joueur du vivier reçoit trois notes sur 100 :
 
 | Note | Ce qu'elle mesure |
 |---|---|
-| **Sport** | (xG + 0,7 xA) / 90 min Sofascore quand disponible, sinon (buts + 0,7 passes) Transfermarkt, vs attendu du poste ; note Sofascore pour un tiers ; disponibilité, discipline — corrigé du niveau de la ligue et des blessures |
+| **Sport** | production / 90 min vs attendu du poste : (xG + 0,7 xA) Sofascore, sinon (buts + 0,7 passes + 0,1 passe clé) API-Football, sinon (buts + 0,7 passes) Transfermarkt ; note moyenne pour un tiers ; disponibilité, discipline — corrigé du niveau de la ligue et des blessures |
 | **Valeur** | sous-évaluation (régression log(valeur) ~ sport + âge sur le vivier), levier fin de contrat, tendance de valeur 12 mois, potentiel de revente |
 | **Fan fit** | ancrage régional, francophonie, fidélité, potentiel média, lien avec le club — **pondérés par l'ADN fan tiré du cockpit** |
 
@@ -39,11 +40,14 @@ open dashboard.html
 
 # 2. Données réelles Transfermarkt
 export TM_API_URL=http://localhost:8000   # conseillé : instance locale (docker run -p 8000:8000 transfermarkt-api)
-python -m moneyball.scout --competitions C2 C1 FR3 FR2 BE2 --max-value 1500000 --max-age 29 --sofascore 216 215
+export API_FOOTBALL_KEY=...               # clé gratuite : https://dashboard.api-football.com
+python -m moneyball.scout --competitions C2 C1 FR3 FR2 BE2 --max-value 1500000 --max-age 29 --apifootball 208 207
 python -m moneyball.recommend
 ```
 
-`--sofascore` récupère les statistiques saison de chaque tournoi Sofascore (216 = Challenge League, 215 = Super League ; l'id d'un autre championnat se lit en fin d'URL sur sofascore.com) et les rattache aux candidats par nom normalisé + année de naissance. `python -m moneyball.sofascore --merge` fait la même chose après coup. Sofascore n'a pas d'API publique : usage interne, un appel par seconde, cache 72 h.
+`--apifootball` lit les statistiques saison de chaque championnat (20 joueurs par page ; Challenge + Super League ≈ 35 requêtes, sous les 100 du plan gratuit) et rattache chaque candidat Transfermarkt par **date de naissance exacte + nom**. `python -m moneyball.apifootball --find "Challenge League"` donne l'id d'un championnat ; `python -m moneyball.apifootball --merge` enrichit après coup.
+
+`--sofascore` (optionnel) récupère les statistiques saison de chaque tournoi Sofascore (216 = Challenge League, 215 = Super League ; l'id d'un autre championnat se lit en fin d'URL sur sofascore.com) et les rattache aux candidats par nom normalisé + année de naissance. `python -m moneyball.sofascore --merge` fait la même chose après coup. Sofascore n'a pas d'API publique : usage interne, un appel par seconde, cache 72 h.
 
 Tag Moneyball : un joueur à ≥ 900 minutes qui marque nettement moins que ses xG est étiqueté **Sous-performe ses xG** (occasion d'achat) ; l'inverse **Sur-performe ses xG** (saison de chance).
 
@@ -56,7 +60,8 @@ Codes compétition Transfermarkt usuels : `C1` Super League, `C2` Challenge Leag
 ```
 moneyball/tm_client.py   client transfermarkt-api (cache, retries, rate limit)
 moneyball/scout.py       constitution du vivier + normalisation
-moneyball/sofascore.py   xG / xA / notes Sofascore, appariement aux candidats
+moneyball/apifootball.py API-Football : notes, tirs, passes clés… (API gratuite retenue)
+moneyball/sofascore.py   Sofascore : xG / xA / notes (optionnel, sans API publique)
 moneyball/fan_dna.py     ADN fan dérivé du cockpit → poids du fan fit
 moneyball/model.py       notes Sport / Valeur / Fan fit, besoins de l'effectif
 moneyball/recommend.py   classement → data/recommendations.json + dashboard.html
@@ -69,7 +74,7 @@ tests/                   python -m unittest discover -s tests -t .
 ## Limites
 
 - Ni Transfermarkt ni Sofascore ne donnent l'audience des comptes joueurs : le potentiel média repose sur la présence d'un compte Instagram et sur la contribution offensive.
-- Le module Sofascore est écrit d'après les points d'entrée de l'application ; il n'a pas encore tourné depuis cet environnement (domaine bloqué). Les noms de champs sont à vérifier au premier appel.
+- Les modules API-Football et Sofascore sont écrits d'après la documentation et les points d'entrée connus ; ils n'ont pas encore tourné depuis cet environnement (domaines bloqués). À vérifier au premier appel réel.
 - L'âge des fans n'est pas modélisé (date de naissance renseignée à 36 % dans Brevo).
 - Périmètre : équipe masculine uniquement.
 - L'indemnité estimée est un ordre de grandeur, pas une offre.
