@@ -80,28 +80,10 @@ EXPECTED_G_A_90 = {"GK": 0.0, "DEF": 0.10, "MID": 0.28, "ATT": 0.50}
 # Effectif cible par ligne pour un club de Challenge League.
 SQUAD_TARGET = {"GK": 3, "DEF": 8, "MID": 8, "ATT": 6}
 
-# Géographie du bassin (indice de pénétration du cockpit : Jura-Nord vaudois + Broye-Vully).
-BASSIN = {
-    "yverdon-les-bains", "yverdon", "grandson", "orbe", "sainte-croix", "vallorbe",
-    "yvonand", "chavornay", "baulmes", "champagne", "concise", "montagny-près-yverdon",
-    "payerne", "avenches", "moudon", "lucens", "estavayer-le-lac", "estavayer",
-    "cudrefin", "échallens", "echallens", "la sarraz", "romainmôtier", "le sentier",
-}
-VAUD = {
-    "lausanne", "morges", "nyon", "vevey", "montreux", "renens", "pully", "prilly",
-    "aigle", "bex", "gland", "rolle", "ecublens", "crissier", "bussigny", "epalinges",
-    "la tour-de-peilz", "cossonay", "oron", "villeneuve", "coppet", "le mont-sur-lausanne",
-}
-ROMANDIE = {
-    "genève", "geneve", "geneva", "fribourg", "neuchâtel", "neuchatel", "la chaux-de-fonds",
-    "le locle", "sion", "sierre", "martigny", "monthey", "bulle", "delémont", "delemont",
-    "porrentruy", "bienne", "biel/bienne", "biel", "carouge", "meyrin", "vernier",
-    "lancy", "onex", "thônex", "romont", "morat", "murten", "colombier", "boudry",
-}
-ROMAND_CLUBS = ("yverdon", "lausanne", "servette", "sion", "xamax", "neuchâtel", "fribourg",
-                "étoile carouge", "etoile carouge", "stade nyonnais", "nyon", "bulle",
-                "la chaux-de-fonds", "stade lausanne", "ouchy", "meyrin", "bavois", "vevey",
-                "echallens", "grandson", "delémont", "delemont", "monthey", "martigny")
+# Géographie du bassin : voir geo.py (toponymes multilingues, commune → canton → zone,
+# règle du club formateur). ROMAND_CLUBS y est défini.
+from . import geo  # noqa: E402
+ROMAND_CLUBS = geo.ROMAND_CLUBS
 FRANCOPHONE = {
     "france", "belgium", "belgique", "switzerland", "suisse", "luxembourg", "monaco",
     "canada", "senegal", "sénégal", "cote d'ivoire", "côte d'ivoire", "ivory coast",
@@ -620,25 +602,10 @@ def _has_played_for(p: dict, needle: str) -> bool:
 
 
 def fan_components(p: dict) -> dict:
-    city = (p.get("birth_city") or "").strip().lower()
-    country = (p.get("birth_country") or "").strip().lower()
     cits = [c.lower() for c in p.get("citizenship", [])]
-    youth = " ".join(p.get("youth_clubs", [])).lower()
 
-    # Ancrage régional
-    if city in BASSIN or "yverdon" in youth:
-        ancrage, origine = 1.0, "Bassin nord-vaudois"
-    elif city in VAUD:
-        ancrage, origine = 0.85, "Vaud"
-    elif city in ROMANDIE or any(c in youth for c in ROMAND_CLUBS):
-        ancrage, origine = 0.7, "Romandie"
-    elif country in ("switzerland", "suisse") or "switzerland" in cits:
-        ancrage, origine = 0.45, "Suisse"
-    elif country == "france" and city in {"pontarlier", "annecy", "thonon-les-bains", "besançon",
-                                           "besancon", "morteau", "annemasse", "évian-les-bains"}:
-        ancrage, origine = 0.4, "Frontalier"
-    else:
-        ancrage, origine = 0.1, "International"
+    # Ancrage régional : lieu de naissance normalisé (geo.py) et club formateur, même règle pour tous.
+    origine, ancrage = geo.zone(p.get("birth_city"), p.get("birth_country"), cits, p.get("youth_clubs", []))
 
     # Francophonie
     romand = origine in ("Bassin nord-vaudois", "Vaud", "Romandie")
