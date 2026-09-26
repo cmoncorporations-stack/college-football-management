@@ -25,7 +25,23 @@ Chaque joueur du vivier reçoit trois notes sur 100 :
 | Part de New Leads | 70,3 % (7,6 % Super Fans) | poids **Fidélité** × 1,34 |
 | Ouverture annonce des recrues vs moyenne | 55,0 % vs 51,8 % | poids **Média** × 1,06 |
 
-Poids résultants : ancrage 32 %, fidélité 23 %, média 18 %, francophonie 13 %, lien club 13 %. Ils se recalculent à chaque mise à jour de `data/fanbase_cockpit.json`.
+Poids résultants : ancrage 32 %, fidélité 23 %, média 18 %, francophonie 13 %, lien club 13 %. Ils se recalculent à chaque mise à jour de `data/fanbase_cockpit.json`. Quand un signal manque ou que le cockpit le dit inexploitable (pas de campagne « recrues », CMON_SCORE non calibré), le multiplicateur retombe à 1,0 et la justification le dit.
+
+### Configuration du club (`club.json`)
+
+Le moteur est commun à tous les clubs ; ce qui est propre à Yverdon Sport vit dans `club.json` (chargé par `moneyball/club.py`) :
+
+| Clé | Yverdon Sport |
+|---|---|
+| `home_league` | `C2` : Challenge League = 1,0 dans les coefficients de niveau et l'équivalent de production (les autres ligues sont renormalisées) |
+| `squad_target` | 3 / 8 / 8 / 6 (GK / DEF / MID / ATT) |
+| `bassin`, `canton`, `region`, `frontalier` | villes du fan fit (Jura-Nord vaudois + Broye-Vully, Vaud, Romandie, France voisine) |
+| `club_needles`, `club_exclude` | reconnaissance du club dans les transferts et clubs formateurs (« Ancien d'Yverdon ») |
+| `recruit_campaign_keywords` | `RECRU` : repère l'annonce des recrues dans les campagnes Brevo |
+| `scout` | périmètre par défaut du scan (C2 C1 FR3 FR2, ≤ 1,5 M€, 17-29 ans) |
+| `labels`, `rationale`, `dashboard` | libellés du tableau de bord, textes de l'ADN fan, bornes des curseurs |
+
+« Enfant du pays » désigne un joueur né dans une ville du bassin ou du canton ; un joueur formé au club mais né ailleurs garde l'ancrage maximal sous l'origine « Formé au club ». Le même moteur tourne pour le FC Lausanne-Sport dans `../lausanne-moneyball/` ; le paquet `moneyball/` et `dashboard_template.html` y sont identiques, seuls `club.json`, `data/` et le README changent.
 
 ## Utilisation
 
@@ -56,19 +72,21 @@ Le vivier livré (`data/candidates.json`, 26.09.2026) est réel : Challenge Leag
 
 Tag Moneyball : un joueur à ≥ 900 minutes qui marque nettement moins que ses xG est étiqueté **Sous-performe ses xG** (occasion d'achat) ; l'inverse **Sur-performe ses xG** (saison de chance).
 
-`scout.py` trouve Yverdon Sport par recherche (ou `--club-id`), lit l'effectif pour calculer les besoins, parcourt les championnats demandés, filtre sur âge et valeur, puis récupère profil, historique de valeur et transferts de chaque joueur. Les statistiques viennent de la page « Squad statistics » de chaque club (une page par club, championnat et saison : saison en cours + précédente, plus l'ancien club des joueurs arrivés depuis un an), car Transfermarkt rend désormais les statistiques individuelles côté client — `/players/{id}/stats` de transfermarkt-api renvoie une liste vide. Les pages sont mises en cache 72 h dans `data/cache/` ; Transfermarkt sert un captcha (HTTP 405) sur environ une requête sur deux, réessayé automatiquement. `--workers` règle le parallélisme (3 par défaut, cadence globale ≈ 1 requête/s).
+`scout.py` trouve le club par `club.json` (`transfermarkt_club_id`, sinon recherche sur `search_name`, ou `--club-id`), lit l'effectif pour calculer les besoins, parcourt les championnats demandés, filtre sur âge et valeur, puis récupère profil, historique de valeur et transferts de chaque joueur. Les statistiques viennent de la page « Squad statistics » de chaque club (une page par club, championnat et saison : saison en cours + précédente, plus l'ancien club des joueurs arrivés depuis un an), car Transfermarkt rend désormais les statistiques individuelles côté client — `/players/{id}/stats` de transfermarkt-api renvoie une liste vide. Les pages sont mises en cache 72 h dans `data/cache/` ; Transfermarkt sert un captcha (HTTP 405) sur environ une requête sur deux, réessayé automatiquement. Depuis certains réseaux (constaté le 26.09.2026 depuis un poste hors du cloud), il sert à la place un défi JavaScript AWS WAF (HTTP 202) à chaque requête : le client ne le met jamais en cache et le scan s'arrête avec un message explicite, sans écrire de vivier. Les joueurs appartenant déjà au club (prêtés ailleurs, ou transfert vers le club annoncé) sont écartés du vivier. `--workers` règle le parallélisme (3 par défaut, cadence globale ≈ 1 requête/s).
 
 Codes compétition Transfermarkt usuels : `C1` Super League, `C2` Challenge League, `FR2` Ligue 2, `FR3` National, `BE2` Challenger Pro League, `A2` 2. Liga autrichienne, `L3` 3. Liga. Vérifier un code avec `/competitions/search/{nom}`.
 
 ## Fichiers
 
 ```
+club.json                configuration du club (voir ci-dessus)
+moneyball/club.py        chargement de club.json, reconnaissance du club (is_club)
 moneyball/tm_direct.py   lecture directe de www.transfermarkt.com (parseur HTML, cache, captcha)
 moneyball/tm_client.py   client transfermarkt-api (option, TM_API_URL)
 moneyball/scout.py       constitution du vivier + normalisation
 moneyball/apifootball.py API-Football : notes, tirs, passes clés… (API gratuite retenue)
 moneyball/sofascore.py   Sofascore : xG / xA / notes (optionnel, sans API publique)
-moneyball/fan_dna.py     ADN fan dérivé du cockpit → poids du fan fit
+moneyball/fan_dna.py     ADN fan dérivé du cockpit → poids du fan fit ; import d'un artefact (--import-artifact)
 moneyball/model.py       notes Sport / Valeur / Fan fit, besoins de l'effectif
 moneyball/recommend.py   classement → data/recommendations.json + dashboard.html
 moneyball/demo.py        vivier fictif de démonstration
