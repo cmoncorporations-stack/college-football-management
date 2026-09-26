@@ -108,6 +108,80 @@ class ModelTest(unittest.TestCase):
         self.assertEqual(ranked, sorted(ranked, key=lambda r: -r["scores"]["final"]))
 
 
+def gk(pid, conceded, cs, minutes=2700, team_conceded=None, team_matches=30, rank=None, teams=10, league_median=1.3,
+       matches=None, **kw):
+    row = {"season": "25/26", "competition_id": "C2", "appearances": matches or minutes // 90, "goals": 0, "assists": 0,
+           "minutes": minutes, "yellow": 1, "red": 0, "conceded": conceded, "clean_sheets": cs,
+           "gk_matches": matches or minutes // 90, "club_id": "1"}
+    if team_conceded is not None:
+        row.update({"team_conceded": team_conceded, "team_matches": team_matches, "team_rank": rank,
+                    "team_count": teams, "league_conceded_90_median": league_median})
+    return player(id=pid, position="Goalkeeper", stats=[row], **kw)
+
+
+def cb(pid, team_conceded, position="Centre-Back", minutes=2500, goals=0, assists=0, league_median=1.3, **kw):
+    row = {**player()["stats"][0], "minutes": minutes, "goals": goals, "assists": assists,
+           "team_conceded": team_conceded, "team_matches": 30, "team_rank": 5, "team_count": 10,
+           "league_conceded_90_median": league_median, "club_id": "1"}
+    return player(id=pid, position=position, stats=[row], **kw)
+
+
+class GoalkeeperTest(unittest.TestCase):
+    """C1 : la note Sport des gardiens ne passe jamais par la production offensive."""
+
+    def pool(self):
+        # 30 gardiens titulaires uniques : de l'équipe championne à l'équipe reléguée.
+        return [gk(f"g{i}", conceded=25 + 2 * i, cs=16 - i // 2, team_conceded=25 + 2 * i, rank=1 + i % 10)
+                for i in range(30)]
+
+    def test_relegated_starter_is_not_100_and_ranks_below_champion_keeper(self):
+        pool = self.pool()
+        base = model.pool_baselines(pool)
+        self.assertGreaterEqual(base["GK"]["n"], 20)
+        champion = gk("c", conceded=20, cs=18, team_conceded=20, rank=1)
+        relegated = gk("r", conceded=70, cs=3, team_conceded=70, rank=10)
+        s_c, d_c = model.sport_score_gk(champion, base)
+        s_r, d_r = model.sport_score_gk(relegated, base)
+        self.assertLess(s_r, 100)
+        self.assertLess(s_r, s_c)
+        self.assertEqual(d_r["mode_gardien"], "titulaire unique : rang de l'équipe")
+        self.assertIsNone(d_r["rang_production"])
+
+    def test_goals_do_not_change_a_keeper_score(self):
+        base = model.pool_baselines(self.pool())
+        a = gk("a", conceded=40, cs=8, team_conceded=40, rank=5)
+        b = gk("b", conceded=40, cs=8, team_conceded=40, rank=5)
+        b["stats"][0].update({"goals": 5, "assists": 3})
+        self.assertEqual(model.sport_score(a, base)[0], model.sport_score(b, base)[0])
+
+    def test_shared_keeper_compared_to_his_team(self):
+        base = model.pool_baselines(self.pool())
+        # Deux doublures à 1 200 min dans une équipe qui encaisse 1,5 but par match :
+        # celle qui encaisse 0,9/90 vaut plus que celle qui encaisse 2,0/90.
+        good = gk("good", conceded=12, cs=6, minutes=1200, team_conceded=45, rank=5)
+        bad = gk("bad", conceded=27, cs=2, minutes=1200, team_conceded=45, rank=5)
+        s_g, d_g = model.sport_score_gk(good, base)
+        s_b, d_b = model.sport_score_gk(bad, base)
+        self.assertGreater(s_g, s_b)
+        self.assertEqual(d_g["mode_gardien"], "gardien partagé : rapport à l'équipe")
+
+    def test_no_conceded_data_means_low_confidence(self):
+        base = model.pool_baselines(self.pool())
+        p = player(id="x", position="Goalkeeper")   # ligne sans conceded : buts d'attaquant ignorés
+        score, d = model.sport_score(p, base)
+        self.assertEqual(d["confiance_note"], "faible")
+        self.assertLessEqual(d["confiance"], 0.5)
+        self.assertEqual(d["rang_defensif"], 0.5)
+
+    def test_availability_capped_at_quarter(self):
+        base = model.pool_baselines(self.pool())
+        # Même indice défensif, disponibilité 0 vs 1 : au plus 25 points d'écart avant niveau de ligue.
+        full = gk("f", conceded=40, cs=8, minutes=2700, team_conceded=40, rank=5)
+        s_full, _ = model.sport_score_gk(full, base)
+        self.assertLessEqual(s_full, 100)
+        self.assertGreater(s_full, 0)
+
+
 class NormalizeTest(unittest.TestCase):
     def test_transfermarkt_payload_shape(self):
         profile = {"name": "A B", "url": "https://www.transfermarkt.com/x", "age": 22,

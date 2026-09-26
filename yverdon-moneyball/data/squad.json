@@ -20,7 +20,49 @@
    "signed_from_id": "2047",
    "contract": "2027-06-30",
    "market_value": 150000,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 9,
+     "goals": 0,
+     "assists": 0,
+     "minutes": 810,
+     "yellow": 0,
+     "red": 0,
+     "conceded": 9,
+     "clean_sheets": 2,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778,
+     "gk_matches": 9
+    },
+    {
+     "season": "25/26",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 10,
+     "goals": 0,
+     "assists": 0,
+     "minutes": 900,
+     "yellow": 0,
+     "red": 0,
+     "conceded": 13,
+     "clean_sheets": 4,
+     "team_conceded": 48,
+     "team_matches": 36,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.528,
+     "gk_matches": 10
+    }
+   ]
   },
   {
    "id": "894261",
@@ -40,7 +82,37 @@
    "signed_from_id": "15446",
    "contract": "2027-06-30",
    "market_value": null,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 0,
+     "goals": 0,
+     "assists": 0,
+     "minutes": 0,
+     "yellow": 0,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null
+    },
+    {
+     "season": "25/26",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 0,
+     "goals": 0,
+     "assists": 0,
+     "minutes": 0,
+     "yellow": 0,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null
+    }
+   ]
   },
   {
    "id": "1030482",
@@ -60,7 +132,47 @@
    "signed_from_id": "1175",
    "contract": "2027-06-30",
    "market_value": 400000,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 4,
+     "goals": 0,
+     "assists": 0,
+     "minutes": 255,
+     "yellow": 0,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    },
+    {
+     "season": "25/26",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 31,
+     "goals": 0,
+     "assists": 1,
+     "minutes": 2281,
+     "yellow": 9,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 48,
+     "team_matches": 36,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.528
+    }
+   ]
   },
   {
    "id": "417895",
@@ -81,7 +193,47 @@
    "signed_from_id": "5499",
    "contract": "2028-06-30",
    "market_value": 300000,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 9,
+     "goals": 1,
+     "assists": 0,
+     "minutes": 810,
+     "yellow": 3,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    },
+    {
+     "season": "25/26",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 28,
+     "goals": 2,
+     "assists": 0,
+     "minutes": 2046,
+     "yellow": 8,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 48,
+     "team_matches": 36,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.528
+    }
+   ]
   },
   {
    "id": "700223",
@@ -101,7 +253,28 @@
    "signed_from_id": "321",
    "contract": "2027-06-30",
    "market_value": 300000,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 1,
+     "goals": 0,
+     "assists": 0,
+     "minutes": 73,
+     "yellow": 0,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    }
+   ]
   },
   {
    "id": "624910",
@@ -122,7 +295,42 @@
    "signed_from_id": "61",
    "contract": "2028-06-30",
    "market_value": 125000,
-   "status": "unknown injury - Return unknown"
+   "status": "unknown injury - Return unknown",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 3,
+     "goals": 0,
+     "assists": 0,
+     "minutes": 256,
+     "yellow": 0,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    },
+    {
+     "season": "25/26",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 0,
+     "goals": 0,
+     "assists": 0,
+     "minutes": 0,
+     "yellow": 0,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null
+    }
+   ]
   },
   {
    "id": "466918",
@@ -142,7 +350,47 @@
    "signed_from_id": "4309",
    "contract": "2027-06-30",
    "market_value": 300000,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 8,
+     "goals": 1,
+     "assists": 2,
+     "minutes": 720,
+     "yellow": 1,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    },
+    {
+     "season": "25/26",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 24,
+     "goals": 3,
+     "assists": 2,
+     "minutes": 2007,
+     "yellow": 3,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 48,
+     "team_matches": 36,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.528
+    }
+   ]
   },
   {
    "id": "1208616",
@@ -162,7 +410,28 @@
    "signed_from_id": "8650",
    "contract": null,
    "market_value": null,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 2,
+     "goals": 0,
+     "assists": 0,
+     "minutes": 49,
+     "yellow": 0,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    }
+   ]
   },
   {
    "id": "864381",
@@ -182,7 +451,47 @@
    "signed_from_id": "15446",
    "contract": "2028-06-30",
    "market_value": 125000,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 2,
+     "goals": 0,
+     "assists": 0,
+     "minutes": 89,
+     "yellow": 0,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    },
+    {
+     "season": "25/26",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 7,
+     "goals": 0,
+     "assists": 0,
+     "minutes": 176,
+     "yellow": 1,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 48,
+     "team_matches": 36,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.528
+    }
+   ]
   },
   {
    "id": "69899",
@@ -202,7 +511,47 @@
    "signed_from_id": "61",
    "contract": null,
    "market_value": 100000,
-   "status": "Team captain"
+   "status": "Team captain",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 9,
+     "goals": 0,
+     "assists": 0,
+     "minutes": 799,
+     "yellow": 2,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    },
+    {
+     "season": "25/26",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 33,
+     "goals": 0,
+     "assists": 7,
+     "minutes": 2922,
+     "yellow": 5,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 48,
+     "team_matches": 36,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.528
+    }
+   ]
   },
   {
    "id": "583015",
@@ -223,7 +572,28 @@
    "signed_from_id": "527",
    "contract": "2028-06-30",
    "market_value": 300000,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 8,
+     "goals": 0,
+     "assists": 0,
+     "minutes": 382,
+     "yellow": 1,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    }
+   ]
   },
   {
    "id": "286292",
@@ -243,7 +613,47 @@
    "signed_from_id": "2790",
    "contract": "2027-06-30",
    "market_value": 150000,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 6,
+     "goals": 0,
+     "assists": 0,
+     "minutes": 437,
+     "yellow": 0,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    },
+    {
+     "season": "25/26",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 16,
+     "goals": 0,
+     "assists": 1,
+     "minutes": 1033,
+     "yellow": 3,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 48,
+     "team_matches": 36,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.528
+    }
+   ]
   },
   {
    "id": "154475",
@@ -263,7 +673,47 @@
    "signed_from_id": "1292",
    "contract": "2027-06-30",
    "market_value": 125000,
-   "status": "unknown injury - Return unknown"
+   "status": "unknown injury - Return unknown",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 8,
+     "goals": 0,
+     "assists": 0,
+     "minutes": 616,
+     "yellow": 2,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    },
+    {
+     "season": "25/26",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 31,
+     "goals": 0,
+     "assists": 3,
+     "minutes": 2653,
+     "yellow": 8,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 48,
+     "team_matches": 36,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.528
+    }
+   ]
   },
   {
    "id": "98167",
@@ -283,7 +733,28 @@
    "signed_from_id": "116",
    "contract": "2029-06-30",
    "market_value": 500000,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 9,
+     "goals": 2,
+     "assists": 3,
+     "minutes": 711,
+     "yellow": 3,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    }
+   ]
   },
   {
    "id": "1177907",
@@ -303,7 +774,28 @@
    "signed_from_id": "527",
    "contract": "2027-06-30",
    "market_value": 300000,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 1,
+     "goals": 0,
+     "assists": 0,
+     "minutes": 1,
+     "yellow": 0,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    }
+   ]
   },
   {
    "id": "390179",
@@ -323,7 +815,28 @@
    "signed_from_id": "515",
    "contract": "2027-06-30",
    "market_value": 250000,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 1,
+     "goals": 0,
+     "assists": 0,
+     "minutes": 27,
+     "yellow": 0,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    }
+   ]
   },
   {
    "id": "524384",
@@ -343,7 +856,47 @@
    "signed_from_id": "5507",
    "contract": "2028-06-30",
    "market_value": 300000,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 4,
+     "goals": 0,
+     "assists": 2,
+     "minutes": 208,
+     "yellow": 2,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    },
+    {
+     "season": "25/26",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 34,
+     "goals": 9,
+     "assists": 9,
+     "minutes": 2548,
+     "yellow": 3,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 48,
+     "team_matches": 36,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.528
+    }
+   ]
   },
   {
    "id": "310361",
@@ -363,7 +916,47 @@
    "signed_from_id": "434",
    "contract": "2027-06-30",
    "market_value": 175000,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 7,
+     "goals": 4,
+     "assists": 0,
+     "minutes": 421,
+     "yellow": 0,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    },
+    {
+     "season": "25/26",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 16,
+     "goals": 4,
+     "assists": 4,
+     "minutes": 638,
+     "yellow": 2,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 48,
+     "team_matches": 36,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.528
+    }
+   ]
   },
   {
    "id": "1195252",
@@ -383,7 +976,28 @@
    "signed_from_id": "2047",
    "contract": "2028-06-30",
    "market_value": 150000,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 9,
+     "goals": 0,
+     "assists": 0,
+     "minutes": 491,
+     "yellow": 1,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    }
+   ]
   },
   {
    "id": "294583",
@@ -404,7 +1018,28 @@
    "signed_from_id": "625",
    "contract": "2029-06-30",
    "market_value": 400000,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 6,
+     "goals": 1,
+     "assists": 0,
+     "minutes": 245,
+     "yellow": 0,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    }
+   ]
   },
   {
    "id": "479486",
@@ -424,7 +1059,47 @@
    "signed_from_id": "17574",
    "contract": "2028-06-30",
    "market_value": 250000,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 9,
+     "goals": 1,
+     "assists": 0,
+     "minutes": 299,
+     "yellow": 0,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    },
+    {
+     "season": "25/26",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 32,
+     "goals": 8,
+     "assists": 1,
+     "minutes": 1455,
+     "yellow": 3,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 48,
+     "team_matches": 36,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.528
+    }
+   ]
   },
   {
    "id": "876629",
@@ -445,7 +1120,47 @@
    "signed_from_id": "5299",
    "contract": "2028-06-30",
    "market_value": 150000,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 8,
+     "goals": 1,
+     "assists": 0,
+     "minutes": 288,
+     "yellow": 1,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    },
+    {
+     "season": "25/26",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 12,
+     "goals": 3,
+     "assists": 0,
+     "minutes": 328,
+     "yellow": 0,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 48,
+     "team_matches": 36,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.528
+    }
+   ]
   },
   {
    "id": "264956",
@@ -466,7 +1181,28 @@
    "signed_from_id": "515",
    "contract": "2027-06-30",
    "market_value": 150000,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 8,
+     "goals": 1,
+     "assists": 1,
+     "minutes": 413,
+     "yellow": 0,
+     "red": 1,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    }
+   ]
   },
   {
    "id": "159317",
@@ -487,7 +1223,47 @@
    "signed_from_id": "938",
    "contract": "2027-06-30",
    "market_value": 50000,
-   "status": ""
+   "status": "",
+   "stats": [
+    {
+     "season": "26/27",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 9,
+     "goals": 1,
+     "assists": 2,
+     "minutes": 466,
+     "yellow": 0,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 9,
+     "team_matches": 9,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.778
+    },
+    {
+     "season": "25/26",
+     "competition_id": "C2",
+     "competition": "Challenge League",
+     "club_id": "322",
+     "appearances": 33,
+     "goals": 5,
+     "assists": 8,
+     "minutes": 1830,
+     "yellow": 3,
+     "red": 0,
+     "conceded": null,
+     "clean_sheets": null,
+     "team_conceded": 48,
+     "team_matches": 36,
+     "team_rank": 3,
+     "team_count": 10,
+     "league_conceded_90_median": 1.528
+    }
+   ]
   }
  ]
 }

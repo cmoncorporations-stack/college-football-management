@@ -71,13 +71,7 @@ def normalize(pid: str, league_id: str, row: dict, profile: dict, stats: list[di
         "contract_expires": club.get("contract_expires") or row.get("contract"),
         "club": club.get("name") or row.get("current_club"),
         "league_id": league_id,
-        "stats": [{
-            "season": s.get("season_id"), "competition_id": s.get("competition_id"),
-            "competition": s.get("competition_name"), "appearances": s.get("appearances") or 0,
-            "goals": s.get("goals") or 0, "assists": s.get("assists") or 0,
-            "minutes": s.get("minutes_played") or 0, "yellow": s.get("yellow_cards") or 0,
-            "red": s.get("red_cards") or 0,
-        } for s in stats],
+        "stats": normalize_stats(stats),
         "transfers": [{"date": t.get("date"), "from": (t.get("club_from") or {}).get("name"),
                        "to": (t.get("club_to") or {}).get("name"), "fee": t.get("fee")}
                       for t in transfers.get("transfers", [])],
@@ -85,6 +79,19 @@ def normalize(pid: str, league_id: str, row: dict, profile: dict, stats: list[di
         "social_media": profile.get("socialMedia") or [],
         "injury_days": injury_days,
     }
+
+
+def normalize_stats(stats: list[dict]) -> list[dict]:
+    """Lignes de statistiques au format de model.py (club_id, buts encaissés et clean sheets compris)."""
+    return [{
+        "season": s.get("season_id"), "competition_id": s.get("competition_id"),
+        "competition": s.get("competition_name"), "club_id": s.get("club_id"),
+        "appearances": s.get("appearances") or 0,
+        "goals": s.get("goals") or 0, "assists": s.get("assists") or 0,
+        "minutes": s.get("minutes_played") or 0, "yellow": s.get("yellow_cards") or 0,
+        "red": s.get("red_cards") or 0,
+        "conceded": s.get("conceded"), "clean_sheets": s.get("clean_sheets"),
+    } for s in stats]
 
 
 def find_yverdon(tm, club_id: str | None) -> str:
@@ -114,7 +121,8 @@ def stat_rows(block: dict, season: int | str) -> dict[str, dict]:
     label = season_label(season)
     return {r["id"]: {"id": r["id"], "season_id": label, "competition_id": block["competition_id"],
                       "competition_name": block.get("competition_name"), "club_id": block["club_id"],
-                      **{k: r[k] for k in ("appearances", "goals", "assists", "yellow_cards", "red_cards", "minutes_played")}}
+                      **{k: r[k] for k in ("appearances", "goals", "assists", "yellow_cards", "red_cards", "minutes_played")},
+                      "conceded": r.get("conceded"), "clean_sheets": r.get("clean_sheets")}
             for r in block["rows"]}
 
 
@@ -145,8 +153,14 @@ def merge_stats(rows: list[dict]) -> list[dict]:
     for r in rows:
         key = (r["season_id"], r["competition_id"])
         if key in merged:
+            m = merged[key]
+            if r["minutes_played"] > m["minutes_played"]:
+                m["club_id"] = r.get("club_id")     # club où il a le plus joué cette saison-là
             for k in ("appearances", "goals", "assists", "yellow_cards", "red_cards", "minutes_played"):
-                merged[key][k] += r[k]
+                m[k] += r[k]
+            for k in ("conceded", "clean_sheets"):
+                if r.get(k) is not None:
+                    m[k] = (m.get(k) or 0) + r[k]
         else:
             merged[key] = dict(r)
     return sorted(merged.values(), key=lambda r: r["season_id"], reverse=True)
@@ -168,6 +182,9 @@ def main(argv: list[str] | None = None) -> None:
                     help="Enrichit avec API-Football (note, passes clés, tirs…) ; ids de ligue, défaut 208 207. Clé : API_FOOTBALL_KEY")
     ap.add_argument("--sofascore", nargs="*", type=int, metavar="TOURNOI",
                     help="Enrichit avec Sofascore (xG, xA, note) ; ids de tournoi, défaut 216 215")
+    ap.add_argument("--stats-only", action="store_true",
+                    help="Relit seulement les pages de statistiques (clubs, clean sheets, classements) et "
+                         "réinjecte les lignes stats dans data/candidates.json et data/squad.json existants")
     args = ap.parse_args(argv)
 
     direct = TransfermarktDirect()
@@ -176,8 +193,16 @@ def main(argv: list[str] | None = None) -> None:
     prev = season - 1
     pool = ThreadPoolExecutor(max_workers=max(1, args.workers))
 
+    existing = None
+    if args.stats_only:
+        existing = {"cand": json.loads((DATA / "candidates.json").read_text()),
+                    "squad": json.loads((DATA / "squad.json").read_text())}
+        args.club_id = args.club_id or existing["squad"].get("club_id")
     ys_id = find_yverdon(tm, args.club_id)
     squad = tm.club_players(ys_id, season)
+    if existing:
+        old_squad = {p["id"]: p for p in existing["squad"]["players"]}
+        squad = [{**old_squad.get(p["id"], {}), **p} for p in squad]
     (DATA / "squad.json").write_text(json.dumps({"club_id": ys_id, "season": season_label(season),
                                                  "players": squad}, ensure_ascii=False, indent=1))
     print(f"Effectif Yverdon : {len(squad)} joueurs (saison {season_label(season)})")
@@ -236,6 +261,37 @@ def main(argv: list[str] | None = None) -> None:
         add_rows(rows)
     with_stats = sum(1 for pid in wanted if any(r["minutes_played"] for r in stats_by_player.get(pid, [])))
     print(f"  {with_stats}/{len(wanted)} joueurs avec des minutes jouées")
+
+    if existing:
+        # Réinjection : mêmes joueurs, mêmes fiches, nouvelles lignes de statistiques.
+        from .defence import collect as defence_collect, inject as defence_inject, pairs_needed
+        from .model import position_group
+        cand = existing["cand"]
+        by_id = {p["id"]: p for p in cand["players"]}
+        refreshed = 0
+        for pid, rows in stats_by_player.items():
+            if pid in by_id:
+                by_id[pid]["stats"] = normalize_stats(merge_stats(rows))
+                refreshed += 1
+        ys_rows = club_season_stats(direct, ys_id, args.competitions[0], season, prev)
+        for p in squad:
+            p["stats"] = normalize_stats(merge_stats([r for r in ys_rows if r["id"] == p["id"]]))
+        print(f"  statistiques réinjectées : {refreshed}/{len(cand['players'])} candidats, {len(squad)} joueurs YS")
+        everyone = cand["players"] + squad
+        pairs = pairs_needed(everyone)
+        gk_pairs = set(pairs_needed([p for p in everyone if position_group(p.get("position")) == "GK"]))
+        print(f"Défense : {len(pairs)} couples compétition/saison (classement), {len(gk_pairs)} pages clean sheets…")
+        defence = defence_collect(direct, pairs, gk_pairs, args.workers)
+        (DATA / "defence.json").write_text(json.dumps(defence, ensure_ascii=False, indent=1))
+        print("  vivier :", defence_inject(cand["players"], defence))
+        print("  effectif YS :", defence_inject(squad, defence))
+        (DATA / "candidates.json").write_text(json.dumps(cand, ensure_ascii=False, indent=1))
+        (DATA / "squad.json").write_text(json.dumps({"club_id": ys_id, "season": season_label(season),
+                                                     "players": squad}, ensure_ascii=False, indent=1))
+        pool.shutdown()
+        print(f"Requêtes Transfermarkt : {direct.calls} (dont {direct.captchas} captchas réessayés)")
+        print("→ data/candidates.json, data/squad.json, data/defence.json")
+        return
 
     # 3. Fiches joueur --------------------------------------------------------
     print("Fiches joueur (profil, valeur, transferts)…")

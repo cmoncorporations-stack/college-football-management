@@ -50,6 +50,36 @@ STATS_HTML = """
 """
 
 
+CLEAN_SHEETS_HTML = """
+<div id="yw1"><table class="items"><thead><tr><th>#</th><th>Player/Club</th><th>Nation</th><th>Matches</th>
+<th>Clean sheets</th><th>Goals conceded</th><th>Minutes of play</th><th>Minutes per goal against</th><th>Percentage</th></tr></thead><tbody>
+<tr class="odd"><td class="zentriert">1</td><td><table class="inline-table"><tr><td rowspan="2"><a href="#"><img title="Gentrit Muslija" /></a></td>
+<td class="hauptlink"><a title="Gentrit Muslija" href="/gentrit-muslija/profil/spieler/1">Gentrit Muslija</a></td></tr>
+<tr><td>FC Wil 1900</td></tr></table></td>
+<td class="zentriert"><img title="Switzerland" class="flaggenrahmen" /></td><td class="zentriert">36</td><td class="zentriert">12</td>
+<td class="zentriert">55</td><td class="zentriert">3.240</td><td class="zentriert">59</td><td class="zentriert">33.3 %%</td></tr>
+<tr class="even"><td class="zentriert">2</td><td><table class="inline-table"><tr><td rowspan="2"></td>
+<td class="hauptlink"><a title="Kevin Martin" href="/kevin-martin/profil/spieler/2">Kevin Martin</a></td></tr>
+<tr><td>Yverdon Sport FC</td></tr></table></td>
+<td class="zentriert"></td><td class="zentriert">26</td><td class="zentriert">8</td><td class="zentriert">35</td>
+<td class="zentriert">2.340</td><td class="zentriert">67</td><td class="zentriert">30.8 %%</td></tr>
+</tbody></table></div>
+%s
+"""
+PAGER = '<div class="pager"><ul class="tm-pagination"><li class="tm-pagination__list-item"><a class="tm-pagination__link" href="/-/weisseWeste/wettbewerb/C2/saison_id/2025/plus/1/page/2">2</a></li></ul></div>'
+
+TABLE_HTML = """
+<div class="box"><table class="items"><thead><tr><th>#</th><th>Club</th><th></th><th>W</th><th>D</th><th>L</th><th>Goals</th><th>+/-</th><th>Pts</th></tr></thead><tbody>
+<tr><td class="rechts">1</td><td class="zentriert"><a href="/fc-vaduz/spielplan/verein/163/saison_id/2025"><img title="FC Vaduz" /></a></td>
+<td class="no-border-links hauptlink"><a href="/fc-vaduz/spielplan/verein/163/saison_id/2025">FC Vaduz</a></td>
+<td class="zentriert">36</td><td class="zentriert">25</td><td class="zentriert">6</td><td class="zentriert">5</td><td class="zentriert">75:41</td><td class="zentriert">34</td><td class="zentriert">81</td></tr>
+<tr><td class="rechts">2</td><td class="zentriert"><a href="/yverdon-sport/spielplan/verein/322/saison_id/2025"><img title="Yverdon Sport" /></a></td>
+<td class="no-border-links hauptlink"><a href="/yverdon-sport/spielplan/verein/322/saison_id/2025">Yverdon Sport</a></td>
+<td class="zentriert">36</td><td class="zentriert">20</td><td class="zentriert">7</td><td class="zentriert">9</td><td class="zentriert">75:48</td><td class="zentriert">27</td><td class="zentriert">67</td></tr>
+</tbody></table></div>
+"""
+
+
 class FakeClient(td.TransfermarktDirect):
     """Client dont fetch() renvoie des pages figées au lieu d'appeler le réseau."""
 
@@ -132,6 +162,57 @@ class StatsTests(unittest.TestCase):
         block = client.club_stats("322", "C1", 2025)
         self.assertEqual(block["rows"], [])
         self.assertEqual(len(block["options"]), 4)
+
+
+class DefenceTests(unittest.TestCase):
+    """C1 : buts encaissés / clean sheets par gardien et classement des équipes."""
+
+    def test_clean_sheets_page_with_pagination(self):
+        page2 = (CLEAN_SHEETS_HTML % "").replace("spieler/1", "spieler/3").replace("Gentrit Muslija", "Autre Gardien")
+        client = FakeClient({"/-/weisseWeste/wettbewerb/C2/saison_id/2025/plus/1": CLEAN_SHEETS_HTML % PAGER,
+                             "/-/weisseWeste/wettbewerb/C2/saison_id/2025/plus/1/page/2": page2})
+        rows = client.clean_sheets("C2", 2025)
+        self.assertEqual([r["id"] for r in rows], ["1", "2", "3"])
+        self.assertEqual(rows[0], {"id": "1", "name": "Gentrit Muslija", "club": "FC Wil 1900", "matches": 36,
+                                   "clean_sheets": 12, "conceded": 55, "minutes": 3240})
+        self.assertEqual(rows[1]["club"], "Yverdon Sport FC")
+        self.assertEqual(rows[1]["conceded"], 35)
+
+    def test_league_table(self):
+        client = FakeClient({"/-/tabelle/wettbewerb/C2/saison_id/2025": TABLE_HTML})
+        table = client.league_table("C2", 2025)
+        self.assertEqual(len(table), 2)
+        self.assertEqual(table[1], {"rank": 2, "club_id": "322", "club": "Yverdon Sport", "matches": 36,
+                                    "goals_for": 75, "goals_against": 48, "points": 67, "teams": 2})
+
+    def test_club_stats_keeper_columns_absent_are_none(self):
+        client = FakeClient({"/-/leistungsdaten/verein/322/plus/1?reldata=C2%262026": STATS_HTML})
+        row = client.club_stats("322", "C2", 2026)["rows"][0]
+        self.assertIsNone(row["conceded"])
+        self.assertIsNone(row["clean_sheets"])
+
+    def test_defence_injection(self):
+        from moneyball.defence import inject
+        defence = {"C2/2025": {"competition_id": "C2", "season_id": 2025,
+                               "table": [{"rank": 1, "club_id": "163", "club": "FC Vaduz", "matches": 36, "goals_for": 75,
+                                          "goals_against": 41, "points": 81, "teams": 2},
+                                         {"rank": 2, "club_id": "322", "club": "Yverdon Sport", "matches": 36, "goals_for": 75,
+                                          "goals_against": 48, "points": 67, "teams": 2}],
+                               "goalkeepers": [{"id": "2", "name": "Kevin Martin", "club": "Yverdon Sport FC", "matches": 26,
+                                                "clean_sheets": 8, "conceded": 35, "minutes": 2340}]}}
+        keeper = {"id": "2", "position": "Goalkeeper",
+                  "stats": [{"season": "25/26", "competition_id": "C2", "club_id": "322", "minutes": 2340, "appearances": 26}]}
+        centre_back = {"id": "9", "position": "Centre-Back",
+                       "stats": [{"season": "25/26", "competition_id": "C2", "club_id": "163", "minutes": 3000, "appearances": 34}]}
+        n = inject([keeper, centre_back], defence)
+        self.assertEqual(n["gardiens_avec_buts_encaisses"], 1)
+        k = keeper["stats"][0]
+        self.assertEqual((k["conceded"], k["clean_sheets"], k["gk_matches"]), (35, 8, 26))
+        self.assertEqual((k["team_conceded"], k["team_matches"], k["team_rank"], k["team_count"]), (48, 36, 2, 2))
+        c = centre_back["stats"][0]
+        self.assertIsNone(c["conceded"])
+        self.assertEqual(c["team_conceded"], 41)
+        self.assertAlmostEqual(c["league_conceded_90_median"], 48 / 36, places=3)
 
 
 class JsonEndpointTests(unittest.TestCase):

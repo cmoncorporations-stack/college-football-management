@@ -145,31 +145,72 @@ def _season_key(s: str) -> int:
 
 
 def recent_stats(p: dict, seasons: int = 2) -> dict:
-    """Agrège les deux dernières saisons, en championnat, pondérées par le niveau."""
+    """Agrège les deux dernières saisons, en championnat, pondérées par le niveau.
+
+    Niveau (`coef`) = moyenne des coefficients de ligue des lignes retenues, pondérée par
+    les minutes ; lignes retenues = les deux saisons les plus récentes ayant des minutes,
+    limitées aux compétitions à coefficient connu (toutes les lignes si aucune ne l'est,
+    au coefficient DEFAULT_COEF). Ajoute les agrégats défensifs (buts encaissés du gardien,
+    résultats de l'équipe, médiane de la ligue) lus par defence.py quand ils existent.
+    """
     rows = [r for r in p.get("stats", []) if r.get("minutes")]
+    empty = {"minutes": 0, "apps": 0, "g": 0, "a": 0, "cards": 0, "coef": DEFAULT_COEF,
+             "minutes_per_season": 0, "conceded": None, "clean_sheets": None, "gk_matches": 0,
+             "gk_minutes": 0, "team_minutes": 0, "team_c90": None, "league_c90": None,
+             "rank_score": None, "team_rows": 0}
     if not rows:
-        return {"minutes": 0, "apps": 0, "g": 0, "a": 0, "cards": 0, "coef": DEFAULT_COEF,
-                "minutes_per_season": 0}
+        return empty
     keys = sorted({_season_key(r["season"]) for r in rows}, reverse=True)[:seasons]
     rows = [r for r in rows if _season_key(r["season"]) in keys]
     league_rows = [r for r in rows if league_coef(r.get("competition_id")) is not None] or rows
     minutes = sum(r["minutes"] for r in league_rows)
     coef = (sum((league_coef(r.get("competition_id")) or DEFAULT_COEF) * r["minutes"]
                 for r in league_rows) / minutes) if minutes else DEFAULT_COEF
-    return {
-        "minutes": minutes,
-        "apps": sum(r.get("appearances", 0) for r in league_rows),
-        "g": sum(r.get("goals", 0) for r in league_rows),
-        "a": sum(r.get("assists", 0) for r in league_rows),
-        "cards": sum(r.get("yellow", 0) + 3 * r.get("red", 0) for r in league_rows),
-        "coef": coef,
-        "minutes_per_season": minutes / max(1, len(keys)),
-    }
+    st = {**empty,
+          "minutes": minutes,
+          "apps": sum(r.get("appearances", 0) for r in league_rows),
+          "g": sum(r.get("goals", 0) for r in league_rows),
+          "a": sum(r.get("assists", 0) for r in league_rows),
+          "cards": sum(r.get("yellow", 0) + 3 * r.get("red", 0) for r in league_rows),
+          "coef": coef,
+          "minutes_per_season": minutes / max(1, len(keys))}
+    # Gardien : buts encaissés et clean sheets (page « Clean sheets » Transfermarkt).
+    gk_rows = [r for r in league_rows if r.get("conceded") is not None]
+    if gk_rows:
+        st["conceded"] = sum(r["conceded"] for r in gk_rows)
+        st["clean_sheets"] = sum(r.get("clean_sheets") or 0 for r in gk_rows)
+        st["gk_matches"] = sum(r.get("gk_matches") or r.get("appearances") or 0 for r in gk_rows)
+        st["gk_minutes"] = sum(r["minutes"] for r in gk_rows)
+        st["team_minutes"] = sum(90 * r["team_matches"] for r in gk_rows if r.get("team_matches"))
+    # Équipe : buts encaissés par match, médiane de la ligue, rang (classement Transfermarkt).
+    team_rows = [r for r in league_rows if r.get("team_matches") and r.get("team_conceded") is not None
+                 and r.get("league_conceded_90_median")]
+    if team_rows:
+        w = sum(r["minutes"] for r in team_rows)
+        st["team_c90"] = sum(r["team_conceded"] / r["team_matches"] * r["minutes"] for r in team_rows) / w
+        st["league_c90"] = sum(r["league_conceded_90_median"] * r["minutes"] for r in team_rows) / w
+        ranked = [r for r in team_rows if r.get("team_rank") and (r.get("team_count") or 0) > 1]
+        if ranked:
+            wr = sum(r["minutes"] for r in ranked)
+            st["rank_score"] = sum((r["team_count"] - r["team_rank"]) / (r["team_count"] - 1) * r["minutes"]
+                                   for r in ranked) / wr
+        st["team_rows"] = len(team_rows)
+    return st
 
 
 # --------------------------------------------------------------------------- SPORT
 SHRINK_MINUTES = 900     # en dessous, la production est tirée vers la médiane du poste
 MIN_REF_MINUTES = 900    # minutes minimales pour entrer dans la distribution de référence
+SOLE_STARTER_SHARE = 0.85  # part des minutes de l'équipe à partir de laquelle un gardien est « titulaire unique »
+
+
+def sub_group(position: str | None) -> str:
+    """Sous-poste de notation : GK, CB (central), FB (latéral), MID, ATT."""
+    g = position_group(position)
+    if g != "DEF":
+        return g
+    pos = (position or "").lower()
+    return "FB" if ("left" in pos or "right" in pos or "wing" in pos) and "back" in pos else "CB"
 
 
 def _ga90_c2(p: dict, st: dict | None = None) -> float:
@@ -180,23 +221,70 @@ def _ga90_c2(p: dict, st: dict | None = None) -> float:
     return (st["g"] + 0.7 * st["a"]) / st["minutes"] * 90 * st["coef"]
 
 
-def pool_baselines(players: list[dict]) -> dict:
-    """Distribution de référence de la production par poste, calculée sur le vivier.
+def team_defence_index(st: dict) -> float | None:
+    """Résultats défensifs de l'équipe : 0,5 = médiane de la ligue ; 1 = deux fois moins de buts
+    encaissés par match que la médiane ; 0 = deux fois plus. None sans classement."""
+    if not st.get("team_c90") or not st.get("league_c90"):
+        return None
+    return _clip(0.5 + (st["league_c90"] - st["team_c90"]) / st["league_c90"] / 2)
 
-    Pour chaque groupe de poste : la liste triée des productions (équivalent C2) des
-    joueurs ayant au moins MIN_REF_MINUTES minutes, leur médiane et leur effectif.
-    Remplace les attendus fixés à la main dès que le groupe compte 20 joueurs.
+
+def gk_defence_index(st: dict) -> tuple[float | None, str]:
+    """Indice défensif d'un gardien, sans production offensive.
+
+    taux de clean sheets + terme « buts encaissés » :
+    - gardien partageant le poste (< 85 % des minutes de l'équipe) : 1 − (ses buts encaissés/90
+      ÷ ceux de l'équipe), borné à ± 0,5 ;
+    - titulaire unique (le rapport vaut 1 par construction) : rang de l'équipe au classement,
+      de −0,3 (dernier) à +0,3 (premier) ;
+    - sans classement ni données d'équipe : 0, et la confiance est notée faible.
+    Retourne (indice, mode) ; indice None sans donnée de buts encaissés.
+    """
+    if st.get("conceded") is None or not st.get("gk_minutes"):
+        return None, "sans donnée de buts encaissés"
+    gk_c90 = st["conceded"] / st["gk_minutes"] * 90
+    cs_rate = st["clean_sheets"] / st["gk_matches"] if st.get("gk_matches") else 0.0
+    if st.get("team_c90") and st.get("team_minutes"):
+        share = st["gk_minutes"] / st["team_minutes"]
+        if share < SOLE_STARTER_SHARE:
+            return cs_rate + _clip(1 - gk_c90 / st["team_c90"], -0.5, 0.5), "gardien partagé : rapport à l'équipe"
+        if st.get("rank_score") is not None:
+            return cs_rate + 0.6 * (st["rank_score"] - 0.5), "titulaire unique : rang de l'équipe"
+        return cs_rate, "titulaire unique sans classement"
+    return cs_rate, "sans donnée d'équipe"
+
+
+def pool_baselines(players: list[dict]) -> dict:
+    """Distributions de référence par sous-poste, calculées sur le vivier (≥ MIN_REF_MINUTES).
+
+    GK : indice défensif (gk_defence_index) ; CB : résultats défensifs de l'équipe
+    (team_defence_index) ; FB : les deux listes (`def_values`) et la production offensive ;
+    MID/ATT : production (équivalent C2). Chaque entrée : values triées, médiane, effectif.
+    Remplace les attendus fixés à la main dès que le sous-poste compte 20 joueurs.
     """
     by_group: dict[str, list[float]] = {}
     for p in players:
         st = recent_stats(p)
-        if st["minutes"] >= MIN_REF_MINUTES:
+        if st["minutes"] < MIN_REF_MINUTES:
+            continue
+        g = sub_group(p.get("position"))
+        if g == "GK":
+            idx, _ = gk_defence_index(st)
+            if idx is not None:
+                by_group.setdefault("GK", []).append(idx)
+        else:
             by_group.setdefault(position_group(p.get("position")), []).append(_ga90_c2(p, st))
     out = {}
     for g, vals in by_group.items():
         vals.sort()
-        out[g] = {"values": vals, "median": vals[len(vals) // 2], "n": len(vals),
-                  "p90": vals[min(len(vals) - 1, int(len(vals) * 0.9))]}
+        entry = {"values": vals, "median": vals[len(vals) // 2], "n": len(vals),
+                 "p90": vals[min(len(vals) - 1, int(len(vals) * 0.9))]}
+        if g.endswith(":def"):
+            base = g[:-4]
+            out.setdefault(base, {"values": [], "median": 0.5, "n": 0})
+            out[base].update({"def_values": vals, "def_median": entry["median"], "def_n": len(vals)})
+        else:
+            out.setdefault(g, {}).update(entry)
     return out
 
 
@@ -214,15 +302,82 @@ def _percentile(values: list[float], x: float) -> float:
     return lo / len(values)
 
 
+def _shrunk_rank(values: list[float] | None, median: float | None, x: float, confidence: float,
+                 fallback: float) -> float:
+    """Rang percentile de x, après rétrécissement vers la médiane selon la confiance ;
+    `fallback` quand la distribution de référence est absente."""
+    if not values:
+        return fallback
+    return _percentile(values, confidence * x + (1 - confidence) * median)
+
+
+def _common(p: dict, st: dict) -> dict:
+    level = _clip(st["coef"] / 1.45, 0.3, 1.2)       # Super League ≈ 1
+    return {
+        "level": level,
+        "availability": _clip(st["minutes_per_season"] / 2400),
+        "injury_penalty": _clip((p.get("injury_days") or 0) / 180, 0, 0.5),
+        "discipline": _clip(1 - (st["cards"] / max(1, st["apps"])) / 0.5),
+        "confidence": st["minutes"] / (st["minutes"] + SHRINK_MINUTES),   # 900 min → 0,5 ; 2700 → 0,75
+        "g_a_90": (st["g"] + 0.7 * st["a"]) / st["minutes"] * 90 if st["minutes"] else 0.0,
+    }
+
+
+def _finish(raw: float, c: dict) -> float:
+    raw = raw * (0.55 + 0.45 * c["level"]) * (1 - c["injury_penalty"])
+    return round(100 * _clip(raw / 0.85), 1)
+
+
+def _detail(st: dict, c: dict, confidence: float, note: str | None, **extra) -> dict:
+    d = {"g_a_90": round(c["g_a_90"], 2), "minutes_saison": round(st["minutes_per_season"]),
+         "minutes_total": st["minutes"], "confiance": round(confidence, 2), "confiance_note": note,
+         "niveau": round(st["coef"], 2), "disponibilite": round(c["availability"], 2),
+         "buts": st["g"], "passes": st["a"], "matchs": st["apps"], "source": "transfermarkt"}
+    d.update(extra)
+    return d
+
+
+def sport_score_gk(p: dict, baselines: dict | None = None) -> tuple[float, dict]:
+    """Note Sport d'un gardien : jamais de production offensive.
+
+    indice défensif (buts encaissés/90 rapportés à l'équipe, ou rang de l'équipe pour un
+    titulaire unique, + taux de clean sheets) → rétréci vers la médiane des gardiens sous
+    900 minutes → rang percentile entre gardiens → 65 % de la note ; disponibilité 25 % ;
+    discipline 10 % ; puis coefficient de ligue et blessures. Sans donnée de buts encaissés :
+    médiane des gardiens, confiance plafonnée à 0,5 et notée « faible ».
+    """
+    st = recent_stats(p)
+    c = _common(p, st)
+    ref = (baselines or {}).get("GK") if (baselines or {}).get("GK", {}).get("n", 0) >= 20 else None
+    idx, mode = gk_defence_index(st)
+    confidence, note = c["confidence"], None
+    if idx is None:
+        rank, confidence, note = 0.5, min(confidence, 0.5), "faible"
+    else:
+        rank = _shrunk_rank(ref["values"] if ref else None, ref["median"] if ref else None, idx,
+                            c["confidence"], _clip((idx + 0.3) / 1.0))
+        if mode in ("titulaire unique sans classement", "sans donnée d'équipe"):
+            confidence, note = min(confidence, 0.5), "faible"
+    raw = 0.65 * rank + 0.25 * c["availability"] + 0.10 * c["discipline"]
+    score = _finish(raw, c)
+    detail = _detail(st, c, confidence, note, rang_defensif=round(rank, 2), rang_production=None,
+                     reference="vivier" if ref else "fixe", mode_gardien=mode,
+                     buts_encaisses=st["conceded"], clean_sheets=st["clean_sheets"],
+                     buts_encaisses_90=round(st["conceded"] / st["gk_minutes"] * 90, 2) if st.get("gk_minutes") else None,
+                     equipe_encaisses_90=round(st["team_c90"], 2) if st.get("team_c90") else None,
+                     ligue_encaisses_90=round(st["league_c90"], 2) if st.get("league_c90") else None,
+                     rang_equipe=round(st["rank_score"], 2) if st.get("rank_score") is not None else None,
+                     indice_defensif=round(idx, 3) if idx is not None else None)
+    return score, detail
+
+
 def sport_score(p: dict, baselines: dict | None = None) -> tuple[float, dict]:
     group = position_group(p.get("position"))
+    if group == "GK":
+        return sport_score_gk(p, baselines)
     st = recent_stats(p)
-    level = _clip(st["coef"] / 1.45, 0.3, 1.2)       # Super League ≈ 1
-    availability = _clip(st["minutes_per_season"] / 2400)
-    injury_penalty = _clip((p.get("injury_days") or 0) / 180, 0, 0.5)
-    g_a_90 = (st["g"] + 0.7 * st["a"]) / st["minutes"] * 90 if st["minutes"] else 0.0
-    discipline = _clip(1 - (st["cards"] / max(1, st["apps"])) / 0.5)
-    confidence = st["minutes"] / (st["minutes"] + SHRINK_MINUTES)   # 900 min → 0,5 ; 2700 → 0,75
+    c = _common(p, st)
+    availability, discipline, confidence, g_a_90 = c["availability"], c["discipline"], c["confidence"], c["g_a_90"]
     ref = (baselines or {}).get(group) if (baselines or {}).get(group, {}).get("n", 0) >= 20 else None
 
     # Bloc `perf` (API-Football ou Sofascore) : la note moyenne entre pour un tiers,
@@ -240,32 +395,22 @@ def sport_score(p: dict, baselines: dict | None = None) -> tuple[float, dict]:
     rating = perf.get("rating")
     rating_score = _clip((rating - 6.0) / 1.6) if rating else None   # 6,0 → 0 ; 7,6 → 1
 
-    if group == "GK":
-        raw = 0.75 * availability + 0.25 * discipline
-        if rating_score is not None:
-            raw = 0.5 * raw + 0.5 * rating_score
+    prod_basis = xg_a_90 if xg_a_90 is not None else g_a_90
+    if ref:
+        # Production en équivalent C2, rétrécie vers la médiane du poste quand
+        # l'échantillon est court, puis lue comme rang percentile dans le vivier.
+        observed = prod_basis * st["coef"]
+        shrunk = confidence * observed + (1 - confidence) * ref["median"]
+        prod = _percentile(ref["values"], shrunk)
     else:
-        prod_basis = xg_a_90 if xg_a_90 is not None else g_a_90
-        if ref:
-            # Production en équivalent C2, rétrécie vers la médiane du poste quand
-            # l'échantillon est court, puis lue comme rang percentile dans le vivier.
-            observed = prod_basis * st["coef"]
-            shrunk = confidence * observed + (1 - confidence) * ref["median"]
-            prod = _percentile(ref["values"], shrunk)
-        else:
-            prod = _clip(prod_basis * st["coef"] / EXPECTED_G_A_90[group] / 1.3)
-        w_prod = {"DEF": 0.25, "MID": 0.45, "ATT": 0.60}[group]
-        raw = w_prod * prod + (0.9 - w_prod) * availability + 0.10 * discipline
-        if rating_score is not None:
-            raw = 0.67 * raw + 0.33 * rating_score
-    raw = raw * (0.55 + 0.45 * level) * (1 - injury_penalty)
-    score = round(100 * _clip(raw / 0.85), 1)
-    detail = {"g_a_90": round(g_a_90, 2), "minutes_saison": round(st["minutes_per_season"]),
-              "minutes_total": st["minutes"], "confiance": round(confidence, 2),
-              "rang_production": round(prod, 2) if group != "GK" else None,
-              "reference": "vivier" if ref else "fixe",
-              "niveau": round(st["coef"], 2), "disponibilite": round(availability, 2),
-              "buts": st["g"], "passes": st["a"], "matchs": st["apps"], "source": "transfermarkt"}
+        prod = _clip(prod_basis * st["coef"] / EXPECTED_G_A_90[group] / 1.3)
+    w_prod = {"DEF": 0.25, "MID": 0.45, "ATT": 0.60}[group]
+    raw = w_prod * prod + (0.9 - w_prod) * availability + 0.10 * discipline
+    if rating_score is not None:
+        raw = 0.67 * raw + 0.33 * rating_score
+    score = _finish(raw, c)
+    detail = _detail(st, c, confidence, None, rang_production=round(prod, 2),
+                     reference="vivier" if ref else "fixe")
     if perf:
         detail.update({"source": "transfermarkt + " + (perf.get("source") or "sofascore"),
                        "xg_a_90": None if xg_a_90 is None else round(xg_a_90, 2),
@@ -544,6 +689,8 @@ def score_pool(players: list[dict], fan_weights: dict, needs: dict, today: date,
             tags.append("Échantillon faible")
         if not p.get("market_value"):
             tags.append("Valeur inconnue")
+        if sport_detail[p["id"]].get("confiance_note") == "faible":
+            tags.append("Confiance faible")
         if fc["_lien"] == "Ancien d'Yverdon":
             tags.append("Retour au club")
         sofa = p.get("perf") or p.get("sofascore") or {}

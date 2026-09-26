@@ -524,7 +524,11 @@ class TransfermarktDirect:
 
             idx = {"apps": col("appearances", "matches"), "goals": col("goals"), "assists": col("assists"),
                    "yellow": col("yellow cards"), "yellow2": col("second yellow"), "red": col("red cards"),
-                   "minutes": col("minutes")}
+                   "minutes": col("minutes"), "conceded": col("goals conceded", "goals against"),
+                   "clean_sheets": col("clean sheets")}
+            # Colonnes gardien (« Goals conceded », « Clean sheets ») : absentes de la vue
+            # plus/1 constatée le 26.09.2026, lues alors sur la page « Clean sheets » de la
+            # compétition (clean_sheets()) ; si Transfermarkt les ajoute ici, elles sont prises.
             for tr in table.find_all("tr"):
                 if tr.ancestor("tr") is not None or not any(c in ("odd", "even") for c in tr.classes()):
                     continue
@@ -537,13 +541,119 @@ class TransfermarktDirect:
                     i = idx.get(key)
                     return parse_int(cells[i].text()) if i is not None and i < len(cells) else 0
 
+                def opt(key):
+                    i = idx.get(key)
+                    if i is None or i >= len(cells):
+                        return None
+                    txt = cells[i].text()
+                    return parse_int(txt) if re.search(r"\d", txt) else None
+
                 inline = tr.find("table", cls="inline-table")
                 pos = inline.find_all("tr")[-1].text() if inline and len(inline.find_all("tr")) >= 2 else None
+                is_gk = "goalkeeper" in (pos or "").lower() or "torwart" in " ".join(
+                    " ".join(c.classes()) for c in cells).lower()
                 rows.append({"id": id_from_href(link.get("href")), "name": link.get("title") or link.text(),
                              "position": pos, "appearances": num("apps"), "goals": num("goals"),
                              "assists": num("assists"), "yellow_cards": num("yellow"),
-                             "red_cards": num("red") + num("yellow2"), "minutes_played": num("minutes")})
+                             "red_cards": num("red") + num("yellow2"), "minutes_played": num("minutes"),
+                             "conceded": opt("conceded") if is_gk else None,
+                             "clean_sheets": opt("clean_sheets") if is_gk else None})
         label = next((o["label"] for o in options if (o["code"], o["season"]) == (competition_id or None, season)), None)
+        gk_conceded = [r["conceded"] for r in rows if r.get("conceded") is not None]
         return {"club_id": club_id, "competition_id": competition_id, "season_id": season,
                 "competition_name": re.sub(r"\s*\d{2}/\d{2}$", "", label) if label else None,
-                "rows": rows, "options": options}
+                "rows": rows, "options": options,
+                "team_conceded": sum(gk_conceded) if gk_conceded else None}
+
+    def clean_sheets(self, competition_id: str, season_id: str | int) -> list[dict]:
+        """Page « Clean sheets » d'une compétition (vue détaillée) : une ligne par gardien.
+
+        `/-/weisseWeste/wettbewerb/{code}/saison_id/{saison}/plus/1`, paginée par 25.
+        Colonnes constatées le 26.09.2026 : matchs, clean sheets, buts encaissés,
+        minutes, minutes par but encaissé, pourcentage. C'est la seule page de
+        www.transfermarkt.com qui donne encore les buts encaissés par gardien en HTML.
+        """
+        season = str(season_id)
+        rows, seen = [], set()
+        for page in range(1, 20):
+            suffix = f"/page/{page}" if page > 1 else ""
+            doc = self.page(f"/-/weisseWeste/wettbewerb/{competition_id}/saison_id/{season}/plus/1{suffix}")
+            table = doc.find("div", id="yw1")
+            if table is None:
+                break
+            headers = [th_label(th) for th in table.find_all("th")]
+
+            def col(*keys):
+                for i, h in enumerate(headers):
+                    if any(k in h for k in keys):
+                        return i
+                return None
+
+            idx = {"matches": col("matches", "appearances"), "cs": col("clean sheets"),
+                   "conceded": col("goals conceded", "goals against"), "minutes": col("minutes of play", "minutes played")}
+            new = 0
+            for tr in table.find_all("tr"):
+                if tr.ancestor("tr") is not None or not any(c in ("odd", "even") for c in tr.classes()):
+                    continue
+                link = next((a for a in tr.find_all("a") if "/profil/spieler/" in (a.get("href") or "")), None)
+                if not link:
+                    continue
+                pid = id_from_href(link.get("href"))
+                inline = tr.find("table", cls="inline-table")
+                club = inline.find_all("tr")[-1].text() if inline and len(inline.find_all("tr")) >= 2 else None
+                cells = tr.cells()
+
+                def num(key):
+                    i = idx.get(key)
+                    return parse_int(cells[i].text()) if i is not None and i < len(cells) else 0
+
+                key = (pid, club)
+                if key in seen:
+                    continue
+                seen.add(key)
+                new += 1
+                rows.append({"id": pid, "name": link.get("title") or link.text(), "club": club,
+                             "matches": num("matches"), "clean_sheets": num("cs"), "conceded": num("conceded"),
+                             "minutes": num("minutes")})
+            has_next = any(f"/page/{page + 1}" in (a.get("href") or "") for a in table.find_all("a")) or \
+                any(f"/page/{page + 1}" in (a.get("href") or "") for a in doc.find_all("a", cls="tm-pagination__link"))
+            if not new or not has_next:
+                break
+        return rows
+
+    def league_table(self, competition_id: str, season_id: str | int) -> list[dict]:
+        """Classement d'une compétition : rang, club, matchs, buts pour/contre, points.
+
+        `/-/tabelle/wettbewerb/{code}/saison_id/{saison}` ; liste vide si la compétition
+        n'a pas de classement (coupes, compétitions à phases).
+        """
+        season = str(season_id)
+        doc = self.page(f"/-/tabelle/wettbewerb/{competition_id}/saison_id/{season}")
+        out = []
+        for table in doc.find_all("table"):
+            headers = [th_label(th) for th in table.find_all("th")]
+            if "pts" not in headers and "points" not in headers:
+                continue
+            for tr in table.find_all("tr"):
+                cells = tr.cells()
+                if not cells or not cells[0].text().isdigit() or tr.ancestor("tr") is not None:
+                    continue
+                club_a = next((a for a in tr.find_all("a") if "/verein/" in (a.get("href") or "")), None)
+                texts = [c.text() for c in cells]
+                goals = next((t for t in texts if re.fullmatch(r"\d+:\d+", t)), None)
+                if not goals:
+                    continue
+                gf, ga = (int(v) for v in goals.split(":"))
+                nums = [int(t) for t in texts[1:] if t.isdigit()]
+                club_img = tr.find("img")
+                out.append({"rank": int(texts[0]), "club_id": id_from_href(club_a.get("href")) if club_a else None,
+                            "club": (club_img.get("title") if club_img and club_img.get("title") else None)
+                                    or (club_a.text() if club_a else None),
+                            "matches": nums[0] if nums else 0, "goals_for": gf, "goals_against": ga,
+                            "points": nums[-1] if nums else 0})
+            if out:
+                break
+        n = len(out)
+        for r in out:
+            r["teams"] = n
+        return out
