@@ -1,4 +1,5 @@
 data/cache/
+data/scan.log
 __pycache__/
 *.pyc
 data/demo_*.json
@@ -6,3 +7,7 @@ data/demo_*.json
 # Cockpit Fanbase Manager du club : volumes Brevo confidentiels, dépôt public.
 # Réimporter avec python -m moneyball.fan_dna --import-artifact <artefact.html>
 data/fanbase_cockpit.json
+
+# Dashboard et recommandations : embarquent des signaux du cockpit, dépôt public.
+data/recommendations.json
+dashboard.html
