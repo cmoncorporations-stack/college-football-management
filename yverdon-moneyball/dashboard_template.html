@@ -104,6 +104,7 @@ tbody tr.open{background:var(--surface2)}
 .tag.free{border-color:var(--good);color:var(--good)}
 .tag.local{border-color:var(--fan);color:var(--fan)}
 .tag.under{border-color:var(--valeur);color:var(--valeur)}
+.tag.weak{border-style:dashed;color:var(--ink3)}
 .detail td{background:var(--surface2);text-align:left;padding:16px 18px}
 .dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .dgrid h3{margin-bottom:6px}
@@ -189,7 +190,7 @@ footer li{margin-bottom:5px}
   <h3 style="margin-top:0">Méthode</h3>
   <ul>
     <li><strong>Sport</strong> : production par 90 minutes rapportée à l'attendu du poste, dans l'ordre des sources disponibles : xG + 0,7 × xA (Sofascore), sinon buts + 0,7 × passes + 0,1 × passe clé (API-Football), sinon buts + 0,7 × passes (Transfermarkt) ; la note moyenne de la saison compte pour un tiers quand elle existe ; plus la disponibilité (minutes par saison) et la discipline, sur les deux dernières saisons de championnat. Le tout est corrigé par le niveau de la ligue (Challenge League = 1,00 ; Super League = 1,45 ; National = 1,00 ; Ligue 2 = 1,45) et par les jours de blessure.</li>
-    <li><strong>Valeur</strong> : 40 % sous-évaluation (résidu d'une régression log(valeur marchande) ~ note sportive + âge sur tout le vivier), 25 % levier contractuel (≤ 6 mois = libre ou pré-contrat), 20 % tendance de la valeur sur 12 mois, 15 % potentiel de revente selon l'âge.</li>
+    <li><strong>Valeur</strong> : 40 % sous-évaluation (résidu d'une régression log(valeur marchande) ~ note sportive + âge + âge² + ligue + poste sur tout le vivier, pour ne pas confondre « joue en National » et « sous-évalué »), 25 % levier contractuel (≤ 6 mois = libre ou pré-contrat), 15 % tendance de la valeur sur 12 mois, 20 % plus-value nette attendue : valeur projetée à 24 mois (courbe d'âge par ligne, pic à 26 ans pour milieux et attaquants, 27 pour défenseurs, 29 pour gardiens, modulée par l'élan des 12 derniers mois) moins l'indemnité estimée, rapportée à la valeur actuelle.</li>
     <li><strong>Fan fit</strong> : ancrage régional (lieu de naissance, club formateur), francophonie, fidélité (durée moyenne par club), potentiel média (réseaux sociaux + spectacle offensif) et lien avec le club, pondérés par l'ADN fan ci-dessus.</li>
     <li><strong>Note finale</strong> = moyenne pondérée des trois notes × (0,85 + 0,30 × besoin du poste).</li>
     <li><strong>Indemnité estimée</strong> = 0 à six mois de la fin de contrat, sinon 35 à 100 % de la valeur marchande selon la durée restante. C'est un ordre de grandeur, pas une offre.</li>
@@ -261,15 +262,15 @@ const DATA=/*__DATA__*/null;
     const t=(st.wS+st.wV+st.wF)||1, s=j.scores;
     return (st.wS*s.sport+st.wV*s.valeur+st.wF*s.fan)/t*(0.85+0.30*s.besoin);
   }
-  function tagCls(t){return /Libre|Fin de/.test(t)?"free":/pays|Retour/.test(t)?"local":/Sous-/.test(t)?"under":""}
+  function tagCls(t){return /Libre|Fin de/.test(t)?"free":/pays|Retour/.test(t)?"local":/Sous-/.test(t)?"under":/faible|inconnue|baisse/.test(t)?"weak":""}
   // « Sous-performe ses xG » est une occasion Moneyball : même couleur que « Sous-évalué »
   function mini(s){return `<div class="mini">${[["S",s.sport,"--sport"],["V",s.valeur,"--valeur"],["F",s.fan,"--fan"]].map(([l,v,c])=>
     `<div><span>${l}</span><span class="t"><i style="width:${v}%;background:var(${c})"></i></span><span class="num">${Math.round(v)}</span></div>`).join("")}</div>`}
   function kv(a){return a.map(([k,v])=>`<div class="kv"><span>${k}</span><span class="num">${v}</span></div>`).join("")}
   function detail(j){const d=j.detail, pct=v=>Math.round(v*100)+" %";
     return `<tr class="detail"><td colspan="9"><div class="dgrid">
-      <div><h3 class="s">Sport · ${j.scores.sport}</h3>${kv([...(d.sport.xg!=null?[["(xG + 0,7 xA) / 90 · Sofascore",d.sport.xg_a_90],["xG · xA",d.sport.xg+" · "+d.sport.xa]]:d.sport.passes_cles!=null?[["(Buts + 0,7 passes + 0,1 passe clé) / 90",d.sport.xg_a_90],["Passes clés",d.sport.passes_cles]]:[]),...(d.sport.note?[["Note moyenne ("+esc(d.sport.source.replace("transfermarkt + ",""))+")",d.sport.note]]:[]),["(Buts + 0,7 passes) / 90",d.sport.g_a_90],["Buts · passes",d.sport.buts+" · "+d.sport.passes],["Matchs (2 saisons)",d.sport.matchs],["Minutes par saison",d.sport.minutes_saison],["Niveau de ligue",d.sport.niveau],["Disponibilité",pct(d.sport.disponibilite)]])}</div>
-      <div><h3 class="v">Valeur · ${j.scores.valeur}</h3>${kv([["Sous-évaluation (rang)",pct(d.valeur.sous_evaluation)],["Tendance 12 mois",(d.valeur.tendance>=0?"+":"")+Math.round(d.valeur.tendance*100)+" %"],["Mois de contrat restants",d.valeur.mois_contrat??"—"],["Fin de contrat",j.contract_expires??"—"],["Revente (âge)",pct(d.valeur.revente)]])}</div>
+      <div><h3 class="s">Sport · ${j.scores.sport}</h3>${kv([...(d.sport.xg!=null?[["(xG + 0,7 xA) / 90 · Sofascore",d.sport.xg_a_90],["xG · xA",d.sport.xg+" · "+d.sport.xa]]:d.sport.passes_cles!=null?[["(Buts + 0,7 passes + 0,1 passe clé) / 90",d.sport.xg_a_90],["Passes clés",d.sport.passes_cles]]:[]),...(d.sport.note?[["Note moyenne ("+esc(d.sport.source.replace("transfermarkt + ",""))+")",d.sport.note]]:[]),["(Buts + 0,7 passes) / 90",d.sport.g_a_90],["Buts · passes",d.sport.buts+" · "+d.sport.passes],...(d.sport.rang_production!=null?[["Rang de production dans le vivier",pct(d.sport.rang_production)]]:[]),["Matchs (2 saisons)",d.sport.matchs],["Minutes (2 saisons)",d.sport.minutes_total],["Confiance de l'échantillon",pct(d.sport.confiance)],["Niveau de ligue",d.sport.niveau],["Disponibilité",pct(d.sport.disponibilite)]])}</div>
+      <div><h3 class="v">Valeur · ${j.scores.valeur}</h3>${kv([["Sous-évaluation (rang)",pct(d.valeur.sous_evaluation)],["Tendance 12 mois",(d.valeur.tendance>=0?"+":"")+Math.round(d.valeur.tendance*100)+" %"],["Mois de contrat restants",d.valeur.mois_contrat??"—"],["Fin de contrat",j.contract_expires??"—"],["Valeur projetée à 24 mois",eur(d.valeur.valeur_projetee_24m)],["Plus-value nette attendue",d.valeur.plus_value==null?"—":(d.valeur.plus_value>=0?"+":"")+Math.round(d.valeur.plus_value*100)+" % de la valeur"],["Coût net (indemnité − revente)",d.valeur.cout_net==null?"—":eur(d.valeur.cout_net)]])}</div>
       <div><h3 class="f">Fan fit · ${j.scores.fan}</h3>${kv([["Origine",esc(d.fan.origine)+(j.naissance?" ("+esc(j.naissance)+")":"")],["Nationalités",esc(j.nationalites.join(", "))],["Francophonie",pct(d.fan.francophonie)],["Durée moyenne par club",d.fan.tenure+" ans"],["Potentiel média",pct(d.fan.media)],["Lien club",esc(d.fan.lien)]])}</div>
     </div>${j.url?`<p style="margin:12px 0 0"><a href="${esc(j.url)}" style="color:var(--accent-ink)">Fiche Transfermarkt</a></p>`:""}</td></tr>`}
 

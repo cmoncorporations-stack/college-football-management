@@ -56,10 +56,44 @@ class ModelTest(unittest.TestCase):
         self.assertEqual(model.position_group("Right Winger"), "ATT")
 
     def test_undervaluation_prefers_cheap_equal_player(self):
-        pool = [player(id=str(i), market_value=200_000 + 50_000 * i) for i in range(8)]
+        pool = [player(id=str(i), market_value=200_000 + 20_000 * i, age=20 + i % 9) for i in range(30)]
         sport = {p["id"]: 60.0 for p in pool}
         u = model.undervaluation(pool, sport)
-        self.assertGreater(u["0"], u["7"])
+        self.assertGreater(u["0"], u["29"])
+
+    def test_undervaluation_controls_for_league(self):
+        # Même profil : les joueurs de FR3 valent structurellement moins ; le plus cher de
+        # chaque ligue doit ressortir moins sous-évalué que le moins cher de la même ligue.
+        pool = ([player(id=f"c{i}", league_id="C1", market_value=500_000 + 30_000 * i, age=21 + i % 8) for i in range(15)]
+                + [player(id=f"f{i}", league_id="FR3", market_value=150_000 + 10_000 * i, age=21 + i % 8) for i in range(15)])
+        sport = {p["id"]: 60.0 for p in pool}
+        u = model.undervaluation(pool, sport)
+        self.assertGreater(u["f0"], u["f14"])
+        self.assertGreater(u["c0"], u["c14"])
+        self.assertLess(u["f14"], 0.9)   # pas « sous-évalué » juste parce qu'il joue en National
+
+    def test_shrinkage_tames_small_samples(self):
+        pool = [player(id=f"r{i}", stats=[{**player()["stats"][0], "goals": 3 + i % 9, "assists": i % 4}]) for i in range(40)]
+        base = model.pool_baselines(pool)
+        self.assertGreaterEqual(base["ATT"]["n"], 20)
+        hot_streak = player(id="h", stats=[{**player()["stats"][0], "goals": 2, "assists": 0, "minutes": 180, "appearances": 3}])
+        full_season = player(id="f", stats=[{**player()["stats"][0], "goals": 12, "assists": 3, "minutes": 2500, "appearances": 30}])
+        s_hot, d_hot = model.sport_score(hot_streak, base)
+        s_full, d_full = model.sport_score(full_season, base)
+        self.assertLess(s_hot, s_full)                # 1 but/90 sur 180 min ne bat pas une vraie saison
+        self.assertLess(d_hot["confiance"], 0.2)
+        self.assertEqual(d_full["reference"], "vivier")
+
+    def test_projection_and_net_gain(self):
+        young_free = player(id="y", age=21, market_value=300_000, contract_expires="2027-01-31")
+        old_locked = player(id="o", age=30, market_value=300_000, contract_expires="2029-06-30")
+        vy = model.value_components(young_free, TODAY)
+        vo = model.value_components(old_locked, TODAY)
+        self.assertGreater(vy["valeur_projetee_24m"], 300_000)
+        self.assertLess(vo["valeur_projetee_24m"], 300_000)
+        self.assertGreater(vy["plus_value"], vo["plus_value"])
+        self.assertEqual(model.age_growth_24m("GK", 25), 0.30)
+        self.assertEqual(model.age_growth_24m("ATT", 25), 0.12)   # les gardiens culminent plus tard
 
     def test_season_key(self):
         self.assertEqual(model._season_key("25/26"), 2025)

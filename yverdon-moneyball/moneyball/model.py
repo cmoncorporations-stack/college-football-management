@@ -1,8 +1,10 @@
 """Modèle Moneyball : trois scores sur 100 par joueur + un besoin par poste.
 
-- SPORT   : production par 90 minutes et disponibilité, corrigées du niveau du championnat.
-- VALEUR  : sous-évaluation par rapport au marché, tendance de la valeur, levier
-            contractuel (fin de contrat = transfert bon marché) et potentiel de revente.
+- SPORT   : production par 90 minutes lue comme rang percentile dans le vivier (par poste,
+            en équivalent Challenge League), rétrécie vers la médiane quand l'échantillon
+            est court, plus disponibilité et discipline.
+- VALEUR  : sous-évaluation (régression avec effets ligue et poste), levier contractuel,
+            tendance de la valeur et plus-value nette attendue à 24 mois (courbe d'âge).
 - FAN FIT : adéquation avec la fanbase, pondérée par l'ADN fan (fan_dna.py).
 
 Score final = (wS·SPORT + wV·VALEUR + wF·FAN) × (0,85 + 0,30 × besoin du poste).
@@ -166,7 +168,53 @@ def recent_stats(p: dict, seasons: int = 2) -> dict:
 
 
 # --------------------------------------------------------------------------- SPORT
-def sport_score(p: dict) -> tuple[float, dict]:
+SHRINK_MINUTES = 900     # en dessous, la production est tirée vers la médiane du poste
+MIN_REF_MINUTES = 900    # minutes minimales pour entrer dans la distribution de référence
+
+
+def _ga90_c2(p: dict, st: dict | None = None) -> float:
+    """Buts + 0,7 passe par 90 min, ramenés en équivalent Challenge League (× niveau)."""
+    st = st or recent_stats(p)
+    if not st["minutes"]:
+        return 0.0
+    return (st["g"] + 0.7 * st["a"]) / st["minutes"] * 90 * st["coef"]
+
+
+def pool_baselines(players: list[dict]) -> dict:
+    """Distribution de référence de la production par poste, calculée sur le vivier.
+
+    Pour chaque groupe de poste : la liste triée des productions (équivalent C2) des
+    joueurs ayant au moins MIN_REF_MINUTES minutes, leur médiane et leur effectif.
+    Remplace les attendus fixés à la main dès que le groupe compte 20 joueurs.
+    """
+    by_group: dict[str, list[float]] = {}
+    for p in players:
+        st = recent_stats(p)
+        if st["minutes"] >= MIN_REF_MINUTES:
+            by_group.setdefault(position_group(p.get("position")), []).append(_ga90_c2(p, st))
+    out = {}
+    for g, vals in by_group.items():
+        vals.sort()
+        out[g] = {"values": vals, "median": vals[len(vals) // 2], "n": len(vals),
+                  "p90": vals[min(len(vals) - 1, int(len(vals) * 0.9))]}
+    return out
+
+
+def _percentile(values: list[float], x: float) -> float:
+    """Rang de x dans une liste triée (0 = plus bas, 1 = plus haut)."""
+    if not values:
+        return 0.5
+    lo, hi = 0, len(values)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if values[mid] < x:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo / len(values)
+
+
+def sport_score(p: dict, baselines: dict | None = None) -> tuple[float, dict]:
     group = position_group(p.get("position"))
     st = recent_stats(p)
     level = _clip(st["coef"] / 1.45, 0.3, 1.2)       # Super League ≈ 1
@@ -174,6 +222,8 @@ def sport_score(p: dict) -> tuple[float, dict]:
     injury_penalty = _clip((p.get("injury_days") or 0) / 180, 0, 0.5)
     g_a_90 = (st["g"] + 0.7 * st["a"]) / st["minutes"] * 90 if st["minutes"] else 0.0
     discipline = _clip(1 - (st["cards"] / max(1, st["apps"])) / 0.5)
+    confidence = st["minutes"] / (st["minutes"] + SHRINK_MINUTES)   # 900 min → 0,5 ; 2700 → 0,75
+    ref = (baselines or {}).get(group) if (baselines or {}).get(group, {}).get("n", 0) >= 20 else None
 
     # Bloc `perf` (API-Football ou Sofascore) : la note moyenne entre pour un tiers,
     # et la production attendue remplace les buts réels quand la source la donne
@@ -196,7 +246,14 @@ def sport_score(p: dict) -> tuple[float, dict]:
             raw = 0.5 * raw + 0.5 * rating_score
     else:
         prod_basis = xg_a_90 if xg_a_90 is not None else g_a_90
-        prod = _clip(prod_basis * st["coef"] / EXPECTED_G_A_90[group] / 1.3)
+        if ref:
+            # Production en équivalent C2, rétrécie vers la médiane du poste quand
+            # l'échantillon est court, puis lue comme rang percentile dans le vivier.
+            observed = prod_basis * st["coef"]
+            shrunk = confidence * observed + (1 - confidence) * ref["median"]
+            prod = _percentile(ref["values"], shrunk)
+        else:
+            prod = _clip(prod_basis * st["coef"] / EXPECTED_G_A_90[group] / 1.3)
         w_prod = {"DEF": 0.25, "MID": 0.45, "ATT": 0.60}[group]
         raw = w_prod * prod + (0.9 - w_prod) * availability + 0.10 * discipline
         if rating_score is not None:
@@ -204,6 +261,9 @@ def sport_score(p: dict) -> tuple[float, dict]:
     raw = raw * (0.55 + 0.45 * level) * (1 - injury_penalty)
     score = round(100 * _clip(raw / 0.85), 1)
     detail = {"g_a_90": round(g_a_90, 2), "minutes_saison": round(st["minutes_per_season"]),
+              "minutes_total": st["minutes"], "confiance": round(confidence, 2),
+              "rang_production": round(prod, 2) if group != "GK" else None,
+              "reference": "vivier" if ref else "fixe",
               "niveau": round(st["coef"], 2), "disponibilite": round(availability, 2),
               "buts": st["g"], "passes": st["a"], "matchs": st["apps"], "source": "transfermarkt"}
     if perf:
@@ -237,6 +297,37 @@ def estimated_fee(p: dict, today: date) -> int:
     return int(round(mv * (0.35 + 0.65 * _clip(months / 36)), -3))
 
 
+# Âge de pic de valeur marchande par ligne ; la valeur monte avant, plafonne autour,
+# puis décroît. Courbes usuelles du marché (gardiens plus tardifs, attaquants plus tôt).
+PEAK_AGE = {"GK": 29, "DEF": 27, "MID": 26, "ATT": 26}
+
+
+def age_growth_24m(group: str, age: int) -> float:
+    """Variation attendue de la valeur marchande sur 24 mois, hors forme du moment."""
+    d = age - PEAK_AGE.get(group, 27)
+    if d <= -5:
+        return 0.45
+    if d <= -3:
+        return 0.30
+    if d <= -1:
+        return 0.12
+    if d <= 1:
+        return 0.0
+    if d <= 3:
+        return -0.20
+    return -0.40
+
+
+def projected_value_24m(p: dict, today: date) -> int | None:
+    """Valeur marchande projetée à 24 mois : courbe d'âge × élan de la valeur sur 12 mois."""
+    mv = p.get("market_value")
+    if not mv:
+        return None
+    group = position_group(p.get("position"))
+    momentum = 1 + 0.5 * _clip(_mv_trend(p, today), -0.5, 0.5)
+    return int(round(mv * (1 + age_growth_24m(group, p.get("age") or 27)) * momentum, -3))
+
+
 def value_components(p: dict, today: date) -> dict:
     age = p.get("age") or 27
     months = _months_until(p.get("contract_expires"), today)
@@ -252,41 +343,75 @@ def value_components(p: dict, today: date) -> dict:
         contract = 0.2
     resale = 1.0 if age <= 22 else 0.8 if age <= 24 else 0.55 if age <= 26 else 0.3 if age <= 29 else 0.1
     trend = _mv_trend(p, today)
+    # Plus-value nette attendue : valeur projetée à 24 mois moins l'indemnité estimée,
+    # rapportée à la valeur actuelle. 0 = on récupère sa mise ; +1 = on la double.
+    mv = p.get("market_value")
+    projected = projected_value_24m(p, today)
+    fee = estimated_fee(p, today)
+    if mv and projected is not None:
+        plus_value = (projected - fee) / max(mv, 50_000)
+        plus_value_score = _clip((plus_value + 0.5) / 2)
+    else:
+        plus_value, plus_value_score = None, 0.4
     return {"contrat": contract, "revente": resale, "tendance": trend,
-            "tendance_score": _clip(0.5 + trend), "mois_contrat": None if months is None else round(months, 1)}
+            "tendance_score": _clip(0.5 + trend / 2),   # valeur doublée sur 12 mois → 1
+            "mois_contrat": None if months is None else round(months, 1),
+            "valeur_projetee_24m": projected, "plus_value": None if plus_value is None else round(plus_value, 2),
+            "plus_value_score": plus_value_score, "cout_net": None if projected is None else fee - projected}
+
+
+def _ols(X: list[list[float]], y: list[float]) -> list[float]:
+    """Moindres carrés ordinaires par équations normales (Gauss avec pivot), sans numpy."""
+    k = len(X[0])
+    A = [[sum(r[i] * r[j] for r in X) for j in range(k)] for i in range(k)]
+    b = [sum(r[i] * yi for r, yi in zip(X, y)) for i in range(k)]
+    for i in range(k):
+        A[i][i] += 1e-6                      # ridge minuscule : évite les colonnes vides
+    for c in range(k):
+        piv = max(range(c, k), key=lambda r: abs(A[r][c]))
+        A[c], A[piv], b[c], b[piv] = A[piv], A[c], b[piv], b[c]
+        for r in range(c + 1, k):
+            f = A[r][c] / A[c][c]
+            for j in range(c, k):
+                A[r][j] -= f * A[c][j]
+            b[r] -= f * b[c]
+    beta = [0.0] * k
+    for i in range(k - 1, -1, -1):
+        beta[i] = (b[i] - sum(A[i][j] * beta[j] for j in range(i + 1, k))) / A[i][i]
+    return beta
 
 
 def undervaluation(players: list[dict], sport: dict[str, float]) -> dict[str, float]:
-    """Régression log(valeur) ~ score sportif + âge sur le vivier : résidu négatif = sous-évalué.
+    """Régression log(valeur) ~ sport + âge + âge² + ligue + poste : résidu négatif = sous-évalué.
 
-    Retourne pour chaque joueur un score 0-1 (1 = le plus sous-évalué du vivier).
+    Les effets fixes ligue et poste évitent qu'un joueur de National (valeurs
+    médianes trois fois plus basses qu'en Super League) ou un gardien paraisse
+    sous-évalué par construction. Retourne un score 0-1 (1 = le plus sous-évalué
+    du vivier) ; 0,5 pour les joueurs sans valeur marchande connue.
     """
-    pts = [(p["id"], sport[p["id"]], p.get("age") or 27, math.log(max(25_000, p.get("market_value") or 25_000)))
-           for p in players]
-    n = len(pts)
-    if n < 5:
-        return {pid: 0.5 for pid, *_ in pts}
-    # Moindres carrés à deux variables (score, âge) — forme normale résolue à la main.
-    xs1 = [s for _, s, _, _ in pts]
-    xs2 = [a for _, _, a, _ in pts]
-    ys = [y for *_, y in pts]
-    m1, m2, my = sum(xs1) / n, sum(xs2) / n, sum(ys) / n
-    s11 = sum((x - m1) ** 2 for x in xs1)
-    s22 = sum((x - m2) ** 2 for x in xs2)
-    s12 = sum((a - m1) * (b - m2) for a, b in zip(xs1, xs2))
-    s1y = sum((a - m1) * (y - my) for a, y in zip(xs1, ys))
-    s2y = sum((b - m2) * (y - my) for b, y in zip(xs2, ys))
-    det = s11 * s22 - s12 ** 2
-    if abs(det) < 1e-9:
-        b1, b2 = (s1y / s11 if s11 else 0.0), 0.0
-    else:
-        b1 = (s1y * s22 - s2y * s12) / det
-        b2 = (s2y * s11 - s1y * s12) / det
-    b0 = my - b1 * m1 - b2 * m2
-    resid = {pid: y - (b0 + b1 * s + b2 * a) for pid, s, a, y in pts}
-    # Rang percentile inversé : résidu le plus bas → 1.
+    known = [p for p in players if p.get("market_value")]
+    if len(known) < 20:
+        return {p["id"]: 0.5 for p in players}
+    leagues = sorted({p.get("league_id") or "?" for p in known})[1:]
+    groups = ["DEF", "MID", "ATT"]
+
+    def row(p):
+        age = p.get("age") or 27
+        g = position_group(p.get("position"))
+        return ([1.0, sport[p["id"]] / 100, age, age * age / 100]
+                + [1.0 if (p.get("league_id") or "?") == l else 0.0 for l in leagues]
+                + [1.0 if g == gg else 0.0 for gg in groups])
+
+    X = [row(p) for p in known]
+    y = [math.log(p["market_value"]) for p in known]
+    beta = _ols(X, y)
+    resid = {p["id"]: yi - sum(b * x for b, x in zip(beta, r)) for p, r, yi in zip(known, X, y)}
     order = sorted(resid, key=resid.get)
-    return {pid: round(1 - i / (n - 1), 3) for i, pid in enumerate(order)}
+    n = len(order)
+    out = {pid: round(1 - i / max(1, n - 1), 3) for i, pid in enumerate(order)}
+    for p in players:
+        out.setdefault(p["id"], 0.5)
+    return out
 
 
 # --------------------------------------------------------------------------- FAN FIT
@@ -384,16 +509,17 @@ DEFAULT_WEIGHTS = {"sport": 0.45, "valeur": 0.30, "fan": 0.25}
 
 def score_pool(players: list[dict], fan_weights: dict, needs: dict, today: date,
                weights: dict = DEFAULT_WEIGHTS) -> list[dict]:
+    baselines = pool_baselines(players)
     sport, sport_detail = {}, {}
     for p in players:
-        sport[p["id"]], sport_detail[p["id"]] = sport_score(p)
+        sport[p["id"]], sport_detail[p["id"]] = sport_score(p, baselines)
     underval = undervaluation(players, sport)
 
     out = []
     for p in players:
         vc = value_components(p, today)
         valeur = 100 * (0.40 * underval[p["id"]] + 0.25 * vc["contrat"] +
-                        0.20 * vc["tendance_score"] + 0.15 * vc["revente"])
+                        0.15 * vc["tendance_score"] + 0.20 * vc["plus_value_score"])
         fc = fan_components(p)
         fan = 100 * sum(fan_weights[k] * fc[k] for k in fan_weights)
         group = position_group(p.get("position"))
@@ -408,10 +534,16 @@ def score_pool(players: list[dict], fan_weights: dict, needs: dict, today: date,
             tags.append("Fin de contrat < 12 mois")
         if underval[p["id"]] >= 0.8:
             tags.append("Sous-évalué")
-        if vc["tendance"] >= 0.3:
-            tags.append("Valeur en hausse")
+        if vc["tendance"] >= 1.0:
+            tags.append("Valeur doublée")
+        elif vc["tendance"] <= -0.3:
+            tags.append("Valeur en baisse")
         if fc["_origine"] in ("Bassin nord-vaudois", "Vaud"):
             tags.append("Enfant du pays")
+        if sport_detail[p["id"]]["minutes_total"] < SHRINK_MINUTES:
+            tags.append("Échantillon faible")
+        if not p.get("market_value"):
+            tags.append("Valeur inconnue")
         if fc["_lien"] == "Ancien d'Yverdon":
             tags.append("Retour au club")
         sofa = p.get("perf") or p.get("sofascore") or {}
@@ -428,11 +560,12 @@ def score_pool(players: list[dict], fan_weights: dict, needs: dict, today: date,
             "age": p.get("age"), "club": p.get("club"), "league_id": p.get("league_id"),
             "nationalites": p.get("citizenship", []), "naissance": p.get("birth_city"),
             "market_value": p.get("market_value"), "indemnite_estimee": estimated_fee(p, today),
+            "valeur_projetee_24m": vc["valeur_projetee_24m"],
             "contract_expires": p.get("contract_expires"), "url": p.get("url"),
             "scores": {"sport": round(sport[p["id"]], 1), "valeur": round(valeur, 1),
                        "fan": round(fan, 1), "besoin": need, "final": round(final, 1)},
             "detail": {"sport": sport_detail[p["id"]],
-                       "valeur": {**{k: v for k, v in vc.items() if k != "tendance_score"},
+                       "valeur": {**{k: v for k, v in vc.items() if k not in ("tendance_score", "plus_value_score")},
                                   "sous_evaluation": underval[p["id"]],
                                   "tendance": round(vc["tendance"], 2)},
                        "fan": {k.lstrip("_"): v for k, v in fc.items()}},
