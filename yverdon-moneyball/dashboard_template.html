@@ -43,6 +43,7 @@ section{margin-top:44px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px}
 .demo{margin-top:18px;border:1px dashed var(--warn);background:color-mix(in srgb,var(--warn) 10%,var(--surface));border-radius:8px;padding:12px 14px;font-size:13.5px;color:var(--ink2)}
 .demo b{color:var(--ink)}
+.demo-tag{font-family:"Source Sans 3",sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;vertical-align:middle;margin-left:10px;padding:2px 8px;border-radius:999px;border:1px dashed var(--warn);color:var(--warn)}
 code{font-size:12.5px;background:var(--inset);padding:1px 5px;border-radius:4px}
 
 /* ADN fan */
@@ -140,7 +141,7 @@ footer li{margin-bottom:5px}
   <div class="lab" id="eyebrow"></div>
   <h1 style="margin-top:6px">Money<span>ball</span> <em id="short" style="font-style:normal"></em></h1>
   <p class="intro">Recrutement guidé par la donnée : la performance et la valeur marchande viennent de Transfermarkt, l'adéquation avec la fanbase vient du cockpit Fanbase Manager (Brevo + Metricool). Chaque joueur reçoit trois notes sur 100, pondérées par le besoin de l'effectif à son poste.</p>
-  <div class="demo" id="demo" hidden><b>Vivier de démonstration — joueurs et clubs fictifs.</b> L'API Transfermarkt n'était pas joignable depuis l'environnement de génération. Les signaux fans, eux, sont les vrais chiffres du cockpit. Lancer <code>python -m moneyball.scout</code> puis <code>python -m moneyball.recommend</code> pour remplacer ce vivier par les données Transfermarkt réelles.</div>
+  <div class="demo" id="demo" hidden><b>Démonstration : joueurs, clubs, effectif et besoins fictifs.</b> Transfermarkt n'a pas pu être lu depuis l'environnement de génération : ni l'effectif réel du club ni le vivier ne sont chargés, et aucun nom ci-dessous n'est un vrai joueur. Seul l'ADN fan est réel : il vient du cockpit Fanbase Manager. Lancer <code>python -m moneyball.scout</code> puis <code>python -m moneyball.recommend</code> pour remplacer cette démonstration par les données Transfermarkt.</div>
 </header>
 
 <section>
@@ -153,20 +154,20 @@ footer li{margin-bottom:5px}
 </section>
 
 <section>
-  <div class="shead"><h2>Besoins de l'<span>effectif</span></h2>
+  <div class="shead"><h2>Besoins de l'<span>effectif</span><em class="demo-tag" hidden>fictif</em></h2>
     <p>Sous-effectif par rapport à la cible de <span id="leagueRef"></span>, contrats qui expirent dans l'année et part de joueurs de 31 ans et plus. Le besoin multiplie la note finale de 0,85 à 1,15.</p></div>
   <div class="needs" id="needs"></div>
 </section>
 
 <section>
-  <div class="shead"><h2>Plan <span>mercato</span></h2>
+  <div class="shead"><h2>Plan <span>mercato</span><em class="demo-tag" hidden>fictif</em></h2>
     <p>Meilleure option par ligne dans l'enveloppe fixée, deux recrues sur les lignes où le besoin dépasse 0,45. Suit les réglages du tableau de chasse.</p></div>
   <div class="plan" id="plan"></div>
   <div class="totals" id="totals"></div>
 </section>
 
 <section>
-  <div class="shead"><h2>Le tableau de <span>chasse</span></h2>
+  <div class="shead"><h2>Le tableau de <span>chasse</span><em class="demo-tag" hidden>fictif</em></h2>
     <p>Réglez l'équilibre entre terrain, valeur et fanbase. Cliquez sur un joueur pour le détail de ses notes.</p></div>
   <div class="controls">
     <div class="ctl"><label for="wS">Sport <output id="oS"></output></label><input type="range" id="wS" min="0" max="100" step="5"></div>
@@ -228,7 +229,7 @@ const DATA=/*__DATA__*/null;
   const ROMAND=[L.bassin,L.canton,L.forme_club,"Romandie"];
   const pc=v=>v==null?"n/d":v+" %";
 
-  if(DATA.demo) $("demo").hidden=false;
+  if(DATA.demo){$("demo").hidden=false;document.querySelectorAll(".demo-tag").forEach(t=>t.hidden=false)}
   $("short").textContent=C.short;
   $("leagueRef").textContent=L.league_ref;
   $("localLabel").textContent=L.local_filter||"Profil romand";
@@ -237,7 +238,7 @@ const DATA=/*__DATA__*/null;
   $("coefs").textContent=(L.coef_display||[]).map(([n,c])=>`${n} = ${C.coefs[c].toFixed(2).replace(".",",")}`).join(" ; ");
   if(DB.fee_max) $("fee").max=DB.fee_max;
   if(DB.budget_max) $("budget").max=DB.budget_max;
-  $("eyebrow").textContent=`${L.eyebrow} · Vivier ${DATA.vivier} joueurs · ${new Date(DATA.genere).toLocaleDateString("fr-CH")}`;
+  $("eyebrow").textContent=`${L.eyebrow} · ${DATA.demo?"Démonstration fictive":"Vivier "+DATA.vivier+" joueurs"} · ${new Date(DATA.genere).toLocaleDateString("fr-CH")}`;
   $("srcDate").textContent=`Relevé du ${new Date(DNA.releve).toLocaleDateString("fr-CH")}.`;
   if(!DATA.demo) $("srcTm").textContent=`Vivier relevé le ${new Date(DATA.genere).toLocaleDateString("fr-CH")} : ${(DATA.competitions||[]).join(", ")}${DATA.saison?" · saison "+DATA.saison:""}.`;
 

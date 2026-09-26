@@ -255,11 +255,12 @@ def sport_score(p: dict, baselines: dict | None = None) -> tuple[float, dict]:
     else:
         prod_basis = xg_a_90 if xg_a_90 is not None else g_a_90
         if ref:
-            # Production en équivalent ligue de référence, rétrécie vers la médiane du poste quand
-            # l'échantillon est court, puis lue comme rang percentile dans le vivier.
+            # Production en équivalent ligue de référence, lue comme rang percentile dans le vivier,
+            # puis rétrécie vers le rang médian (0,5) quand l'échantillon est court. Rétrécir la
+            # valeur avant de lire son rang ne suffisait pas : la distribution est serrée autour de
+            # la médiane, et un remplaçant à 630 minutes restait au 85e rang (vivier LS, 26.09.2026).
             observed = prod_basis * st["coef"]
-            shrunk = confidence * observed + (1 - confidence) * ref["median"]
-            prod = _percentile(ref["values"], shrunk)
+            prod = confidence * _percentile(ref["values"], observed) + (1 - confidence) * 0.5
         else:
             prod = _clip(prod_basis * st["coef"] / EXPECTED_G_A_90[group] / 1.3)
         w_prod = {"DEF": 0.25, "MID": 0.45, "ATT": 0.60}[group]

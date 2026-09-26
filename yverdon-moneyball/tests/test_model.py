@@ -93,6 +93,7 @@ class ModelTest(unittest.TestCase):
         s_hot, d_hot = model.sport_score(hot_streak, base)
         s_full, d_full = model.sport_score(full_season, base)
         self.assertLess(s_hot, s_full)                # 1 but/90 sur 180 min ne bat pas une vraie saison
+        self.assertLess(d_hot["rang_production"], 0.62)   # rang tiré vers le milieu : confiance < 0,2
         self.assertLess(d_hot["confiance"], 0.2)
         self.assertEqual(d_full["reference"], "vivier")
 
