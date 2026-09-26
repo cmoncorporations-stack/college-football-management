@@ -30,7 +30,7 @@ LEAGUE_COEF = {
     "BE1": 1.70, "BE2": 1.05,               # Belgique
     "L2": 1.75, "L3": 1.20,                 # Allemagne
     "A1": 1.35, "A2": 0.95,                 # Autriche
-    "IT1": 2.10, "IT2": 1.60, "IT3": 1.00,  # Italie
+    "IT1": 2.10, "IT2": 1.60, "IT3": 0.90,  # Italie (Serie C : même valeur que le préfixe IT3A-C)
     "LUX1": 0.60,
     "NL1": 1.80, "NL2": 1.10, "PO1": 1.50, "PO2": 0.90, "ES1": 2.10, "ES2": 1.60,
     "GB1": 2.50, "GB2": 1.70, "PL1": 1.40, "DK1": 1.30, "DK2": 0.80, "SE1": 1.20, "NO1": 1.20,
