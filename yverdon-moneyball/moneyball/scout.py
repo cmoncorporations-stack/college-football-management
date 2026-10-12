@@ -5,8 +5,10 @@
 Étapes :
 1. Trouve Yverdon Sport (recherche par nom ou --club-id) et récupère l'effectif actuel.
 2. Pour chaque championnat : clubs → effectifs → premier filtre (âge, valeur marchande).
-3. Statistiques : page « Squad statistics » de chaque club (championnat, saison en
-   cours et saison précédente), plus celle de l'ancien club des joueurs arrivés cet été.
+3. Statistiques : page « Squad statistics » de chaque club (championnat de la saison en cours,
+   puis les autres compétitions de la saison en cours — coupe nationale, coupes d'Europe — lues
+   via le sélecteur de compétition de la page, puis championnat de la saison précédente), plus
+   celle de l'ancien club des joueurs arrivés cet été.
 4. Pour chaque joueur retenu : profil, historique de valeur, transferts, blessures (optionnel).
 5. Écrit data/squad.json et data/candidates.json au format normalisé attendu par model.py.
 
@@ -126,10 +128,17 @@ def stat_rows(block: dict, season: int | str) -> dict[str, dict]:
             for r in block["rows"]}
 
 
+def other_competitions(options: list[dict], season: int | str, league_code: str | None) -> list[dict]:
+    """Autres compétitions de la saison en cours (coupe nationale, coupes d'Europe…) parmi les options
+    de la page « Squad statistics » : tout sauf le championnat lu et la ligne « Total » (code vide)."""
+    return [o for o in options if o.get("code") and o.get("season") == str(season) and o["code"] != league_code]
+
+
 def club_season_stats(direct: TransfermarktDirect, club_id: str, comp: str | None, season: int,
-                      prev: int, with_prev: bool = True) -> list[dict]:
-    """Lignes de statistiques (une par joueur et saison) d'un club : championnat saison en cours,
-    puis championnat de la saison précédente (retrouvé dans les options de la page)."""
+                      prev: int, with_prev: bool = True, all_competitions: bool = True) -> list[dict]:
+    """Lignes de statistiques (une par joueur, saison et compétition) d'un club : championnat de la saison
+    en cours, puis (all_competitions) les autres compétitions de la saison en cours — coupe nationale,
+    coupes d'Europe — via le sélecteur de la page, puis le championnat de la saison précédente."""
     out = []
     if comp is not None:
         cur = direct.club_stats(club_id, comp, season)
@@ -140,6 +149,12 @@ def club_season_stats(direct: TransfermarktDirect, club_id: str, comp: str | Non
             cur = direct.club_stats(club_id, code, prev)
         return list(stat_rows(cur, prev).values())
     out.extend(stat_rows(cur, season).values())
+    if all_competitions:
+        for o in other_competitions(cur["options"], season, comp):
+            try:
+                out.extend(stat_rows(direct.club_stats(club_id, o["code"], season), season).values())
+            except Exception as e:  # une coupe exotique n'arrête pas la lecture du club
+                print(f"  ! {club_id} {o['code']} {season} : {e}")
     if with_prev:
         code, _ = league_option(cur["options"], prev)
         if code:

@@ -1571,119 +1571,119 @@
     "rank": 1,
     "club_id": "2790",
     "club": "FC Lugano",
-    "matches": 9,
-    "goals_for": 27,
+    "matches": 10,
+    "goals_for": 31,
     "goals_against": 7,
-    "points": 25,
+    "points": 28,
     "teams": 12
    },
    {
     "rank": 2,
     "club_id": "452",
     "club": "BSC Young Boys",
-    "matches": 9,
-    "goals_for": 31,
+    "matches": 10,
+    "goals_for": 33,
     "goals_against": 18,
-    "points": 19,
+    "points": 22,
     "teams": 12
    },
    {
     "rank": 3,
     "club_id": "321",
     "club": "FC Sion",
-    "matches": 9,
+    "matches": 10,
     "goals_for": 23,
-    "goals_against": 14,
+    "goals_against": 17,
     "points": 19,
     "teams": 12
    },
    {
     "rank": 4,
-    "club_id": "26",
-    "club": "FC Basel 1893",
-    "matches": 9,
+    "club_id": "257",
+    "club": "FC St. Gallen 1879",
+    "matches": 10,
     "goals_for": 17,
-    "goals_against": 17,
-    "points": 13,
+    "goals_against": 19,
+    "points": 16,
     "teams": 12
    },
    {
     "rank": 5,
-    "club_id": "257",
-    "club": "FC St. Gallen 1879",
-    "matches": 9,
-    "goals_for": 16,
-    "goals_against": 19,
-    "points": 13,
+    "club_id": "260",
+    "club": "FC Zürich",
+    "matches": 10,
+    "goals_for": 18,
+    "goals_against": 22,
+    "points": 14,
     "teams": 12
    },
    {
     "rank": 6,
-    "club_id": "434",
-    "club": "FC Luzern",
-    "matches": 9,
-    "goals_for": 17,
-    "goals_against": 18,
-    "points": 12,
+    "club_id": "61",
+    "club": "Servette FC",
+    "matches": 10,
+    "goals_for": 14,
+    "goals_against": 13,
+    "points": 13,
     "teams": 12
    },
    {
     "rank": 7,
-    "club_id": "260",
-    "club": "FC Zürich",
-    "matches": 9,
-    "goals_for": 14,
+    "club_id": "26",
+    "club": "FC Basel 1893",
+    "matches": 10,
+    "goals_for": 17,
     "goals_against": 20,
-    "points": 11,
+    "points": 13,
     "teams": 12
    },
    {
     "rank": 8,
-    "club_id": "61",
-    "club": "Servette FC",
-    "matches": 9,
-    "goals_for": 11,
-    "goals_against": 13,
-    "points": 10,
+    "club_id": "434",
+    "club": "FC Luzern",
+    "matches": 10,
+    "goals_for": 17,
+    "goals_against": 22,
+    "points": 12,
     "teams": 12
    },
    {
     "rank": 9,
     "club_id": "938",
     "club": "FC Thun",
-    "matches": 9,
-    "goals_for": 15,
-    "goals_against": 23,
+    "matches": 10,
+    "goals_for": 17,
+    "goals_against": 27,
     "points": 10,
     "teams": 12
    },
    {
     "rank": 10,
-    "club_id": "504",
-    "club": "Grasshopper Club Zurich",
-    "matches": 9,
-    "goals_for": 13,
-    "goals_against": 24,
-    "points": 8,
+    "club_id": "163",
+    "club": "FC Vaduz",
+    "matches": 10,
+    "goals_for": 21,
+    "goals_against": 21,
+    "points": 9,
     "teams": 12
    },
    {
     "rank": 11,
-    "club_id": "163",
-    "club": "FC Vaduz",
-    "matches": 9,
-    "goals_for": 18,
-    "goals_against": 21,
-    "points": 6,
+    "club_id": "504",
+    "club": "Grasshopper Club Zurich",
+    "matches": 10,
+    "goals_for": 13,
+    "goals_against": 26,
+    "points": 8,
     "teams": 12
    },
    {
     "rank": 12,
     "club_id": "527",
     "club": "FC Lausanne-Sport",
-    "matches": 9,
+    "matches": 10,
     "goals_for": 7,
-    "goals_against": 15,
+    "goals_against": 16,
     "points": 6,
     "teams": 12
    }
@@ -1693,37 +1693,64 @@
     "id": "203124",
     "name": "David von Ballmoos",
     "club": "FC Lugano",
-    "matches": 8,
-    "clean_sheets": 3,
+    "matches": 9,
+    "clean_sheets": 4,
     "conceded": 6,
-    "minutes": 675
+    "minutes": 765
    },
    {
     "id": "539804",
     "name": "Marvin Hübel",
     "club": "Grasshopper Club Zurich",
-    "matches": 5,
-    "clean_sheets": 2,
-    "conceded": 12,
-    "minutes": 450
-   },
-   {
-    "id": "395671",
-    "name": "Anthony Racioppi",
-    "club": "FC Sion",
-    "matches": 9,
+    "matches": 6,
     "clean_sheets": 2,
     "conceded": 14,
+    "minutes": 540
+   },
+   {
+    "id": "229292",
+    "name": "Edvinas Gertmonas",
+    "club": "Servette FC",
+    "matches": 8,
+    "clean_sheets": 2,
+    "conceded": 11,
+    "minutes": 720
+   },
+   {
+    "id": "500763",
+    "name": "Marvin Keller",
+    "club": "BSC Young Boys",
+    "matches": 9,
+    "clean_sheets": 2,
+    "conceded": 16,
+    "minutes": 810
+   },
+   {
+    "id": "254285",
+    "name": "Lawrence Ati Zigi",
+    "club": "FC St. Gallen 1879",
+    "matches": 9,
+    "clean_sheets": 2,
+    "conceded": 17,
     "minutes": 810
    },
    {
     "id": "534398",
     "name": "Melvin Mastil",
     "club": "FC Lausanne-Sport",
-    "matches": 9,
+    "matches": 10,
     "clean_sheets": 2,
-    "conceded": 15,
-    "minutes": 810
+    "conceded": 16,
+    "minutes": 900
+   },
+   {
+    "id": "395671",
+    "name": "Anthony Racioppi",
+    "club": "FC Sion",
+    "matches": 10,
+    "clean_sheets": 2,
+    "conceded": 17,
+    "minutes": 900
    },
    {
     "id": "499317",
@@ -1738,27 +1765,18 @@
     "id": "247915",
     "name": "Jonas Omlin",
     "club": "FC Basel 1893",
-    "matches": 2,
+    "matches": 3,
     "clean_sheets": 1,
-    "conceded": 1,
-    "minutes": 135
+    "conceded": 4,
+    "minutes": 225
    },
    {
     "id": "318707",
     "name": "Karlo Letica",
     "club": "FC Luzern",
-    "matches": 6,
-    "clean_sheets": 1,
-    "conceded": 10,
-    "minutes": 540
-   },
-   {
-    "id": "229292",
-    "name": "Edvinas Gertmonas",
-    "club": "Servette FC",
     "matches": 7,
     "clean_sheets": 1,
-    "conceded": 11,
+    "conceded": 14,
     "minutes": 630
    },
    {
@@ -1771,31 +1789,22 @@
     "minutes": 675
    },
    {
-    "id": "500763",
-    "name": "Marvin Keller",
-    "club": "BSC Young Boys",
+    "id": "291383",
+    "name": "Leon Schaffran",
+    "club": "FC Vaduz",
     "matches": 8,
     "clean_sheets": 1,
     "conceded": 16,
-    "minutes": 720
-   },
-   {
-    "id": "254285",
-    "name": "Lawrence Ati Zigi",
-    "club": "FC St. Gallen 1879",
-    "matches": 8,
-    "clean_sheets": 1,
-    "conceded": 17,
-    "minutes": 720
+    "minutes": 712
    },
    {
     "id": "496237",
     "name": "Niklas Steffen",
     "club": "FC Thun",
-    "matches": 9,
+    "matches": 10,
     "clean_sheets": 1,
-    "conceded": 23,
-    "minutes": 810
+    "conceded": 27,
+    "minutes": 900
    },
    {
     "id": "78868",
@@ -1864,19 +1873,10 @@
     "id": "862748",
     "name": "Silas Huber",
     "club": "FC Zürich",
-    "matches": 5,
+    "matches": 6,
     "clean_sheets": 0,
-    "conceded": 10,
-    "minutes": 450
-   },
-   {
-    "id": "291383",
-    "name": "Leon Schaffran",
-    "club": "FC Vaduz",
-    "matches": 7,
-    "clean_sheets": 0,
-    "conceded": 16,
-    "minutes": 622
+    "conceded": 12,
+    "minutes": 540
    }
   ]
  },
@@ -2915,59 +2915,59 @@
     "rank": 1,
     "club_id": "5499",
     "club": "FC Stade-Lausanne-Ouchy",
-    "matches": 9,
-    "goals_for": 17,
+    "matches": 10,
+    "goals_for": 20,
     "goals_against": 3,
-    "points": 21,
+    "points": 24,
     "teams": 10
    },
    {
     "rank": 2,
-    "club_id": "242",
-    "club": "FC Winterthur",
-    "matches": 9,
-    "goals_for": 19,
-    "goals_against": 8,
-    "points": 18,
+    "club_id": "322",
+    "club": "Yverdon Sport FC",
+    "matches": 10,
+    "goals_for": 16,
+    "goals_against": 9,
+    "points": 19,
     "teams": 10
    },
    {
     "rank": 3,
-    "club_id": "322",
-    "club": "Yverdon Sport FC",
-    "matches": 9,
-    "goals_for": 14,
-    "goals_against": 9,
-    "points": 16,
+    "club_id": "242",
+    "club": "FC Winterthur",
+    "matches": 10,
+    "goals_for": 19,
+    "goals_against": 11,
+    "points": 18,
     "teams": 10
    },
    {
     "rank": 4,
     "club_id": "2074",
     "club": "SC Kriens",
-    "matches": 9,
-    "goals_for": 16,
-    "goals_against": 11,
-    "points": 14,
+    "matches": 10,
+    "goals_for": 17,
+    "goals_against": 12,
+    "points": 15,
     "teams": 10
    },
    {
     "rank": 5,
-    "club_id": "116",
-    "club": "FC Aarau",
-    "matches": 9,
-    "goals_for": 14,
-    "goals_against": 16,
-    "points": 12,
+    "club_id": "625",
+    "club": "Neuchâtel Xamax FCS",
+    "matches": 10,
+    "goals_for": 15,
+    "goals_against": 17,
+    "points": 15,
     "teams": 10
    },
    {
     "rank": 6,
-    "club_id": "625",
-    "club": "Neuchâtel Xamax FCS",
-    "matches": 9,
-    "goals_for": 12,
-    "goals_against": 17,
+    "club_id": "116",
+    "club": "FC Aarau",
+    "matches": 10,
+    "goals_for": 15,
+    "goals_against": 18,
     "points": 12,
     "teams": 10
    },
@@ -2975,29 +2975,29 @@
     "rank": 7,
     "club_id": "8463",
     "club": "FC Rapperswil-Jona",
-    "matches": 9,
+    "matches": 10,
     "goals_for": 15,
-    "goals_against": 16,
+    "goals_against": 19,
     "points": 10,
     "teams": 10
    },
    {
     "rank": 8,
-    "club_id": "1292",
-    "club": "Etoile Carouge FC",
-    "matches": 9,
-    "goals_for": 8,
-    "goals_against": 12,
-    "points": 9,
+    "club_id": "850",
+    "club": "FC Wil 1900",
+    "matches": 10,
+    "goals_for": 16,
+    "goals_against": 22,
+    "points": 10,
     "teams": 10
    },
    {
     "rank": 9,
-    "club_id": "850",
-    "club": "FC Wil 1900",
-    "matches": 9,
-    "goals_for": 15,
-    "goals_against": 21,
+    "club_id": "1292",
+    "club": "Etoile Carouge FC",
+    "matches": 10,
+    "goals_for": 8,
+    "goals_against": 14,
     "points": 9,
     "teams": 10
    },
@@ -3005,10 +3005,10 @@
     "rank": 10,
     "club_id": "5507",
     "club": "FC Stade Nyonnais",
-    "matches": 9,
-    "goals_for": 6,
-    "goals_against": 23,
-    "points": 2,
+    "matches": 10,
+    "goals_for": 8,
+    "goals_against": 24,
+    "points": 5,
     "teams": 10
    }
   ],
@@ -3017,10 +3017,19 @@
     "id": "659311",
     "name": "Laurent Seji",
     "club": "FC Stade-Lausanne-Ouchy",
-    "matches": 8,
-    "clean_sheets": 6,
+    "matches": 9,
+    "clean_sheets": 7,
     "conceded": 2,
-    "minutes": 720
+    "minutes": 810
+   },
+   {
+    "id": "484542",
+    "name": "Uros Likar",
+    "club": "Neuchâtel Xamax FCS",
+    "matches": 5,
+    "clean_sheets": 3,
+    "conceded": 3,
+    "minutes": 375
    },
    {
     "id": "123147",
@@ -3032,40 +3041,31 @@
     "minutes": 540
    },
    {
+    "id": "237664",
+    "name": "Simon Enzler",
+    "club": "Yverdon Sport FC",
+    "matches": 10,
+    "clean_sheets": 3,
+    "conceded": 9,
+    "minutes": 900
+   },
+   {
     "id": "1061045",
     "name": "Ruben Salchli",
     "club": "SC Kriens",
-    "matches": 9,
+    "matches": 10,
     "clean_sheets": 3,
-    "conceded": 11,
-    "minutes": 810
-   },
-   {
-    "id": "484542",
-    "name": "Uros Likar",
-    "club": "Neuchâtel Xamax FCS",
-    "matches": 4,
-    "clean_sheets": 2,
-    "conceded": 3,
-    "minutes": 285
+    "conceded": 12,
+    "minutes": 900
    },
    {
     "id": "203926",
     "name": "Alan Omerovic",
     "club": "FC Rapperswil-Jona",
-    "matches": 4,
+    "matches": 5,
     "clean_sheets": 2,
-    "conceded": 4,
-    "minutes": 360
-   },
-   {
-    "id": "237664",
-    "name": "Simon Enzler",
-    "club": "Yverdon Sport FC",
-    "matches": 9,
-    "clean_sheets": 2,
-    "conceded": 9,
-    "minutes": 810
+    "conceded": 7,
+    "minutes": 450
    },
    {
     "id": "455762",
@@ -3080,37 +3080,37 @@
     "id": "688604",
     "name": "Antonio Spagnoli",
     "club": "FC Winterthur",
-    "matches": 3,
+    "matches": 4,
     "clean_sheets": 1,
-    "conceded": 4,
-    "minutes": 270
+    "conceded": 7,
+    "minutes": 360
    },
    {
     "id": "1015811",
     "name": "Lionel Huwiler",
     "club": "Etoile Carouge FC",
-    "matches": 6,
+    "matches": 7,
     "clean_sheets": 1,
-    "conceded": 10,
-    "minutes": 540
+    "conceded": 12,
+    "minutes": 630
    },
    {
     "id": "944830",
     "name": "Gentrit Muslija",
     "club": "FC Wil 1900",
-    "matches": 9,
+    "matches": 10,
     "clean_sheets": 1,
-    "conceded": 21,
-    "minutes": 810
+    "conceded": 22,
+    "minutes": 900
    },
    {
     "id": "951660",
     "name": "Marwan Aubert",
     "club": "FC Stade Nyonnais",
-    "matches": 9,
+    "matches": 10,
     "clean_sheets": 1,
-    "conceded": 23,
-    "minutes": 810
+    "conceded": 24,
+    "minutes": 900
    },
    {
     "id": "284695",
@@ -3131,15 +3131,6 @@
     "minutes": 360
    },
    {
-    "id": "1157110",
-    "name": "Luka Velickovic",
-    "club": "FC Aarau",
-    "matches": 5,
-    "clean_sheets": 0,
-    "conceded": 7,
-    "minutes": 450
-   },
-   {
     "id": "925220",
     "name": "Cyrill Emch",
     "club": "FC Rapperswil-Jona",
@@ -3147,6 +3138,15 @@
     "clean_sheets": 0,
     "conceded": 12,
     "minutes": 450
+   },
+   {
+    "id": "1157110",
+    "name": "Luka Velickovic",
+    "club": "FC Aarau",
+    "matches": 6,
+    "clean_sheets": 0,
+    "conceded": 9,
+    "minutes": 540
    },
    {
     "id": "227037",
@@ -7889,18 +7889,18 @@
     "minutes": 707
    },
    {
-    "id": "60543",
-    "name": "Mathieu Gorgelin",
-    "club": "RC Lens",
+    "id": "112822",
+    "name": "Karl-Johan Johnsson",
+    "club": "RC Strasbourg Alsace",
     "matches": 1,
     "clean_sheets": 1,
     "conceded": 0,
     "minutes": 90
    },
    {
-    "id": "112822",
-    "name": "Karl-Johan Johnsson",
-    "club": "RC Strasbourg Alsace",
+    "id": "60543",
+    "name": "Mathieu Gorgelin",
+    "club": "RC Lens",
     "matches": 1,
     "clean_sheets": 1,
     "conceded": 0,
@@ -8572,44 +8572,84 @@
     "rank": 1,
     "club_id": "618",
     "club": "AS Saint-Étienne",
-    "matches": 7,
-    "goals_for": 19,
+    "matches": 8,
+    "goals_for": 21,
     "goals_against": 8,
-    "points": 16,
+    "points": 19,
     "teams": 18
    },
    {
     "rank": 2,
     "club_id": "1154",
     "club": "Red Star FC",
-    "matches": 7,
-    "goals_for": 9,
-    "goals_against": 7,
-    "points": 14,
+    "matches": 8,
+    "goals_for": 12,
+    "goals_against": 9,
+    "points": 17,
     "teams": 18
    },
    {
     "rank": 3,
+    "club_id": "969",
+    "club": "Montpellier HSC",
+    "matches": 8,
+    "goals_for": 8,
+    "goals_against": 5,
+    "points": 15,
+    "teams": 18
+   },
+   {
+    "rank": 4,
     "club_id": "1421",
     "club": "Stade Reims",
-    "matches": 7,
+    "matches": 8,
     "goals_for": 15,
+    "goals_against": 9,
+    "points": 14,
+    "teams": 18
+   },
+   {
+    "rank": 5,
+    "club_id": "1159",
+    "club": "AS Nancy-Lorraine",
+    "matches": 8,
+    "goals_for": 9,
+    "goals_against": 7,
+    "points": 13,
+    "teams": 18
+   },
+   {
+    "rank": 6,
+    "club_id": "30204",
+    "club": "FC Annecy",
+    "matches": 8,
+    "goals_for": 10,
     "goals_against": 9,
     "points": 13,
     "teams": 18
    },
    {
-    "rank": 4,
-    "club_id": "969",
-    "club": "Montpellier HSC",
-    "matches": 7,
-    "goals_for": 6,
-    "goals_against": 5,
-    "points": 12,
+    "rank": 7,
+    "club_id": "3166",
+    "club": "Pau FC",
+    "matches": 8,
+    "goals_for": 9,
+    "goals_against": 8,
+    "points": 11,
     "teams": 18
    },
    {
-    "rank": 5,
+    "rank": 8,
+    "club_id": "750",
+    "club": "FC Sochaux-Montbéliard",
+    "matches": 8,
+    "goals_for": 5,
+    "goals_against": 6,
+    "points": 11,
+    "teams": 18
+   },
+   {
+    "rank": 9,
     "club_id": "347",
     "club": "FC Metz",
     "matches": 7,
@@ -8619,37 +8659,7 @@
     "teams": 18
    },
    {
-    "rank": 6,
-    "club_id": "1159",
-    "club": "AS Nancy-Lorraine",
-    "matches": 7,
-    "goals_for": 8,
-    "goals_against": 7,
-    "points": 10,
-    "teams": 18
-   },
-   {
-    "rank": 7,
-    "club_id": "30204",
-    "club": "FC Annecy",
-    "matches": 7,
-    "goals_for": 9,
-    "goals_against": 9,
-    "points": 10,
-    "teams": 18
-   },
-   {
-    "rank": 8,
-    "club_id": "750",
-    "club": "FC Sochaux-Montbéliard",
-    "matches": 7,
-    "goals_for": 4,
-    "goals_against": 5,
-    "points": 10,
-    "teams": 18
-   },
-   {
-    "rank": 9,
+    "rank": 10,
     "club_id": "2969",
     "club": "Dijon FCO",
     "matches": 7,
@@ -8659,22 +8669,12 @@
     "teams": 18
    },
    {
-    "rank": 10,
-    "club_id": "3166",
-    "club": "Pau FC",
-    "matches": 7,
-    "goals_for": 6,
-    "goals_against": 6,
-    "points": 8,
-    "teams": 18
-   },
-   {
     "rank": 11,
     "club_id": "9202",
     "club": "USL Dunkerque",
-    "matches": 7,
+    "matches": 8,
     "goals_for": 10,
-    "goals_against": 12,
+    "goals_against": 13,
     "points": 8,
     "teams": 18
    },
@@ -8682,47 +8682,47 @@
     "rank": 11,
     "club_id": "855",
     "club": "EA Guingamp",
-    "matches": 7,
+    "matches": 8,
     "goals_for": 10,
-    "goals_against": 12,
+    "goals_against": 13,
     "points": 8,
     "teams": 18
    },
    {
     "rank": 13,
-    "club_id": "1290",
-    "club": "Grenoble Foot 38",
-    "matches": 7,
-    "goals_for": 8,
-    "goals_against": 11,
+    "club_id": "995",
+    "club": "FC Nantes",
+    "matches": 8,
+    "goals_for": 9,
+    "goals_against": 13,
     "points": 8,
     "teams": 18
    },
    {
     "rank": 14,
-    "club_id": "11273",
-    "club": "Rodez AF",
-    "matches": 7,
-    "goals_for": 14,
-    "goals_against": 16,
-    "points": 7,
+    "club_id": "1290",
+    "club": "Grenoble Foot 38",
+    "matches": 8,
+    "goals_for": 8,
+    "goals_against": 13,
+    "points": 8,
     "teams": 18
    },
    {
     "rank": 15,
-    "club_id": "995",
-    "club": "FC Nantes",
-    "matches": 7,
-    "goals_for": 9,
-    "goals_against": 13,
+    "club_id": "11273",
+    "club": "Rodez AF",
+    "matches": 8,
+    "goals_for": 14,
+    "goals_against": 18,
     "points": 7,
     "teams": 18
    },
    {
     "rank": 16,
-    "club_id": "3524",
-    "club": "Clermont Foot 63",
-    "matches": 7,
+    "club_id": "7042",
+    "club": "US Boulogne",
+    "matches": 8,
     "goals_for": 4,
     "goals_against": 6,
     "points": 6,
@@ -8730,115 +8730,142 @@
    },
    {
     "rank": 17,
-    "club_id": "7042",
-    "club": "US Boulogne",
-    "matches": 7,
-    "goals_for": 3,
-    "goals_against": 5,
-    "points": 5,
+    "club_id": "3524",
+    "club": "Clermont Foot 63",
+    "matches": 8,
+    "goals_for": 6,
+    "goals_against": 9,
+    "points": 6,
     "teams": 18
    },
    {
     "rank": 18,
     "club_id": "1080",
     "club": "Stade Lavallois",
-    "matches": 7,
-    "goals_for": 8,
-    "goals_against": 14,
+    "matches": 8,
+    "goals_for": 10,
+    "goals_against": 17,
     "points": 5,
     "teams": 18
    }
   ],
   "goalkeepers": [
    {
-    "id": "191882",
-    "name": "Mehdi Jeannin",
-    "club": "FC Sochaux-Montbéliard",
-    "matches": 7,
-    "clean_sheets": 4,
-    "conceded": 5,
-    "minutes": 630
-   },
-   {
     "id": "696600",
     "name": "Simon Ngapandouetnbu",
     "club": "Montpellier HSC",
-    "matches": 7,
+    "matches": 8,
+    "clean_sheets": 5,
+    "conceded": 5,
+    "minutes": 720
+   },
+   {
+    "id": "191882",
+    "name": "Mehdi Jeannin",
+    "club": "FC Sochaux-Montbéliard",
+    "matches": 8,
     "clean_sheets": 4,
-    "conceded": 5,
-    "minutes": 630
-   },
-   {
-    "id": "696892",
-    "name": "Blondy Nna Noukeu",
-    "club": "US Boulogne",
-    "matches": 7,
-    "clean_sheets": 3,
-    "conceded": 5,
-    "minutes": 630
-   },
-   {
-    "id": "358505",
-    "name": "Théo Guivarch",
-    "club": "Clermont Foot 63",
-    "matches": 7,
-    "clean_sheets": 3,
     "conceded": 6,
-    "minutes": 630
+    "minutes": 720
    },
    {
     "id": "242716",
     "name": "Enzo Basilio",
     "club": "AS Nancy-Lorraine",
-    "matches": 7,
-    "clean_sheets": 3,
+    "matches": 8,
+    "clean_sheets": 4,
     "conceded": 7,
-    "minutes": 630
+    "minutes": 720
    },
    {
-    "id": "344591",
-    "name": "Gaëtan Poussin",
-    "club": "Red Star FC",
-    "matches": 7,
+    "id": "696892",
+    "name": "Blondy Nna Noukeu",
+    "club": "US Boulogne",
+    "matches": 8,
     "clean_sheets": 3,
-    "conceded": 7,
-    "minutes": 630
-   },
-   {
-    "id": "395602",
-    "name": "Alexandre Olliero",
-    "club": "Grenoble Foot 38",
-    "matches": 7,
-    "clean_sheets": 3,
-    "conceded": 11,
-    "minutes": 630
-   },
-   {
-    "id": "78047",
-    "name": "Brice Maubleu",
-    "club": "Pau FC",
-    "matches": 7,
-    "clean_sheets": 2,
     "conceded": 6,
-    "minutes": 630
+    "minutes": 720
    },
    {
     "id": "357047",
     "name": "Gautier Larsonneur",
     "club": "AS Saint-Étienne",
-    "matches": 7,
-    "clean_sheets": 2,
+    "matches": 8,
+    "clean_sheets": 3,
     "conceded": 8,
-    "minutes": 630
+    "minutes": 718
    },
    {
     "id": "222636",
     "name": "Florian Escales",
     "club": "FC Annecy",
-    "matches": 7,
+    "matches": 8,
+    "clean_sheets": 3,
+    "conceded": 9,
+    "minutes": 720
+   },
+   {
+    "id": "358505",
+    "name": "Théo Guivarch",
+    "club": "Clermont Foot 63",
+    "matches": 8,
+    "clean_sheets": 3,
+    "conceded": 9,
+    "minutes": 720
+   },
+   {
+    "id": "344591",
+    "name": "Gaëtan Poussin",
+    "club": "Red Star FC",
+    "matches": 8,
+    "clean_sheets": 3,
+    "conceded": 9,
+    "minutes": 720
+   },
+   {
+    "id": "395602",
+    "name": "Alexandre Olliero",
+    "club": "Grenoble Foot 38",
+    "matches": 8,
+    "clean_sheets": 3,
+    "conceded": 13,
+    "minutes": 720
+   },
+   {
+    "id": "78047",
+    "name": "Brice Maubleu",
+    "club": "Pau FC",
+    "matches": 8,
+    "clean_sheets": 2,
+    "conceded": 8,
+    "minutes": 720
+   },
+   {
+    "id": "639582",
+    "name": "Tom Ritzy Hülsmann",
+    "club": "Stade Reims",
+    "matches": 8,
     "clean_sheets": 2,
     "conceded": 9,
-    "minutes": 630
+    "minutes": 720
+   },
+   {
+    "id": "1111044",
+    "name": "Mamour Ndiaye",
+    "club": "AS Saint-Étienne",
+    "matches": 1,
+    "clean_sheets": 1,
+    "conceded": 0,
+    "minutes": 2
+   },
+   {
+    "id": "190280",
+    "name": "Patrik Carlgren",
+    "club": "FC Nantes",
+    "matches": 1,
+    "clean_sheets": 1,
+    "conceded": 0,
+    "minutes": 90
    },
    {
     "id": "394903",
@@ -8859,24 +8886,6 @@
     "minutes": 540
    },
    {
-    "id": "639582",
-    "name": "Tom Ritzy Hülsmann",
-    "club": "Stade Reims",
-    "matches": 7,
-    "clean_sheets": 1,
-    "conceded": 9,
-    "minutes": 630
-   },
-   {
-    "id": "142033",
-    "name": "Adrián Ortolá",
-    "club": "EA Guingamp",
-    "matches": 7,
-    "clean_sheets": 1,
-    "conceded": 12,
-    "minutes": 630
-   },
-   {
     "id": "127188",
     "name": "Maxime Dupé",
     "club": "FC Nantes",
@@ -8884,6 +8893,15 @@
     "clean_sheets": 1,
     "conceded": 13,
     "minutes": 630
+   },
+   {
+    "id": "142033",
+    "name": "Adrián Ortolá",
+    "club": "EA Guingamp",
+    "matches": 8,
+    "clean_sheets": 1,
+    "conceded": 13,
+    "minutes": 720
    },
    {
     "id": "1371249",
@@ -8904,12 +8922,12 @@
     "minutes": 90
    },
    {
-    "id": "390942",
-    "name": "Quentin Braat",
-    "club": "Rodez AF",
+    "id": "141364",
+    "name": "Maxime Hautbois",
+    "club": "Stade Lavallois",
     "matches": 1,
     "clean_sheets": 0,
-    "conceded": 1,
+    "conceded": 3,
     "minutes": 90
    },
    {
@@ -8922,13 +8940,22 @@
     "minutes": 90
    },
    {
+    "id": "390942",
+    "name": "Quentin Braat",
+    "club": "Rodez AF",
+    "matches": 2,
+    "clean_sheets": 0,
+    "conceded": 3,
+    "minutes": 180
+   },
+   {
     "id": "495602",
     "name": "Moha Ramos",
     "club": "USL Dunkerque",
-    "matches": 4,
+    "matches": 5,
     "clean_sheets": 0,
-    "conceded": 6,
-    "minutes": 327
+    "conceded": 7,
+    "minutes": 417
    },
    {
     "id": "618463",
@@ -9449,186 +9476,195 @@
   "table": [
    {
     "rank": 1,
-    "club_id": "1564",
-    "club": "FC Rouen 1899",
-    "matches": 8,
+    "club_id": "3541",
+    "club": "Vendée Foot Club La Roche-sur-Yon",
+    "matches": 9,
     "goals_for": 15,
-    "goals_against": 5,
-    "points": 17,
+    "goals_against": 8,
+    "points": 21,
     "teams": 18
    },
    {
     "rank": 2,
-    "club_id": "1162",
-    "club": "SM Caen",
-    "matches": 8,
-    "goals_for": 15,
-    "goals_against": 9,
-    "points": 15,
+    "club_id": "1564",
+    "club": "FC Rouen 1899",
+    "matches": 9,
+    "goals_for": 17,
+    "goals_against": 5,
+    "points": 20,
     "teams": 18
    },
    {
     "rank": 3,
-    "club_id": "3541",
-    "club": "Vendée Foot Club La Roche-sur-Yon",
-    "matches": 7,
-    "goals_for": 10,
-    "goals_against": 6,
-    "points": 15,
+    "club_id": "21688",
+    "club": "US Concarneau",
+    "matches": 9,
+    "goals_for": 12,
+    "goals_against": 8,
+    "points": 16,
     "teams": 18
    },
    {
     "rank": 4,
-    "club_id": "21688",
-    "club": "US Concarneau",
-    "matches": 7,
-    "goals_for": 9,
-    "goals_against": 6,
-    "points": 12,
+    "club_id": "13466",
+    "club": "FC Versailles 78",
+    "matches": 9,
+    "goals_for": 13,
+    "goals_against": 12,
+    "points": 16,
     "teams": 18
    },
    {
     "rank": 5,
-    "club_id": "94385",
-    "club": "US Thionville Lusitanos",
-    "matches": 7,
-    "goals_for": 13,
-    "goals_against": 11,
-    "points": 12,
+    "club_id": "1416",
+    "club": "Amiens SC",
+    "matches": 9,
+    "goals_for": 12,
+    "goals_against": 3,
+    "points": 15,
     "teams": 18
    },
    {
     "rank": 6,
-    "club_id": "1416",
-    "club": "Amiens SC",
-    "matches": 7,
-    "goals_for": 8,
-    "goals_against": 2,
-    "points": 11,
+    "club_id": "895",
+    "club": "AS Cannes",
+    "matches": 9,
+    "goals_for": 11,
+    "goals_against": 4,
+    "points": 15,
     "teams": 18
    },
    {
     "rank": 7,
-    "club_id": "895",
-    "club": "AS Cannes",
-    "matches": 7,
-    "goals_for": 8,
-    "goals_against": 3,
-    "points": 11,
+    "club_id": "1162",
+    "club": "SM Caen",
+    "matches": 9,
+    "goals_for": 17,
+    "goals_against": 12,
+    "points": 15,
     "teams": 18
    },
    {
     "rank": 8,
     "club_id": "26863",
     "club": "Le Puy-en-Velay FC",
-    "matches": 7,
-    "goals_for": 9,
-    "goals_against": 7,
-    "points": 10,
+    "matches": 9,
+    "goals_for": 11,
+    "goals_against": 9,
+    "points": 13,
     "teams": 18
    },
    {
     "rank": 9,
-    "club_id": "13466",
-    "club": "FC Versailles 78",
-    "matches": 7,
-    "goals_for": 10,
-    "goals_against": 11,
-    "points": 10,
+    "club_id": "17442",
+    "club": "FC Fleury 91",
+    "matches": 9,
+    "goals_for": 15,
+    "goals_against": 12,
+    "points": 12,
     "teams": 18
    },
    {
     "rank": 10,
-    "club_id": "595",
-    "club": "SC Bastia",
-    "matches": 7,
-    "goals_for": 6,
-    "goals_against": 9,
-    "points": 10,
+    "club_id": "94385",
+    "club": "US Thionville Lusitanos",
+    "matches": 9,
+    "goals_for": 14,
+    "goals_against": 14,
+    "points": 12,
     "teams": 18
    },
    {
     "rank": 11,
-    "club_id": "17442",
-    "club": "FC Fleury 91",
-    "matches": 7,
-    "goals_for": 11,
-    "goals_against": 8,
-    "points": 9,
+    "club_id": "62382",
+    "club": "Paris 13 Atletico",
+    "matches": 9,
+    "goals_for": 7,
+    "goals_against": 9,
+    "points": 12,
     "teams": 18
    },
    {
     "rank": 12,
-    "club_id": "7124",
-    "club": "Quevilly - Rouen Métropole",
-    "matches": 7,
-    "goals_for": 6,
-    "goals_against": 8,
-    "points": 9,
+    "club_id": "595",
+    "club": "SC Bastia",
+    "matches": 9,
+    "goals_for": 7,
+    "goals_against": 11,
+    "points": 11,
     "teams": 18
    },
    {
     "rank": 13,
-    "club_id": "62382",
-    "club": "Paris 13 Atletico",
-    "matches": 7,
-    "goals_for": 5,
-    "goals_against": 7,
-    "points": 9,
+    "club_id": "7124",
+    "club": "Quevilly - Rouen Métropole",
+    "matches": 9,
+    "goals_for": 8,
+    "goals_against": 12,
+    "points": 10,
     "teams": 18
    },
    {
     "rank": 14,
     "club_id": "10868",
     "club": "US Orléans",
-    "matches": 7,
-    "goals_for": 6,
-    "goals_against": 10,
-    "points": 7,
+    "matches": 9,
+    "goals_for": 7,
+    "goals_against": 11,
+    "points": 9,
     "teams": 18
    },
    {
     "rank": 15,
     "club_id": "1423",
     "club": "Valenciennes FC",
-    "matches": 7,
-    "goals_for": 7,
-    "goals_against": 12,
-    "points": 5,
+    "matches": 9,
+    "goals_for": 9,
+    "goals_against": 14,
+    "points": 8,
     "teams": 18
    },
    {
     "rank": 16,
     "club_id": "42609",
     "club": "SC Aubagne Air Bel",
-    "matches": 7,
-    "goals_for": 3,
-    "goals_against": 8,
-    "points": 4,
+    "matches": 9,
+    "goals_for": 6,
+    "goals_against": 12,
+    "points": 7,
     "teams": 18
    },
    {
     "rank": 17,
     "club_id": "2972",
     "club": "Football Bourg-en-Bresse Péronnas 01",
-    "matches": 7,
-    "goals_for": 4,
-    "goals_against": 12,
-    "points": 4,
+    "matches": 9,
+    "goals_for": 5,
+    "goals_against": 15,
+    "points": 5,
     "teams": 18
    },
    {
     "rank": 18,
     "club_id": "18633",
     "club": "FC Villefranche-Beaujolais",
-    "matches": 7,
-    "goals_for": 6,
-    "goals_against": 17,
+    "matches": 9,
+    "goals_for": 7,
+    "goals_against": 22,
     "points": 4,
     "teams": 18
    }
   ],
   "goalkeepers": [
+   {
+    "id": "164967",
+    "name": "Axel Maraval",
+    "club": "FC Rouen 1899",
+    "matches": 9,
+    "clean_sheets": 6,
+    "conceded": 5,
+    "minutes": 810
+   },
    {
     "id": "804829",
     "name": "Yannick Pandor",
@@ -9639,85 +9675,76 @@
     "minutes": 630
    },
    {
-    "id": "164967",
-    "name": "Axel Maraval",
-    "club": "FC Rouen 1899",
-    "matches": 8,
-    "clean_sheets": 5,
-    "conceded": 5,
-    "minutes": 720
-   },
-   {
     "id": "157484",
     "name": "Quentin Beunardeau",
     "club": "AS Cannes",
-    "matches": 7,
-    "clean_sheets": 4,
-    "conceded": 3,
-    "minutes": 630
+    "matches": 9,
+    "clean_sheets": 5,
+    "conceded": 4,
+    "minutes": 810
    },
    {
     "id": "549318",
     "name": "Yannis Clémentia",
     "club": "SM Caen",
-    "matches": 8,
+    "matches": 9,
     "clean_sheets": 4,
-    "conceded": 9,
-    "minutes": 720
-   },
-   {
-    "id": "191529",
-    "name": "Vincent Viot",
-    "club": "US Concarneau",
-    "matches": 7,
-    "clean_sheets": 3,
-    "conceded": 6,
-    "minutes": 630
-   },
-   {
-    "id": "695422",
-    "name": "Théo De Percin",
-    "club": "SC Bastia",
-    "matches": 7,
-    "clean_sheets": 3,
-    "conceded": 9,
-    "minutes": 630
+    "conceded": 12,
+    "minutes": 810
    },
    {
     "id": "796971",
     "name": "Nathan Yavorsky",
     "club": "FC Versailles 78",
-    "matches": 7,
-    "clean_sheets": 3,
-    "conceded": 11,
-    "minutes": 630
+    "matches": 9,
+    "clean_sheets": 4,
+    "conceded": 12,
+    "minutes": 810
    },
    {
-    "id": "203469",
-    "name": "Imbad Ahamada",
-    "club": "Vendée Foot Club La Roche-sur-Yon",
-    "matches": 6,
-    "clean_sheets": 2,
-    "conceded": 6,
-    "minutes": 540
+    "id": "191529",
+    "name": "Vincent Viot",
+    "club": "US Concarneau",
+    "matches": 9,
+    "clean_sheets": 3,
+    "conceded": 8,
+    "minutes": 810
    },
    {
     "id": "478346",
     "name": "Matis Carvalho",
     "club": "Le Puy-en-Velay FC",
-    "matches": 7,
-    "clean_sheets": 2,
-    "conceded": 7,
-    "minutes": 630
+    "matches": 9,
+    "clean_sheets": 3,
+    "conceded": 9,
+    "minutes": 810
    },
    {
     "id": "1029212",
     "name": "Axel Temperton",
     "club": "Paris 13 Atletico",
-    "matches": 7,
-    "clean_sheets": 2,
-    "conceded": 7,
-    "minutes": 630
+    "matches": 9,
+    "clean_sheets": 3,
+    "conceded": 9,
+    "minutes": 810
+   },
+   {
+    "id": "1026536",
+    "name": "Fei-Hong Faham",
+    "club": "US Orléans",
+    "matches": 9,
+    "clean_sheets": 3,
+    "conceded": 11,
+    "minutes": 810
+   },
+   {
+    "id": "695422",
+    "name": "Théo De Percin",
+    "club": "SC Bastia",
+    "matches": 9,
+    "clean_sheets": 3,
+    "conceded": 11,
+    "minutes": 810
    },
    {
     "id": "883866",
@@ -9729,15 +9756,6 @@
     "minutes": 576
    },
    {
-    "id": "1026536",
-    "name": "Fei-Hong Faham",
-    "club": "US Orléans",
-    "matches": 7,
-    "clean_sheets": 2,
-    "conceded": 10,
-    "minutes": 630
-   },
-   {
     "id": "624785",
     "name": "Wilfried Bedfian",
     "club": "US Thionville Lusitanos",
@@ -9747,31 +9765,31 @@
     "minutes": 630
    },
    {
+    "id": "203469",
+    "name": "Imbad Ahamada",
+    "club": "Vendée Foot Club La Roche-sur-Yon",
+    "matches": 8,
+    "clean_sheets": 2,
+    "conceded": 8,
+    "minutes": 720
+   },
+   {
     "id": "392282",
     "name": "Jean Louchet",
     "club": "Valenciennes FC",
-    "matches": 7,
+    "matches": 9,
     "clean_sheets": 2,
-    "conceded": 12,
-    "minutes": 630
+    "conceded": 14,
+    "minutes": 810
    },
    {
     "id": "593317",
     "name": "Sullivan Péan",
     "club": "FC Villefranche-Beaujolais",
-    "matches": 7,
+    "matches": 9,
     "clean_sheets": 2,
-    "conceded": 17,
-    "minutes": 630
-   },
-   {
-    "id": "1203239",
-    "name": "Tiago Moreira",
-    "club": "SC Aubagne Air Bel",
-    "matches": 1,
-    "clean_sheets": 1,
-    "conceded": 0,
-    "minutes": 47
+    "conceded": 22,
+    "minutes": 810
    },
    {
     "id": "707245",
@@ -9783,31 +9801,58 @@
     "minutes": 90
    },
    {
+    "id": "861141",
+    "name": "Victor Delins",
+    "club": "Amiens SC",
+    "matches": 2,
+    "clean_sheets": 1,
+    "conceded": 1,
+    "minutes": 180
+   },
+   {
+    "id": "1203239",
+    "name": "Tiago Moreira",
+    "club": "SC Aubagne Air Bel",
+    "matches": 3,
+    "clean_sheets": 1,
+    "conceded": 4,
+    "minutes": 227
+   },
+   {
     "id": "979761",
     "name": "Mathys Silistrie",
     "club": "Quevilly - Rouen Métropole",
-    "matches": 7,
+    "matches": 9,
     "clean_sheets": 1,
-    "conceded": 8,
-    "minutes": 630
+    "conceded": 12,
+    "minutes": 810
    },
    {
     "id": "872757",
     "name": "Gaël Alette",
     "club": "FC Fleury 91",
-    "matches": 7,
+    "matches": 9,
     "clean_sheets": 1,
-    "conceded": 8,
-    "minutes": 630
+    "conceded": 12,
+    "minutes": 810
+   },
+   {
+    "id": "827240",
+    "name": "Antonin Parisot",
+    "club": "US Thionville Lusitanos",
+    "matches": 2,
+    "clean_sheets": 0,
+    "conceded": 3,
+    "minutes": 180
    },
    {
     "id": "804739",
     "name": "Lenny Montfort",
     "club": "Football Bourg-en-Bresse Péronnas 01",
-    "matches": 7,
+    "matches": 9,
     "clean_sheets": 0,
-    "conceded": 12,
-    "minutes": 630
+    "conceded": 15,
+    "minutes": 810
    }
   ]
  },
@@ -12876,7 +12921,7 @@
    {
     "rank": 14,
     "club_id": "11204",
-    "club": "Stade Reims B",
+    "club": " ",
     "matches": 26,
     "goals_for": 21,
     "goals_against": 40,
@@ -12933,7 +12978,7 @@
    {
     "id": "894585",
     "name": "Soumaïla Sylla",
-    "club": "Stade Reims B",
+    "club": "Reims Révélations",
     "matches": 23,
     "clean_sheets": 7,
     "conceded": 34,
@@ -13086,7 +13131,7 @@
    {
     "id": "1166410",
     "name": "Aristide Cornélis",
-    "club": "Stade Reims B",
+    "club": "Reims Révélations",
     "matches": 1,
     "clean_sheets": 0,
     "conceded": 2,
@@ -13140,7 +13185,7 @@
    {
     "id": "1048495",
     "name": "Maxime Debove",
-    "club": "Stade Reims B",
+    "club": "Reims Révélations",
     "matches": 2,
     "clean_sheets": 0,
     "conceded": 4,
@@ -14807,7 +14852,7 @@
    {
     "rank": 12,
     "club_id": "762",
-    "club": "Newcastle United",
+    "club": " ",
     "matches": 38,
     "goals_for": 53,
     "goals_against": 55,
@@ -15351,7 +15396,7 @@
    {
     "rank": 21,
     "club_id": "9253",
-    "club": "Newcastle United U21",
+    "club": " ",
     "matches": 20,
     "goals_for": 30,
     "goals_against": 35,
@@ -15852,7 +15897,7 @@
    {
     "rank": 6,
     "club_id": "1385",
-    "club": "Modena FC",
+    "club": " ",
     "matches": 38,
     "goals_for": 49,
     "goals_against": 36,
@@ -17342,150 +17387,150 @@
     "rank": 1,
     "club_id": "63966",
     "club": "Nashville SC",
-    "matches": 26,
-    "goals_for": 53,
-    "goals_against": 21,
-    "points": 57,
+    "matches": 28,
+    "goals_for": 59,
+    "goals_against": 22,
+    "points": 63,
     "teams": 15
    },
    {
     "rank": 2,
-    "club_id": "626",
-    "club": "New England Revolution",
-    "matches": 26,
-    "goals_for": 45,
-    "goals_against": 33,
-    "points": 46,
+    "club_id": "69261",
+    "club": "Inter Miami CF",
+    "matches": 28,
+    "goals_for": 68,
+    "goals_against": 50,
+    "points": 49,
     "teams": 15
    },
    {
     "rank": 3,
-    "club_id": "69261",
-    "club": "Inter Miami CF",
-    "matches": 26,
-    "goals_for": 63,
-    "goals_against": 48,
-    "points": 46,
+    "club_id": "432",
+    "club": "Chicago Fire FC",
+    "matches": 28,
+    "goals_for": 51,
+    "goals_against": 40,
+    "points": 48,
     "teams": 15
    },
    {
     "rank": 4,
-    "club_id": "78435",
-    "club": "Charlotte FC",
-    "matches": 26,
-    "goals_for": 47,
-    "goals_against": 37,
-    "points": 43,
+    "club_id": "626",
+    "club": "New England Revolution",
+    "matches": 28,
+    "goals_for": 45,
+    "goals_against": 39,
+    "points": 46,
     "teams": 15
    },
    {
     "rank": 5,
-    "club_id": "432",
-    "club": "Chicago Fire FC",
-    "matches": 25,
-    "goals_for": 45,
-    "goals_against": 38,
-    "points": 39,
+    "club_id": "78435",
+    "club": "Charlotte FC",
+    "matches": 28,
+    "goals_for": 50,
+    "goals_against": 40,
+    "points": 46,
     "teams": 15
    },
    {
     "rank": 6,
     "club_id": "25467",
     "club": "Philadelphia Union",
-    "matches": 26,
-    "goals_for": 50,
-    "goals_against": 42,
-    "points": 36,
+    "matches": 28,
+    "goals_for": 56,
+    "goals_against": 45,
+    "points": 42,
     "teams": 15
    },
    {
     "rank": 7,
     "club_id": "45604",
     "club": "Orlando City SC",
-    "matches": 26,
-    "goals_for": 46,
-    "goals_against": 60,
-    "points": 34,
+    "matches": 28,
+    "goals_for": 51,
+    "goals_against": 66,
+    "points": 37,
     "teams": 15
    },
    {
     "rank": 8,
     "club_id": "623",
     "club": "Red Bull New York",
-    "matches": 26,
-    "goals_for": 34,
-    "goals_against": 48,
-    "points": 33,
+    "matches": 28,
+    "goals_for": 38,
+    "goals_against": 52,
+    "points": 36,
     "teams": 15
    },
    {
     "rank": 9,
     "club_id": "51772",
     "club": "FC Cincinnati",
-    "matches": 25,
-    "goals_for": 54,
-    "goals_against": 61,
-    "points": 33,
+    "matches": 27,
+    "goals_for": 58,
+    "goals_against": 65,
+    "points": 36,
     "teams": 15
    },
    {
     "rank": 10,
     "club_id": "40058",
     "club": "New York City FC",
-    "matches": 26,
-    "goals_for": 39,
-    "goals_against": 34,
-    "points": 32,
+    "matches": 28,
+    "goals_for": 42,
+    "goals_against": 38,
+    "points": 33,
     "teams": 15
    },
    {
     "rank": 11,
-    "club_id": "2440",
-    "club": "D.C. United",
-    "matches": 25,
-    "goals_for": 31,
-    "goals_against": 39,
-    "points": 29,
+    "club_id": "11141",
+    "club": "Toronto FC",
+    "matches": 28,
+    "goals_for": 41,
+    "goals_against": 52,
+    "points": 32,
     "teams": 15
    },
    {
     "rank": 12,
-    "club_id": "11141",
-    "club": "Toronto FC",
-    "matches": 26,
-    "goals_for": 39,
-    "goals_against": 49,
-    "points": 29,
+    "club_id": "2440",
+    "club": "D.C. United",
+    "matches": 27,
+    "goals_for": 34,
+    "goals_against": 46,
+    "points": 30,
     "teams": 15
    },
    {
     "rank": 13,
     "club_id": "813",
     "club": "Columbus Crew",
-    "matches": 26,
-    "goals_for": 37,
-    "goals_against": 42,
-    "points": 26,
+    "matches": 28,
+    "goals_for": 41,
+    "goals_against": 46,
+    "points": 29,
     "teams": 15
    },
    {
     "rank": 14,
     "club_id": "51663",
     "club": "Atlanta United FC",
-    "matches": 26,
-    "goals_for": 30,
-    "goals_against": 43,
-    "points": 26,
+    "matches": 28,
+    "goals_for": 33,
+    "goals_against": 48,
+    "points": 27,
     "teams": 15
    },
    {
     "rank": 15,
     "club_id": "4078",
     "club": "CF Montréal",
-    "matches": 26,
-    "goals_for": 31,
-    "goals_against": 53,
-    "points": 21,
+    "matches": 28,
+    "goals_for": 35,
+    "goals_against": 56,
+    "points": 24,
     "teams": 15
    }
   ],
@@ -17893,69 +17938,69 @@
     "rank": 1,
     "club_id": "239",
     "club": "Viking FK",
-    "matches": 21,
-    "goals_for": 54,
+    "matches": 22,
+    "goals_for": 56,
     "goals_against": 20,
-    "points": 50,
+    "points": 53,
     "teams": 16
    },
    {
-    "rank": 2,
+    "rank": 1,
     "club_id": "501",
     "club": "FK Bodø/Glimt",
-    "matches": 21,
-    "goals_for": 53,
-    "goals_against": 19,
-    "points": 50,
+    "matches": 22,
+    "goals_for": 56,
+    "goals_against": 20,
+    "points": 53,
     "teams": 16
    },
    {
     "rank": 3,
     "club_id": "1293",
     "club": "Tromsø IL",
-    "matches": 21,
-    "goals_for": 40,
-    "goals_against": 29,
-    "points": 38,
+    "matches": 22,
+    "goals_for": 41,
+    "goals_against": 30,
+    "points": 39,
     "teams": 16
    },
    {
     "rank": 4,
     "club_id": "687",
     "club": "Molde FK",
-    "matches": 21,
-    "goals_for": 44,
-    "goals_against": 32,
-    "points": 36,
+    "matches": 22,
+    "goals_for": 46,
+    "goals_against": 34,
+    "points": 37,
     "teams": 16
    },
    {
     "rank": 5,
     "club_id": "195",
     "club": "Rosenborg BK",
-    "matches": 21,
-    "goals_for": 39,
-    "goals_against": 30,
-    "points": 33,
+    "matches": 22,
+    "goals_for": 40,
+    "goals_against": 31,
+    "points": 34,
     "teams": 16
    },
    {
     "rank": 6,
     "club_id": "353",
     "club": "Lillestrøm SK",
-    "matches": 21,
-    "goals_for": 28,
-    "goals_against": 29,
-    "points": 32,
+    "matches": 22,
+    "goals_for": 30,
+    "goals_against": 31,
+    "points": 33,
     "teams": 16
    },
    {
     "rank": 7,
     "club_id": "1100",
     "club": "SK Brann",
-    "matches": 21,
+    "matches": 22,
     "goals_for": 39,
-    "goals_against": 32,
+    "goals_against": 34,
     "points": 29,
     "teams": 16
    },
@@ -17963,24 +18008,34 @@
     "rank": 8,
     "club_id": "3837",
     "club": "Fredrikstad FK",
-    "matches": 21,
-    "goals_for": 25,
-    "goals_against": 32,
-    "points": 28,
+    "matches": 22,
+    "goals_for": 26,
+    "goals_against": 33,
+    "points": 29,
     "teams": 16
    },
    {
     "rank": 9,
     "club_id": "10217",
     "club": "Sarpsborg 08 FF",
-    "matches": 21,
-    "goals_for": 24,
-    "goals_against": 29,
-    "points": 25,
+    "matches": 22,
+    "goals_for": 28,
+    "goals_against": 31,
+    "points": 28,
     "teams": 16
    },
    {
     "rank": 10,
+    "club_id": "4309",
+    "club": "Hamarkameratene",
+    "matches": 22,
+    "goals_for": 33,
+    "goals_against": 46,
+    "points": 26,
+    "teams": 16
+   },
+   {
+    "rank": 11,
     "club_id": "23184",
     "club": "KFUM-Kameratene Oslo",
     "matches": 21,
@@ -17990,17 +18045,17 @@
     "teams": 16
    },
    {
-    "rank": 11,
+    "rank": 12,
     "club_id": "6399",
     "club": "Sandefjord Fotball",
-    "matches": 21,
-    "goals_for": 21,
-    "goals_against": 27,
-    "points": 23,
+    "matches": 22,
+    "goals_for": 22,
+    "goals_against": 28,
+    "points": 24,
     "teams": 16
    },
    {
-    "rank": 12,
+    "rank": 13,
     "club_id": "76",
     "club": "Vålerenga Fotball Elite",
     "matches": 21,
@@ -18010,22 +18065,12 @@
     "teams": 16
    },
    {
-    "rank": 13,
-    "club_id": "4309",
-    "club": "Hamarkameratene",
-    "matches": 21,
-    "goals_for": 29,
-    "goals_against": 44,
-    "points": 23,
-    "teams": 16
-   },
-   {
     "rank": 14,
     "club_id": "5619",
     "club": "Aalesunds FK",
-    "matches": 21,
-    "goals_for": 33,
-    "goals_against": 46,
+    "matches": 22,
+    "goals_for": 35,
+    "goals_against": 50,
     "points": 21,
     "teams": 16
    },
@@ -18033,9 +18078,9 @@
     "rank": 15,
     "club_id": "21101",
     "club": "Kristiansund BK",
-    "matches": 21,
-    "goals_for": 21,
-    "goals_against": 40,
+    "matches": 22,
+    "goals_for": 22,
+    "goals_against": 43,
     "points": 19,
     "teams": 16
    },
@@ -18043,9 +18088,9 @@
     "rank": 16,
     "club_id": "267",
     "club": "IK Start",
-    "matches": 21,
-    "goals_for": 22,
-    "goals_against": 44,
+    "matches": 22,
+    "goals_for": 24,
+    "goals_against": 48,
     "points": 16,
     "teams": 16
    }
@@ -18055,82 +18100,82 @@
     "id": "255440",
     "name": "Nikita Haikin",
     "club": "FK Bodø/Glimt",
-    "matches": 19,
+    "matches": 20,
     "clean_sheets": 10,
-    "conceded": 15,
-    "minutes": 1710
+    "conceded": 16,
+    "minutes": 1800
    },
    {
     "id": "138335",
     "name": "Jakob Haugaard",
     "club": "Tromsø IL",
-    "matches": 21,
+    "matches": 22,
     "clean_sheets": 10,
-    "conceded": 26,
-    "minutes": 1831
+    "conceded": 27,
+    "minutes": 1921
    },
    {
     "id": "441892",
     "name": "Leopold Wahlstedt",
     "club": "Rosenborg BK",
-    "matches": 21,
+    "matches": 22,
     "clean_sheets": 7,
-    "conceded": 30,
-    "minutes": 1890
+    "conceded": 31,
+    "minutes": 1980
    },
    {
     "id": "272542",
     "name": "Elias Hadaya",
     "club": "Sandefjord Fotball",
-    "matches": 21,
+    "matches": 22,
     "clean_sheets": 6,
-    "conceded": 27,
-    "minutes": 1890
+    "conceded": 28,
+    "minutes": 1980
    },
    {
     "id": "365544",
     "name": "Pontus Dahlberg",
     "club": "Lillestrøm SK",
-    "matches": 21,
+    "matches": 22,
     "clean_sheets": 6,
-    "conceded": 29,
-    "minutes": 1890
+    "conceded": 31,
+    "minutes": 1980
    },
    {
     "id": "73327",
     "name": "Arild Østbø",
     "club": "Viking FK",
-    "matches": 10,
-    "clean_sheets": 4,
+    "matches": 11,
+    "clean_sheets": 5,
     "conceded": 8,
-    "minutes": 900
+    "minutes": 990
    },
    {
     "id": "905220",
     "name": "Leander Øy",
     "club": "Sarpsborg 08 FF",
-    "matches": 11,
+    "matches": 12,
     "clean_sheets": 4,
-    "conceded": 17,
-    "minutes": 990
+    "conceded": 19,
+    "minutes": 1080
    },
    {
     "id": "712378",
     "name": "Albert Posiadala",
     "club": "Molde FK",
-    "matches": 17,
+    "matches": 18,
     "clean_sheets": 4,
-    "conceded": 24,
-    "minutes": 1457
+    "conceded": 26,
+    "minutes": 1547
    },
    {
     "id": "63443",
     "name": "Marcus Sandberg",
     "club": "Hamarkameratene",
-    "matches": 21,
+    "matches": 22,
     "clean_sheets": 4,
-    "conceded": 44,
-    "minutes": 1890
+    "conceded": 46,
+    "minutes": 1980
    },
    {
     "id": "367243",
@@ -18145,10 +18190,10 @@
     "id": "955389",
     "name": "Martin Børsheim",
     "club": "Fredrikstad FK",
-    "matches": 21,
+    "matches": 22,
     "clean_sheets": 3,
-    "conceded": 32,
-    "minutes": 1890
+    "conceded": 33,
+    "minutes": 1980
    },
    {
     "id": "546819",
@@ -18214,15 +18259,6 @@
     "minutes": 343
    },
    {
-    "id": "736962",
-    "name": "Simen Vidtun Nilsen",
-    "club": "SK Brann",
-    "matches": 8,
-    "clean_sheets": 1,
-    "conceded": 11,
-    "minutes": 720
-   },
-   {
     "id": "258957",
     "name": "Håvar Jenssen",
     "club": "KFUM-Kameratene Oslo",
@@ -18232,21 +18268,21 @@
     "minutes": 720
    },
    {
+    "id": "736962",
+    "name": "Simen Vidtun Nilsen",
+    "club": "SK Brann",
+    "matches": 9,
+    "clean_sheets": 1,
+    "conceded": 13,
+    "minutes": 810
+   },
+   {
     "id": "774531",
     "name": "Luca Podlech",
     "club": "Aalesunds FK",
-    "matches": 8,
-    "clean_sheets": 1,
-    "conceded": 18,
-    "minutes": 720
-   },
-   {
-    "id": "448696",
-    "name": "Michael Lansing",
-    "club": "Kristiansund BK",
     "matches": 9,
     "clean_sheets": 1,
-    "conceded": 20,
+    "conceded": 22,
     "minutes": 810
    },
    {
@@ -18259,9 +18295,18 @@
     "minutes": 900
    },
    {
+    "id": "448696",
+    "name": "Michael Lansing",
+    "club": "Kristiansund BK",
+    "matches": 10,
+    "clean_sheets": 1,
+    "conceded": 23,
+    "minutes": 900
+   },
+   {
     "id": "303157",
     "name": "Jacob Pryts",
-    "club": "IK Start",
+    "club": "Sarpsborg 08 FF",
     "matches": 16,
     "clean_sheets": 1,
     "conceded": 37,
@@ -18286,21 +18331,21 @@
     "minutes": 59
    },
    {
-    "id": "794456",
-    "name": "Magnus Sjøeng",
-    "club": "IK Start",
-    "matches": 1,
-    "clean_sheets": 0,
-    "conceded": 3,
-    "minutes": 90
-   },
-   {
     "id": "358726",
     "name": "Julian Faye Lund",
     "club": "FK Bodø/Glimt",
     "matches": 2,
     "clean_sheets": 0,
     "conceded": 4,
+    "minutes": 180
+   },
+   {
+    "id": "794456",
+    "name": "Magnus Sjøeng",
+    "club": "IK Start",
+    "matches": 2,
+    "clean_sheets": 0,
+    "conceded": 7,
     "minutes": 180
    },
    {
@@ -19520,34 +19565,44 @@
     "rank": 1,
     "club_id": "7945",
     "club": "IK Sirius",
-    "matches": 22,
-    "goals_for": 52,
+    "matches": 23,
+    "goals_for": 53,
     "goals_against": 28,
-    "points": 51,
+    "points": 54,
     "teams": 16
    },
    {
     "rank": 2,
-    "club_id": "1059",
-    "club": "Hammarby IF",
-    "matches": 22,
-    "goals_for": 49,
-    "goals_against": 20,
-    "points": 43,
+    "club_id": "1044",
+    "club": "Djurgårdens IF",
+    "matches": 23,
+    "goals_for": 48,
+    "goals_against": 21,
+    "points": 44,
     "teams": 16
    },
    {
     "rank": 3,
-    "club_id": "1044",
-    "club": "Djurgårdens IF",
-    "matches": 22,
-    "goals_for": 47,
+    "club_id": "1059",
+    "club": "Hammarby IF",
+    "matches": 23,
+    "goals_for": 49,
     "goals_against": 21,
-    "points": 41,
+    "points": 43,
     "teams": 16
    },
    {
     "rank": 4,
+    "club_id": "1109",
+    "club": "BK Häcken",
+    "matches": 23,
+    "goals_for": 42,
+    "goals_against": 30,
+    "points": 39,
+    "teams": 16
+   },
+   {
+    "rank": 5,
     "club_id": "1101",
     "club": "IF Elfsborg",
     "matches": 22,
@@ -19557,27 +19612,27 @@
     "teams": 16
    },
    {
-    "rank": 5,
-    "club_id": "1109",
-    "club": "BK Häcken",
-    "matches": 22,
-    "goals_for": 39,
-    "goals_against": 30,
-    "points": 36,
-    "teams": 16
-   },
-   {
     "rank": 6,
     "club_id": "5202",
     "club": "Västerås SK",
-    "matches": 22,
+    "matches": 23,
     "goals_for": 34,
-    "goals_against": 35,
+    "goals_against": 36,
     "points": 35,
     "teams": 16
    },
    {
     "rank": 7,
+    "club_id": "801",
+    "club": "IFK Göteborg",
+    "matches": 23,
+    "goals_for": 32,
+    "goals_against": 41,
+    "points": 35,
+    "teams": 16
+   },
+   {
+    "rank": 8,
     "club_id": "496",
     "club": "Malmö FF",
     "matches": 22,
@@ -19587,32 +19642,22 @@
     "teams": 16
    },
    {
-    "rank": 8,
+    "rank": 9,
     "club_id": "272",
     "club": "AIK",
-    "matches": 22,
-    "goals_for": 31,
-    "goals_against": 34,
+    "matches": 23,
+    "goals_for": 36,
+    "goals_against": 40,
     "points": 33,
-    "teams": 16
-   },
-   {
-    "rank": 9,
-    "club_id": "801",
-    "club": "IFK Göteborg",
-    "matches": 22,
-    "goals_for": 31,
-    "goals_against": 41,
-    "points": 32,
     "teams": 16
    },
    {
     "rank": 10,
     "club_id": "7009",
     "club": "GAIS",
-    "matches": 22,
+    "matches": 23,
     "goals_for": 28,
-    "goals_against": 20,
+    "goals_against": 21,
     "points": 30,
     "teams": 16
    },
@@ -19620,24 +19665,34 @@
     "rank": 11,
     "club_id": "1092",
     "club": "IF Brommapojkarna",
-    "matches": 22,
-    "goals_for": 30,
-    "goals_against": 36,
-    "points": 27,
+    "matches": 23,
+    "goals_for": 36,
+    "goals_against": 41,
+    "points": 30,
     "teams": 16
    },
    {
     "rank": 12,
     "club_id": "2719",
     "club": "Mjällby AIF",
-    "matches": 22,
-    "goals_for": 27,
-    "goals_against": 38,
-    "points": 22,
+    "matches": 23,
+    "goals_for": 28,
+    "goals_against": 39,
+    "points": 23,
     "teams": 16
    },
    {
     "rank": 13,
+    "club_id": "3641",
+    "club": "Degerfors IF",
+    "matches": 23,
+    "goals_for": 20,
+    "goals_against": 35,
+    "points": 20,
+    "teams": 16
+   },
+   {
+    "rank": 14,
     "club_id": "3654",
     "club": "Kalmar FF",
     "matches": 22,
@@ -19647,22 +19702,12 @@
     "teams": 16
    },
    {
-    "rank": 14,
-    "club_id": "3641",
-    "club": "Degerfors IF",
-    "matches": 22,
-    "goals_for": 19,
-    "goals_against": 34,
-    "points": 19,
-    "teams": 16
-   },
-   {
     "rank": 15,
     "club_id": "1118",
     "club": "Örgryte IS",
-    "matches": 22,
+    "matches": 23,
     "goals_for": 25,
-    "goals_against": 49,
+    "goals_against": 52,
     "points": 15,
     "teams": 16
    },
