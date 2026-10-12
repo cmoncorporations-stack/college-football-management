@@ -11,7 +11,7 @@ Chaque joueur du vivier reçoit trois notes sur 100 :
 
 | Note | Ce qu'elle mesure |
 |---|---|
-| **Sport** | par sous-poste, en rang percentile dans le vivier : production (buts + 0,7 passes) / 90 pour milieux, attaquants et la moitié offensive des latéraux ; buts encaissés rapportés à l'équipe et clean sheets pour les gardiens ; résultats défensifs de l'équipe pour les centraux et la moitié défensive des latéraux ; plus disponibilité, discipline — corrigé du niveau de la ligue et des blessures ([détail](#note-sport-par-sous-poste)) |
+| **Sport** | par sous-poste, en rang percentile dans le vivier : production (buts + 0,7 passes) / 90 pour milieux, attaquants et la moitié offensive des latéraux ; buts encaissés rapportés à l'équipe et clean sheets pour les gardiens ; résultats défensifs de l'équipe pour les centraux et la moitié défensive des latéraux ; plus disponibilité, discipline — corrigé du niveau de la ligue et des blessures ([détail](#note-sport-par-sous-poste)) ; **plus une composante « dynamique de saison 2026/27 »** lue dans le journal match par match ([détail](#dynamique-de-saison-202627)) |
 | **Valeur** | sous-évaluation (régression log(valeur) ~ sport + âge + âge² + ligue + poste sur le vivier), levier fin de contrat, tendance de valeur 12 mois, plus-value nette à 24 mois ; valeur manquante estimée par la même régression, marquée et pesant moitié moins |
 | **Fan fit** | ancrage régional (`geo.py`), francophonie, fidélité, potentiel média, lien avec le club — **pondérés par l'ADN fan tiré du cockpit** |
 
@@ -42,6 +42,30 @@ Source : Transfermarkt seul, deux dernières saisons de championnat. Chaque joue
 Puis × (0,55 + 0,45 × niveau), niveau = coefficient de ligue / 1,45 borné entre 0,3 et 1,2, × (1 − jours de blessure / 180, au plus 0,5), / 0,85, borné à 100. Jamais de buts ni de passes dans la note d'un gardien ; jamais de buts dans celle d'un central.
 
 Le sous-poste vient du champ `position` Transfermarkt : `Left-Back`, `Right-Back` (et « wing-back ») → latéral ; tout autre défenseur → central.
+
+### Dynamique de saison 2026/27
+
+Source : `moneyball/matchlog.py` → `data/matchlog_2627.json`, le journal match par match de la saison en cours, toutes compétitions (championnat, coupe nationale, coupes d'Europe), pour les 1 171 joueurs du vivier et les 24 joueurs d'Yverdon. Constat du 11.10.2026 : la page « performances détaillées » d'un joueur (`/leistungsdatendetails/spieler/{id}/saison/2026/.../plus/1`) est rendue côté client (composant `tm-player-performance-table-new`, API `tmapi` sur transfermarkt.technology, non joignable) ; le journal est donc reconstruit à partir des pages encore servies en HTML : calendrier de chaque club (toutes compétitions, un identifiant de feuille par rencontre), feuille de match (buts, passeurs, remplacements, cartons, minute décodée du sprite horloge `x/36 + 10·y/36 + 1`, vérifiée contre la frise chronologique), compositions (onze de départ, banc, poste occupé), absences en cours de chaque club et historique de blessures des joueurs absents d'au moins une feuille. Par joueur et par match : `date`, `competition_id`, `competition`, `matchday`, `home`, `opponent`, `opponent_id`, `result`, `outcome` (V/N/D), `status` (`played`, `bench`, `not_in_squad`, `injured`, `suspended`, `other` = pas encore au club), `position` jouée, `started`, `minutes`, `goals`, `assists`, `yellow`, `red`, `subbed_on_minute`, `subbed_off_minute`, `conceded` (buts encaissés par l'équipe pendant qu'il était sur le terrain). Les suspensions ne sont pas publiées match par match : une absence qui suit un carton rouge, ou une suspension listée par le club, est notée `suspended`.
+
+`season_dynamics(p, matchlog, today, standings)` calcule sur 2026/27 seulement :
+
+| Indicateur | Définition |
+|---|---|
+| `starter_share` | titularisations ÷ matchs de l'équipe où le joueur était disponible (hors blessure et suspension) |
+| `minutes_share` | minutes jouées ÷ minutes possibles de l'équipe (90 par match, 120 après prolongation) |
+| `role_trend` | part de minutes sur les 5 derniers matchs de l'équipe − part sur les 5 premiers (≥ 6 matchs) |
+| `form_5` | production (buts + 0,7 passes / 90) des 5 derniers matchs joués ÷ production de saison ; gardiens et centraux : (buts encaissés / 90 saison + 0,5) ÷ (5 derniers + 0,5), sur le terrain pour les centraux |
+| `big_game_factor` | même production contre la première moitié du classement du championnat au jour du journal ÷ seconde moitié (gardiens, centraux : inversé) ; coupes exclues |
+| `availability_2627` | matchs manqués pour blessure ou suspension ÷ matchs de l'équipe |
+| `consistency` | écart-type des minutes par match joué ÷ 45, borné à 1 |
+
+Score dynamique (0-1) = 0,30 titularisation + 0,20 minutes + 0,15 (0,5 + tendance) + 0,15 forme/2 + 0,10 gros matchs/2 + 0,05 (1 − manqués) + 0,05 (1 − régularité) ; indicateur absent = 0,5. Il entre dans la note Sport **avant** le niveau de ligue : note brute = (1 − w) × formule par sous-poste + w × score dynamique, w = 0,25 × confiance, confiance = matchs de l'équipe / (matchs + 6) (10 matchs → w ≈ 0,16 ; la dynamique montera au fil des journées). Un joueur sans journal garde sa note et reçoit le tag « Saison 26/27 non lue ».
+
+Les agrégats de la saison en cours (`recent_stats`) comptent désormais toutes les compétitions : championnat au poids 1,0 et à son coefficient, coupe nationale au poids 0,8 au niveau du championnat du joueur, coupe d'Europe au poids 1,0 au niveau 1,3 par défaut (ligue adverse inconnue dans les agrégats) ; la saison en cours est pondérée min(1, matchs de l'équipe / 15) face à 25/26. Les minutes affichées (`minutes_total`, tag « Échantillon faible ») restent les minutes réelles. Les agrégats défensifs (gardien, équipe, médiane de ligue) restent ceux des lignes de championnat.
+
+Tags : « En forme » (`form_5` ≥ 1,3 et ≥ 3 matchs joués), « Perd sa place » (`role_trend` ≤ −0,3), « Gagne sa place » (≥ +0,3), « Titulaire installé » (`starter_share` ≥ 0,8 et ≥ 6 matchs), « Révélation 26/27 » (production / 90 ≥ 1,5 × celle de 25/26 avec ≥ 450 minutes ; gardiens : buts encaissés / 90 divisés par 1,5), « Blessé actuellement » (dernier statut blessé), « Échantillon faible » conservé.
+
+Effectif : `squad_needs` compte un **titulaire blessé longue durée** (≥ 3 matchs manqués consécutifs, dernier statut blessé, titulaire à ≥ 50 % avant la blessure) comme un demi-manque ; le tableau de bord affiche « L'effectif cette saison » (part de titularisations, part de minutes, tendance, statut) et, sur chaque fiche, le bloc « Saison 26/27 » avec les 5 derniers matchs.
 
 ### Coefficients de ligue
 
@@ -109,9 +133,14 @@ open dashboard.html
 python -m moneyball.scout --competitions C2 C1 FR3 FR2 --max-value 1500000 --max-age 29
 python -m moneyball.recommend
 
-# 2b. Rafraîchir seulement les statistiques (clubs, clean sheets, classements ; ≈ 20 min), sans relire les fiches
+# 2b. Rafraîchir seulement les statistiques (clubs toutes compétitions de la saison en cours, clean sheets,
+#     classements ; ≈ 10 min), sans relire les fiches
 python -m moneyball.scout --stats-only
 python -m moneyball.defence            # ou seulement la partie défensive (clean sheets + classements)
+
+# 2c. Journal match par match de la saison en cours (≈ 25 min la première fois, cache 72 h ensuite)
+python -m moneyball.matchlog --workers 3      # → data/matchlog_2627.json
+python -m moneyball.recommend                 # relit le journal s'il existe (--no-matchlog pour l'ignorer)
 
 # Variantes : instance transfermarkt-api pour profils/valeurs/transferts, enrichissement API-Football
 export TM_API_URL=http://localhost:8000   # docker run -p 8000:8000 transfermarkt-api
@@ -138,6 +167,7 @@ moneyball/tm_direct.py   lecture directe de www.transfermarkt.com (parseur HTML,
 moneyball/tm_client.py   client transfermarkt-api (option, TM_API_URL)
 moneyball/scout.py       constitution du vivier + normalisation (--stats-only : rafraîchit les statistiques)
 moneyball/defence.py     clean sheets / buts encaissés des gardiens, classements → colonnes défensives
+moneyball/matchlog.py    journal match par match de la saison en cours (calendriers, feuilles de match, compositions, absences)
 moneyball/geo.py         toponymes multilingues → commune → canton → zone d'ancrage
 moneyball/apifootball.py API-Football : notes, tirs, passes clés… (API gratuite retenue)
 moneyball/sofascore.py   Sofascore : xG / xA / notes (optionnel, sans API publique)
@@ -145,6 +175,7 @@ moneyball/fan_dna.py     ADN fan dérivé du cockpit → poids du fan fit
 moneyball/model.py       notes Sport / Valeur / Fan fit, besoins de l'effectif
 moneyball/recommend.py   classement → data/recommendations.json + dashboard.html
 moneyball/demo.py        vivier fictif de démonstration
+data/matchlog_2627.json  journal 2026/27 au 11.10.2026 (1 195 joueurs, 323 feuilles de match)
 data/fanbase_cockpit.json  extrait du cockpit Fanbase Manager (relevé du 23.09.2026)
 dashboard_template.html  tableau de bord interactif (poids, filtres, plan mercato)
 tests/                   python -m unittest discover -s tests -t .
@@ -157,8 +188,9 @@ tests/                   python -m unittest discover -s tests -t .
 - Transfermarkt ne donne aucune statistique défensive individuelle : les centraux sont notés sur les résultats de leur équipe (confiance « faible ») ; un gardien titulaire unique est noté sur le classement de son équipe, pas sur ses arrêts.
 - Buts encaissés : 96 gardiens sur 123 ont une donnée (page « Clean sheets » des 30 couples compétition/saison où joue un gardien du vivier) ; les 27 autres n'ont aucune minute en championnat ou ne jouent que dans une compétition sans page clean sheets (ligne « Total », OFPL, TS2…) et gardent une confiance « faible ». Les résultats d'équipe (classement) couvrent 1093 joueurs sur 1171.
 - Valeurs marchandes manquantes : 129 joueurs sans valeur Transfermarkt reçoivent la valeur prédite par la régression (`market_value_estimated`, `market_value_source: "regression"`) ; ils sont exclus du plan mercato automatique et comptés à part.
-- Statistiques Transfermarkt limitées au championnat des deux dernières saisons ; un joueur arrivé d'un championnat hors périmètre n'a que sa saison précédente dans son ancien club ; les blessures ne sont lues qu'avec transfermarkt-api (`--injuries`).
-- Début de saison 2026/27 : les minutes de la saison en cours sont encore faibles, le modèle s'appuie surtout sur 2025/26.
+- Statistiques Transfermarkt : championnat des deux dernières saisons, plus toutes les compétitions de la saison en cours ; un joueur arrivé d'un championnat hors périmètre n'a que sa saison précédente dans son ancien club ; l'historique de blessures n'est lu (journal) que pour les joueurs absents d'au moins une feuille de match de 2026/27.
+- Journal 2026/27 : les suspensions ne sont pas publiées match par match (déduites du carton rouge précédent ou de la page d'absences du club) ; les matchs d'un joueur avec un autre club avant son arrivée ne sont pas lus (statut `other`) ; le niveau des adversaires européens n'est pas connu dans les agrégats (1,3 par défaut) ; les valeurs marchandes restent celles du 26.09.2026 (dernière mise à jour Transfermarkt des quatre championnats : 21-22.09.2026, vérifié sur les fiches le 11.10.2026).
+- Début de saison 2026/27 (8 à 10 journées au 11.10.2026) : la composante dynamique pèse encore environ 15 % de la note Sport et la saison en cours environ les deux tiers d'une saison pleine dans les agrégats ; les deux montent au fil des journées.
 - L'âge des fans n'est pas modélisé (date de naissance renseignée à 36 % dans Brevo).
 - Périmètre : équipe masculine uniquement.
 - L'indemnité estimée est un ordre de grandeur, pas une offre.

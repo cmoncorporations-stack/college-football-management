@@ -106,6 +106,28 @@ tbody tr.open{background:var(--surface2)}
 .tag.local{border-color:var(--fan);color:var(--fan)}
 .tag.under{border-color:var(--valeur);color:var(--valeur)}
 .tag.weak{border-style:dashed;color:var(--ink3)}
+.tag.form{border-color:var(--good);color:var(--good);background:color-mix(in srgb,var(--good) 10%,transparent)}
+.tag.down{border-color:var(--bad);color:var(--bad)}
+.tag.injury{border-color:var(--bad);color:var(--bad);border-style:dashed}
+.tag.unread{border-style:dotted;color:var(--ink3)}
+.season{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.season h3{color:var(--sport);margin-bottom:8px}
+.sgrid{display:grid;grid-template-columns:2fr 3fr;gap:18px}
+.last5{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.m5{border:1px solid var(--line);border-radius:7px;padding:6px 8px;font-size:12px;min-width:118px;background:var(--surface)}
+.m5 .d{color:var(--ink3);font-size:11px}
+.m5 .r{font-family:Oswald,sans-serif;font-size:15px}
+.m5.V .r{color:var(--good)}.m5.D .r{color:var(--bad)}
+.m5.abs{border-style:dashed;color:var(--ink3)}
+#squadTable td{white-space:nowrap}
+.bar{display:inline-block;width:64px;height:7px;background:var(--inset);border-radius:999px;overflow:hidden;vertical-align:middle;margin-right:6px}
+.bar i{display:block;height:100%;background:var(--sport);border-radius:999px}
+.trend.up{color:var(--good)}.trend.down{color:var(--bad)}
+.moves{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px}
+.moves ol{margin:6px 0 0;padding-left:22px;font-size:13.5px}
+.moves li{padding:3px 0;border-bottom:1px dotted var(--line)}
+.moves .why{color:var(--ink3);font-size:12px}
+@media (max-width:900px){.sgrid,.moves{grid-template-columns:1fr}}
 .morebtn{font:inherit;font-size:13px;margin-left:8px;padding:4px 12px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--accent-ink);cursor:pointer}
 .detail td{background:var(--surface2);text-align:left;padding:16px 18px}
 .dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -155,8 +177,18 @@ footer li{margin-bottom:5px}
 
 <section>
   <div class="shead"><h2>Besoins de l'<span>effectif</span></h2>
-    <p>Sous-effectif par rapport à la cible de Challenge League, contrats qui expirent dans l'année et part de joueurs de 31 ans et plus. Le besoin multiplie la note finale de 0,85 à 1,15.</p></div>
+    <p>Sous-effectif par rapport à la cible de Challenge League, contrats qui expirent dans l'année, part de joueurs de 31 ans et plus ; un titulaire blessé longue durée (trois matchs manqués consécutifs ou plus, toujours blessé) compte un demi-manque. Le besoin multiplie la note finale de 0,85 à 1,15.</p></div>
   <div class="needs" id="needs"></div>
+</section>
+
+<section id="squadSection">
+  <div class="shead"><h2>L'effectif <span>cette saison</span></h2>
+    <p id="squadSub">Journal match par match 2026/27 des joueurs d'Yverdon Sport, toutes compétitions : part de titularisations, part des minutes de l'équipe, tendance de rôle et statut au jour du journal. Trié par minutes jouées.</p></div>
+  <div class="tw"><table id="squadTable">
+    <thead><tr><th class="l">Joueur</th><th>Âge</th><th>Matchs</th><th>Titul.</th><th>Minutes</th><th>B · P</th><th>Titularisations</th><th>Minutes équipe</th><th>Tendance</th><th class="l">Statut</th><th class="l">Signaux</th></tr></thead>
+    <tbody id="squadRows"></tbody>
+  </table></div>
+  <div id="moves"></div>
 </section>
 
 <section>
@@ -201,6 +233,12 @@ footer li{margin-bottom:5px}
         <li><em>Latéraux</em> : 50 % profil défensif (même formule que les centraux) + 50 % production offensive (buts + 0,7 × passes, percentile entre latéraux) → 55 % ; disponibilité 35 % ; discipline 10 %.</li>
       </ul>
       Le tout est multiplié par (0,55 + 0,45 × niveau), niveau = coefficient de ligue / 1,45 (Super League ≈ 1, borné entre 0,3 et 1,2), et par (1 − jours de blessure / 180, au plus 0,5), puis divisé par 0,85 et borné à 100.</li>
+    <li><strong>Dynamique de saison 26/27</strong> (journal match par match Transfermarkt, toutes compétitions, au <span id="dynDate"></span>). Avant le niveau de ligue, la note brute par sous-poste est mélangée à un score « dynamique » : poids = <span id="dynW"></span> × confiance, confiance = matchs de l'équipe / (matchs + <span id="dynK"></span>) — à 10 matchs la dynamique pèse environ 16 % de la note, elle montera au fil des journées. Score dynamique (0-1) = 0,30 part de titularisations (titularisations / matchs où le joueur était disponible, hors blessure et suspension) + 0,20 part des minutes de l'équipe + 0,15 tendance de rôle (part de minutes sur les 5 derniers matchs de l'équipe moins les 5 premiers, recentrée) + 0,15 forme (production des 5 derniers matchs joués / production de saison, 1,0 = sa moyenne ; gardiens et centraux : buts encaissés sur le terrain, inversés) + 0,10 facteur gros matchs (production contre la première moitié du classement du championnat au jour du journal / seconde moitié) + 0,05 disponibilité (1 − matchs manqués pour blessure ou suspension / matchs) + 0,05 régularité (1 − écart-type des minutes par match joué / 45). Un indicateur non calculable vaut 0,5. Un joueur sans journal garde sa note et le tag « Saison 26/27 non lue ».
+      <ul>
+        <li><em>Minutes toutes compétitions.</em> Les agrégats de la saison en cours comptent désormais le championnat (poids 1,0, à son coefficient), la coupe nationale (poids <span id="cupW"></span>, au niveau du championnat du joueur) et les coupes d'Europe (poids 1,0, niveau <span id="euroC"></span> par défaut, ligue adverse inconnue) ; la saison en cours est pondérée min(1, matchs de l'équipe / <span id="rampN"></span>) face à 25/26, elle pèse donc de plus en plus au fil des journées. Les minutes affichées restent les minutes réelles.</li>
+        <li><em>Tags.</em> « En forme » (forme ≥ 1,3 et ≥ 3 matchs joués), « Perd sa place » (tendance ≤ −0,3), « Gagne sa place » (≥ +0,3), « Titulaire installé » (titularisations ≥ 80 % et ≥ 6 matchs), « Révélation 26/27 » (production / 90 ≥ 1,5 × celle de 25/26 avec ≥ 450 minutes ; gardiens : buts encaissés / 90 divisés par 1,5), « Blessé actuellement » (dernier statut blessé), « Échantillon faible » (moins de 900 minutes réelles).</li>
+        <li><em>Statuts du journal.</em> La page « performances détaillées » d'un joueur est rendue côté client par Transfermarkt (API tmapi non joignable) : le journal est reconstruit depuis les calendriers des clubs, les feuilles de match (buts, passes, remplacements, cartons, minute lue dans le sprite horloge) et les compositions (onze, banc, poste occupé). Absences : blessé (historique de blessures du joueur, absences en cours du club), suspendu (carton rouge au match précédent ou suspension listée par le club), hors groupe sinon ; les matchs antérieurs à l'arrivée au club ne comptent pas. Un match sans composition publiée est ignoré.</li>
+      </ul></li>
     <li><strong>Coefficients de ligue.</strong> Le niveau d'un joueur est la moyenne des coefficients de ses championnats pondérée par ses minutes, sur ses deux dernières saisons avec des minutes, en ne gardant que les compétitions à coefficient connu (coupes et lignes « Total » ignorées ; 0,8 si aucune n'est connue). Référence Challenge League = 1,00. Codes Transfermarkt exacts : <span id="coefExact"></span>. Divisions inférieures, par préfixe de code : <span id="coefPrefix"></span>. Exemple recalculable : 1 080 minutes en Challenge League (1,00) et 900 minutes en 1re Ligue Classic (0,45) → (1 080 × 1,00 + 900 × 0,45) / 1 980 = 0,75.</li>
     <li><strong>Valeur</strong> : 40 % sous-évaluation (résidu d'une régression log(valeur marchande) ~ note sportive + âge + âge² + ligue + poste sur tout le vivier, pour ne pas confondre « joue en National » et « sous-évalué »), 25 % levier contractuel (≤ 6 mois = libre ou pré-contrat), 15 % tendance de la valeur sur 12 mois, 20 % plus-value nette attendue : valeur projetée à 24 mois (courbe d'âge par ligne, pic à 26 ans pour milieux et attaquants, 27 pour défenseurs, 29 pour gardiens, modulée par l'élan des 12 derniers mois) moins l'indemnité estimée, rapportée à la valeur actuelle. Un joueur sans valeur Transfermarkt reçoit la valeur prédite par cette régression, marquée (*) : sa note Valeur pèse moitié moins dans la note finale et il est exclu du plan mercato automatique.</li>
     <li><strong>Fan fit</strong> : ancrage régional (lieu de naissance normalisé — Genf, Genève et Geneva sont la même ville — rattaché à sa commune, son canton et sa zone : bassin nord-vaudois 1,00, Vaud 0,85, Romandie 0,70, Suisse 0,45, frontalier 0,40, international 0,10 ; un club formateur d'Yverdon vaut bassin, un club formateur romand vaut Romandie, et l'on retient la meilleure des deux lectures pour tous), francophonie, fidélité (durée moyenne par club), potentiel média (réseaux sociaux + spectacle offensif) et lien avec le club, pondérés par l'ADN fan ci-dessus.</li>
@@ -209,12 +247,13 @@ footer li{margin-bottom:5px}
   </ul>
   <h3>Sources</h3>
   <ul>
-    <li><strong>Transfermarkt</strong> (lecture directe des pages www.transfermarkt.com) : profils, statistiques de championnat des deux dernières saisons (page « Squad statistics » de chaque club), buts encaissés et clean sheets des gardiens (page « Clean sheets » de chaque compétition, vue détaillée), classements (buts encaissés et rang de chaque équipe), historique de valeur, transferts. Valeurs en euros. <span id="srcTm"></span></li>
+    <li><strong>Transfermarkt</strong> (lecture directe des pages www.transfermarkt.com) : profils, statistiques des deux dernières saisons (page « Squad statistics » de chaque club : championnat, et pour la saison en cours toutes les compétitions du sélecteur), buts encaissés et clean sheets des gardiens (page « Clean sheets » de chaque compétition, vue détaillée), classements (buts encaissés et rang de chaque équipe), historique de valeur, transferts, et pour 2026/27 le journal match par match (calendriers des clubs, feuilles de match, compositions, absences, historique de blessures). Valeurs en euros. <span id="srcTm"></span> <span id="srcJournal"></span></li>
     <li><strong>Cockpit Fanbase Manager Yverdon Sport</strong> : indice de pénétration, catégories CMON_SCORE, campagnes Brevo, audiences Metricool. <span id="srcDate"></span></li>
   </ul>
   <h3>Limites</h3>
   <ul>
     <li>Sources prévues, non actives sur ce vivier : Sofascore (xG, xA, note ; répond 403 hors navigateur) et API-Football (note, tirs, passes clés ; pas de clé). Sans elles, la note Sport repose sur buts, passes, minutes, discipline, buts encaissés et résultats d'équipe Transfermarkt.</li>
+    <li>Journal 2026/27 : les suspensions ne sont pas publiées match par match par Transfermarkt ; elles sont déduites (carton rouge au match précédent, suspension listée par le club). Les matchs d'un joueur avec un autre club avant son arrivée ne sont pas lus. Le niveau des adversaires européens n'est pas connu dans les agrégats (1,3 par défaut).</li>
     <li>Transfermarkt ne donne aucune statistique défensive individuelle (duels, interceptions) : les défenseurs centraux sont notés sur les résultats de leur équipe, d'où une confiance « faible ». Un gardien titulaire unique est noté sur le classement de son équipe, pas sur ses arrêts.</li>
     <li>Transfermarkt ne donne pas le volume d'abonnés des joueurs : le potentiel média se fonde sur la présence d'un compte, pas sur son audience.</li>
     <li>La base CRM du club ne donne pas l'âge des fans (date de naissance renseignée à 36 %) : l'adéquation générationnelle n'est pas modélisée.</li>
@@ -237,14 +276,20 @@ const DATA=/*__DATA__*/null;
 
   if(DATA.demo) $("demo").hidden=false;
   const dateFr=d=>d?new Date(d).toLocaleDateString("fr-CH"):"—";
-  $("eyebrow").textContent=`Yverdon Sport · Cellule recrutement · Vivier ${DATA.vivier} joueurs · données Transfermarkt du ${dateFr(DATA.date_donnees||DATA.genere)}`;
+  const JN=DATA.journal||null;
+  const leagues=JN?Object.entries(JN.competitions).filter(([k,v])=>v.type==="league"&&v.journees):[];
+  $("eyebrow").textContent=`Yverdon Sport · Cellule recrutement · Vivier ${DATA.vivier} joueurs · données Transfermarkt du ${dateFr(DATA.date_donnees||DATA.genere)}`+(leagues.length?` · journées couvertes : ${leagues.map(([k,v])=>`${k} ${v.journees}`).join(", ")}`:"");
   const SRC=DATA.sources||{};
-  $("meta").textContent=`Modèle ${DATA.version_modele||"—"} · calcul du ${dateFr(DATA.genere)} · données du ${dateFr(DATA.date_donnees)} · sources utilisées : Transfermarkt ${SRC.transfermarkt_stats??"—"} / ${SRC.vivier??DATA.vivier} joueurs avec statistiques, ${SRC.gardiens_buts_encaisses??0} / ${SRC.gardiens??"—"} gardiens avec buts encaissés ; Sofascore : ${SRC.sofascore??0} ; API-Football : ${SRC.api_football??0}${DATA.valeurs_estimees?` · ${DATA.valeurs_estimees} valeur${DATA.valeurs_estimees>1?"s":""} marchande${DATA.valeurs_estimees>1?"s":""} estimée${DATA.valeurs_estimees>1?"s":""} (*)`:""}.`;
+  $("meta").textContent=`Modèle ${DATA.version_modele||"—"} · calcul du ${dateFr(DATA.genere)} · journal 26/27 au ${dateFr(DATA.date_donnees)}${DATA.date_vivier?` (vivier relevé le ${dateFr(DATA.date_vivier)})`:""}${JN?` · journal match par match : ${JN.joueurs_avec_journal} / ${JN.vivier} joueurs du vivier, ${JN.effectif_avec_journal} / ${JN.effectif} joueurs YS, ${JN.feuilles_lues} feuilles de match`:" · saison 26/27 non lue"} · sources utilisées : Transfermarkt ${SRC.transfermarkt_stats??"—"} / ${SRC.vivier??DATA.vivier} joueurs avec statistiques, ${SRC.gardiens_buts_encaisses??0} / ${SRC.gardiens??"—"} gardiens avec buts encaissés ; Sofascore : ${SRC.sofascore??0} ; API-Football : ${SRC.api_football??0}${DATA.valeurs_estimees?` · ${DATA.valeurs_estimees} valeur${DATA.valeurs_estimees>1?"s":""} marchande${DATA.valeurs_estimees>1?"s":""} estimée${DATA.valeurs_estimees>1?"s":""} (*)`:""}.`;
   $("srcDate").textContent=`Relevé du ${new Date(DNA.releve).toLocaleDateString("fr-CH")}.`;
+  if(JN) $("srcJournal").textContent=`Journal 2026/27 au ${dateFr(JN.date)} : ${JN.feuilles_lues} / ${JN.feuilles_listees} feuilles de match lues, ${JN.pages_blessures} historiques de blessures, ${JN.joueurs_avec_journal} / ${JN.vivier} joueurs du vivier et ${JN.effectif_avec_journal} / ${JN.effectif} joueurs YS avec journal ; compétitions : ${Object.entries(JN.competitions).map(([k,v])=>`${k} (${v.nom||k}, ${v.matchs} matchs${v.journees?", journée "+v.journees:""})`).join(", ")}.`;
   if(!DATA.demo) $("srcTm").textContent=`Vivier relevé le ${dateFr(DATA.date_donnees||DATA.genere)} : ${(DATA.competitions||[]).join(", ")}${DATA.saison?" · saison "+DATA.saison:""} · ${SRC.transfermarkt_stats??"—"} / ${SRC.vivier??DATA.vivier} joueurs avec statistiques, ${SRC.gardiens_buts_encaisses??0} / ${SRC.gardiens??"—"} gardiens avec buts encaissés, ${SRC.transfermarkt_equipe??0} joueurs avec les résultats de leur équipe.`;
   const CO=DATA.coefficients_ligue||{exacts:{},prefixes:{}};
   const fmtC=o=>Object.entries(o).map(([k,v])=>`${k} ${v.toFixed(2)}`).join(", ");
   $("coefExact").textContent=fmtC(CO.exacts); $("coefPrefix").textContent=fmtC(CO.prefixes);
+  const DY=DATA.dynamique||{poids:0.25,retrecissement_matchs:6,poids_coupe:0.8,niveau_europe:1.3,rampe_saison_matchs:15};
+  $("dynDate").textContent=JN?dateFr(JN.date):"—"; $("dynW").textContent=DY.poids.toLocaleString("fr-CH"); $("dynK").textContent=DY.retrecissement_matchs;
+  $("cupW").textContent=DY.poids_coupe.toLocaleString("fr-CH"); $("euroC").textContent=DY.niveau_europe.toLocaleString("fr-CH"); $("rampN").textContent=DY.rampe_saison_matchs;
 
   // ADN fan
   const maxW=Math.max(...Object.values(DNA.weights));
@@ -266,7 +311,7 @@ const DATA=/*__DATA__*/null;
   $("needs").innerHTML=["GK","DEF","MID","ATT"].map(g=>{const n=NEEDS[g];const lvl=n.besoin>=0.5?"hi":n.besoin>=0.3?"mid":"lo";
     return `<div class="need ${lvl}"><div class="g"><h3>${GL[g]}</h3><span class="pill">${lvl==="hi"?"Prioritaire":lvl==="mid"?"À renforcer":"Couvert"}</span></div>
     <div class="g" style="margin-top:6px"><b class="num">${n.besoin.toFixed(2)}</b><span class="psub">besoin</span></div>
-    <ul><li><span>Effectif / cible</span><span class="num">${n.effectif} / ${n.cible}</span></li><li><span>Fin de contrat &lt; 12 mois</span><span class="num">${n.fin_contrat_12m}</span></li><li><span>31 ans et plus</span><span class="num">${n["31_ans_plus"]}</span></li><li><span>Âge moyen</span><span class="num">${n.age_moyen??"—"}</span></li></ul></div>`}).join("");
+    <ul><li><span>Effectif / cible</span><span class="num">${n.effectif} / ${n.cible}</span></li><li><span>Fin de contrat &lt; 12 mois</span><span class="num">${n.fin_contrat_12m}</span></li><li><span>31 ans et plus</span><span class="num">${n["31_ans_plus"]}</span></li><li><span>Titulaires blessés longue durée</span><span class="num">${n.blesses_longue_duree??0}</span></li><li><span>Âge moyen</span><span class="num">${n.age_moyen??"—"}</span></li></ul></div>`}).join("");
 
   // Contrôles
   const st={wS:DATA.poids_defaut.sport*100,wV:DATA.poids_defaut.valeur*100,wF:DATA.poids_defaut.fan*100,pos:"",fee:1500000,budget:1500000,age:34,fFree:false,fLocal:false};
@@ -279,7 +324,7 @@ const DATA=/*__DATA__*/null;
     const wV=j.market_value_estimated?st.wV/2:st.wV, t=(st.wS+wV+st.wF)||1, s=j.scores;
     return (st.wS*s.sport+wV*s.valeur+st.wF*s.fan)/t*(0.85+0.30*s.besoin);
   }
-  function tagCls(t){return /Libre|Fin de/.test(t)?"free":/pays|Retour/.test(t)?"local":/Sous-/.test(t)?"under":/faible|inconnue|estimée|baisse/.test(t)?"weak":""}
+  function tagCls(t){return /Libre|Fin de/.test(t)?"free":/pays|Retour/.test(t)?"local":/Sous-/.test(t)?"under":/En forme|Gagne|Titulaire|Révélation/.test(t)?"form":/Perd sa/.test(t)?"down":/Blessé/.test(t)?"injury":/non lue/.test(t)?"unread":/faible|inconnue|estimée|baisse/.test(t)?"weak":""}
   // « Sous-performe ses xG » est une occasion Moneyball : même couleur que « Sous-évalué »
   function mini(s){return `<div class="mini">${[["S",s.sport,"--sport"],["V",s.valeur,"--valeur"],["F",s.fan,"--fan"]].map(([l,v,c])=>
     `<div><span>${l}</span><span class="t"><i style="width:${v}%;background:var(${c})"></i></span><span class="num">${Math.round(v)}</span></div>`).join("")}</div>`}
@@ -290,7 +335,32 @@ const DATA=/*__DATA__*/null;
       <div><h3 class="s">Sport · ${j.scores.sport}</h3>${kv([...(j.groupe==="GK"?[["Buts encaissés · clean sheets (2 saisons)",d.sport.buts_encaisses==null?"aucune donnée":d.sport.buts_encaisses+" · "+d.sport.clean_sheets],["Buts encaissés / 90 (gardien · équipe · médiane ligue)",[d.sport.buts_encaisses_90,d.sport.equipe_encaisses_90,d.sport.ligue_encaisses_90].map(v=>v==null?"—":v).join(" · ")],["Lecture",esc(d.sport.mode_gardien||"—")],["Rang défensif entre gardiens",pct(d.sport.rang_defensif)]]:j.groupe==="DEF"?[["Sous-poste",j.sous_poste==="CB"?"central":"latéral"],["Buts encaissés / 90 (équipe · médiane ligue)",[d.sport.equipe_encaisses_90,d.sport.ligue_encaisses_90].map(v=>v==null?"—":v).join(" · ")],["Rang défensif dans le sous-poste",pct(d.sport.rang_defensif)],...(d.sport.rang_production!=null?[["(Buts + 0,7 passes) / 90",d.sport.g_a_90],["Rang offensif entre latéraux",pct(d.sport.rang_production)]]:[])]:[["(Buts + 0,7 passes) / 90",d.sport.g_a_90],["Buts · passes",d.sport.buts+" · "+d.sport.passes],...(d.sport.rang_production!=null?[["Rang de production dans le vivier",pct(d.sport.rang_production)]]:[])]),["Matchs (2 saisons)",d.sport.matchs],["Minutes (2 saisons)",d.sport.minutes_total],["Confiance de la note Sport",conf(j)+(d.sport.confiance_note==="faible"?" ("+pct(d.sport.confiance)+" d'échantillon)":"")],["Niveau de ligue",d.sport.niveau],["Disponibilité",pct(d.sport.disponibilite)]])}</div>
       <div><h3 class="v">Valeur · ${j.scores.valeur}${j.market_value_estimated?" *":""}</h3>${kv([...(j.market_value_estimated?[["Valeur marchande","estimée "+eur(j.market_value)+" (régression, absente de Transfermarkt)"]]:[]),["Sous-évaluation (rang)",pct(d.valeur.sous_evaluation)],["Tendance 12 mois",(d.valeur.tendance>=0?"+":"")+Math.round(d.valeur.tendance*100)+" %"],["Mois de contrat restants",d.valeur.mois_contrat??"—"],["Fin de contrat",j.contract_expires??"—"],["Valeur projetée à 24 mois",eur(d.valeur.valeur_projetee_24m)],["Plus-value nette attendue",d.valeur.plus_value==null?"—":(d.valeur.plus_value>=0?"+":"")+Math.round(d.valeur.plus_value*100)+" % de la valeur"],["Coût net (indemnité − revente)",d.valeur.cout_net==null?"—":eur(d.valeur.cout_net)]])}</div>
       <div><h3 class="f">Fan fit · ${j.scores.fan}</h3>${kv([["Origine",esc(d.fan.origine)+(j.naissance?" ("+esc(j.naissance)+")":"")],["Nationalités",esc(j.nationalites.join(", "))],["Francophonie",pct(d.fan.francophonie)],["Durée moyenne par club",d.fan.tenure+" ans"],["Potentiel média",pct(d.fan.media)],["Lien club",esc(d.fan.lien)]])}</div>
-    </div>${j.url?`<p style="margin:12px 0 0"><a href="${esc(j.url)}" style="color:var(--accent-ink)">Fiche Transfermarkt</a></p>`:""}</td></tr>`}
+    </div>${season(j.detail.sport.dynamique,j.detail.sport.poids_dynamique,j.groupe)}${j.url?`<p style="margin:12px 0 0"><a href="${esc(j.url)}" style="color:var(--accent-ink)">Fiche Transfermarkt</a></p>`:""}</td></tr>`}
+  const pctOr=v=>v==null?"—":Math.round(v*100)+" %";
+  const signed=v=>v==null?"—":(v>=0?"+":"")+Math.round(v*100)+" pt";
+  const ratio=v=>v==null?"—":"× "+v.toFixed(2);
+  const STATUS={played:"a joué",bench:"banc",not_in_squad:"hors groupe",injured:"blessé",suspended:"suspendu",other:"pas au club"};
+  const REASONS={"unknown injury":"blessure non précisée","muscle injury":"blessure musculaire","muscular problems":"problèmes musculaires","knee injury":"blessure au genou","ankle injury":"blessure à la cheville","hamstring injury":"ischio-jambiers","ill":"malade","illness":"malade","cruciate ligament tear":"rupture des ligaments croisés","torn muscle fibre":"déchirure musculaire","thigh problems":"cuisse","groin injury":"aine","adductor problems":"adducteurs","foot injury":"blessure au pied","shoulder injury":"blessure à l'épaule","back injury":"blessure au dos","calf injury":"mollet","concussion":"commotion","yellow card suspension":"suspension (cartons jaunes)","red card suspension":"suspension (carton rouge)","carton rouge au match précédent":"carton rouge au match précédent"};
+  const reason=r=>r?(REASONS[String(r).toLowerCase()]||r):"";
+  function last5(list){return `<div class="last5">${(list||[]).map(m=>m.status==="played"?`<div class="m5 ${m.outcome||""}"><div class="d">${dateFr(m.date)} · ${m.home?"dom.":"ext."} · ${esc(m.competition_id||"")}</div><div>${esc(m.opponent||"—")}</div><div class="r num">${esc(m.result||"—")} <small>${m.outcome||""}</small></div><div class="num">${m.minutes}' · ${m.goals}b ${m.assists}p${m.conceded!=null&&m.conceded!==undefined?" · "+m.conceded+" enc.":""}${m.started?"":" · entré"}</div></div>`
+    :`<div class="m5 abs"><div class="d">${dateFr(m.date)} · ${esc(m.competition_id||"")}</div><div>${esc(m.opponent||"—")}</div><div>${STATUS[m.status]||m.status}</div></div>`).join("")}</div>`}
+  function season(d,w,g){
+    if(!d) return `<div class="season"><h3>Saison 26/27</h3><p class="psub" style="margin:0">Journal match par match non lu pour ce joueur (page absente ou club hors des calendriers lus) : la note Sport garde la formule par sous-poste.</p></div>`;
+    const cur=d.statut_actuel?` · statut actuel : <b>${STATUS[d.statut_actuel.status]||d.statut_actuel.status}</b>${d.statut_actuel.reason?" ("+esc(reason(d.statut_actuel.reason))+")":""}`:"";
+    return `<div class="season"><h3>Saison 26/27 · toutes compétitions (${esc((d.competitions||[]).join(", "))})</h3>
+      <p class="psub" style="margin:0 0 8px">${d.matchs} matchs de l'équipe · ${d.joues} joués · ${d.titularisations} titularisations · ${d.minutes} minutes · ${d.buts} but${d.buts>1?"s":""} · ${d.passes} passe${d.passes>1?"s":""}${d.buts_encaisses!=null?" · "+d.buts_encaisses+" encaissés sur le terrain":""} · banc ${d.banc} · hors groupe ${d.hors_groupe} · blessé ${d.blesse} · suspendu ${d.suspendu}${cur}</p>
+      <div class="sgrid"><div>${kv([["Part de titularisations",pctOr(d.starter_share)],["Part des minutes de l'équipe",pctOr(d.minutes_share)],["Tendance de rôle (5 derniers − 5 premiers)",signed(d.role_trend)],["Forme 5 derniers matchs / saison",ratio(d.form_5)],["Facteur gros matchs (haut / bas du classement)",ratio(d.big_game_factor)],["Matchs manqués (blessure, suspension)",pctOr(d.availability_2627)],["Régularité du temps de jeu (écart-type / 45)",d.consistency==null?"—":d.consistency.toFixed(2)],[g==="GK"||g==="DEF"?"Buts encaissés / 90 (saison · 25/26)":"(Buts + 0,7 passes) / 90 (saison · 25/26)",`${d.production_90??d.encaisses_90??"—"} · ${d.production_90_2526??"—"}`],["Score dynamique · confiance · poids dans la note Sport",`${Math.round(d.score*100)} · ${pctOr(d.confiance)} · ${pctOr(w)}`]])}</div>
+      <div><div class="lab">5 derniers matchs de l'équipe</div>${last5(d.derniers_matchs)}</div></div></div>`}
+
+  // L'effectif cette saison
+  const SQ=DATA.effectif_saison||[];
+  const trendCls=v=>v==null?"":v>=0.3?"trend up":v<=-0.3?"trend down":"";
+  if(!JN){$("squadSub").textContent="Journal 2026/27 non disponible : lancer python -m moneyball.matchlog puis python -m moneyball.recommend.";}
+  $("squadRows").innerHTML=SQ.length?SQ.map(r=>{const d=r.dynamique;const bar=v=>v==null?"—":`<span class="bar"><i style="width:${Math.round(v*100)}%"></i></span>${Math.round(v*100)} %`;
+    return `<tr><td class="l"><div class="pname">${esc(r.name)}</div><div class="psub">${esc(r.position)} · ${GL[r.groupe]}</div></td><td>${r.age??"—"}</td>`+(d?`<td>${d.matchs}</td><td>${d.titularisations}</td><td>${d.minutes}</td><td>${d.buts} · ${d.passes}</td><td>${bar(d.starter_share)}</td><td>${bar(d.minutes_share)}</td><td class="${trendCls(d.role_trend)}">${signed(d.role_trend)}</td><td class="l">${d.statut_actuel?`${STATUS[d.statut_actuel.status]||d.statut_actuel.status}${d.statut_actuel.reason?" · "+esc(reason(d.statut_actuel.reason)):""}`:(d.derniers_matchs&&d.derniers_matchs.length?STATUS[d.derniers_matchs[d.derniers_matchs.length-1].status]:"—")}</td>`:`<td colspan="8" class="l psub">journal non lu</td>`)+`<td class="l"><div class="tags">${r.tags.map(t=>`<span class="tag ${tagCls(t)}">${esc(t)}</span>`).join("")}</div></td></tr>`}).join(""):`<tr><td colspan="11" class="empty">Aucun journal 2026/27.</td></tr>`;
+  const CP=DATA.comparaison;
+  if(CP){const li=m=>`<li><b>${esc(m.name)}</b> <span class="psub">${esc(m.club)} · ${GL[m.groupe]}</span> · ${m.rang_avant} → ${m.rang_apres} <span class="why">· Sport ${m.sport_avant} → ${m.sport_apres} · ${esc(m.raison)}</span></li>`;
+    $("moves").innerHTML=`<div class="moves"><div><h3>Dix plus fortes montées avec la saison 26/27</h3><ol>${CP.montees.map(li).join("")}</ol></div><div><h3>Dix plus fortes descentes</h3><ol>${CP.descentes.map(li).join("")}</ol></div></div><p class="psub" style="margin-top:10px">Rangs dans le classement par note finale aux poids par défaut, sans puis avec la composante dynamique. Top 20 par ligne avant → après : ${["GK","DEF","MID","ATT"].map(g=>`${GL[g]} ${CP.top20_par_ligne_avant[g]} → ${CP.top20_par_ligne_apres[g]}`).join(", ")}.</p>`;}
 
   function filtered(){
     return J.filter(j=>(!st.pos||j.groupe===st.pos)&&j.indemnite_estimee<=st.fee&&(j.age??0)<=st.age
