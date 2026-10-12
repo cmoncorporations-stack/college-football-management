@@ -33,6 +33,8 @@ class ParserTest(unittest.TestCase):
         last = next(r for r in rows if r["id"] == "4897476")
         self.assertEqual((last["date"], last["matchday"], last["home_id"], last["away_id"], last["result"]),
                          ("2026-10-09", 10, "1292", "322", "0:2"))
+        self.assertEqual((last["formation"], last["coach"]), ("4-3-3 Attacking", "Guillermo Abascal"))
+        self.assertEqual(rows[0]["formation"], "4-2-3-1")
         upcoming = next(r for r in rows if r["id"] == "4897485")
         self.assertFalse(upcoming["played"])
         self.assertIsNone(upcoming["result"])

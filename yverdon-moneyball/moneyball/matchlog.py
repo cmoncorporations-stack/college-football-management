@@ -136,6 +136,11 @@ def parse_fixtures(html: str, club_id: str) -> list[dict]:
             texts = [c.text() for c in cells]
             result = next((t for t in reversed(texts) if re.fullmatch(r"\d+:\d+.*|-:-", t)), None)
             md = texts[0].strip()
+            formation = next((t for t in texts if re.fullmatch(r"\d(?:-\d){2,4}(?: [A-Za-z ]+)?", t.strip())), None)
+            coach = None
+            if formation is not None:
+                i = texts.index(formation)
+                coach = texts[i + 1].strip() if i + 1 < len(texts) and texts[i + 1].strip() else None
             out.append({
                 "id": m.group(1), "date": parse_short_date(texts[1] if len(texts) > 1 else ""),
                 "competition_id": comp, "competition": comp_name,
@@ -143,6 +148,7 @@ def parse_fixtures(html: str, club_id: str) -> list[dict]:
                 "home_id": clubs[0][0], "home": clubs[0][1], "away_id": clubs[1][0], "away": clubs[1][1],
                 "result": result if result and result != "-:-" else None,
                 "played": bool(result and result != "-:-"),
+                "formation": formation, "coach": coach,
             })
     return out
 
