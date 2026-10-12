@@ -277,3 +277,116 @@ class NormalizeTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def log_entry(i, status="played", started=True, minutes=90, goals=0, assists=0, conceded=0, opponent="o", comp="C2"):
+    return {"match_id": str(i), "date": f"2026-{7 + i // 4:02d}-{1 + 7 * (i % 4):02d}", "competition_id": comp,
+            "competition": "Challenge League", "matchday": i + 1, "home": i % 2 == 0, "opponent": opponent,
+            "opponent_id": opponent, "result": "1:0", "outcome": "V", "status": status, "position": "Centre-Forward",
+            "started": started if status == "played" else False, "minutes": minutes if status == "played" else 0,
+            "goals": goals, "assists": assists, "yellow": 0, "red": 0, "subbed_on_minute": None,
+            "subbed_off_minute": None, "conceded": conceded if status == "played" else None}
+
+
+def matchlog_for(pid, entries, current=None):
+    return {"players": {pid: {"name": "x", "club_id": "1", "entries": entries, "team_matches": len(entries),
+                              "current_status": current}}}
+
+
+class DynamicsTest(unittest.TestCase):
+    """Composante « dynamique de saison » (journal 2026/27) et agrégats toutes compétitions."""
+
+    def test_recent_stats_weights_cup_and_ramp(self):
+        prev = {"season": "25/26", "competition_id": "C2", "appearances": 30, "goals": 9, "assists": 0, "minutes": 2700,
+                "yellow": 0, "red": 0}
+        league = {"season": "26/27", "competition_id": "C2", "appearances": 10, "goals": 2, "assists": 0, "minutes": 900,
+                  "yellow": 0, "red": 0, "team_matches": 10}
+        cup = {"season": "26/27", "competition_id": "SCC", "competition": "Swiss Cup", "appearances": 1, "goals": 3,
+               "assists": 0, "minutes": 90, "yellow": 0, "red": 0}
+        st = model.recent_stats(player(stats=[prev, league, cup]), today=TODAY)
+        w = 10 / 15                                   # poids de la saison en cours à 10 matchs
+        self.assertAlmostEqual(st["season_weight"], round(w, 3))
+        self.assertAlmostEqual(st["minutes"], 2700 + 900 * w + 90 * w * 0.8)
+        self.assertAlmostEqual(st["g"], 9 + 2 * w + 3 * w * 0.8)
+        self.assertEqual((st["minutes_raw"], st["g_raw"], st["cup_minutes"]), (3690, 14, 90))
+        # Sans journal ni classement, la saison en cours garde son plein poids (comportement historique).
+        st0 = model.recent_stats(player(stats=[prev, {**league, "team_matches": None}]), today=TODAY)
+        self.assertEqual(st0["minutes"], 3600)
+        # Le journal fixe le nombre de matchs de l'équipe.
+        st15 = model.recent_stats(player(stats=[prev, league, cup]), today=TODAY, team_matches=30)
+        self.assertEqual(st15["season_weight"], 1.0)
+        self.assertAlmostEqual(st15["coef"], 1.0)    # coupe nationale au niveau du championnat du joueur
+
+    def test_european_minutes_at_default_level(self):
+        rows = [{"season": "26/27", "competition_id": "C1", "appearances": 9, "goals": 0, "assists": 0, "minutes": 810,
+                 "yellow": 0, "red": 0, "team_matches": 15},
+                {"season": "26/27", "competition_id": "UCOL", "competition": "UEFA Conference League", "appearances": 2,
+                 "goals": 0, "assists": 0, "minutes": 180, "yellow": 0, "red": 0}]
+        st = model.recent_stats(player(stats=rows, league_id="C1"), today=TODAY)
+        self.assertEqual(st["euro_minutes"], 180)
+        self.assertAlmostEqual(st["coef"], (1.45 * 810 + 1.3 * 180) / 990)
+
+    def test_season_dynamics_indicators(self):
+        # 10 matchs : titulaire sur les 5 premiers, remplaçant ensuite ; 1 match blessé ; forme en hausse.
+        entries = [log_entry(i, started=True, minutes=90, goals=0) for i in range(5)]
+        entries += [log_entry(5, status="injured")]
+        entries += [log_entry(i, started=False, minutes=20, goals=1) for i in range(6, 10)]
+        dyn = model.season_dynamics(player(id="d"), matchlog_for("d", entries), TODAY,
+                                    standings={"o": {"rank": 1, "teams": 10}})
+        self.assertEqual((dyn["matchs"], dyn["joues"], dyn["titularisations"], dyn["blesse"]), (10, 9, 5, 1))
+        self.assertAlmostEqual(dyn["starter_share"], 5 / 9, places=2)
+        self.assertAlmostEqual(dyn["minutes_share"], (450 + 80) / 900, places=2)
+        self.assertLess(dyn["role_trend"], -0.3)          # perd sa place
+        self.assertGreater(dyn["form_5"], 1.3)            # 4 buts en 80 min sur les 5 derniers
+        self.assertAlmostEqual(dyn["availability_2627"], 0.1, places=2)
+        self.assertGreater(dyn["consistency"], 0.5)
+        self.assertIsNone(dyn["big_game_factor"])        # tous les adversaires dans la même moitié
+        self.assertAlmostEqual(dyn["confiance"], 10 / 16, places=2)
+        self.assertIn("Perd sa place", model.dynamic_tags(dyn))
+        self.assertIn("En forme", model.dynamic_tags(dyn))
+        self.assertEqual(model.dynamic_tags(None), ["Saison 26/27 non lue"])
+
+    def test_big_game_factor_and_revelation(self):
+        entries = [log_entry(i, goals=2 if i % 2 else 0, opponent="top" if i % 2 else "low") for i in range(8)]
+        standings = {"top": {"rank": 2, "teams": 10}, "low": {"rank": 9, "teams": 10}}
+        p = player(id="r", stats=[{"season": "25/26", "competition_id": "C2", "appearances": 30, "goals": 3, "assists": 0,
+                                   "minutes": 2700, "yellow": 0, "red": 0}])
+        dyn = model.season_dynamics(p, matchlog_for("r", entries), TODAY, standings)
+        self.assertEqual(dyn["big_game_factor"], 3.0)     # production seulement contre le haut du tableau
+        self.assertTrue(dyn["revelation"])                 # 1,0 but/90 contre 0,1 la saison passée, 720 minutes
+        self.assertIn("Révélation 26/27", model.dynamic_tags(dyn))
+        self.assertIn("Titulaire installé", model.dynamic_tags(dyn))
+
+    def test_keeper_form_uses_conceded(self):
+        entries = [log_entry(i, conceded=2) for i in range(5)] + [log_entry(i, conceded=0) for i in range(5, 10)]
+        dyn = model.season_dynamics(player(id="g", position="Goalkeeper"), matchlog_for("g", entries), TODAY)
+        self.assertGreater(dyn["form_5"], 1.3)            # 0 but encaissé sur les 5 derniers contre 1/90 sur la saison
+        self.assertEqual(dyn["buts_encaisses"], 10)
+        self.assertIsNone(dyn["production_90"])
+
+    def test_dynamics_blend_weight_and_direction(self):
+        base = model.sport_score(player())[0]
+        strong = model.season_dynamics(player(id="p"), matchlog_for("p", [log_entry(i, goals=1) for i in range(10)]), TODAY)
+        weak = model.season_dynamics(player(id="p"), matchlog_for("p", [log_entry(i, status="bench") for i in range(10)]), TODAY)
+        s_strong, d_strong = model.sport_score(player(), dynamics=strong)
+        s_weak, d_weak = model.sport_score(player(), dynamics=weak)
+        self.assertGreater(s_strong, s_weak)
+        self.assertAlmostEqual(d_strong["poids_dynamique"], 0.25 * 10 / 16, places=3)
+        self.assertEqual(d_strong["dynamique"]["matchs"], 10)
+        self.assertEqual(model.sport_score(player(), dynamics=None)[0], base)
+
+    def test_long_term_injured_starter_is_half_a_need(self):
+        squad = [{"id": f"s{i}", "position": "Centre-Back", "age": 25, "contract": "2028-06-30"} for i in range(8)]
+        entries = [log_entry(i, started=True) for i in range(5)] + [log_entry(i, status="injured") for i in range(5, 8)]
+        ml = matchlog_for("s0", entries)
+        self.assertTrue(model.long_term_injured_starter(squad[0], ml))
+        self.assertFalse(model.long_term_injured_starter(squad[1], ml))
+        without = model.squad_needs(squad, TODAY)["DEF"]
+        with_log = model.squad_needs(squad, TODAY, ml)["DEF"]
+        self.assertEqual((without["blesses_longue_duree"], with_log["blesses_longue_duree"]), (0, 1))
+        self.assertGreater(with_log["besoin"], without["besoin"])
+        # Un remplaçant blessé ne compte pas ; une absence de 2 matchs non plus.
+        bench = [log_entry(i, started=False, minutes=10) for i in range(5)] + [log_entry(i, status="injured") for i in range(5, 8)]
+        self.assertFalse(model.long_term_injured_starter(squad[0], matchlog_for("s0", bench)))
+        short = [log_entry(i, started=True) for i in range(6)] + [log_entry(i, status="injured") for i in range(6, 8)]
+        self.assertFalse(model.long_term_injured_starter(squad[0], matchlog_for("s0", short)))

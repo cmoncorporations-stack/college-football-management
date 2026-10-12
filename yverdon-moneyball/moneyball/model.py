@@ -9,6 +9,12 @@
 
 Score final = (wS·SPORT + wV·VALEUR + wF·FAN) × (0,85 + 0,30 × besoin du poste).
 
+Depuis le 11.10.2026, la note Sport comporte une composante « dynamique de saison »
+(season_dynamics) lue dans le journal match par match 2026/27 (matchlog.py) : part de
+titularisations, part de minutes, tendance de rôle, forme sur 5 matchs, facteur gros matchs,
+disponibilité et régularité. Elle pèse 25 % × confiance, confiance = matchs de l'équipe /
+(matchs + 6) ; le reste garde la formule par sous-poste.
+
 Entrée : joueurs au format normalisé produit par scout.py (ou demo.py) :
 {id, name, position, age, citizenship[], birth_city, birth_country, market_value,
  mv_history[[date, value]], contract_expires, club, league_id, stats[{season,
@@ -53,6 +59,18 @@ LEAGUE_PREFIX_COEF = (
     ("PT23", 0.60),  # Liga Next Gen U23
 )
 DEFAULT_COEF = 0.8
+# Saison en cours, toutes compétitions : poids d'une minute de coupe nationale par rapport à une
+# minute de championnat, niveau par défaut d'une minute de coupe d'Europe (ligue adverse inconnue),
+# et montée en puissance de la saison en cours : poids = min(1, matchs de l'équipe / 15).
+CUP_WEIGHT = 0.8
+EURO_DEFAULT_COEF = 1.3
+SEASON_RAMP_MATCHES = 15
+# Composante dynamique : 25 % de la note Sport × confiance, confiance = matchs / (matchs + 6).
+DYN_WEIGHT = 0.25
+DYN_SHRINK_MATCHES = 6
+CUP_WORDS = ("cup", "coupe", "pokal", "coppa", "copa", "trophy", "trophée")
+EURO_WORDS = ("champions league", "europa league", "conference league", "uefa")
+EURO_CODES = {"CL", "EL", "UCOL", "CLQ", "ELQ", "UCOLQ", "CLI", "ECLQ", "UEL", "UCL"}
 SWISS_LEAGUES = {"C1", "C2", "CHPL", "CHC1", "CHC2", "CHC3", "CIR1", "CIR2", "C191", "S1PO"}
 FRENCH_LANG_LEAGUES = {"FR1", "FR2", "FR3", "BE1", "BE2", "LUX1", "FR4A", "FR4B", "FR4C",
                        "FR5A", "FR5B", "FR5C", "FR5D", "FR5E", "FR5F", "FR5G", "FR5H", "F19B", "F19C", "F19F"}
@@ -68,6 +86,24 @@ def league_coef(competition_id: str | None) -> float | None:
         if competition_id.startswith(prefix):
             return coef
     return None
+
+def competition_type(competition_id: str | None, label: str | None = None) -> str:
+    """league (championnat à coefficient connu), national_cup, european ou other (« Total », amicaux…)."""
+    lab = (label or "").lower()
+    if competition_id and league_coef(competition_id) is not None:
+        return "league"
+    if (competition_id or "") in EURO_CODES or any(w in lab for w in EURO_WORDS):
+        return "european"
+    if any(w in lab for w in CUP_WORDS):
+        return "national_cup"
+    return "other"
+
+
+def current_season_key(today: date | None = None) -> int:
+    """Saison Transfermarkt en cours : 2026 pour 2026/27 (bascule au 1er juillet)."""
+    t = today or date.today()
+    return t.year if t.month >= 7 else t.year - 1
+
 
 POSITION_GROUPS = {
     "GK": ("goalkeeper", "gardien"),
@@ -126,37 +162,78 @@ def _season_key(s: str) -> int:
     return n + 2000 if n < 100 else n
 
 
-def recent_stats(p: dict, seasons: int = 2) -> dict:
-    """Agrège les deux dernières saisons, en championnat, pondérées par le niveau.
+def recent_stats(p: dict, seasons: int = 2, today: date | None = None, team_matches: int | None = None) -> dict:
+    """Agrège les deux dernières saisons, pondérées par le niveau et par la compétition.
 
-    Niveau (`coef`) = moyenne des coefficients de ligue des lignes retenues, pondérée par
-    les minutes ; lignes retenues = les deux saisons les plus récentes ayant des minutes,
-    limitées aux compétitions à coefficient connu (toutes les lignes si aucune ne l'est,
-    au coefficient DEFAULT_COEF). Ajoute les agrégats défensifs (buts encaissés du gardien,
-    résultats de l'équipe, médiane de la ligue) lus par defence.py quand ils existent.
+    - Saisons passées : championnat seulement (compétitions à coefficient connu), poids 1.
+    - Saison en cours : toutes compétitions. Championnat au poids 1,0 et à son coefficient ;
+      coupe nationale au poids CUP_WEIGHT (0,8) et au niveau du championnat du joueur ;
+      coupe d'Europe au poids 1,0 et au niveau EURO_DEFAULT_COEF (1,3, ligue adverse inconnue
+      dans les agrégats). Le tout multiplié par le poids de saison min(1, matchs de l'équipe / 15)
+      (`team_matches` : journal 2026/27, sinon classement de la ligne de championnat ; sans
+      information, poids 1 comme avant).
+    Si aucune ligne n'a de coefficient connu, toutes les lignes comptent au coefficient DEFAULT_COEF.
+
+    `minutes`, `apps`, `g`, `a`, `cards` sont les totaux pondérés qui servent aux taux et à la
+    confiance ; `minutes_raw`, `apps_raw`, `g_raw`, `a_raw` les totaux réels pour l'affichage.
+    Les agrégats défensifs (gardien, équipe, médiane de ligue) lus par defence.py restent ceux
+    des lignes de championnat, en minutes réelles.
     """
     rows = [r for r in p.get("stats", []) if r.get("minutes")]
     empty = {"minutes": 0, "apps": 0, "g": 0, "a": 0, "cards": 0, "coef": DEFAULT_COEF,
              "minutes_per_season": 0, "conceded": None, "clean_sheets": None, "gk_matches": 0,
              "gk_minutes": 0, "team_minutes": 0, "team_c90": None, "league_c90": None,
-             "rank_score": None, "team_rows": 0}
+             "rank_score": None, "team_rows": 0, "minutes_raw": 0, "apps_raw": 0, "g_raw": 0, "a_raw": 0,
+             "cup_minutes": 0, "euro_minutes": 0, "season_weight": None, "cur_minutes_raw": 0}
     if not rows:
         return empty
     keys = sorted({_season_key(r["season"]) for r in rows}, reverse=True)[:seasons]
     rows = [r for r in rows if _season_key(r["season"]) in keys]
-    league_rows = [r for r in rows if league_coef(r.get("competition_id")) is not None] or rows
-    minutes = sum(r["minutes"] for r in league_rows)
-    coef = (sum((league_coef(r.get("competition_id")) or DEFAULT_COEF) * r["minutes"]
-                for r in league_rows) / minutes) if minutes else DEFAULT_COEF
+    cur = current_season_key(today)
+
+    def kind(r):
+        return competition_type(r.get("competition_id"), r.get("competition"))
+
+    league_rows = [r for r in rows if kind(r) == "league"]
+    cur_other = [r for r in rows if _season_key(r["season"]) == cur and kind(r) in ("national_cup", "european")]
+    fallback = not league_rows and not cur_other
+    if fallback:
+        league_rows = rows
+    tm = team_matches or max((r.get("team_matches") or 0 for r in rows if _season_key(r["season"]) == cur), default=0)
+    season_w = min(1.0, tm / SEASON_RAMP_MATCHES) if tm else 1.0
+    cur_league = [r for r in league_rows if _season_key(r["season"]) == cur]
+    cur_min = sum(r["minutes"] for r in cur_league)
+    cur_level = (sum((league_coef(r.get("competition_id")) or DEFAULT_COEF) * r["minutes"] for r in cur_league) / cur_min
+                 if cur_min else (league_coef(p.get("league_id")) or DEFAULT_COEF))
+    weighted: list[tuple[dict, float, float]] = []
+    for r in league_rows:
+        w = season_w if _season_key(r["season"]) == cur else 1.0
+        weighted.append((r, w, DEFAULT_COEF if fallback else (league_coef(r.get("competition_id")) or DEFAULT_COEF)))
+    for r in cur_other:
+        if kind(r) == "national_cup":
+            weighted.append((r, season_w * CUP_WEIGHT, cur_level))
+        else:
+            weighted.append((r, season_w, EURO_DEFAULT_COEF))
+    minutes = sum(r["minutes"] * w for r, w, _ in weighted)
+    coef = (sum(level * r["minutes"] * w for r, w, level in weighted) / minutes) if minutes else DEFAULT_COEF
+    used = [r for r, _, _ in weighted]
     st = {**empty,
           "minutes": minutes,
-          "apps": sum(r.get("appearances", 0) for r in league_rows),
-          "g": sum(r.get("goals", 0) for r in league_rows),
-          "a": sum(r.get("assists", 0) for r in league_rows),
-          "cards": sum(r.get("yellow", 0) + 3 * r.get("red", 0) for r in league_rows),
+          "apps": sum(r.get("appearances", 0) * w for r, w, _ in weighted),
+          "g": sum(r.get("goals", 0) * w for r, w, _ in weighted),
+          "a": sum(r.get("assists", 0) * w for r, w, _ in weighted),
+          "cards": sum((r.get("yellow", 0) + 3 * r.get("red", 0)) * w for r, w, _ in weighted),
           "coef": coef,
-          "minutes_per_season": minutes / max(1, len(keys))}
-    # Gardien : buts encaissés et clean sheets (page « Clean sheets » Transfermarkt).
+          "minutes_per_season": minutes / max(1, len(keys)),
+          "minutes_raw": sum(r["minutes"] for r in used),
+          "apps_raw": sum(r.get("appearances", 0) for r in used),
+          "g_raw": sum(r.get("goals", 0) for r in used),
+          "a_raw": sum(r.get("assists", 0) for r in used),
+          "cup_minutes": sum(r["minutes"] for r in cur_other if kind(r) == "national_cup"),
+          "euro_minutes": sum(r["minutes"] for r in cur_other if kind(r) == "european"),
+          "season_weight": round(season_w, 3) if (cur_league or cur_other) else None,
+          "cur_minutes_raw": cur_min + sum(r["minutes"] for r in cur_other)}
+    # Gardien : buts encaissés et clean sheets (page « Clean sheets » Transfermarkt), championnat.
     gk_rows = [r for r in league_rows if r.get("conceded") is not None]
     if gk_rows:
         st["conceded"] = sum(r["conceded"] for r in gk_rows)
@@ -316,16 +393,178 @@ def _finish(raw: float, c: dict) -> float:
     return round(100 * _clip(raw / 0.85), 1)
 
 
-def _detail(st: dict, c: dict, confidence: float, note: str | None, **extra) -> dict:
+def _detail(st: dict, c: dict, confidence: float, note: str | None, dynamics: dict | None = None,
+            w_dyn: float = 0.0, **extra) -> dict:
     d = {"g_a_90": round(c["g_a_90"], 2), "minutes_saison": round(st["minutes_per_season"]),
-         "minutes_total": st["minutes"], "confiance": round(confidence, 2), "confiance_note": note,
+         "minutes_total": st["minutes_raw"], "minutes_ponderees": round(st["minutes"]),
+         "confiance": round(confidence, 2), "confiance_note": note,
          "niveau": round(st["coef"], 2), "disponibilite": round(c["availability"], 2),
-         "buts": st["g"], "passes": st["a"], "matchs": st["apps"], "source": "transfermarkt"}
+         "buts": st["g_raw"], "passes": st["a_raw"], "matchs": st["apps_raw"], "source": "transfermarkt",
+         "minutes_coupe_2627": st["cup_minutes"], "minutes_europe_2627": st["euro_minutes"],
+         "poids_saison_2627": st["season_weight"],
+         "dynamique": dynamics, "poids_dynamique": round(w_dyn, 3)}
     d.update(extra)
     return d
 
 
-def sport_score_gk(p: dict, baselines: dict | None = None) -> tuple[float, dict]:
+def _rate(entries: list[dict], key: str = "prod") -> float | None:
+    """Production (buts + 0,7 passes) ou buts encaissés par 90 minutes sur une liste de lignes de journal."""
+    minutes = sum(e["minutes"] for e in entries)
+    if not minutes:
+        return None
+    if key == "conceded":
+        total = sum(e.get("conceded") or 0 for e in entries)
+    else:
+        total = sum(e["goals"] + 0.7 * e["assists"] for e in entries)
+    return total / minutes * 90
+
+
+def _ratio(num: float | None, den: float | None, cap: float = 3.0) -> float | None:
+    if num is None or den is None:
+        return None
+    if den <= 0:
+        return cap if num > 0 else None
+    return min(cap, num / den)
+
+
+def _prev_season_rate(p: dict, defensive: bool, today: date | None) -> tuple[float | None, int]:
+    """Production (ou buts encaissés) par 90 min en championnat la saison précédente, et minutes."""
+    prev = current_season_key(today) - 1
+    rows = [r for r in p.get("stats", []) if r.get("minutes") and _season_key(r["season"]) == prev
+            and competition_type(r.get("competition_id"), r.get("competition")) == "league"]
+    if defensive:
+        rows = [r for r in rows if r.get("conceded") is not None]
+    minutes = sum(r["minutes"] for r in rows)
+    if not minutes:
+        return None, 0
+    total = sum(r["conceded"] for r in rows) if defensive else sum(r.get("goals", 0) + 0.7 * r.get("assists", 0) for r in rows)
+    return total / minutes * 90, minutes
+
+
+def season_dynamics(p: dict, matchlog: dict | None, today: date | None = None,
+                    standings: dict | None = None) -> dict | None:
+    """Dynamique de saison d'un joueur, sur 2026/27 seulement, d'après le journal match par match.
+
+    - starter_share : titularisations ÷ matchs de l'équipe où le joueur était disponible
+      (hors blessure et suspension) ;
+    - minutes_share : minutes jouées ÷ minutes possibles de l'équipe (90 par match, 120 après prolongation) ;
+    - role_trend : part de minutes sur les 5 derniers matchs de l'équipe moins celle sur les 5 premiers
+      (≥ 6 matchs) ; > 0 gagne sa place, < 0 la perd ;
+    - form_5 : production (buts + 0,7 passes / 90) des 5 derniers matchs joués rapportée à celle de la
+      saison ; gardiens et centraux : (buts encaissés/90 saison + 0,5) ÷ (buts encaissés/90 des 5 derniers
+      + 0,5) — sur le terrain pour les centraux ; > 1 = mieux que sa moyenne ;
+    - big_game_factor : même production contre les adversaires de la première moitié du classement du
+      championnat au jour du journal ÷ contre la seconde moitié (gardiens, centraux : inversé sur les buts
+      encaissés) ; matchs de coupe exclus (pas de classement) ;
+    - availability_2627 : matchs manqués pour blessure ou suspension ÷ matchs de l'équipe ;
+    - consistency : écart-type des minutes par match joué ÷ 45, borné à 1 (0 = toujours le même temps de jeu).
+    Les matchs disputés avant l'arrivée du joueur au club (`other`) ne comptent pas.
+    `score` (0-1) = 0,30 titularisation + 0,20 minutes + 0,15 tendance + 0,15 forme + 0,10 gros matchs
+    + 0,05 disponibilité + 0,05 régularité (indicateur absent = 0,5) ; `confiance` = matchs / (matchs + 6).
+    None sans journal.
+    """
+    log = ((matchlog or {}).get("players") or {}).get(p.get("id"))
+    if not log or not log.get("entries"):
+        return None
+    entries = [e for e in log["entries"] if e.get("status") != "other"]
+    if not entries:
+        return None
+    g = sub_group(p.get("position"))
+    defensive = g in ("GK", "CB")
+    n = len(entries)
+    available = [e for e in entries if e["status"] not in ("injured", "suspended")]
+    played = [e for e in entries if e["status"] == "played"]
+    starts = sum(1 for e in played if e.get("started"))
+    possible = sum(max(90, e["minutes"]) for e in entries)
+    minutes = sum(e["minutes"] for e in played)
+    starter_share = starts / len(available) if available else None
+    minutes_share = minutes / possible if possible else None
+
+    def share(block):
+        poss = sum(max(90, e["minutes"]) for e in block)
+        return sum(e["minutes"] for e in block) / poss if poss else 0.0
+
+    role_trend = share(entries[-5:]) - share(entries[:5]) if n >= 6 else None
+    key = "conceded" if defensive else "prod"
+    season_rate = _rate(played, key)
+    last5 = played[-5:]
+    if defensive:
+        form_5 = _ratio((season_rate or 0) + 0.5, (_rate(last5, key) or 0) + 0.5) if last5 else None
+    else:
+        form_5 = _ratio(_rate(last5, key), season_rate) if last5 else None
+    big = None
+    if standings:
+        def half(e):
+            st = standings.get(str(e.get("opponent_id")))
+            if not st or not st.get("teams") or competition_type(e.get("competition_id")) != "league":
+                return None
+            return "top" if st["rank"] <= st["teams"] / 2 else "bottom"
+        top = [e for e in played if half(e) == "top"]
+        bottom = [e for e in played if half(e) == "bottom"]
+        if top and bottom:
+            if defensive:
+                big = _ratio((_rate(bottom, key) or 0) + 0.5, (_rate(top, key) or 0) + 0.5)
+            else:
+                big = _ratio(_rate(top, key), _rate(bottom, key))
+    missed = sum(1 for e in entries if e["status"] in ("injured", "suspended"))
+    availability = missed / n
+    consistency = None
+    if len(played) >= 2:
+        mins = [e["minutes"] for e in played]
+        mean = sum(mins) / len(mins)
+        consistency = min(1.0, (sum((m - mean) ** 2 for m in mins) / len(mins)) ** 0.5 / 45)
+    neutral = lambda v: 0.5 if v is None else v  # noqa: E731
+    score = (0.30 * neutral(starter_share) + 0.20 * neutral(minutes_share)
+             + 0.15 * _clip(0.5 + (role_trend or 0.0)) + 0.15 * _clip(neutral(form_5) / 2 if form_5 is not None else 0.5)
+             + 0.10 * _clip(neutral(big) / 2 if big is not None else 0.5)
+             + 0.05 * (1 - availability) + 0.05 * (1 - neutral(consistency)))
+    prev_rate, prev_minutes = _prev_season_rate(p, defensive, today)
+    revelation = False
+    if minutes >= 450 and prev_minutes > 0 and season_rate is not None and g != "CB":
+        if defensive:
+            revelation = season_rate <= prev_rate / 1.5
+        else:
+            revelation = season_rate >= 0.25 and season_rate >= 1.5 * prev_rate
+    current = log.get("current_status") or None
+    comps = sorted({e.get("competition_id") for e in entries if e.get("competition_id")})
+    return {
+        "starter_share": None if starter_share is None else round(starter_share, 3),
+        "minutes_share": None if minutes_share is None else round(minutes_share, 3),
+        "role_trend": None if role_trend is None else round(role_trend, 3),
+        "form_5": None if form_5 is None else round(form_5, 2),
+        "big_game_factor": None if big is None else round(big, 2),
+        "availability_2627": round(availability, 3),
+        "consistency": None if consistency is None else round(consistency, 3),
+        "score": round(score, 3), "confiance": round(n / (n + DYN_SHRINK_MATCHES), 3),
+        "matchs": n, "disponibles": len(available), "joues": len(played), "titularisations": starts,
+        "minutes": minutes, "buts": sum(e["goals"] for e in played), "passes": sum(e["assists"] for e in played),
+        "jaunes": sum(e["yellow"] for e in played), "rouges": sum(e["red"] for e in played),
+        "buts_encaisses": sum(e.get("conceded") or 0 for e in played) if defensive else None,
+        "production_90": None if season_rate is None or defensive else round(season_rate, 2),
+        "encaisses_90": None if season_rate is None or not defensive else round(season_rate, 2),
+        "production_90_2526": None if prev_rate is None else round(prev_rate, 2),
+        "blesse": sum(1 for e in entries if e["status"] == "injured"),
+        "suspendu": sum(1 for e in entries if e["status"] == "suspended"),
+        "banc": sum(1 for e in entries if e["status"] == "bench"),
+        "hors_groupe": sum(1 for e in entries if e["status"] == "not_in_squad"),
+        "competitions": comps,
+        "statut_actuel": current, "revelation": revelation,
+        "derniers_matchs": [{k: e.get(k) for k in ("date", "competition_id", "opponent", "home", "result", "outcome",
+                                                    "status", "started", "minutes", "goals", "assists", "conceded")}
+                            for e in entries[-5:]],
+    }
+
+
+def _blend_dynamics(raw: float, dyn: dict | None) -> tuple[float, float]:
+    """Mélange la note brute par sous-poste et la dynamique : poids = DYN_WEIGHT × confiance."""
+    if not dyn:
+        return raw, 0.0
+    w = DYN_WEIGHT * dyn["confiance"]
+    return (1 - w) * raw + w * dyn["score"], w
+
+
+def sport_score_gk(p: dict, baselines: dict | None = None, dynamics: dict | None = None,
+                   today: date | None = None) -> tuple[float, dict]:
     """Note Sport d'un gardien : jamais de production offensive.
 
     indice défensif (buts encaissés/90 rapportés à l'équipe, ou rang de l'équipe pour un
@@ -334,7 +573,7 @@ def sport_score_gk(p: dict, baselines: dict | None = None) -> tuple[float, dict]
     discipline 10 % ; puis coefficient de ligue et blessures. Sans donnée de buts encaissés :
     médiane des gardiens, confiance plafonnée à 0,5 et notée « faible ».
     """
-    st = recent_stats(p)
+    st = recent_stats(p, today=today, team_matches=(dynamics or {}).get("matchs"))
     c = _common(p, st)
     ref = (baselines or {}).get("GK") if (baselines or {}).get("GK", {}).get("n", 0) >= 20 else None
     idx, mode = gk_defence_index(st)
@@ -347,8 +586,9 @@ def sport_score_gk(p: dict, baselines: dict | None = None) -> tuple[float, dict]
         if mode in ("titulaire unique sans classement", "sans donnée d'équipe"):
             confidence, note = min(confidence, 0.5), "faible"
     raw = 0.65 * rank + 0.25 * c["availability"] + 0.10 * c["discipline"]
+    raw, w_dyn = _blend_dynamics(raw, dynamics)
     score = _finish(raw, c)
-    detail = _detail(st, c, confidence, note, rang_defensif=round(rank, 2), rang_production=None,
+    detail = _detail(st, c, confidence, note, dynamics, w_dyn, rang_defensif=round(rank, 2), rang_production=None,
                      reference="vivier" if ref else "fixe", mode_gardien=mode,
                      buts_encaisses=st["conceded"], clean_sheets=st["clean_sheets"],
                      buts_encaisses_90=round(st["conceded"] / st["gk_minutes"] * 90, 2) if st.get("gk_minutes") else None,
@@ -359,7 +599,8 @@ def sport_score_gk(p: dict, baselines: dict | None = None) -> tuple[float, dict]
     return score, detail
 
 
-def sport_score_def(p: dict, baselines: dict | None = None) -> tuple[float, dict]:
+def sport_score_def(p: dict, baselines: dict | None = None, dynamics: dict | None = None,
+                    today: date | None = None) -> tuple[float, dict]:
     """Note Sport d'un défenseur, par sous-poste.
 
     Central (CB) : résultats défensifs de l'équipe (buts encaissés/90 vs médiane de la ligue)
@@ -369,7 +610,7 @@ def sport_score_def(p: dict, baselines: dict | None = None) -> tuple[float, dict
     Latéral (FB) : 50 % profil défensif (même formule) + 50 % production offensive (buts +
     0,7 passes, percentile entre latéraux) → 55 % ; disponibilité 35 % ; discipline 10 %.
     """
-    st = recent_stats(p)
+    st = recent_stats(p, today=today, team_matches=(dynamics or {}).get("matchs"))
     c = _common(p, st)
     g = sub_group(p.get("position"))
     b = (baselines or {}).get(g, {})
@@ -394,8 +635,9 @@ def sport_score_def(p: dict, baselines: dict | None = None) -> tuple[float, dict
         confidence, note = c["confidence"], def_note
         if note:
             confidence = min(confidence, 0.5)
+    raw, w_dyn = _blend_dynamics(raw, dynamics)
     score = _finish(raw, c)
-    detail = _detail(st, c, confidence, note, sous_poste=g, rang_defensif=round(rank_def, 2),
+    detail = _detail(st, c, confidence, note, dynamics, w_dyn, sous_poste=g, rang_defensif=round(rank_def, 2),
                      rang_production=None if rank_prod is None else round(rank_prod, 2),
                      reference="vivier" if (ref_def or (g == "FB" and b.get("n", 0) >= 20)) else "fixe",
                      equipe_encaisses_90=round(st["team_c90"], 2) if st.get("team_c90") else None,
@@ -404,13 +646,14 @@ def sport_score_def(p: dict, baselines: dict | None = None) -> tuple[float, dict
     return score, detail
 
 
-def sport_score(p: dict, baselines: dict | None = None) -> tuple[float, dict]:
+def sport_score(p: dict, baselines: dict | None = None, dynamics: dict | None = None,
+                today: date | None = None) -> tuple[float, dict]:
     group = position_group(p.get("position"))
     if group == "GK":
-        return sport_score_gk(p, baselines)
+        return sport_score_gk(p, baselines, dynamics, today)
     if group == "DEF":
-        return sport_score_def(p, baselines)
-    st = recent_stats(p)
+        return sport_score_def(p, baselines, dynamics, today)
+    st = recent_stats(p, today=today, team_matches=(dynamics or {}).get("matchs"))
     c = _common(p, st)
     availability, discipline, confidence, g_a_90 = c["availability"], c["discipline"], c["confidence"], c["g_a_90"]
     ref = (baselines or {}).get(group) if (baselines or {}).get(group, {}).get("n", 0) >= 20 else None
@@ -443,8 +686,9 @@ def sport_score(p: dict, baselines: dict | None = None) -> tuple[float, dict]:
     raw = w_prod * prod + (0.9 - w_prod) * availability + 0.10 * discipline
     if rating_score is not None:
         raw = 0.67 * raw + 0.33 * rating_score
+    raw, w_dyn = _blend_dynamics(raw, dynamics)
     score = _finish(raw, c)
-    detail = _detail(st, c, confidence, None, rang_production=round(prod, 2),
+    detail = _detail(st, c, confidence, None, dynamics, w_dyn, rang_production=round(prod, 2),
                      reference="vivier" if ref else "fixe")
     if perf:
         detail.update({"source": "transfermarkt + " + (perf.get("source") or "sofascore"),
@@ -675,19 +919,48 @@ def fan_components(p: dict) -> dict:
 
 
 # --------------------------------------------------------------------------- BESOINS
-def squad_needs(squad: list[dict], today: date) -> dict:
-    """Besoin 0-1 par ligne : sous-effectif, contrats qui expirent, vieillissement."""
+LONG_INJURY_MATCHES = 3   # matchs manqués consécutifs à partir desquels un titulaire blessé compte un demi-manque
+
+
+def long_term_injured_starter(p: dict, matchlog: dict | None) -> bool:
+    """Titulaire blessé longue durée : dernier statut `injured`, ≥ 3 matchs manqués consécutifs, et titulaire
+    (≥ 50 % des matchs disponibles) avant la blessure — ou aucun match avant la blessure cette saison."""
+    log = ((matchlog or {}).get("players") or {}).get(p.get("id"))
+    if not log:
+        return False
+    entries = [e for e in log.get("entries", []) if e.get("status") != "other"]
+    streak = 0
+    for e in reversed(entries):
+        if e["status"] != "injured":
+            break
+        streak += 1
+    if streak < LONG_INJURY_MATCHES:
+        return False
+    before = entries[:len(entries) - streak]
+    available = [e for e in before if e["status"] not in ("injured", "suspended")]
+    if not available:
+        return True
+    return sum(1 for e in before if e.get("started")) / len(available) >= 0.5
+
+
+def squad_needs(squad: list[dict], today: date, matchlog: dict | None = None) -> dict:
+    """Besoin 0-1 par ligne : sous-effectif, contrats qui expirent, vieillissement.
+
+    Avec le journal 2026/27, un titulaire blessé longue durée (≥ 3 matchs manqués consécutifs, dernier
+    statut blessé) compte comme un demi-manque dans le sous-effectif.
+    """
     needs = {}
     for group, target in SQUAD_TARGET.items():
         members = [p for p in squad if position_group(p.get("position")) == group]
         count = len(members)
         expiring = sum(1 for p in members if (m := _months_until(p.get("contract"), today)) is not None and m <= 12)
         veterans = sum(1 for p in members if (p.get("age") or 0) >= 31)
-        shortage = _clip((target - (count - expiring)) / target)
+        long_injured = sum(1 for p in members if long_term_injured_starter(p, matchlog))
+        shortage = _clip((target - (count - expiring - 0.5 * long_injured)) / target)
         ageing = veterans / count if count else 1.0
         need = _clip(0.6 * shortage + 0.25 * ageing + 0.15 * (expiring / count if count else 1))
         needs[group] = {"besoin": round(need, 2), "effectif": count, "cible": target,
-                        "fin_contrat_12m": expiring, "31_ans_plus": veterans,
+                        "fin_contrat_12m": expiring, "31_ans_plus": veterans, "blesses_longue_duree": long_injured,
                         "age_moyen": round(sum(p.get("age") or 0 for p in members) / count, 1) if count else None}
     return needs
 
@@ -696,12 +969,47 @@ def squad_needs(squad: list[dict], today: date) -> dict:
 DEFAULT_WEIGHTS = {"sport": 0.45, "valeur": 0.30, "fan": 0.25}
 
 
+def standings_from_defence(defence: dict | None, season: int) -> dict:
+    """{club_id: {"rank", "teams", "competition_id"}} d'après data/defence.json pour une saison."""
+    out = {}
+    for key, block in (defence or {}).items():
+        if int(block.get("season_id", 0)) != season:
+            continue
+        for t in block.get("table") or []:
+            if t.get("club_id"):
+                out[str(t["club_id"])] = {"rank": t["rank"], "teams": t.get("teams") or len(block["table"]),
+                                          "competition_id": block.get("competition_id")}
+    return out
+
+
+def dynamic_tags(dyn: dict | None) -> list[str]:
+    """Tags tirés de la dynamique de saison (journal 2026/27)."""
+    if dyn is None:
+        return ["Saison 26/27 non lue"]
+    tags = []
+    if dyn.get("form_5") is not None and dyn["form_5"] >= 1.3 and dyn["joues"] >= 3:
+        tags.append("En forme")
+    if dyn.get("role_trend") is not None:
+        if dyn["role_trend"] <= -0.3:
+            tags.append("Perd sa place")
+        elif dyn["role_trend"] >= 0.3:
+            tags.append("Gagne sa place")
+    if dyn.get("starter_share") is not None and dyn["starter_share"] >= 0.8 and dyn["matchs"] >= 6:
+        tags.append("Titulaire installé")
+    if dyn.get("revelation"):
+        tags.append("Révélation 26/27")
+    if (dyn.get("statut_actuel") or {}).get("status") == "injured":
+        tags.append("Blessé actuellement")
+    return tags
+
+
 def score_pool(players: list[dict], fan_weights: dict, needs: dict, today: date,
-               weights: dict = DEFAULT_WEIGHTS) -> list[dict]:
+               weights: dict = DEFAULT_WEIGHTS, matchlog: dict | None = None, standings: dict | None = None) -> list[dict]:
     baselines = pool_baselines(players)
-    sport, sport_detail = {}, {}
+    sport, sport_detail, dynamics = {}, {}, {}
     for p in players:
-        sport[p["id"]], sport_detail[p["id"]] = sport_score(p, baselines)
+        dynamics[p["id"]] = season_dynamics(p, matchlog, today, standings) if matchlog else None
+        sport[p["id"]], sport_detail[p["id"]] = sport_score(p, baselines, dynamics[p["id"]], today)
     underval = undervaluation(players, sport)
     estimates = estimate_market_values(players, sport)
 
@@ -746,6 +1054,8 @@ def score_pool(players: list[dict], fan_weights: dict, needs: dict, today: date,
             tags.append("Confiance faible")
         if fc["_lien"] == "Ancien d'Yverdon":
             tags.append("Retour au club")
+        if matchlog is not None:
+            tags.extend(dynamic_tags(dynamics[p["id"]]))
         sofa = p.get("perf") or p.get("sofascore") or {}
         if sofa.get("xg") is not None and sofa.get("goals") is not None and (sofa.get("minutes") or 0) >= 900:
             # Moneyball : un joueur qui marque nettement moins que ses xG est une occasion,
