@@ -69,7 +69,7 @@ Effectif : `squad_needs` compte un **titulaire blessé longue durée** (≥ 3 ma
 
 ### Prochain match (`moneyball/matchprep.py`)
 
-`python -m moneyball.matchprep` écrit `data/matchprep.json`, repris par `recommend` dans la section « Prochain match » du tableau de bord. Approche pilotée par la donnée, dans l'esprit des clubs qui en ont fait leur méthode comme l'AC Como ; le modèle interne de Como n'est pas public et aucun de ses paramètres n'est repris. Tout est calculé sur des données Transfermarkt réelles de 2026/27.
+`python -m moneyball.matchprep` écrit `data/matchprep.json`, repris par `recommend` dans la section « Next matches » du tableau de bord : le prochain match de coupe et les deux prochains matchs de championnat (au 11.10.2026 : BSC Old Boys – Yverdon le 17.10, Yverdon – Kriens le 25.10, Stade-Lausanne-Ouchy – Yverdon le 30.10), chacun avec un dossier adversaire (classement, xG-tirs, systèmes, entraîneur, forme, confrontation de la saison, joueurs clés du vivier, gardien, absents). Le tableau de bord (`dashboard_template.html`) est rédigé en anglais depuis le 12.10.2026 ; les étiquettes produites par le modèle (tags, zones, liens, statuts) y sont traduites à l'affichage. Approche pilotée par la donnée, dans l'esprit des clubs qui en ont fait leur méthode comme l'AC Como ; le modèle interne de Como n'est pas public et aucun de ses paramètres n'est repris. Tout est calculé sur des données Transfermarkt réelles de 2026/27.
 
 | Bloc | Méthode |
 |---|---|
