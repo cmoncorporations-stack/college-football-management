@@ -373,6 +373,8 @@
       "buts": 5,
       "passes": 2,
       "titularisations": 10,
+      "poste": "Attacking Midfield",
+      "encaisses": 11,
       "statut": null
      },
      {
@@ -383,6 +385,8 @@
       "buts": 4,
       "passes": 1,
       "titularisations": 10,
+      "poste": "Centre-Forward",
+      "encaisses": 10,
       "statut": null
      },
      {
@@ -393,6 +397,8 @@
       "buts": 2,
       "passes": 1,
       "titularisations": 10,
+      "poste": "Defensive Midfield",
+      "encaisses": 12,
       "statut": null
      },
      {
@@ -403,6 +409,8 @@
       "buts": 1,
       "passes": 2,
       "titularisations": 9,
+      "poste": "Left Midfield",
+      "encaisses": 8,
       "statut": null
      },
      {
@@ -413,6 +421,8 @@
       "buts": 1,
       "passes": 0,
       "titularisations": 8,
+      "poste": "Left-Back",
+      "encaisses": 12,
       "statut": null
      },
      {
@@ -423,6 +433,8 @@
       "buts": 1,
       "passes": 0,
       "titularisations": 1,
+      "poste": "Right Winger",
+      "encaisses": 4,
       "statut": null
      },
      {
@@ -433,6 +445,8 @@
       "buts": 0,
       "passes": 1,
       "titularisations": 9,
+      "poste": "Defensive Midfield",
+      "encaisses": 9,
       "statut": null
      },
      {
@@ -443,10 +457,103 @@
       "buts": 0,
       "passes": 1,
       "titularisations": 1,
+      "poste": "Centre-Forward",
+      "encaisses": 3,
       "statut": null
      }
     ],
-    "note": "joueurs de l'adversaire présents dans le vivier (17-29 ans, ≤ 1,5 M€) : liste partielle"
+    "gardiens": [
+     {
+      "id": "1061045",
+      "name": "Ruben Salchli",
+      "matchs": 10,
+      "minutes": 900,
+      "buts": 0,
+      "passes": 0,
+      "titularisations": 10,
+      "poste": "Goalkeeper",
+      "encaisses": 12,
+      "statut": null
+     },
+     {
+      "id": "692185",
+      "name": "Patrick Zajac",
+      "matchs": 1,
+      "minutes": 90,
+      "buts": 0,
+      "passes": 0,
+      "titularisations": 1,
+      "poste": "Goalkeeper",
+      "encaisses": 2,
+      "statut": null
+     }
+    ],
+    "indisponibles": [
+     {
+      "id": "1015823",
+      "name": "Marvin Akahomen",
+      "status": "injured",
+      "reason": "Meniscus injury",
+      "since": "2026-07-29",
+      "until": null,
+      "missed_matches": 10
+     },
+     {
+      "id": "940390",
+      "name": "Lorin Jetzer",
+      "status": "injured",
+      "reason": "unknown injury",
+      "since": "2026-07-22",
+      "until": null,
+      "missed_matches": 11
+     },
+     {
+      "id": "928948",
+      "name": "Daoud Touré",
+      "status": "injured",
+      "reason": "unknown injury",
+      "since": "2026-07-22",
+      "until": null,
+      "missed_matches": 11
+     },
+     {
+      "id": "862739",
+      "name": "Yuro Bohon Diet",
+      "status": "injured",
+      "reason": "unknown injury",
+      "since": "2026-08-31",
+      "until": null,
+      "missed_matches": 5
+     }
+    ],
+    "confrontations": [
+     {
+      "date": "2026-08-07",
+      "journee": 3,
+      "home": "2074",
+      "away": "322",
+      "score": "0:2",
+      "xg": [
+       0.98,
+       1.87
+      ]
+     }
+    ],
+    "classement": {
+     "club_id": "2074",
+     "club": "SC Kriens",
+     "j": 10,
+     "pts": 15,
+     "bp": 17,
+     "bc": 12,
+     "xg_pour": 18.9,
+     "xg_contre": 13.7,
+     "rang": 4,
+     "attaque": 1.12,
+     "defense": 1.06
+    },
+    "attaque": 1.12,
+    "defense": 1.06
    },
    "onze": [
     {
@@ -671,7 +778,7 @@
      "minutes_attendues": 80,
      "buts_90": 0.3,
      "xg_match": 0.27,
-     "p_marquer": 0.234
+     "p_marquer": 0.235
     },
     {
      "id": "524384",
@@ -833,28 +940,1644 @@
      {
       "id": "310361",
       "name": "Varol Tasar",
-      "raison": "sélection 0.62 · Sport 64 · 62% des minutes sur 3 matchs · 4 b, 0 p en 26/27"
+      "raison": {
+       "disponible": true,
+       "statut": null,
+       "selection": 0.6206,
+       "sport": 64.1,
+       "part_3_derniers": 0.62,
+       "buts": 4,
+       "passes": 0
+      }
      },
      {
       "id": "264956",
       "name": "Jean-Kévin Augustin",
-      "raison": "sélection 0.52 · Sport 40 · 66% des minutes sur 3 matchs · 1 b, 1 p en 26/27"
+      "raison": {
+       "disponible": true,
+       "statut": null,
+       "selection": 0.5239,
+       "sport": 40.0,
+       "part_3_derniers": 0.66,
+       "buts": 1,
+       "passes": 1
+      }
      }
     ],
     "sortants": [
      {
       "id": "289404",
       "name": "Jonathan Okita",
-      "raison": "sélection 0.61 · Sport 44 · 76% des minutes sur 3 matchs · 1 b, 0 p en 26/27"
+      "raison": {
+       "disponible": true,
+       "statut": null,
+       "selection": 0.6067,
+       "sport": 43.8,
+       "part_3_derniers": 0.76,
+       "buts": 1,
+       "passes": 0
+      }
      },
      {
       "id": "294583",
       "name": "Shkelqim Demhasaj",
-      "raison": "sélection 0.39 · Sport 45 · 29% des minutes sur 3 matchs · 1 b, 1 p en 26/27"
+      "raison": {
+       "disponible": true,
+       "statut": null,
+       "selection": 0.3877,
+       "sport": 45.3,
+       "part_3_derniers": 0.29,
+       "buts": 1,
+       "passes": 1
+      }
      }
     ]
    }
   },
+  "championnat_matchs": [
+   {
+    "match": {
+     "id": "4897485",
+     "date": "2026-10-25",
+     "competition_id": "C2",
+     "matchday": 11,
+     "home_id": "322",
+     "home": "Yverdon Sport FC",
+     "away_id": "2074",
+     "away": "SC Kriens"
+    },
+    "prediction": {
+     "dom": 0.5089,
+     "nul": 0.2332,
+     "ext": 0.2579,
+     "xg_dom": 1.78,
+     "xg_ext": 1.2,
+     "clean_sheet_dom": 0.3009,
+     "clean_sheet_ext": 0.1691,
+     "plus_2_5": 0.572,
+     "les_deux_marquent": 0.5809,
+     "scores": [
+      {
+       "score": "1:1",
+       "p": 0.1086
+      },
+      {
+       "score": "2:1",
+       "p": 0.0965
+      },
+      {
+       "score": "1:0",
+       "p": 0.0904
+      },
+      {
+       "score": "2:0",
+       "p": 0.0803
+      },
+      {
+       "score": "1:2",
+       "p": 0.0652
+      },
+      {
+       "score": "0:1",
+       "p": 0.0611
+      }
+     ]
+    },
+    "variantes": {
+     "buts": {
+      "dom": 0.5995,
+      "nul": 0.2223,
+      "ext": 0.1781,
+      "xg_dom": 1.87,
+      "xg_ext": 0.91
+     },
+     "xg": {
+      "dom": 0.4116,
+      "nul": 0.233,
+      "ext": 0.3555,
+      "xg_dom": 1.68,
+      "xg_ext": 1.54
+     }
+    },
+    "forme_ys": [
+     {
+      "date": "2026-09-01",
+      "journee": 6,
+      "dom": false,
+      "adversaire": "625",
+      "score": "2:1",
+      "issue": "V",
+      "xg_pour": 1.89,
+      "xg_contre": 1.55
+     },
+     {
+      "date": "2026-09-06",
+      "journee": 7,
+      "dom": true,
+      "adversaire": "5507",
+      "score": "4:1",
+      "issue": "V",
+      "xg_pour": 2.0,
+      "xg_contre": 1.81
+     },
+     {
+      "date": "2026-09-11",
+      "journee": 8,
+      "dom": false,
+      "adversaire": "8463",
+      "score": "0:2",
+      "issue": "D",
+      "xg_pour": 1.0,
+      "xg_contre": 2.19
+     },
+     {
+      "date": "2026-09-20",
+      "journee": 9,
+      "dom": true,
+      "adversaire": "5499",
+      "score": "0:0",
+      "issue": "N",
+      "xg_pour": 0.98,
+      "xg_contre": 1.53
+     },
+     {
+      "date": "2026-10-09",
+      "journee": 10,
+      "dom": false,
+      "adversaire": "1292",
+      "score": "2:0",
+      "issue": "V",
+      "xg_pour": 1.57,
+      "xg_contre": 0.92
+     }
+    ],
+    "forme_adversaire": [
+     {
+      "date": "2026-09-01",
+      "journee": 6,
+      "dom": false,
+      "adversaire": "8463",
+      "score": "1:1",
+      "issue": "N",
+      "xg_pour": 3.35,
+      "xg_contre": 1.82
+     },
+     {
+      "date": "2026-09-04",
+      "journee": 7,
+      "dom": true,
+      "adversaire": "5499",
+      "score": "0:2",
+      "issue": "D",
+      "xg_pour": 1.57,
+      "xg_contre": 0.96
+     },
+     {
+      "date": "2026-09-12",
+      "journee": 8,
+      "dom": false,
+      "adversaire": "116",
+      "score": "2:2",
+      "issue": "N",
+      "xg_pour": 2.81,
+      "xg_contre": 1.66
+     },
+     {
+      "date": "2026-09-18",
+      "journee": 9,
+      "dom": true,
+      "adversaire": "1292",
+      "score": "4:1",
+      "issue": "V",
+      "xg_pour": 2.43,
+      "xg_contre": 1.0
+     },
+     {
+      "date": "2026-10-09",
+      "journee": 10,
+      "dom": true,
+      "adversaire": "850",
+      "score": "1:1",
+      "issue": "N",
+      "xg_pour": 1.29,
+      "xg_contre": 0.71
+     }
+    ],
+    "adversaire": {
+     "id": "2074",
+     "systemes": {
+      "4-2-3-1": 8,
+      "4-4-1-1": 2,
+      "4-3-3 Attacking": 1
+     },
+     "entraineur": "Michael Winsauer",
+     "joueurs_du_vivier": [
+      {
+       "id": "1015825",
+       "name": "Elio Rufener",
+       "matchs": 11,
+       "minutes": 824,
+       "buts": 5,
+       "passes": 2,
+       "titularisations": 10,
+       "poste": "Attacking Midfield",
+       "encaisses": 11,
+       "statut": null
+      },
+      {
+       "id": "684604",
+       "name": "Albin Krasniqi",
+       "matchs": 10,
+       "minutes": 753,
+       "buts": 4,
+       "passes": 1,
+       "titularisations": 10,
+       "poste": "Centre-Forward",
+       "encaisses": 10,
+       "statut": null
+      },
+      {
+       "id": "290607",
+       "name": "Martin François",
+       "matchs": 11,
+       "minutes": 945,
+       "buts": 2,
+       "passes": 1,
+       "titularisations": 10,
+       "poste": "Defensive Midfield",
+       "encaisses": 12,
+       "statut": null
+      },
+      {
+       "id": "1177478",
+       "name": "Malek Ishuayed",
+       "matchs": 11,
+       "minutes": 775,
+       "buts": 1,
+       "passes": 2,
+       "titularisations": 9,
+       "poste": "Left Midfield",
+       "encaisses": 8,
+       "statut": null
+      },
+      {
+       "id": "925197",
+       "name": "Kevin Tröndle",
+       "matchs": 8,
+       "minutes": 572,
+       "buts": 1,
+       "passes": 0,
+       "titularisations": 8,
+       "poste": "Left-Back",
+       "encaisses": 12,
+       "statut": null
+      },
+      {
+       "id": "342095",
+       "name": "Lukas Riedmann",
+       "matchs": 10,
+       "minutes": 206,
+       "buts": 1,
+       "passes": 0,
+       "titularisations": 1,
+       "poste": "Right Winger",
+       "encaisses": 4,
+       "statut": null
+      },
+      {
+       "id": "539797",
+       "name": "Mauricio Willimann",
+       "matchs": 11,
+       "minutes": 850,
+       "buts": 0,
+       "passes": 1,
+       "titularisations": 9,
+       "poste": "Defensive Midfield",
+       "encaisses": 9,
+       "statut": null
+      },
+      {
+       "id": "322512",
+       "name": "Rrezart Hoxha",
+       "matchs": 5,
+       "minutes": 165,
+       "buts": 0,
+       "passes": 1,
+       "titularisations": 1,
+       "poste": "Centre-Forward",
+       "encaisses": 3,
+       "statut": null
+      }
+     ],
+     "gardiens": [
+      {
+       "id": "1061045",
+       "name": "Ruben Salchli",
+       "matchs": 10,
+       "minutes": 900,
+       "buts": 0,
+       "passes": 0,
+       "titularisations": 10,
+       "poste": "Goalkeeper",
+       "encaisses": 12,
+       "statut": null
+      },
+      {
+       "id": "692185",
+       "name": "Patrick Zajac",
+       "matchs": 1,
+       "minutes": 90,
+       "buts": 0,
+       "passes": 0,
+       "titularisations": 1,
+       "poste": "Goalkeeper",
+       "encaisses": 2,
+       "statut": null
+      }
+     ],
+     "indisponibles": [
+      {
+       "id": "1015823",
+       "name": "Marvin Akahomen",
+       "status": "injured",
+       "reason": "Meniscus injury",
+       "since": "2026-07-29",
+       "until": null,
+       "missed_matches": 10
+      },
+      {
+       "id": "940390",
+       "name": "Lorin Jetzer",
+       "status": "injured",
+       "reason": "unknown injury",
+       "since": "2026-07-22",
+       "until": null,
+       "missed_matches": 11
+      },
+      {
+       "id": "928948",
+       "name": "Daoud Touré",
+       "status": "injured",
+       "reason": "unknown injury",
+       "since": "2026-07-22",
+       "until": null,
+       "missed_matches": 11
+      },
+      {
+       "id": "862739",
+       "name": "Yuro Bohon Diet",
+       "status": "injured",
+       "reason": "unknown injury",
+       "since": "2026-08-31",
+       "until": null,
+       "missed_matches": 5
+      }
+     ],
+     "confrontations": [
+      {
+       "date": "2026-08-07",
+       "journee": 3,
+       "home": "2074",
+       "away": "322",
+       "score": "0:2",
+       "xg": [
+        0.98,
+        1.87
+       ]
+      }
+     ],
+     "classement": {
+      "club_id": "2074",
+      "club": "SC Kriens",
+      "j": 10,
+      "pts": 15,
+      "bp": 17,
+      "bc": 12,
+      "xg_pour": 18.9,
+      "xg_contre": 13.7,
+      "rang": 4,
+      "attaque": 1.12,
+      "defense": 1.06
+     },
+     "attaque": 1.12,
+     "defense": 1.06
+    },
+    "onze": [
+     {
+      "creneau": "GK",
+      "role": "Gardien",
+      "id": "237664",
+      "name": "Simon Enzler",
+      "position": "Goalkeeper",
+      "selection": 0.7827,
+      "sport": 60.6,
+      "part_3_derniers": 1.0,
+      "dynamique": 0.8,
+      "adequation": 1.0
+     },
+     {
+      "creneau": "RB",
+      "role": "Latéral droit",
+      "id": "69899",
+      "name": "Anthony Sauthier",
+      "position": "Right-Back",
+      "selection": 0.8246,
+      "sport": 74.2,
+      "part_3_derniers": 0.96,
+      "dynamique": 0.775,
+      "adequation": 0.9
+     },
+     {
+      "creneau": "CB1",
+      "role": "Défenseur central",
+      "id": "1030482",
+      "name": "Jason Gnakpa",
+      "position": "Centre-Back",
+      "selection": 0.6598,
+      "sport": 60.8,
+      "part_3_derniers": 0.78,
+      "dynamique": 0.57,
+      "adequation": 1.0
+     },
+     {
+      "creneau": "CB2",
+      "role": "Défenseur central",
+      "id": "417895",
+      "name": "Lucas Pos",
+      "position": "Centre-Back",
+      "selection": 0.8218,
+      "sport": 68.8,
+      "part_3_derniers": 1.0,
+      "dynamique": 0.811,
+      "adequation": 0.98
+     },
+     {
+      "creneau": "LB",
+      "role": "Latéral gauche",
+      "id": "466918",
+      "name": "Vegard Kongsro",
+      "position": "Left-Back",
+      "selection": 0.8224,
+      "sport": 73.3,
+      "part_3_derniers": 1.0,
+      "dynamique": 0.713,
+      "adequation": 1.0
+     },
+     {
+      "creneau": "DM",
+      "role": "Milieu défensif",
+      "id": "286292",
+      "name": "Ousmane Doumbia",
+      "position": "Defensive Midfield",
+      "selection": 0.6257,
+      "sport": 39.3,
+      "part_3_derniers": 0.9,
+      "dynamique": 0.669,
+      "adequation": 0.86
+     },
+     {
+      "creneau": "CM1",
+      "role": "Milieu central",
+      "id": "159317",
+      "name": "Hélios Sessolo",
+      "position": "Centre-Forward",
+      "selection": 0.5797,
+      "sport": 64.4,
+      "part_3_derniers": 0.5,
+      "dynamique": 0.568,
+      "adequation": 0.59
+     },
+     {
+      "creneau": "CM2",
+      "role": "Milieu offensif",
+      "id": "98167",
+      "name": "Valon Fazliu",
+      "position": "Attacking Midfield",
+      "selection": 0.6593,
+      "sport": 53.0,
+      "part_3_derniers": 0.79,
+      "dynamique": 0.717,
+      "adequation": 0.97
+     },
+     {
+      "creneau": "RW",
+      "role": "Ailier droit",
+      "id": "310361",
+      "name": "Varol Tasar",
+      "position": "Right Winger",
+      "selection": 0.6206,
+      "sport": 64.1,
+      "part_3_derniers": 0.62,
+      "dynamique": 0.572,
+      "adequation": 0.86
+     },
+     {
+      "creneau": "CF",
+      "role": "Avant-centre",
+      "id": "264956",
+      "name": "Jean-Kévin Augustin",
+      "position": "Centre-Forward",
+      "selection": 0.5239,
+      "sport": 40.0,
+      "part_3_derniers": 0.66,
+      "dynamique": 0.566,
+      "adequation": 0.94
+     },
+     {
+      "creneau": "LW",
+      "role": "Ailier gauche",
+      "id": "524384",
+      "name": "Elias Pasche",
+      "position": "Left Winger",
+      "selection": 0.644,
+      "sport": 65.0,
+      "part_3_derniers": 0.73,
+      "dynamique": 0.487,
+      "adequation": 0.95
+     }
+    ],
+    "banc": [
+     {
+      "id": "289404",
+      "name": "Jonathan Okita",
+      "position": "Left Winger",
+      "selection": 0.6067,
+      "sport": 43.8,
+      "part_3_derniers": 0.76
+     },
+     {
+      "id": "1195252",
+      "name": "Jonatan Mayorga",
+      "position": "Right Winger",
+      "selection": 0.4248,
+      "sport": 32.5,
+      "part_3_derniers": 0.47
+     },
+     {
+      "id": "294583",
+      "name": "Shkelqim Demhasaj",
+      "position": "Centre-Forward",
+      "selection": 0.3877,
+      "sport": 45.3,
+      "part_3_derniers": 0.29
+     },
+     {
+      "id": "876629",
+      "name": "Mahamadou Kanouté",
+      "position": "Centre-Forward",
+      "selection": 0.3646,
+      "sport": 55.7,
+      "part_3_derniers": 0.11
+     },
+     {
+      "id": "390179",
+      "name": "Bastien Toma",
+      "position": "Attacking Midfield",
+      "selection": 0.3295,
+      "sport": 34.3,
+      "part_3_derniers": 0.32
+     },
+     {
+      "id": "479486",
+      "name": "Robin Golliard",
+      "position": "Centre-Forward",
+      "selection": 0.327,
+      "sport": 55.4,
+      "part_3_derniers": 0.07
+     },
+     {
+      "id": "624910",
+      "name": "Anthony Baron",
+      "position": "Centre-Back",
+      "selection": 0.3268,
+      "sport": 52.9,
+      "part_3_derniers": 0.0
+     },
+     {
+      "id": "700223",
+      "name": "Gilles Richard",
+      "position": "Centre-Back",
+      "selection": 0.2955,
+      "sport": 48.3,
+      "part_3_derniers": 0.0
+     },
+     {
+      "id": "864381",
+      "name": "Lorenzo Bittarelli",
+      "position": "Right-Back",
+      "selection": 0.241,
+      "sport": 38.0,
+      "part_3_derniers": 0.0
+     }
+    ],
+    "buteurs": [
+     {
+      "id": "310361",
+      "name": "Varol Tasar",
+      "minutes_attendues": 80,
+      "buts_90": 0.49,
+      "xg_match": 0.44,
+      "p_marquer": 0.354
+     },
+     {
+      "id": "159317",
+      "name": "Hélios Sessolo",
+      "minutes_attendues": 80,
+      "buts_90": 0.3,
+      "xg_match": 0.27,
+      "p_marquer": 0.235
+     },
+     {
+      "id": "524384",
+      "name": "Elias Pasche",
+      "minutes_attendues": 80,
+      "buts_90": 0.29,
+      "xg_match": 0.26,
+      "p_marquer": 0.228
+     },
+     {
+      "id": "264956",
+      "name": "Jean-Kévin Augustin",
+      "minutes_attendues": 80,
+      "buts_90": 0.27,
+      "xg_match": 0.24,
+      "p_marquer": 0.215
+     },
+     {
+      "id": "98167",
+      "name": "Valon Fazliu",
+      "minutes_attendues": 80,
+      "buts_90": 0.17,
+      "xg_match": 0.16,
+      "p_marquer": 0.144
+     },
+     {
+      "id": "466918",
+      "name": "Vegard Kongsro",
+      "minutes_attendues": 80,
+      "buts_90": 0.11,
+      "xg_match": 0.1,
+      "p_marquer": 0.092
+     },
+     {
+      "id": "289404",
+      "name": "Jonathan Okita",
+      "minutes_attendues": 20,
+      "buts_90": 0.37,
+      "xg_match": 0.08,
+      "p_marquer": 0.08
+     },
+     {
+      "id": "417895",
+      "name": "Lucas Pos",
+      "minutes_attendues": 80,
+      "buts_90": 0.08,
+      "xg_match": 0.07,
+      "p_marquer": 0.069
+     },
+     {
+      "id": "294583",
+      "name": "Shkelqim Demhasaj",
+      "minutes_attendues": 20,
+      "buts_90": 0.3,
+      "xg_match": 0.07,
+      "p_marquer": 0.064
+     },
+     {
+      "id": "1195252",
+      "name": "Jonatan Mayorga",
+      "minutes_attendues": 20,
+      "buts_90": 0.18,
+      "xg_match": 0.04,
+      "p_marquer": 0.04
+     },
+     {
+      "id": "286292",
+      "name": "Ousmane Doumbia",
+      "minutes_attendues": 80,
+      "buts_90": 0.04,
+      "xg_match": 0.04,
+      "p_marquer": 0.039
+     },
+     {
+      "id": "1030482",
+      "name": "Jason Gnakpa",
+      "minutes_attendues": 80,
+      "buts_90": 0.01,
+      "xg_match": 0.01,
+      "p_marquer": 0.011
+     },
+     {
+      "id": "69899",
+      "name": "Anthony Sauthier",
+      "minutes_attendues": 80,
+      "buts_90": 0.01,
+      "xg_match": 0.01,
+      "p_marquer": 0.009
+     },
+     {
+      "id": "237664",
+      "name": "Simon Enzler",
+      "minutes_attendues": 80,
+      "buts_90": 0.0,
+      "xg_match": 0.0,
+      "p_marquer": 0.0
+     }
+    ],
+    "dernier_onze": [
+     {
+      "id": "237664",
+      "name": "Simon Enzler",
+      "position": "Goalkeeper"
+     },
+     {
+      "id": "1030482",
+      "name": "Jason Gnakpa",
+      "position": "Centre-Back"
+     },
+     {
+      "id": "417895",
+      "name": "Lucas Pos",
+      "position": "Centre-Back"
+     },
+     {
+      "id": "466918",
+      "name": "Vegard Kongsro",
+      "position": "Left-Back"
+     },
+     {
+      "id": "69899",
+      "name": "Anthony Sauthier",
+      "position": "Right-Back"
+     },
+     {
+      "id": "286292",
+      "name": "Ousmane Doumbia",
+      "position": "Defensive Midfield"
+     },
+     {
+      "id": "98167",
+      "name": "Valon Fazliu",
+      "position": "Central Midfield"
+     },
+     {
+      "id": "289404",
+      "name": "Jonathan Okita",
+      "position": "Left Winger"
+     },
+     {
+      "id": "524384",
+      "name": "Elias Pasche",
+      "position": "Right Winger"
+     },
+     {
+      "id": "294583",
+      "name": "Shkelqim Demhasaj",
+      "position": "Centre-Forward"
+     },
+     {
+      "id": "159317",
+      "name": "Hélios Sessolo",
+      "position": "Central Midfield"
+     }
+    ],
+    "ecarts": {
+     "dernier_match": "4897476",
+     "entrants": [
+      {
+       "id": "310361",
+       "name": "Varol Tasar",
+       "raison": {
+        "disponible": true,
+        "statut": null,
+        "selection": 0.6206,
+        "sport": 64.1,
+        "part_3_derniers": 0.62,
+        "buts": 4,
+        "passes": 0
+       }
+      },
+      {
+       "id": "264956",
+       "name": "Jean-Kévin Augustin",
+       "raison": {
+        "disponible": true,
+        "statut": null,
+        "selection": 0.5239,
+        "sport": 40.0,
+        "part_3_derniers": 0.66,
+        "buts": 1,
+        "passes": 1
+       }
+      }
+     ],
+     "sortants": [
+      {
+       "id": "289404",
+       "name": "Jonathan Okita",
+       "raison": {
+        "disponible": true,
+        "statut": null,
+        "selection": 0.6067,
+        "sport": 43.8,
+        "part_3_derniers": 0.76,
+        "buts": 1,
+        "passes": 0
+       }
+      },
+      {
+       "id": "294583",
+       "name": "Shkelqim Demhasaj",
+       "raison": {
+        "disponible": true,
+        "statut": null,
+        "selection": 0.3877,
+        "sport": 45.3,
+        "part_3_derniers": 0.29,
+        "buts": 1,
+        "passes": 1
+       }
+      }
+     ]
+    }
+   },
+   {
+    "match": {
+     "id": "4897489",
+     "date": "2026-10-30",
+     "competition_id": "C2",
+     "matchday": 12,
+     "home_id": "5499",
+     "home": "FC Stade-Lausanne-Ouchy",
+     "away_id": "322",
+     "away": "Yverdon Sport FC"
+    },
+    "prediction": {
+     "dom": 0.4935,
+     "nul": 0.2609,
+     "ext": 0.2456,
+     "xg_dom": 1.49,
+     "xg_ext": 0.97,
+     "clean_sheet_dom": 0.3785,
+     "clean_sheet_ext": 0.2243,
+     "plus_2_5": 0.4475,
+     "les_deux_marquent": 0.4821,
+     "scores": [
+      {
+       "score": "1:0",
+       "p": 0.1269
+      },
+      {
+       "score": "1:1",
+       "p": 0.1233
+      },
+      {
+       "score": "2:0",
+       "p": 0.0949
+      },
+      {
+       "score": "2:1",
+       "p": 0.0921
+      },
+      {
+       "score": "0:0",
+       "p": 0.0849
+      },
+      {
+       "score": "0:1",
+       "p": 0.0825
+      }
+     ]
+    },
+    "variantes": {
+     "buts": {
+      "dom": 0.6036,
+      "nul": 0.2518,
+      "ext": 0.1446,
+      "xg_dom": 1.56,
+      "xg_ext": 0.61
+     },
+     "xg": {
+      "dom": 0.3755,
+      "nul": 0.2574,
+      "ext": 0.3671,
+      "xg_dom": 1.37,
+      "xg_ext": 1.35
+     }
+    },
+    "forme_ys": [
+     {
+      "date": "2026-09-01",
+      "journee": 6,
+      "dom": false,
+      "adversaire": "625",
+      "score": "2:1",
+      "issue": "V",
+      "xg_pour": 1.89,
+      "xg_contre": 1.55
+     },
+     {
+      "date": "2026-09-06",
+      "journee": 7,
+      "dom": true,
+      "adversaire": "5507",
+      "score": "4:1",
+      "issue": "V",
+      "xg_pour": 2.0,
+      "xg_contre": 1.81
+     },
+     {
+      "date": "2026-09-11",
+      "journee": 8,
+      "dom": false,
+      "adversaire": "8463",
+      "score": "0:2",
+      "issue": "D",
+      "xg_pour": 1.0,
+      "xg_contre": 2.19
+     },
+     {
+      "date": "2026-09-20",
+      "journee": 9,
+      "dom": true,
+      "adversaire": "5499",
+      "score": "0:0",
+      "issue": "N",
+      "xg_pour": 0.98,
+      "xg_contre": 1.53
+     },
+     {
+      "date": "2026-10-09",
+      "journee": 10,
+      "dom": false,
+      "adversaire": "1292",
+      "score": "2:0",
+      "issue": "V",
+      "xg_pour": 1.57,
+      "xg_contre": 0.92
+     }
+    ],
+    "forme_adversaire": [
+     {
+      "date": "2026-09-01",
+      "journee": 6,
+      "dom": true,
+      "adversaire": "1292",
+      "score": "3:0",
+      "issue": "V",
+      "xg_pour": 1.89,
+      "xg_contre": 0.96
+     },
+     {
+      "date": "2026-09-04",
+      "journee": 7,
+      "dom": false,
+      "adversaire": "2074",
+      "score": "2:0",
+      "issue": "V",
+      "xg_pour": 0.96,
+      "xg_contre": 1.57
+     },
+     {
+      "date": "2026-09-11",
+      "journee": 8,
+      "dom": true,
+      "adversaire": "850",
+      "score": "4:0",
+      "issue": "V",
+      "xg_pour": 1.53,
+      "xg_contre": 0.76
+     },
+     {
+      "date": "2026-09-20",
+      "journee": 9,
+      "dom": false,
+      "adversaire": "322",
+      "score": "0:0",
+      "issue": "N",
+      "xg_pour": 1.53,
+      "xg_contre": 0.98
+     },
+     {
+      "date": "2026-10-09",
+      "journee": 10,
+      "dom": false,
+      "adversaire": "8463",
+      "score": "3:0",
+      "issue": "V",
+      "xg_pour": 1.29,
+      "xg_contre": 0.95
+     }
+    ],
+    "adversaire": {
+     "id": "5499",
+     "systemes": {
+      "3-4-2-1": 7,
+      "3-4-3": 2,
+      "3-4-1-2": 1
+     },
+     "entraineur": "Dalibor Stevanovic",
+     "joueurs_du_vivier": [
+      {
+       "id": "805519",
+       "name": "Malko Sartoretti",
+       "matchs": 11,
+       "minutes": 769,
+       "buts": 6,
+       "passes": 0,
+       "titularisations": 11,
+       "poste": "Centre-Forward",
+       "encaisses": 2,
+       "statut": null
+      },
+      {
+       "id": "925229",
+       "name": "Cobel Sow García",
+       "matchs": 11,
+       "minutes": 848,
+       "buts": 2,
+       "passes": 4,
+       "titularisations": 11,
+       "poste": "Right Midfield",
+       "encaisses": 3,
+       "statut": null
+      },
+      {
+       "id": "926442",
+       "name": "Théo Bouchlarhem",
+       "matchs": 10,
+       "minutes": 824,
+       "buts": 2,
+       "passes": 2,
+       "titularisations": 10,
+       "poste": "Left Midfield",
+       "encaisses": 4,
+       "statut": null
+      },
+      {
+       "id": "913052",
+       "name": "Ronaldo Freitas",
+       "matchs": 11,
+       "minutes": 738,
+       "buts": 2,
+       "passes": 2,
+       "titularisations": 9,
+       "poste": "Attacking Midfield",
+       "encaisses": 4,
+       "statut": null
+      },
+      {
+       "id": "410604",
+       "name": "Bastien Conus",
+       "matchs": 11,
+       "minutes": 797,
+       "buts": 3,
+       "passes": 0,
+       "titularisations": 10,
+       "poste": "Defensive Midfield",
+       "encaisses": 2,
+       "statut": null
+      },
+      {
+       "id": "1177475",
+       "name": "Jamie Atangana",
+       "matchs": 8,
+       "minutes": 239,
+       "buts": 3,
+       "passes": 0,
+       "titularisations": 1,
+       "poste": "Centre-Forward",
+       "encaisses": 2,
+       "statut": null
+      },
+      {
+       "id": "1306214",
+       "name": "Julen Carrasco",
+       "matchs": 5,
+       "minutes": 68,
+       "buts": 2,
+       "passes": 0,
+       "titularisations": 0,
+       "poste": "Right-Back",
+       "encaisses": 1,
+       "statut": null
+      },
+      {
+       "id": "331356",
+       "name": "Jordi Tur",
+       "matchs": 9,
+       "minutes": 463,
+       "buts": 1,
+       "passes": 1,
+       "titularisations": 4,
+       "poste": "Central Midfield",
+       "encaisses": 2,
+       "statut": null
+      }
+     ],
+     "gardiens": [
+      {
+       "id": "659311",
+       "name": "Laurent Seji",
+       "matchs": 9,
+       "minutes": 810,
+       "buts": 0,
+       "passes": 0,
+       "titularisations": 9,
+       "poste": "Goalkeeper",
+       "encaisses": 2,
+       "statut": null
+      }
+     ],
+     "indisponibles": [
+      {
+       "id": "370979",
+       "name": "Ayo Akinola",
+       "status": "injured",
+       "reason": "unknown injury",
+       "since": "2026-10-07",
+       "until": null,
+       "missed_matches": 1
+      },
+      {
+       "id": "800249",
+       "name": "Loïc Socka Bongué",
+       "status": "injured",
+       "reason": "unknown injury",
+       "since": "2026-07-22",
+       "until": null,
+       "missed_matches": 11
+      }
+     ],
+     "confrontations": [
+      {
+       "date": "2026-09-20",
+       "journee": 9,
+       "home": "322",
+       "away": "5499",
+       "score": "0:0",
+       "xg": [
+        0.98,
+        1.53
+       ]
+      }
+     ],
+     "classement": {
+      "club_id": "5499",
+      "club": "FC Stade-Lausanne-Ouchy",
+      "j": 10,
+      "pts": 24,
+      "bp": 20,
+      "bc": 3,
+      "xg_pour": 12.9,
+      "xg_contre": 12.5,
+      "rang": 1,
+      "attaque": 1.08,
+      "defense": 1.5
+     },
+     "attaque": 1.08,
+     "defense": 1.5
+    },
+    "onze": [
+     {
+      "creneau": "GK",
+      "role": "Gardien",
+      "id": "237664",
+      "name": "Simon Enzler",
+      "position": "Goalkeeper",
+      "selection": 0.7827,
+      "sport": 60.6,
+      "part_3_derniers": 1.0,
+      "dynamique": 0.8,
+      "adequation": 1.0
+     },
+     {
+      "creneau": "RB",
+      "role": "Latéral droit",
+      "id": "69899",
+      "name": "Anthony Sauthier",
+      "position": "Right-Back",
+      "selection": 0.8246,
+      "sport": 74.2,
+      "part_3_derniers": 0.96,
+      "dynamique": 0.775,
+      "adequation": 0.9
+     },
+     {
+      "creneau": "CB1",
+      "role": "Défenseur central",
+      "id": "1030482",
+      "name": "Jason Gnakpa",
+      "position": "Centre-Back",
+      "selection": 0.6598,
+      "sport": 60.8,
+      "part_3_derniers": 0.78,
+      "dynamique": 0.57,
+      "adequation": 1.0
+     },
+     {
+      "creneau": "CB2",
+      "role": "Défenseur central",
+      "id": "417895",
+      "name": "Lucas Pos",
+      "position": "Centre-Back",
+      "selection": 0.8218,
+      "sport": 68.8,
+      "part_3_derniers": 1.0,
+      "dynamique": 0.811,
+      "adequation": 0.98
+     },
+     {
+      "creneau": "LB",
+      "role": "Latéral gauche",
+      "id": "466918",
+      "name": "Vegard Kongsro",
+      "position": "Left-Back",
+      "selection": 0.8224,
+      "sport": 73.3,
+      "part_3_derniers": 1.0,
+      "dynamique": 0.713,
+      "adequation": 1.0
+     },
+     {
+      "creneau": "DM",
+      "role": "Milieu défensif",
+      "id": "286292",
+      "name": "Ousmane Doumbia",
+      "position": "Defensive Midfield",
+      "selection": 0.6257,
+      "sport": 39.3,
+      "part_3_derniers": 0.9,
+      "dynamique": 0.669,
+      "adequation": 0.86
+     },
+     {
+      "creneau": "CM1",
+      "role": "Milieu central",
+      "id": "159317",
+      "name": "Hélios Sessolo",
+      "position": "Centre-Forward",
+      "selection": 0.5797,
+      "sport": 64.4,
+      "part_3_derniers": 0.5,
+      "dynamique": 0.568,
+      "adequation": 0.59
+     },
+     {
+      "creneau": "CM2",
+      "role": "Milieu offensif",
+      "id": "98167",
+      "name": "Valon Fazliu",
+      "position": "Attacking Midfield",
+      "selection": 0.6593,
+      "sport": 53.0,
+      "part_3_derniers": 0.79,
+      "dynamique": 0.717,
+      "adequation": 0.97
+     },
+     {
+      "creneau": "RW",
+      "role": "Ailier droit",
+      "id": "310361",
+      "name": "Varol Tasar",
+      "position": "Right Winger",
+      "selection": 0.6206,
+      "sport": 64.1,
+      "part_3_derniers": 0.62,
+      "dynamique": 0.572,
+      "adequation": 0.86
+     },
+     {
+      "creneau": "CF",
+      "role": "Avant-centre",
+      "id": "264956",
+      "name": "Jean-Kévin Augustin",
+      "position": "Centre-Forward",
+      "selection": 0.5239,
+      "sport": 40.0,
+      "part_3_derniers": 0.66,
+      "dynamique": 0.566,
+      "adequation": 0.94
+     },
+     {
+      "creneau": "LW",
+      "role": "Ailier gauche",
+      "id": "524384",
+      "name": "Elias Pasche",
+      "position": "Left Winger",
+      "selection": 0.644,
+      "sport": 65.0,
+      "part_3_derniers": 0.73,
+      "dynamique": 0.487,
+      "adequation": 0.95
+     }
+    ],
+    "banc": [
+     {
+      "id": "289404",
+      "name": "Jonathan Okita",
+      "position": "Left Winger",
+      "selection": 0.6067,
+      "sport": 43.8,
+      "part_3_derniers": 0.76
+     },
+     {
+      "id": "1195252",
+      "name": "Jonatan Mayorga",
+      "position": "Right Winger",
+      "selection": 0.4248,
+      "sport": 32.5,
+      "part_3_derniers": 0.47
+     },
+     {
+      "id": "294583",
+      "name": "Shkelqim Demhasaj",
+      "position": "Centre-Forward",
+      "selection": 0.3877,
+      "sport": 45.3,
+      "part_3_derniers": 0.29
+     },
+     {
+      "id": "876629",
+      "name": "Mahamadou Kanouté",
+      "position": "Centre-Forward",
+      "selection": 0.3646,
+      "sport": 55.7,
+      "part_3_derniers": 0.11
+     },
+     {
+      "id": "390179",
+      "name": "Bastien Toma",
+      "position": "Attacking Midfield",
+      "selection": 0.3295,
+      "sport": 34.3,
+      "part_3_derniers": 0.32
+     },
+     {
+      "id": "479486",
+      "name": "Robin Golliard",
+      "position": "Centre-Forward",
+      "selection": 0.327,
+      "sport": 55.4,
+      "part_3_derniers": 0.07
+     },
+     {
+      "id": "624910",
+      "name": "Anthony Baron",
+      "position": "Centre-Back",
+      "selection": 0.3268,
+      "sport": 52.9,
+      "part_3_derniers": 0.0
+     },
+     {
+      "id": "700223",
+      "name": "Gilles Richard",
+      "position": "Centre-Back",
+      "selection": 0.2955,
+      "sport": 48.3,
+      "part_3_derniers": 0.0
+     },
+     {
+      "id": "864381",
+      "name": "Lorenzo Bittarelli",
+      "position": "Right-Back",
+      "selection": 0.241,
+      "sport": 38.0,
+      "part_3_derniers": 0.0
+     }
+    ],
+    "buteurs": [
+     {
+      "id": "310361",
+      "name": "Varol Tasar",
+      "minutes_attendues": 80,
+      "buts_90": 0.49,
+      "xg_match": 0.24,
+      "p_marquer": 0.212
+     },
+     {
+      "id": "159317",
+      "name": "Hélios Sessolo",
+      "minutes_attendues": 80,
+      "buts_90": 0.3,
+      "xg_match": 0.15,
+      "p_marquer": 0.136
+     },
+     {
+      "id": "524384",
+      "name": "Elias Pasche",
+      "minutes_attendues": 80,
+      "buts_90": 0.29,
+      "xg_match": 0.14,
+      "p_marquer": 0.132
+     },
+     {
+      "id": "264956",
+      "name": "Jean-Kévin Augustin",
+      "minutes_attendues": 80,
+      "buts_90": 0.27,
+      "xg_match": 0.13,
+      "p_marquer": 0.123
+     },
+     {
+      "id": "98167",
+      "name": "Valon Fazliu",
+      "minutes_attendues": 80,
+      "buts_90": 0.17,
+      "xg_match": 0.08,
+      "p_marquer": 0.081
+     },
+     {
+      "id": "466918",
+      "name": "Vegard Kongsro",
+      "minutes_attendues": 80,
+      "buts_90": 0.11,
+      "xg_match": 0.05,
+      "p_marquer": 0.051
+     },
+     {
+      "id": "289404",
+      "name": "Jonathan Okita",
+      "minutes_attendues": 20,
+      "buts_90": 0.37,
+      "xg_match": 0.05,
+      "p_marquer": 0.044
+     },
+     {
+      "id": "417895",
+      "name": "Lucas Pos",
+      "minutes_attendues": 80,
+      "buts_90": 0.08,
+      "xg_match": 0.04,
+      "p_marquer": 0.038
+     },
+     {
+      "id": "294583",
+      "name": "Shkelqim Demhasaj",
+      "minutes_attendues": 20,
+      "buts_90": 0.3,
+      "xg_match": 0.04,
+      "p_marquer": 0.036
+     },
+     {
+      "id": "1195252",
+      "name": "Jonatan Mayorga",
+      "minutes_attendues": 20,
+      "buts_90": 0.18,
+      "xg_match": 0.02,
+      "p_marquer": 0.022
+     },
+     {
+      "id": "286292",
+      "name": "Ousmane Doumbia",
+      "minutes_attendues": 80,
+      "buts_90": 0.04,
+      "xg_match": 0.02,
+      "p_marquer": 0.021
+     },
+     {
+      "id": "1030482",
+      "name": "Jason Gnakpa",
+      "minutes_attendues": 80,
+      "buts_90": 0.01,
+      "xg_match": 0.01,
+      "p_marquer": 0.006
+     },
+     {
+      "id": "69899",
+      "name": "Anthony Sauthier",
+      "minutes_attendues": 80,
+      "buts_90": 0.01,
+      "xg_match": 0.0,
+      "p_marquer": 0.005
+     },
+     {
+      "id": "237664",
+      "name": "Simon Enzler",
+      "minutes_attendues": 80,
+      "buts_90": 0.0,
+      "xg_match": 0.0,
+      "p_marquer": 0.0
+     }
+    ],
+    "dernier_onze": [
+     {
+      "id": "237664",
+      "name": "Simon Enzler",
+      "position": "Goalkeeper"
+     },
+     {
+      "id": "1030482",
+      "name": "Jason Gnakpa",
+      "position": "Centre-Back"
+     },
+     {
+      "id": "417895",
+      "name": "Lucas Pos",
+      "position": "Centre-Back"
+     },
+     {
+      "id": "466918",
+      "name": "Vegard Kongsro",
+      "position": "Left-Back"
+     },
+     {
+      "id": "69899",
+      "name": "Anthony Sauthier",
+      "position": "Right-Back"
+     },
+     {
+      "id": "286292",
+      "name": "Ousmane Doumbia",
+      "position": "Defensive Midfield"
+     },
+     {
+      "id": "98167",
+      "name": "Valon Fazliu",
+      "position": "Central Midfield"
+     },
+     {
+      "id": "289404",
+      "name": "Jonathan Okita",
+      "position": "Left Winger"
+     },
+     {
+      "id": "524384",
+      "name": "Elias Pasche",
+      "position": "Right Winger"
+     },
+     {
+      "id": "294583",
+      "name": "Shkelqim Demhasaj",
+      "position": "Centre-Forward"
+     },
+     {
+      "id": "159317",
+      "name": "Hélios Sessolo",
+      "position": "Central Midfield"
+     }
+    ],
+    "ecarts": {
+     "dernier_match": "4897476",
+     "entrants": [
+      {
+       "id": "310361",
+       "name": "Varol Tasar",
+       "raison": {
+        "disponible": true,
+        "statut": null,
+        "selection": 0.6206,
+        "sport": 64.1,
+        "part_3_derniers": 0.62,
+        "buts": 4,
+        "passes": 0
+       }
+      },
+      {
+       "id": "264956",
+       "name": "Jean-Kévin Augustin",
+       "raison": {
+        "disponible": true,
+        "statut": null,
+        "selection": 0.5239,
+        "sport": 40.0,
+        "part_3_derniers": 0.66,
+        "buts": 1,
+        "passes": 1
+       }
+      }
+     ],
+     "sortants": [
+      {
+       "id": "289404",
+       "name": "Jonathan Okita",
+       "raison": {
+        "disponible": true,
+        "statut": null,
+        "selection": 0.6067,
+        "sport": 43.8,
+        "part_3_derniers": 0.76,
+        "buts": 1,
+        "passes": 0
+       }
+      },
+      {
+       "id": "294583",
+       "name": "Shkelqim Demhasaj",
+       "raison": {
+        "disponible": true,
+        "statut": null,
+        "selection": 0.3877,
+        "sport": 45.3,
+        "part_3_derniers": 0.29,
+        "buts": 1,
+        "passes": 1
+       }
+      }
+     ]
+    }
+   }
+  ],
   "coupe": {
    "match": {
     "id": "5019275",

@@ -521,18 +521,22 @@ def build(today: date, season: int = 2026, client: MatchlogClient | None = None)
     standings = standings_from_defence(defence, season)
     table = table_now(per_match, teams, names, ratings)
 
-    # --- prochain match de championnat
+    # --- prochains matchs de championnat (N_LEAGUE premiers du calendrier)
     ys_next = sorted((m for m in raw["remaining"] if YS in (m["home_id"], m["away_id"])), key=lambda m: m["date"])
+
+    def predict_league(fx):
+        out = {}
+        for k in ("mix", "buts", "xg"):
+            r = ratings[k]
+            a = math.exp(r["mu"] + r["home"] + r["att"][fx["home_id"]] - r["def"][fx["away_id"]])
+            b = math.exp(r["mu"] + r["att"][fx["away_id"]] - r["def"][fx["home_id"]])
+            out[k] = outcome_probs(a, b)
+        return out["mix"], {k: {kk: v for kk, v in out[k].items() if kk in ("dom", "nul", "ext", "xg_dom", "xg_ext")}
+                            for k in ("buts", "xg")}
+
     lg = ys_next[0]
-    lh = math.exp(mix["mu"] + mix["home"] + mix["att"][lg["home_id"]] - mix["def"][lg["away_id"]])
-    la = math.exp(mix["mu"] + mix["att"][lg["away_id"]] - mix["def"][lg["home_id"]])
-    league_pred = outcome_probs(lh, la)
-    league_variants = {}
-    for k in ("buts", "xg"):
-        r = ratings[k]
-        a = math.exp(r["mu"] + r["home"] + r["att"][lg["home_id"]] - r["def"][lg["away_id"]])
-        b = math.exp(r["mu"] + r["att"][lg["away_id"]] - r["def"][lg["home_id"]])
-        league_variants[k] = {kk: v for kk, v in outcome_probs(a, b).items() if kk in ("dom", "nul", "ext", "xg_dom", "xg_ext")}
+    league_pred, league_variants = predict_league(lg)
+    lh, la = league_pred["xg_dom"], league_pred["xg_ext"]
 
     # --- coupe : modèle pro-amateur sur le 1er tour 2026/27
     def coef_of(cid):
@@ -599,8 +603,6 @@ def build(today: date, season: int = 2026, client: MatchlogClient | None = None)
     bench = sorted((p for p in available if p["id"] not in in_xi), key=lambda p: -p["selection"])[:9]
     bench_rows = [{k: p[k] for k in ("id", "name", "position", "selection", "sport", "part_3_derniers")} for p in bench]
     goal_hist = {p["id"]: player_goal_history(p) for p in squad}
-    ys_lam_league = lh if lg["home_id"] == YS else la
-    scorers = scorer_probs(xi, bench_rows, players, ys_lam_league, goal_hist)
 
     # Coupe : le gardien du 1er tour (Rouiller) et rotation des joueurs les plus chargés si l'écart de note est faible
     cup_xi = None
@@ -636,22 +638,37 @@ def build(today: date, season: int = 2026, client: MatchlogClient | None = None)
         cup["banc"] = cup_bench
         cup["buteurs"] = scorer_probs(cup_xi, cup_bench, players, cup_lam_ys, goal_hist)
 
-    # --- adversaire de championnat
-    opp_l = lg["away_id"] if lg["home_id"] == YS else lg["home_id"]
-    opp_fx = raw["fixtures"].get(opp_l) or client.fixtures(opp_l, season)
-    systems = Counter(m["formation"] for m in opp_fx if m["played"] and m.get("formation"))
-    coach = next((m["coach"] for m in reversed(opp_fx) if m["played"] and m.get("coach")), None)
-    opp_players = []
-    for pid, log in raw["ml"]["players"].items():
-        if log["club_id"] != opp_l:
-            continue
-        e = [x for x in log["entries"] if x["status"] == "played"]
-        if e:
-            opp_players.append({"id": pid, "name": log["name"], "matchs": len(e), "minutes": sum(x["minutes"] for x in e),
-                                "buts": sum(x["goals"] for x in e), "passes": sum(x["assists"] for x in e),
-                                "titularisations": sum(1 for x in e if x["started"]),
-                                "statut": (log.get("current_status") or {}).get("status")})
-    opp_players.sort(key=lambda r: (-(r["buts"] + 0.7 * r["passes"]), -r["minutes"]))
+    # --- dossier adversaire
+    def dossier(opp):
+        opp_fx = raw["fixtures"].get(opp) or client.fixtures(opp, season)
+        systems = Counter(m["formation"] for m in opp_fx if m["played"] and m.get("formation"))
+        coach = next((m["coach"] for m in reversed(opp_fx) if m["played"] and m.get("coach")), None)
+        opp_players = []
+        for pid, log in raw["ml"]["players"].items():
+            if log["club_id"] != opp:
+                continue
+            e = [x for x in log["entries"] if x["status"] == "played"]
+            if e:
+                opp_players.append({"id": pid, "name": log["name"], "matchs": len(e), "minutes": sum(x["minutes"] for x in e),
+                                    "buts": sum(x["goals"] for x in e), "passes": sum(x["assists"] for x in e),
+                                    "titularisations": sum(1 for x in e if x["started"]),
+                                    "poste": Counter(x["position"] for x in e if x.get("position")).most_common(1)[0][0]
+                                    if any(x.get("position") for x in e) else None,
+                                    "encaisses": sum(x.get("conceded") or 0 for x in e),
+                                    "statut": (log.get("current_status") or {}).get("status")})
+        opp_players.sort(key=lambda r: (-(r["buts"] + 0.7 * r["passes"]), -r["minutes"]))
+        keepers = [r for r in opp_players if (r["poste"] or "").lower() == "goalkeeper"]
+        injured = [{"id": pid, "name": log["name"], **(log.get("current_status") or {})}
+                   for pid, log in raw["ml"]["players"].items() if log["club_id"] == opp
+                   and (log.get("current_status") or {}).get("status") in ("injured", "suspended")]
+        h2h = [{"date": pm["date"], "journee": pm["matchday"], "home": pm["home"], "away": pm["away"],
+                "score": f"{pm['score'][0]}:{pm['score'][1]}", "xg": pm["xg"]}
+               for pm in sorted(per_match.values(), key=lambda pm: pm["date"]) if {pm["home"], pm["away"]} == {YS, opp}]
+        row = next(r for r in table if r["club_id"] == opp)
+        return {"id": opp, "systemes": dict(systems), "entraineur": coach, "joueurs_du_vivier": opp_players[:8],
+                "gardiens": keepers[:2], "indisponibles": injured, "confrontations": h2h, "classement": row,
+                "attaque": round(math.exp(mix["att"][opp]), 2), "defense": round(math.exp(mix["def"][opp]), 2)}
+
     ys_fx = raw["fixtures"][YS]
     ys_systems = Counter(m["formation"] for m in ys_fx if m["played"] and m.get("formation"))
     ys_coach = next((m["coach"] for m in reversed(ys_fx) if m["played"] and m.get("coach")), None)
@@ -667,14 +684,24 @@ def build(today: date, season: int = 2026, client: MatchlogClient | None = None)
 
     def why(pid):
         p = by_id[pid]
-        if not p["disponible"]:
-            return "indisponible (" + ((p["statut"] or {}).get("status") or "?") + ")"
-        return (f"sélection {p['selection']:.2f} · Sport {p['sport']:.0f} · {p['part_3_derniers']:.0%} des minutes "
-                f"sur 3 matchs · {p['buts_2627']} b, {p['passes_2627']} p en 26/27")
+        return {"disponible": p["disponible"], "statut": (p["statut"] or {}).get("status"), "selection": p["selection"],
+                "sport": p["sport"], "part_3_derniers": p["part_3_derniers"], "buts": p["buts_2627"], "passes": p["passes_2627"]}
 
     ecarts = {"dernier_match": last_id,
               "entrants": [{"id": r["id"], "name": r["name"], "raison": why(r["id"])} for r in xi if r["id"] not in last_ids],
               "sortants": [{"id": r["id"], "name": r["name"], "raison": why(r["id"])} for r in last_xi if r["id"] not in in_xi]}
+
+    def league_block(fx):
+        pred, variants = predict_league(fx)
+        opp = fx["away_id"] if fx["home_id"] == YS else fx["home_id"]
+        lam = pred["xg_dom"] if fx["home_id"] == YS else pred["xg_ext"]
+        return {"match": {k: fx[k] for k in ("id", "date", "competition_id", "matchday", "home_id", "home", "away_id", "away")},
+                "prediction": pred, "variantes": variants, "forme_ys": form(per_match, YS),
+                "forme_adversaire": form(per_match, opp), "adversaire": dossier(opp),
+                "onze": xi, "banc": bench_rows, "buteurs": scorer_probs(xi, bench_rows, players, lam, goal_hist),
+                "dernier_onze": last_xi, "ecarts": ecarts}
+
+    league_blocks = [league_block(fx) for fx in ys_next[:2]]
 
     # --- saison
     played_c2 = [{"home": pm["home"], "away": pm["away"], "score": pm["score"]} for pm in per_match.values()]
@@ -690,15 +717,7 @@ def build(today: date, season: int = 2026, client: MatchlogClient | None = None)
                           "prior_matchs": PRIOR_MATCHES, "clubs_avec_prior": sorted(ratings["prior"])},
         "classement": table,
         "noms": names,
-        "prochain_match": {"championnat": {"match": {k: lg[k] for k in ("id", "date", "competition_id", "matchday",
-                                                                         "home_id", "home", "away_id", "away")},
-                                           "prediction": league_pred, "variantes": league_variants,
-                                           "forme_ys": form(per_match, YS), "forme_adversaire": form(per_match, opp_l),
-                                           "adversaire": {"id": opp_l, "systemes": dict(systems), "entraineur": coach,
-                                                          "joueurs_du_vivier": opp_players[:8],
-                                                          "note": "joueurs de l'adversaire présents dans le vivier (17-29 ans, ≤ 1,5 M€) : liste partielle"},
-                                           "onze": xi, "banc": bench_rows, "buteurs": scorers,
-                                           "dernier_onze": last_xi, "ecarts": ecarts},
+        "prochain_match": {"championnat": league_blocks[0], "championnat_matchs": league_blocks,
                            "coupe": cup},
         "yverdon": {"entraineur": ys_coach, "systemes_saison": dict(ys_systems), "systemes_entraineur": dict(coach_systems),
                     "systeme_retenu": "4-3-3",
@@ -721,14 +740,13 @@ def main(argv: list[str] | None = None) -> None:
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1))
     pm = out["prochain_match"]
     print(f"xG-tirs : {out['xg_modele']}")
-    for key in ("coupe", "championnat"):
-        blk = pm[key]
+    for blk in [pm["coupe"]] + pm["championnat_matchs"]:
         if not blk:
             continue
         m, p = blk["match"], blk["prediction"]
         print(f"\n{m['date']} {m['home']} – {m['away']} : dom {p['dom']:.0%} · nul {p['nul']:.0%} · ext {p['ext']:.0%} ; "
               f"xG {p['xg_dom']} – {p['xg_ext']} ; scores {[s['score'] for s in p['scores'][:3]]}"
-              + (f" ; qualification Yverdon {p['qualif_ext'] if m['away_id'] == YS else p['qualif_dom']:.0%}" if key == "coupe" else ""))
+              + (f" ; qualification Yverdon {p['qualif_ext'] if m['away_id'] == YS else p['qualif_dom']:.0%}" if "qualif_dom" in p else ""))
         print("  Onze :", ", ".join(f"{r['creneau']} {r['name']}" for r in blk["onze"]))
     ys = out["projection_saison"]["clubs"][YS]
     print(f"\nProjection Yverdon : {ys['points_projetes']} points, rang moyen {ys['rang_moyen']}, P(1er) {ys['p_rang'][1]:.0%}")
