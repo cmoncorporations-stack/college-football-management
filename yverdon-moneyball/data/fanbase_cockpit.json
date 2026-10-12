@@ -1,0 +1,2067 @@
+{
+ "_source": "Artefact « Fanbase Manager Yverdon Sport » (claude.ai/artifact/CLE7aTxaagrihaq67tjrV6) — relevé Brevo + Metricool",
+ "genere": "2026-09-23",
+ "series": {
+  "igM": [
+   [
+    "26.03",
+    31416
+   ],
+   [
+    "21.04",
+    31590
+   ],
+   [
+    "17.05",
+    31483
+   ],
+   [
+    "12.06",
+    31407
+   ],
+   [
+    "08.07",
+    31493
+   ],
+   [
+    "03.08",
+    31755
+   ],
+   [
+    "29.08",
+    31731
+   ],
+   [
+    "22.09",
+    31747
+   ]
+  ],
+  "igF": [
+   [
+    "26.03",
+    6242
+   ],
+   [
+    "21.04",
+    6588
+   ],
+   [
+    "17.05",
+    6652
+   ],
+   [
+    "12.06",
+    6755
+   ],
+   [
+    "08.07",
+    6819
+   ],
+   [
+    "03.08",
+    6988
+   ],
+   [
+    "29.08",
+    7384
+   ],
+   [
+    "22.09",
+    7607
+   ]
+  ],
+  "fbM": [
+   [
+    "26.03",
+    12871
+   ],
+   [
+    "21.04",
+    13132
+   ],
+   [
+    "17.05",
+    13139
+   ],
+   [
+    "12.06",
+    13138
+   ],
+   [
+    "08.07",
+    13132
+   ],
+   [
+    "03.08",
+    13208
+   ],
+   [
+    "29.08",
+    13224
+   ],
+   [
+    "22.09",
+    13265
+   ]
+  ],
+  "fbF": [
+   [
+    "26.03",
+    2710
+   ],
+   [
+    "21.04",
+    2736
+   ],
+   [
+    "17.05",
+    2769
+   ],
+   [
+    "12.06",
+    2817
+   ],
+   [
+    "08.07",
+    2832
+   ],
+   [
+    "03.08",
+    2894
+   ],
+   [
+    "29.08",
+    2939
+   ],
+   [
+    "22.09",
+    2965
+   ]
+  ],
+  "li": [
+   [
+    "26.03",
+    3357
+   ],
+   [
+    "21.04",
+    3475
+   ],
+   [
+    "17.05",
+    3536
+   ],
+   [
+    "12.06",
+    3660
+   ],
+   [
+    "08.07",
+    3747
+   ],
+   [
+    "03.08",
+    3808
+   ],
+   [
+    "29.08",
+    3864
+   ],
+   [
+    "22.09",
+    3900
+   ]
+  ],
+  "ytM": [
+   [
+    "26.03",
+    1690
+   ],
+   [
+    "21.04",
+    1700
+   ],
+   [
+    "17.05",
+    1710
+   ],
+   [
+    "12.06",
+    1710
+   ],
+   [
+    "08.07",
+    1710
+   ],
+   [
+    "03.08",
+    1730
+   ],
+   [
+    "29.08",
+    1740
+   ],
+   [
+    "22.09",
+    1760
+   ]
+  ]
+ },
+ "game": {
+  "followers": {
+   "igM": 31747,
+   "igF": 7607,
+   "fbM": 13265,
+   "fbF": 2965,
+   "li": 3900,
+   "ytM": 1760
+  },
+  "debut180": {
+   "igM": 31416,
+   "igF": 6242,
+   "fbM": 12871,
+   "fbF": 2710,
+   "li": 3357,
+   "ytM": 1690
+  },
+  "cibles": {
+   "igM": 36000,
+   "igF": 9000,
+   "fbM": 15000,
+   "fbF": 3500,
+   "li": 4500,
+   "ytM": 2000
+  },
+  "audienceTotale": 61244,
+  "attrs": {
+   "DATA": 75,
+   "CROISSANCE": 78,
+   "AUDIENCE": 87,
+   "ENGAGEMENT": 100,
+   "EMAILING": 100
+  },
+  "ovr": 88,
+  "engIGclub": 5.28,
+  "engIGM": 4.92,
+  "engIGF": 5.84,
+  "engLI": 10.49,
+  "postsM": 121,
+  "postsF": 115,
+  "postsLI": 27
+ },
+ "penetration": {
+  "sport": "football",
+  "sportLabel": "football",
+  "fanShare": 0.34,
+  "fanShareSource": "YouGov Global Profiles — suiveurs actifs de football en Suisse",
+  "bassin": "Jura-Nord vaudois + Broye-Vully",
+  "population": 144387,
+  "populationSource": "OFS, chiffres finaux fin 2024",
+  "audienceActive": 49100,
+  "contacts": 12369,
+  "baseLabel": "contacts exploitables",
+  "optInPct": 95.19,
+  "indice": 25.2,
+  "precedent": 25.1,
+  "cible": 30,
+  "coeur": {
+   "nom": "Jura-Nord vaudois seul",
+   "population": 96651,
+   "active": 32900,
+   "indice": 37.6
+  },
+  "basePrecision": "e-mail valide et non désinscrit, dédupliqués — définition homogène du panel C'mon",
+  "optInIndice": 24.0
+ },
+ "brevo": {
+  "contactsTotal": 17683,
+  "exploitables": 12369,
+  "completionGlobale": 74.9,
+  "categories": [
+   {
+    "nom": "New Lead",
+    "n": 8691,
+    "pct": 70.3
+   },
+   {
+    "nom": "Warm",
+    "n": 1797,
+    "pct": 14.5
+   },
+   {
+    "nom": "Qualified",
+    "n": 494,
+    "pct": 4.0
+   },
+   {
+    "nom": "Sales Qualified",
+    "n": 449,
+    "pct": 3.6
+   },
+   {
+    "nom": "Super Fan",
+    "n": 938,
+    "pct": 7.6
+   }
+  ],
+  "score": {
+   "median": 5.0,
+   "max": 2400.0,
+   "min": 0.0,
+   "moyenne": 42.8,
+   "pctQualifies": 29.7,
+   "renseigne": 12257
+  },
+  "empreinteFeminine": {
+   "n": 2559,
+   "nbListes": 96,
+   "pct": 20.7
+  },
+  "funnelBrevo": {
+   "contactsTotal": 17683,
+   "exploitables": 12369,
+   "pilotables": 12369,
+   "engages": 12257,
+   "qualifies": 3678,
+   "abonnesPartenaires": 382
+  },
+  "frictions": {
+   "palierEngorge": [
+    "New Lead"
+   ],
+   "aUnPointDeWarm": 374,
+   "abonnesVsSuperFans": {
+    "abonnes": 382,
+    "superFans": 938
+   },
+   "newLeadPct": 70.3,
+   "score0a9": 7097,
+   "score0a9Pct": 57.4
+  },
+  "optin": {
+   "optIn": 11774,
+   "doubleOptIn": 289,
+   "nurtures": 0
+  }
+ },
+ "croissance12m": {
+  "debut": 8898,
+  "fin": 12369,
+  "ajoutes": 3471,
+  "pct": 39.0
+ },
+ "campagnes": [
+  {
+   "date": "2026-09-22",
+   "nom": "CMON_YVERDON_APM_SLO_260922_Business",
+   "equipe": "Masculin",
+   "delivered": 50,
+   "ouverture": 44.0,
+   "clics": 32.0
+  },
+  {
+   "date": "2026-09-22",
+   "nom": "CMON_YVERDON_APM_SLO_260922_FAN",
+   "equipe": "Masculin",
+   "delivered": 363,
+   "ouverture": 54.0,
+   "clics": 7.2
+  },
+  {
+   "date": "2026-09-18",
+   "nom": "CMON_YVERDON_AVM_STADE_LAUSANNE_OUCHY_260920_BILLETTERIE_BUSINESS",
+   "equipe": "Masculin",
+   "delivered": 126,
+   "ouverture": 37.3,
+   "clics": 11.9
+  },
+  {
+   "date": "2026-09-18",
+   "nom": "CMON_YVERDON_AVM_STADE_LAUSANNE_OUCHY_260920_BILLETTERIE_FAN",
+   "equipe": "Masculin",
+   "delivered": 8078,
+   "ouverture": 37.1,
+   "clics": 1.0
+  },
+  {
+   "date": "2026-09-17",
+   "nom": "CMON-NL-20260914-Raclette-Soutien-YSW-FR",
+   "equipe": "Féminin",
+   "delivered": 1166,
+   "ouverture": 49.4,
+   "clics": 1.8
+  },
+  {
+   "date": "2026-09-15",
+   "nom": "CMON-NL-20260914-Journee-Stade-Confirmation-FR",
+   "equipe": "Masculin",
+   "delivered": 104,
+   "ouverture": 72.1,
+   "clics": 1.0
+  },
+  {
+   "date": "2026-09-15",
+   "nom": "CMON_YVERDON_ABO_FLEX",
+   "equipe": "Masculin",
+   "delivered": 3325,
+   "ouverture": 41.5,
+   "clics": 2.6
+  },
+  {
+   "date": "2026-09-14",
+   "nom": "CMON_YSF_AARAU_APM_260914",
+   "equipe": "Féminin",
+   "delivered": 93,
+   "ouverture": 59.1,
+   "clics": 8.6
+  },
+  {
+   "date": "2026-09-13",
+   "nom": "CMON_YSF_AARAU_AVM_260912_PROGRAMME",
+   "equipe": "Féminin",
+   "delivered": 50,
+   "ouverture": 60.0,
+   "clics": 4.0
+  },
+  {
+   "date": "2026-09-11",
+   "nom": "CMON_YSF_AARAU_AVM_260912_BILLETTERIE_FAN",
+   "equipe": "Féminin",
+   "delivered": 2906,
+   "ouverture": 43.0,
+   "clics": 1.3
+  },
+  {
+   "date": "2026-09-07",
+   "nom": "CMON_YVERDON_APM_NYON_260907_BUSINESS",
+   "equipe": "Masculin",
+   "delivered": 63,
+   "ouverture": 41.3,
+   "clics": 9.5
+  },
+  {
+   "date": "2026-09-07",
+   "nom": "CMON_YVERDON_APM_NYON_260907_FAN",
+   "equipe": "Masculin",
+   "delivered": 252,
+   "ouverture": 57.1,
+   "clics": 6.7
+  },
+  {
+   "date": "2026-09-06",
+   "nom": "CMON_YVERDON_AVM_NYON_260906_PROGRAMME",
+   "equipe": "Masculin",
+   "delivered": 267,
+   "ouverture": 58.8,
+   "clics": 7.9
+  },
+  {
+   "date": "2026-09-05",
+   "nom": "CMON_YVERDON_MERCH_MAILLOT_BLANC_260906",
+   "equipe": "Masculin",
+   "delivered": 1766,
+   "ouverture": 51.2,
+   "clics": 1.4
+  },
+  {
+   "date": "2026-09-04",
+   "nom": "CMON_YVERDON_AVM_NYON_260906_BILLETTERIE_BUSINESS",
+   "equipe": "Masculin",
+   "delivered": 45,
+   "ouverture": 42.2,
+   "clics": 33.3
+  },
+  {
+   "date": "2026-09-04",
+   "nom": "CMON_YVERDON_AVM_NYON_260906_BILLETTERIE_FAN",
+   "equipe": "Masculin",
+   "delivered": 7912,
+   "ouverture": 38.5,
+   "clics": 0.8
+  },
+  {
+   "date": "2026-08-31",
+   "nom": "CMON_YSF_GC_APM_260829",
+   "equipe": "Féminin",
+   "delivered": 71,
+   "ouverture": 57.7,
+   "clics": 9.9
+  },
+  {
+   "date": "2026-08-31",
+   "nom": "CMON_YVERDON_APM_WIL_260828_BUSINESS",
+   "equipe": "Masculin",
+   "delivered": 32,
+   "ouverture": 46.9,
+   "clics": 0.0
+  },
+  {
+   "date": "2026-08-31",
+   "nom": "CMON_YVERDON_APM_WIL_260828_FAN",
+   "equipe": "Masculin",
+   "delivered": 286,
+   "ouverture": 58.4,
+   "clics": 3.8
+  },
+  {
+   "date": "2026-08-30",
+   "nom": "CMON_YS_ABO_Multitel / Salt _2627_relance",
+   "equipe": "Masculin",
+   "delivered": 2160,
+   "ouverture": 45.9,
+   "clics": 0.6
+  },
+  {
+   "date": "2026-08-29",
+   "nom": "CMON_YSF_GC_AVM_260829_PROGRAMME",
+   "equipe": "Féminin",
+   "delivered": 93,
+   "ouverture": 52.7,
+   "clics": 4.3
+  },
+  {
+   "date": "2026-08-28",
+   "nom": "CMON_YVERDON_AVM_WIL_260828_PROGRAMME",
+   "equipe": "Masculin",
+   "delivered": 261,
+   "ouverture": 56.7,
+   "clics": 7.7
+  },
+  {
+   "date": "2026-08-28",
+   "nom": "CMON_YVERDON_BCV_JOURNEE_AU_STADE_260916",
+   "equipe": "Masculin",
+   "delivered": 1648,
+   "ouverture": 59.0,
+   "clics": 5.6
+  },
+  {
+   "date": "2026-08-27",
+   "nom": "CMON_YSF_GC_AVM_260829_BILLETTERIE_FAN",
+   "equipe": "Féminin",
+   "delivered": 2758,
+   "ouverture": 45.2,
+   "clics": 0.9
+  },
+  {
+   "date": "2026-08-27",
+   "nom": "CMON_YVERDON_ABO_ENTREPRISE-20 %_RELANCE",
+   "equipe": "Masculin",
+   "delivered": 376,
+   "ouverture": 42.8,
+   "clics": 4.0
+  },
+  {
+   "date": "2026-08-26",
+   "nom": "CMON_YVERDON_AVM_WIL_260826_BUSINESS",
+   "equipe": "Masculin",
+   "delivered": 45,
+   "ouverture": 48.9,
+   "clics": 33.3
+  },
+  {
+   "date": "2026-08-26",
+   "nom": "CMON_YVERDON_AVM_WIL_260826_FAN",
+   "equipe": "Masculin",
+   "delivered": 7916,
+   "ouverture": 45.6,
+   "clics": 1.5
+  },
+  {
+   "date": "2026-08-24",
+   "nom": "CMON_YVERDON_APM_FC_AARAU_260823_BUSINESS",
+   "equipe": "Masculin",
+   "delivered": 29,
+   "ouverture": 48.3,
+   "clics": 0.0
+  },
+  {
+   "date": "2026-08-24",
+   "nom": "CMON_YVERDON_APM_FC_AARAU_260823_FAN",
+   "equipe": "Masculin",
+   "delivered": 332,
+   "ouverture": 59.0,
+   "clics": 9.0
+  },
+  {
+   "date": "2026-08-23",
+   "nom": "CMON_YVERDON_AVM_AARAU_260823_PROGRAMME",
+   "equipe": "Masculin",
+   "delivered": 291,
+   "ouverture": 57.0,
+   "clics": 7.2
+  },
+  {
+   "date": "2026-08-21",
+   "nom": "CMON_YVERDON_AVM_AARAU_260823_BUSINESS",
+   "equipe": "Masculin",
+   "delivered": 37,
+   "ouverture": 54.1,
+   "clics": 0.0
+  },
+  {
+   "date": "2026-08-21",
+   "nom": "CMON_YVERDON_AVM_AARAU_260823_FAN",
+   "equipe": "Masculin",
+   "delivered": 7853,
+   "ouverture": 39.1,
+   "clics": 1.5
+  },
+  {
+   "date": "2026-08-20",
+   "nom": "CMON_YVERDON_RETARGETINGABO_CAROUGE",
+   "equipe": "Masculin",
+   "delivered": 111,
+   "ouverture": 50.5,
+   "clics": 5.4
+  },
+  {
+   "date": "2026-08-18",
+   "nom": "CMON_YS_ABO_Multitel / Salt _2627",
+   "equipe": "Masculin",
+   "delivered": 2182,
+   "ouverture": 50.4,
+   "clics": 0.9
+  },
+  {
+   "date": "2026-08-17",
+   "nom": "CMON_YVERDON_ABO_ENTREPRISE-20 %",
+   "equipe": "Masculin",
+   "delivered": 378,
+   "ouverture": 41.0,
+   "clics": 1.6
+  },
+  {
+   "date": "2026-08-11",
+   "nom": "CMON_YSW_RETARGETING_FCZ_2627",
+   "equipe": "Féminin",
+   "delivered": 60,
+   "ouverture": 58.3,
+   "clics": 13.3
+  },
+  {
+   "date": "2026-08-10",
+   "nom": "CMON_YSF_APM_FCZURICH_260807",
+   "equipe": "Féminin",
+   "delivered": 86,
+   "ouverture": 58.1,
+   "clics": 10.5
+  },
+  {
+   "date": "2026-08-07",
+   "nom": "CMON_YSF_FCZURICH_260807_PROGRAMME",
+   "equipe": "Féminin",
+   "delivered": 104,
+   "ouverture": 60.6,
+   "clics": 2.9
+  },
+  {
+   "date": "2026-08-07",
+   "nom": "CMON_YSW_ABO_INFOS & CADEAUX_2627",
+   "equipe": "Féminin",
+   "delivered": 58,
+   "ouverture": 69.0,
+   "clics": 0.0
+  },
+  {
+   "date": "2026-08-05",
+   "nom": "CMON_YSF_FCZURICH_260807_BILLETTERIE_FAN",
+   "equipe": "Féminin",
+   "delivered": 2764,
+   "ouverture": 46.7,
+   "clics": 2.2
+  },
+  {
+   "date": "2026-08-05",
+   "nom": "CMON_YSF_Avant_Saison26-27_Global",
+   "equipe": "Féminin",
+   "delivered": 6418,
+   "ouverture": 39.2,
+   "clics": 1.7
+  },
+  {
+   "date": "2026-08-04",
+   "nom": "CMON_YSF_INVITATIONS_YSF-ZURICH_AUTORITÉS_POLITIQUES",
+   "equipe": "Féminin",
+   "delivered": 40,
+   "ouverture": 55.0,
+   "clics": 22.5
+  },
+  {
+   "date": "2026-08-04",
+   "nom": "CMON_YSF_INVITATIONS_YSF-ZURICH_ASSOCIATIONS_SPORTIVES",
+   "equipe": "Féminin",
+   "delivered": 84,
+   "ouverture": 53.6,
+   "clics": 1.2
+  },
+  {
+   "date": "2026-08-03",
+   "nom": "CMON_YVERDON_APM_FCRJ_260511_FAN_copy",
+   "equipe": "Masculin",
+   "delivered": 222,
+   "ouverture": 62.2,
+   "clics": 16.2
+  },
+  {
+   "date": "2026-07-31",
+   "nom": "CMON_YVERDON_AVM_ETOILE_CAROUGE_260730_PROGRAMME",
+   "equipe": "Masculin",
+   "delivered": 232,
+   "ouverture": 72.0,
+   "clics": 12.5
+  },
+  {
+   "date": "2026-07-31",
+   "nom": "CMON_YS_ABOVIP_INFOS & CADEAUX_2627",
+   "equipe": "Masculin",
+   "delivered": 14,
+   "ouverture": 71.4,
+   "clics": 50.0
+  },
+  {
+   "date": "2026-07-31",
+   "nom": "CMON_YS_ABOVYS_INFOS & CADEAUX_2627",
+   "equipe": "Masculin",
+   "delivered": 26,
+   "ouverture": 80.8,
+   "clics": 0.0
+  },
+  {
+   "date": "2026-07-31",
+   "nom": "CMON_YS_ABOTF_INFOS & CADEAUX_2627",
+   "equipe": "Masculin",
+   "delivered": 39,
+   "ouverture": 76.9,
+   "clics": 0.0
+  },
+  {
+   "date": "2026-07-31",
+   "nom": "CMON_YS_ABOTP_INFOS & CADEAUX_2627",
+   "equipe": "Masculin",
+   "delivered": 80,
+   "ouverture": 80.0,
+   "clics": 0.0
+  },
+  {
+   "date": "2026-07-29",
+   "nom": "CMON_YVERDON_AVM_ETOILE_CAROUGE_260731_FAN",
+   "equipe": "Masculin",
+   "delivered": 7610,
+   "ouverture": 46.6,
+   "clics": 1.0
+  },
+  {
+   "date": "2026-07-29",
+   "nom": "CMON_YS_ANNIVERSAIRE_ETE_MAI_JUILLET",
+   "equipe": "Masculin",
+   "delivered": 550,
+   "ouverture": 39.3,
+   "clics": 5.6
+  },
+  {
+   "date": "2026-07-22",
+   "nom": "CMON_YS_RECRUES_26_27_copy",
+   "equipe": "Masculin",
+   "delivered": 2003,
+   "ouverture": 55.0,
+   "clics": 1.5
+  },
+  {
+   "date": "2026-07-16",
+   "nom": "CMON_YS_MERCHANDISING_MAILLOTS_260709",
+   "equipe": "Masculin",
+   "delivered": 1587,
+   "ouverture": 57.1,
+   "clics": 14.4
+  },
+  {
+   "date": "2026-07-09",
+   "nom": "CMON-YSF-ABO-2627-CONCOURS-LOSERS",
+   "equipe": "Féminin",
+   "delivered": 116,
+   "ouverture": 62.9,
+   "clics": 1.7
+  },
+  {
+   "date": "2026-07-09",
+   "nom": "CMON-YS-ABO-2627-CONCOURS-LOSERS",
+   "equipe": "Masculin",
+   "delivered": 205,
+   "ouverture": 46.8,
+   "clics": 5.4
+  },
+  {
+   "date": "2026-07-08",
+   "nom": "CMON_YS_ABO_RELANCE_LANCEMENT_2627_ABONNÉS",
+   "equipe": "Masculin",
+   "delivered": 111,
+   "ouverture": 72.1,
+   "clics": 26.1
+  },
+  {
+   "date": "2026-07-08",
+   "nom": "CMON_YS_ABO_RELANCE_LANCEMENT_2627_PARTENAIRES",
+   "equipe": "Masculin",
+   "delivered": 42,
+   "ouverture": 54.8,
+   "clics": 38.1
+  },
+  {
+   "date": "2026-07-01",
+   "nom": "CMON_YSF_OUVERTURE_ABO_2627_ABONNES_RELANCE_260624",
+   "equipe": "Féminin",
+   "delivered": 41,
+   "ouverture": 29.3,
+   "clics": 2.4
+  },
+  {
+   "date": "2026-07-01",
+   "nom": "CMON_YSF_OUVERTURE_ABO_2627_SUPPORTER_RELANCE_260624",
+   "equipe": "Féminin",
+   "delivered": 160,
+   "ouverture": 35.0,
+   "clics": 3.1
+  },
+  {
+   "date": "2026-06-30",
+   "nom": "CMON_YS_ABO_LANCEMENT_2627_ABONNES",
+   "equipe": "Masculin",
+   "delivered": 111,
+   "ouverture": 76.6,
+   "clics": 33.3
+  },
+  {
+   "date": "2026-06-30",
+   "nom": "CMON_YS_ABO_LANCEMENT_2627_PARTENAIRES",
+   "equipe": "Masculin",
+   "delivered": 41,
+   "ouverture": 63.4,
+   "clics": 43.9
+  },
+  {
+   "date": "2026-06-30",
+   "nom": "CMON_YS_ABO_2627_3x_RELANCE3_260630",
+   "equipe": "Masculin",
+   "delivered": 209,
+   "ouverture": 56.0,
+   "clics": 3.3
+  },
+  {
+   "date": "2026-06-30",
+   "nom": "CMON_YS_ABO_2627_TRIBUNE-PRINCIPALE_RELANCE3_260630",
+   "equipe": "Masculin",
+   "delivered": 38,
+   "ouverture": 68.4,
+   "clics": 0.0
+  },
+  {
+   "date": "2026-06-30",
+   "nom": "CMON_YS_ABO_2627_VILLAGE_YS_RELANCE3_260630",
+   "equipe": "Masculin",
+   "delivered": 31,
+   "ouverture": 48.4,
+   "clics": 6.5
+  },
+  {
+   "date": "2026-06-30",
+   "nom": "CMON_YS_ABO_2627_10x_RELANCE3_260630",
+   "equipe": "Masculin",
+   "delivered": 21,
+   "ouverture": 66.7,
+   "clics": 4.8
+  },
+  {
+   "date": "2026-06-30",
+   "nom": "CMON_YS_ABO_2627_TRIBUNE-FAMILIALE_RELANCE3_260630",
+   "equipe": "Masculin",
+   "delivered": 18,
+   "ouverture": 38.9,
+   "clics": 0.0
+  }
+ ],
+ "postsM": [
+  [
+   "20260922",
+   522,
+   7326
+  ],
+  [
+   "20260921",
+   46,
+   1982
+  ],
+  [
+   "20260920",
+   185,
+   3696
+  ],
+  [
+   "20260920",
+   126,
+   2507
+  ],
+  [
+   "20260920",
+   868,
+   10059
+  ],
+  [
+   "20260920",
+   204,
+   3527
+  ],
+  [
+   "20260920",
+   108,
+   2976
+  ],
+  [
+   "20260918",
+   221,
+   4684
+  ],
+  [
+   "20260917",
+   298,
+   5548
+  ],
+  [
+   "20260916",
+   260,
+   4957
+  ],
+  [
+   "20260915",
+   1349,
+   19172
+  ],
+  [
+   "20260915",
+   75,
+   3867
+  ],
+  [
+   "20260914",
+   131,
+   3636
+  ],
+  [
+   "20260914",
+   110,
+   2693
+  ],
+  [
+   "20260914",
+   146,
+   2652
+  ],
+  [
+   "20260913",
+   556,
+   6369
+  ],
+  [
+   "20260911",
+   215,
+   4017
+  ],
+  [
+   "20260911",
+   177,
+   3355
+  ],
+  [
+   "20260911",
+   118,
+   3549
+  ],
+  [
+   "20260910",
+   374,
+   7209
+  ],
+  [
+   "20260909",
+   92,
+   2392
+  ],
+  [
+   "20260908",
+   870,
+   12619
+  ],
+  [
+   "20260908",
+   130,
+   4211
+  ],
+  [
+   "20260907",
+   338,
+   6107
+  ],
+  [
+   "20260907",
+   158,
+   3538
+  ],
+  [
+   "20260906",
+   432,
+   7625
+  ],
+  [
+   "20260906",
+   382,
+   5911
+  ],
+  [
+   "20260906",
+   243,
+   4645
+  ],
+  [
+   "20260906",
+   119,
+   3444
+  ],
+  [
+   "20260905",
+   1376,
+   29455
+  ],
+  [
+   "20260905",
+   1085,
+   19046
+  ],
+  [
+   "20260904",
+   967,
+   21439
+  ],
+  [
+   "20260904",
+   87,
+   3381
+  ],
+  [
+   "20260903",
+   164,
+   4173
+  ],
+  [
+   "20260902",
+   205,
+   3036
+  ],
+  [
+   "20260901",
+   426,
+   6996
+  ],
+  [
+   "20260901",
+   531,
+   9543
+  ],
+  [
+   "20260901",
+   224,
+   3783
+  ],
+  [
+   "20260901",
+   174,
+   4068
+  ],
+  [
+   "20260831",
+   239,
+   3566
+  ],
+  [
+   "20260831",
+   105,
+   3578
+  ],
+  [
+   "20260829",
+   310,
+   4795
+  ],
+  [
+   "20260828",
+   181,
+   3927
+  ],
+  [
+   "20260828",
+   178,
+   3660
+  ],
+  [
+   "20260828",
+   158,
+   4704
+  ],
+  [
+   "20260827",
+   94,
+   3225
+  ],
+  [
+   "20260825",
+   579,
+   12992
+  ],
+  [
+   "20260825",
+   109,
+   3103
+  ],
+  [
+   "20260824",
+   132,
+   4003
+  ],
+  [
+   "20260823",
+   381,
+   6443
+  ],
+  [
+   "20260823",
+   417,
+   9054
+  ],
+  [
+   "20260823",
+   367,
+   8856
+  ],
+  [
+   "20260823",
+   203,
+   3076
+  ],
+  [
+   "20260823",
+   140,
+   3934
+  ],
+  [
+   "20260821",
+   138,
+   8370
+  ],
+  [
+   "20260820",
+   330,
+   5865
+  ],
+  [
+   "20260820",
+   187,
+   2908
+  ],
+  [
+   "20260818",
+   245,
+   4827
+  ],
+  [
+   "20260818",
+   254,
+   4283
+  ],
+  [
+   "20260817",
+   550,
+   7649
+  ],
+  [
+   "20260817",
+   367,
+   5683
+  ],
+  [
+   "20260816",
+   153,
+   4219
+  ],
+  [
+   "20260816",
+   395,
+   10212
+  ],
+  [
+   "20260816",
+   313,
+   7729
+  ],
+  [
+   "20260816",
+   135,
+   4635
+  ],
+  [
+   "20260814",
+   222,
+   4626
+  ],
+  [
+   "20260813",
+   117,
+   3920
+  ],
+  [
+   "20260812",
+   288,
+   6514
+  ],
+  [
+   "20260812",
+   169,
+   3001
+  ],
+  [
+   "20260810",
+   311,
+   8226
+  ],
+  [
+   "20260808",
+   259,
+   5222
+  ],
+  [
+   "20260808",
+   251,
+   4880
+  ],
+  [
+   "20260807",
+   370,
+   6656
+  ],
+  [
+   "20260807",
+   301,
+   6337
+  ],
+  [
+   "20260807",
+   211,
+   3996
+  ],
+  [
+   "20260807",
+   178,
+   2942
+  ],
+  [
+   "20260807",
+   166,
+   3789
+  ],
+  [
+   "20260805",
+   103,
+   3989
+  ],
+  [
+   "20260804",
+   1226,
+   21113
+  ],
+  [
+   "20260801",
+   290,
+   6001
+  ],
+  [
+   "20260731",
+   202,
+   4374
+  ],
+  [
+   "20260731",
+   151,
+   4827
+  ],
+  [
+   "20260731",
+   565,
+   26041
+  ],
+  [
+   "20260731",
+   127,
+   4469
+  ],
+  [
+   "20260729",
+   88,
+   3376
+  ],
+  [
+   "20260729",
+   146,
+   3314
+  ],
+  [
+   "20260725",
+   301,
+   6414
+  ],
+  [
+   "20260724",
+   368,
+   7758
+  ],
+  [
+   "20260724",
+   199,
+   5931
+  ],
+  [
+   "20260724",
+   989,
+   15538
+  ],
+  [
+   "20260724",
+   154,
+   4588
+  ],
+  [
+   "20260723",
+   473,
+   8032
+  ],
+  [
+   "20260723",
+   354,
+   6883
+  ],
+  [
+   "20260722",
+   139,
+   4734
+  ],
+  [
+   "20260722",
+   318,
+   4365
+  ],
+  [
+   "20260721",
+   339,
+   6803
+  ],
+  [
+   "20260720",
+   799,
+   14566
+  ],
+  [
+   "20260718",
+   309,
+   5546
+  ],
+  [
+   "20260718",
+   246,
+   6352
+  ],
+  [
+   "20260718",
+   184,
+   4315
+  ],
+  [
+   "20260717",
+   532,
+   8061
+  ],
+  [
+   "20260717",
+   293,
+   4827
+  ],
+  [
+   "20260716",
+   484,
+   8732
+  ],
+  [
+   "20260715",
+   1784,
+   16642
+  ],
+  [
+   "20260715",
+   263,
+   5845
+  ],
+  [
+   "20260714",
+   298,
+   5529
+  ],
+  [
+   "20260712",
+   298,
+   6203
+  ],
+  [
+   "20260712",
+   93,
+   4165
+  ],
+  [
+   "20260711",
+   155,
+   4946
+  ],
+  [
+   "20260710",
+   212,
+   5668
+  ],
+  [
+   "20260710",
+   168,
+   3654
+  ],
+  [
+   "20260708",
+   1052,
+   17797
+  ],
+  [
+   "20260708",
+   137,
+   7213
+  ],
+  [
+   "20260707",
+   5622,
+   124006
+  ],
+  [
+   "20260704",
+   285,
+   7862
+  ],
+  [
+   "20260703",
+   122,
+   5038
+  ],
+  [
+   "20260702",
+   274,
+   6970
+  ],
+  [
+   "20260701",
+   43,
+   2800
+  ],
+  [
+   "20260701",
+   155,
+   3975
+  ],
+  [
+   "20260630",
+   819,
+   14087
+  ],
+  [
+   "20260630",
+   227,
+   6105
+  ]
+ ],
+ "postsF": [
+  [
+   "20260922",
+   51,
+   1837
+  ],
+  [
+   "20260922",
+   100,
+   1333
+  ],
+  [
+   "20260921",
+   31,
+   834
+  ],
+  [
+   "20260919",
+   294,
+   3340
+  ],
+  [
+   "20260918",
+   281,
+   5908
+  ],
+  [
+   "20260918",
+   100,
+   1652
+  ],
+  [
+   "20260918",
+   207,
+   3136
+  ],
+  [
+   "20260918",
+   131,
+   6159
+  ],
+  [
+   "20260916",
+   108,
+   2202
+  ],
+  [
+   "20260915",
+   64,
+   1830
+  ],
+  [
+   "20260914",
+   222,
+   2707
+  ],
+  [
+   "20260914",
+   269,
+   2350
+  ],
+  [
+   "20260913",
+   463,
+   7435
+  ],
+  [
+   "20260913",
+   360,
+   9864
+  ],
+  [
+   "20260913",
+   149,
+   1770
+  ],
+  [
+   "20260913",
+   271,
+   3041
+  ],
+  [
+   "20260913",
+   95,
+   3355
+  ],
+  [
+   "20260911",
+   236,
+   4188
+  ],
+  [
+   "20260910",
+   103,
+   7100
+  ],
+  [
+   "20260910",
+   267,
+   3428
+  ],
+  [
+   "20260909",
+   151,
+   3521
+  ],
+  [
+   "20260909",
+   290,
+   3264
+  ],
+  [
+   "20260909",
+   334,
+   5346
+  ],
+  [
+   "20260909",
+   2868,
+   45428
+  ],
+  [
+   "20260909",
+   99,
+   4541
+  ],
+  [
+   "20260908",
+   103,
+   2800
+  ],
+  [
+   "20260908",
+   60,
+   2104
+  ],
+  [
+   "20260907",
+   1352,
+   21028
+  ],
+  [
+   "20260907",
+   207,
+   4259
+  ],
+  [
+   "20260906",
+   241,
+   8004
+  ],
+  [
+   "20260906",
+   98,
+   2110
+  ],
+  [
+   "20260906",
+   200,
+   2678
+  ],
+  [
+   "20260906",
+   108,
+   3720
+  ],
+  [
+   "20260903",
+   83,
+   3757
+  ],
+  [
+   "20260902",
+   151,
+   1818
+  ],
+  [
+   "20260901",
+   128,
+   1686
+  ],
+  [
+   "20260831",
+   83,
+   3739
+  ],
+  [
+   "20260831",
+   51,
+   1639
+  ],
+  [
+   "20260830",
+   204,
+   3510
+  ],
+  [
+   "20260829",
+   98,
+   2545
+  ],
+  [
+   "20260829",
+   119,
+   1772
+  ],
+  [
+   "20260829",
+   94,
+   4374
+  ],
+  [
+   "20260825",
+   82,
+   2730
+  ],
+  [
+   "20260825",
+   122,
+   2288
+  ],
+  [
+   "20260824",
+   254,
+   6128
+  ],
+  [
+   "20260824",
+   83,
+   1516
+  ],
+  [
+   "20260823",
+   243,
+   3439
+  ],
+  [
+   "20260822",
+   323,
+   8003
+  ],
+  [
+   "20260822",
+   363,
+   5573
+  ],
+  [
+   "20260822",
+   133,
+   2745
+  ],
+  [
+   "20260822",
+   86,
+   1597
+  ],
+  [
+   "20260822",
+   114,
+   5413
+  ],
+  [
+   "20260821",
+   269,
+   4764
+  ],
+  [
+   "20260820",
+   136,
+   3678
+  ],
+  [
+   "20260818",
+   3926,
+   22542
+  ],
+  [
+   "20260817",
+   209,
+   2531
+  ],
+  [
+   "20260816",
+   221,
+   3081
+  ],
+  [
+   "20260816",
+   117,
+   2645
+  ],
+  [
+   "20260816",
+   134,
+   1847
+  ],
+  [
+   "20260816",
+   312,
+   4607
+  ],
+  [
+   "20260816",
+   104,
+   2933
+  ],
+  [
+   "20260815",
+   430,
+   7486
+  ],
+  [
+   "20260813",
+   403,
+   4235
+  ],
+  [
+   "20260813",
+   96,
+   2719
+  ],
+  [
+   "20260811",
+   408,
+   3482
+  ],
+  [
+   "20260808",
+   320,
+   5560
+  ],
+  [
+   "20260807",
+   159,
+   3145
+  ],
+  [
+   "20260807",
+   212,
+   2942
+  ],
+  [
+   "20260807",
+   125,
+   5329
+  ],
+  [
+   "20260806",
+   76,
+   2138
+  ],
+  [
+   "20260805",
+   143,
+   4105
+  ],
+  [
+   "20260805",
+   975,
+   17484
+  ],
+  [
+   "20260804",
+   462,
+   7672
+  ],
+  [
+   "20260804",
+   481,
+   7701
+  ],
+  [
+   "20260803",
+   1076,
+   16854
+  ],
+  [
+   "20260802",
+   255,
+   4349
+  ],
+  [
+   "20260801",
+   99,
+   2487
+  ],
+  [
+   "20260801",
+   115,
+   2772
+  ],
+  [
+   "20260731",
+   290,
+   5384
+  ],
+  [
+   "20260729",
+   283,
+   5982
+  ],
+  [
+   "20260729",
+   208,
+   5251
+  ],
+  [
+   "20260727",
+   538,
+   9953
+  ],
+  [
+   "20260726",
+   94,
+   1828
+  ],
+  [
+   "20260725",
+   334,
+   5256
+  ],
+  [
+   "20260724",
+   132,
+   2222
+  ],
+  [
+   "20260723",
+   311,
+   8619
+  ],
+  [
+   "20260722",
+   161,
+   2130
+  ],
+  [
+   "20260722",
+   191,
+   5797
+  ],
+  [
+   "20260721",
+   113,
+   3854
+  ],
+  [
+   "20260719",
+   166,
+   2803
+  ],
+  [
+   "20260719",
+   108,
+   2264
+  ],
+  [
+   "20260718",
+   136,
+   3340
+  ],
+  [
+   "20260718",
+   130,
+   5182
+  ],
+  [
+   "20260716",
+   197,
+   2467
+  ],
+  [
+   "20260716",
+   219,
+   3159
+  ],
+  [
+   "20260715",
+   441,
+   6525
+  ],
+  [
+   "20260715",
+   319,
+   8080
+  ],
+  [
+   "20260714",
+   247,
+   4645
+  ],
+  [
+   "20260714",
+   364,
+   8310
+  ],
+  [
+   "20260713",
+   131,
+   2652
+  ],
+  [
+   "20260713",
+   417,
+   7023
+  ],
+  [
+   "20260712",
+   299,
+   5334
+  ],
+  [
+   "20260711",
+   315,
+   7617
+  ],
+  [
+   "20260711",
+   108,
+   4251
+  ],
+  [
+   "20260710",
+   399,
+   6604
+  ],
+  [
+   "20260710",
+   108,
+   1956
+  ],
+  [
+   "20260709",
+   987,
+   14123
+  ],
+  [
+   "20260709",
+   175,
+   3527
+  ],
+  [
+   "20260708",
+   430,
+   7580
+  ],
+  [
+   "20260707",
+   1235,
+   14423
+  ],
+  [
+   "20260701",
+   91,
+   3927
+  ],
+  [
+   "20260701",
+   128,
+   2803
+  ],
+  [
+   "20260629",
+   119,
+   1608
+  ],
+  [
+   "20260627",
+   110,
+   1695
+  ],
+  [
+   "20260625",
+   683,
+   10968
+  ]
+ ]
+}

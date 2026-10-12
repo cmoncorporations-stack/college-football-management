@@ -1,0 +1,532 @@
+<meta charset="utf-8">
+<title>Moneyball Yverdon Sport</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+:root{
+  --ground:#F6F8F5; --surface:#FFFFFF; --surface2:#EDF2EB; --inset:#E3EAE1;
+  --ink:#14211B; --ink2:#4C5C54; --ink3:#6A7B73; --line:#D6DFD4;
+  --accent:#0A9BD3; --accent-ink:#06739E;
+  --sport:#0A66C2; --valeur:#B48A1E; --fan:#C0308A;
+  --good:#1F8A5B; --warn:#B48A1E; --bad:#B0483A;
+  --shadow:0 1px 2px rgba(20,33,27,.06),0 8px 24px -16px rgba(20,33,27,.28);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
+  --ground:#0D1411; --surface:#16201B; --surface2:#1C2721; --inset:#111A15;
+  --ink:#E9EFEA; --ink2:#A2B3A9; --ink3:#879890; --line:#27342C;
+  --accent:#3FB9E8; --accent-ink:#3FB9E8;
+  --sport:#3E8EDD; --valeur:#D9B84A; --fan:#D45BA8;
+  --good:#2CA172; --warn:#D9B84A; --bad:#C4685A;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -18px rgba(0,0,0,.8)}}
+:root[data-theme="dark"]{color-scheme:dark;
+  --ground:#0D1411; --surface:#16201B; --surface2:#1C2721; --inset:#111A15;
+  --ink:#E9EFEA; --ink2:#A2B3A9; --ink3:#879890; --line:#27342C;
+  --accent:#3FB9E8; --accent-ink:#3FB9E8;
+  --sport:#3E8EDD; --valeur:#D9B84A; --fan:#D45BA8;
+  --good:#2CA172; --warn:#D9B84A; --bad:#C4685A;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -18px rgba(0,0,0,.8)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:"Source Sans 3",-apple-system,"Segoe UI",sans-serif;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1160px;margin:0 auto;padding-inline:20px;padding-block:28px 64px}
+h1,h2,h3{font-family:Oswald,"Arial Narrow",sans-serif;font-weight:600;text-wrap:balance;margin:0}
+h1{font-size:42px;text-transform:uppercase;letter-spacing:.02em;line-height:1.05}
+h1 span,h2 span{color:var(--accent)}
+h2{font-size:25px;text-transform:uppercase;letter-spacing:.04em}
+h3{font-size:14px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink2)}
+.lab{font-size:11px;text-transform:uppercase;letter-spacing:.11em;color:var(--ink3);font-weight:600}
+.num{font-variant-numeric:tabular-nums}
+section{margin-top:44px}
+.shead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:2px solid var(--line);padding-bottom:10px;margin-bottom:18px}
+.shead p{margin:0;color:var(--ink3);font-size:13px;max-width:62ch}
+.intro{margin:8px 0 0;color:var(--ink2);max-width:74ch}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px}
+.demo{margin-top:18px;border:1px dashed var(--warn);background:color-mix(in srgb,var(--warn) 10%,var(--surface));border-radius:8px;padding:12px 14px;font-size:13.5px;color:var(--ink2)}
+.demo b{color:var(--ink)}
+code{font-size:12.5px;background:var(--inset);padding:1px 5px;border-radius:4px}
+
+/* ADN fan */
+.dna{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+.wrow{display:grid;grid-template-columns:120px 1fr 44px;gap:12px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line)}
+.wrow:last-child{border-bottom:0}
+.wrow .n{font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:13px}
+.wrow .v{font-family:Oswald,sans-serif;font-size:18px;text-align:right}
+.wrow .why{grid-column:1/-1;font-size:12.5px;color:var(--ink3);margin-top:-2px}
+.track{height:8px;background:var(--inset);border-radius:999px;overflow:hidden}
+.track i{display:block;height:100%;border-radius:999px;background:var(--fan)}
+.sig{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.sig div{padding:12px 14px;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
+.sig div:nth-child(2n){border-right:0}
+.sig div:nth-last-child(-n+2){border-bottom:0}
+.sig b{display:block;font-family:Oswald,sans-serif;font-size:24px;font-weight:600;line-height:1.2}
+.sig small{font-size:12px;color:var(--ink3)}
+
+/* Besoins */
+.needs{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.need{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;border-top:4px solid var(--line)}
+.need.hi{border-top-color:var(--bad)}.need.mid{border-top-color:var(--warn)}.need.lo{border-top-color:var(--good)}
+.need .g{display:flex;justify-content:space-between;align-items:baseline}
+.need .g b{font-family:Oswald,sans-serif;font-size:30px}
+.pill{font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;padding:2px 9px;border-radius:999px;border:1px solid currentColor}
+.need.hi .pill{color:var(--bad)}.need.mid .pill{color:var(--warn)}.need.lo .pill{color:var(--good)}
+.need ul{list-style:none;margin:10px 0 0;padding:0;font-size:13px;color:var(--ink2)}
+.need li{display:flex;justify-content:space-between;padding:3px 0}
+
+/* Contrôles */
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px 20px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow);margin-bottom:16px}
+.ctl label{display:flex;justify-content:space-between;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2);font-weight:600;margin-bottom:6px}
+.ctl output{font-family:Oswald,sans-serif;font-size:15px;color:var(--ink);letter-spacing:.02em}
+input[type=range]{width:100%;accent-color:var(--accent)}
+#wS{accent-color:var(--sport)}#wV{accent-color:var(--valeur)}#wF{accent-color:var(--fan)}
+select{width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:7px;background:var(--surface2);color:var(--ink);font:inherit}
+.chk{display:flex;gap:8px;align-items:center;font-size:14px;margin-top:4px;cursor:pointer}
+.chk input{accent-color:var(--accent);width:16px;height:16px}
+input:focus-visible,select:focus-visible,button:focus-visible,tr:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Tableau */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:900px;font-size:14px}
+th{font-family:Oswald,sans-serif;font-weight:500;text-transform:uppercase;letter-spacing:.07em;font-size:11px;color:var(--ink3);text-align:right;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;vertical-align:middle}
+th.l,td.l{text-align:left}
+tbody tr.row{cursor:pointer}
+tbody tr.row:hover{background:var(--surface2)}
+tbody tr.open{background:var(--surface2)}
+.rk{font-family:Oswald,sans-serif;color:var(--ink3);width:34px}
+.pname{font-weight:700}
+.psub{font-size:12px;color:var(--ink3)}
+.final{font-family:Oswald,sans-serif;font-size:21px;font-weight:600}
+.mini{display:grid;gap:3px;min-width:120px}
+.mini div{display:grid;grid-template-columns:12px 1fr 28px;gap:6px;align-items:center;font-size:11px;color:var(--ink3)}
+.mini .t{height:6px;background:var(--inset);border-radius:999px;overflow:hidden}
+.mini .t i{display:block;height:100%;border-radius:999px}
+.tags{display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-start}
+.tag{font-size:11px;border:1px solid var(--line);border-radius:4px;padding:1px 6px;white-space:nowrap;color:var(--ink2)}
+.tag.free{border-color:var(--good);color:var(--good)}
+.tag.local{border-color:var(--fan);color:var(--fan)}
+.tag.under{border-color:var(--valeur);color:var(--valeur)}
+.tag.weak{border-style:dashed;color:var(--ink3)}
+.tag.form{border-color:var(--good);color:var(--good);background:color-mix(in srgb,var(--good) 10%,transparent)}
+.tag.down{border-color:var(--bad);color:var(--bad)}
+.tag.injury{border-color:var(--bad);color:var(--bad);border-style:dashed}
+.tag.unread{border-style:dotted;color:var(--ink3)}
+.season{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.season h3{color:var(--sport);margin-bottom:8px}
+.sgrid{display:grid;grid-template-columns:2fr 3fr;gap:18px}
+.last5{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.m5{border:1px solid var(--line);border-radius:7px;padding:6px 8px;font-size:12px;min-width:118px;background:var(--surface)}
+.m5 .d{color:var(--ink3);font-size:11px}
+.m5 .r{font-family:Oswald,sans-serif;font-size:15px}
+.m5.V .r{color:var(--good)}.m5.D .r{color:var(--bad)}
+.m5.abs{border-style:dashed;color:var(--ink3)}
+#squadTable td{white-space:nowrap}
+.bar{display:inline-block;width:64px;height:7px;background:var(--inset);border-radius:999px;overflow:hidden;vertical-align:middle;margin-right:6px}
+.bar i{display:block;height:100%;background:var(--sport);border-radius:999px}
+.trend.up{color:var(--good)}.trend.down{color:var(--bad)}
+.moves{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px}
+.moves ol{margin:6px 0 0;padding-left:22px;font-size:13.5px}
+.moves li{padding:3px 0;border-bottom:1px dotted var(--line)}
+.moves .why{color:var(--ink3);font-size:12px}
+@media (max-width:900px){.sgrid,.moves{grid-template-columns:1fr}}
+.mgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+.mgrid>*{min-width:0}
+.last5 .m5{flex:1 1 118px}
+.mcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;box-shadow:var(--shadow)}
+.mcard .teams{font-family:Oswald,sans-serif;font-size:22px;line-height:1.2;margin:4px 0 2px}
+.pbar{display:flex;height:26px;border-radius:7px;overflow:hidden;margin:12px 0 4px;font-size:12px;font-weight:700;color:#fff}
+.pbar span{display:flex;align-items:center;justify-content:center;min-width:0;white-space:nowrap;overflow:hidden}
+.pbar .w{background:var(--good)}.pbar .d{background:var(--ink3)}.pbar .l{background:var(--bad)}
+.plabels{display:flex;justify-content:space-between;font-size:12px;color:var(--ink3)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.kpis div{background:var(--surface2);border-radius:8px;padding:8px 10px}
+.kpis b{display:block;font-family:Oswald,sans-serif;font-size:20px;font-weight:600}
+.kpis small{font-size:11.5px;color:var(--ink3)}
+.pitch{background:color-mix(in srgb,var(--good) 9%,var(--surface));border:1px solid var(--line);border-radius:10px;padding:10px 6px;display:grid;gap:8px;margin-top:10px}
+.pline{display:flex;justify-content:space-around;gap:4px}
+.pl{text-align:center;font-size:12px;min-width:0;flex:1}
+.pl b{display:block;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl small{color:var(--ink3);font-size:11px}
+.small-list{font-size:13px;margin:6px 0 0;padding-left:18px}
+.small-list li{padding:1px 0}
+.dist{display:flex;gap:3px;align-items:flex-end;height:70px;margin-top:8px}
+.dist div{flex:1;background:var(--sport);border-radius:3px 3px 0 0;position:relative;min-height:1px}
+.dist span{position:absolute;bottom:-17px;left:0;right:0;text-align:center;font-size:11px;color:var(--ink3)}
+.dist em{position:absolute;top:-16px;left:0;right:0;text-align:center;font-size:10.5px;font-style:normal;color:var(--ink2)}
+@media (max-width:900px){.mgrid{grid-template-columns:minmax(0,1fr)}.kpis{grid-template-columns:1fr 1fr}}
+.morebtn{font:inherit;font-size:13px;margin-left:8px;padding:4px 12px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--accent-ink);cursor:pointer}
+.detail td{background:var(--surface2);text-align:left;padding:16px 18px}
+.dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.dgrid h3{margin-bottom:6px}
+.dgrid h3.s{color:var(--sport)}.dgrid h3.v{color:var(--valeur)}.dgrid h3.f{color:var(--fan)}
+.kv{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:2px 0;border-bottom:1px dotted var(--line)}
+.kv span:first-child{color:var(--ink3)}
+.empty{padding:22px;text-align:center;color:var(--ink3);font-style:italic}
+
+/* Plan mercato */
+.plan{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.slot{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px}
+.slot .who{font-weight:700;margin-top:4px}
+.slot .meta{font-size:12.5px;color:var(--ink3)}
+.slot .sc{font-family:Oswald,sans-serif;font-size:20px;float:right}
+.slot.none{color:var(--ink3);font-style:italic;font-size:13px}
+.totals{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:14px;font-size:14px;color:var(--ink2)}
+.totals b{font-family:Oswald,sans-serif;font-size:20px;color:var(--ink);font-weight:600;margin-right:4px}
+
+footer{margin-top:56px;border-top:2px solid var(--line);padding-top:20px;font-size:13px;color:var(--ink3)}
+footer h3{margin:18px 0 8px}
+footer ul{margin:0;padding-left:19px}
+footer li{margin-bottom:5px}
+
+@media (max-width:900px){.needs,.plan{grid-template-columns:1fr 1fr}.dna{grid-template-columns:1fr}.dgrid{grid-template-columns:1fr}}
+@media (max-width:520px){.needs,.plan{grid-template-columns:1fr}h1{font-size:32px}.wrow{grid-template-columns:96px 1fr 40px}.sig{grid-template-columns:1fr}.sig div{border-right:0}.sig div:nth-last-child(2){border-bottom:1px solid var(--line)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap" lang="en">
+<header>
+  <div class="lab" id="eyebrow">Yverdon Sport · Recruitment cell</div>
+  <h1 style="margin-top:6px">Money<span>ball</span> YS</h1>
+  <p class="intro">Data-driven recruitment and match preparation: performance and market value come from Transfermarkt, fanbase fit comes from the Fanbase Manager cockpit (Brevo + Metricool). Every player gets three scores out of 100, weighted by the squad's need in his position.</p>
+  <p class="psub" id="meta" style="margin:10px 0 0"></p>
+  <div class="demo" id="demo" hidden><b>Demo pool — fictitious players and clubs.</b> Transfermarkt could not be reached from the build environment. The fan signals are the real cockpit figures. Run <code>python -m moneyball.scout</code> then <code>python -m moneyball.recommend</code> to replace this pool with real Transfermarkt data.</div>
+</header>
+
+<section id="matchSection" hidden>
+  <div class="shead"><h2>Next <span>matches</span></h2>
+    <p>Preparation of Yverdon Sport's next three matches from 2026/27 Transfermarkt data: forecast, expected goals (shot-based xG), recommended XI, likely scorers, opponent file and projection to the winter break.</p></div>
+  <div id="matchRows" style="display:grid;gap:18px"></div>
+  <div class="mgrid" style="margin-top:18px">
+    <div class="mcard" id="projCard"></div>
+    <div class="mcard" id="modelCard"></div>
+  </div>
+  <div class="tw" style="margin-top:18px"><table id="c2Table">
+    <thead><tr><th class="l">#</th><th class="l">Club</th><th>P</th><th>Pts</th><th>Goals</th><th>Shot xG for</th><th>Shot xG against</th><th>Goals − xG</th><th>Attack</th><th>Defence</th><th>Proj. pts</th><th>P(1st at break)</th></tr></thead>
+    <tbody id="c2Rows"></tbody></table></div>
+  <p class="psub" id="c2Note" style="margin-top:8px"></p>
+</section>
+
+<section>
+  <div class="shead"><h2>Fan <span>DNA</span></h2>
+    <p>What the fanbase rewards, read from the cockpit. Each weight is recomputed whenever the cockpit is refreshed.</p></div>
+  <div class="dna">
+    <div class="card" id="weights"></div>
+    <div class="sig" id="signals"></div>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><h2>Squad <span>needs</span></h2>
+    <p>Shortfall against a Challenge League target squad, contracts expiring within a year and share of players aged 31 or over; a starter with a long-term injury (three or more consecutive matches missed, still injured) counts as half a missing player. Need multiplies the final score by 0.85 to 1.15.</p></div>
+  <div class="needs" id="needs"></div>
+</section>
+
+<section id="squadSection">
+  <div class="shead"><h2>The squad <span>this season</span></h2>
+    <p id="squadSub">Yverdon Sport's 2026/27 match-by-match log, all competitions: share of starts, share of the team's minutes, role trend and status on the log date. Sorted by minutes played.</p></div>
+  <div class="tw"><table id="squadTable">
+    <thead><tr><th class="l">Player</th><th>Age</th><th>Matches</th><th>Starts</th><th>Minutes</th><th>G · A</th><th>Start share</th><th>Minute share</th><th>Trend</th><th class="l">Status</th><th class="l">Signals</th></tr></thead>
+    <tbody id="squadRows"></tbody>
+  </table></div>
+  <div id="moves"></div>
+</section>
+
+<section>
+  <div class="shead"><h2>Transfer <span>plan</span></h2>
+    <p>Best option per position line within the budget, two signings where need exceeds 0.45. Follows the shortlist settings below. Players with an estimated market value (*) are excluded and counted separately.</p></div>
+  <div class="plan" id="plan"></div>
+  <div class="totals" id="totals"></div>
+</section>
+
+<section>
+  <div class="shead"><h2>The <span>shortlist</span></h2>
+    <p>Balance pitch, value and fanbase. Click a player for the detail of his scores.</p></div>
+  <div class="controls">
+    <div class="ctl"><label for="wS">Sport <output id="oS"></output></label><input type="range" id="wS" min="0" max="100" step="5"></div>
+    <div class="ctl"><label for="wV">Value <output id="oV"></output></label><input type="range" id="wV" min="0" max="100" step="5"></div>
+    <div class="ctl"><label for="wF">Fan fit <output id="oF"></output></label><input type="range" id="wF" min="0" max="100" step="5"></div>
+    <div class="ctl"><label for="pos">Line</label>
+      <select id="pos"><option value="">All</option><option value="GK">Goalkeepers</option><option value="DEF">Defence</option><option value="MID">Midfield</option><option value="ATT">Attack</option></select></div>
+    <div class="ctl"><label for="fee">Max fee <output id="oFee"></output></label><input type="range" id="fee" min="0" max="1500000" step="50000"></div>
+    <div class="ctl"><label for="budget">Transfer budget <output id="oBud"></output></label><input type="range" id="budget" min="0" max="3000000" step="50000"></div>
+    <div class="ctl"><label for="age">Max age <output id="oAge"></output></label><input type="range" id="age" min="18" max="34" step="1"></div>
+    <div class="ctl"><span class="lab">Filters</span>
+      <label class="chk" for="fFree"><input type="checkbox" id="fFree"> Contract &lt; 12 months</label>
+      <label class="chk" for="fLocal"><input type="checkbox" id="fLocal"> French-speaking Swiss profile</label></div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th class="l">#</th><th class="l">Player</th><th class="l">Club</th><th class="l">Scores</th><th>Confidence</th><th>Need</th><th>TM value</th><th>Est. fee</th><th class="l">Signals</th><th>Score</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+  <p class="psub" id="count" style="margin-top:10px"></p>
+  <p class="psub">Confidence: share of the sample (minutes) behind the Sport score; "low" for centre-backs (no individual defensive data, only team results) and for goalkeepers without goals-conceded data. (*) market value missing on Transfermarkt, estimated by the model's regression: the Value score's weight is halved and the player is excluded from the automatic transfer plan.</p>
+</section>
+
+<footer>
+  <h3 style="margin-top:0">Method</h3>
+  <ul>
+    <li><strong>Next matches</strong> (<code>moneyball/matchprep.py</code>). A data-driven approach in the spirit of clubs that made it their method, such as AC Como; Como's internal model is not public and none of its parameters is reused. (1) <em>Shot-based xG</em>: Transfermarkt publishes total shots, shots off target and shots saved but no expected goals; goals ≈ a × shots on target + b × shots off target, fitted on the 2026/27 Challenge League matches. This is not a location-based xG. (2) <em>Team ratings</em>: Poisson model with attack, defence and home advantage on the 2026/27 Challenge League, target = 50 % goals + 50 % shot xG, shrunk towards the 2025/26 table (worth 6 matches). (3) <em>Cup</em>: Poisson regression on the 2026/27 Swiss Cup first round between professional clubs and clubs from a division with a known coefficient (log λ = α + β × ln(coefficient ratio) + home), then the opponent is placed within its own league; extra time at one third of the expected goals, penalties at 50 %. (4) <em>XI</em>: available players, positions actually played this season, the current coach's 4-3-3; selection score = 0.45 Sport + 0.35 share of minutes over the last 3 matches + 0.20 26/27 dynamics. (5) <em>Scorers</em>: P(score) = 1 − e<sup>−λ × share</sup>, share = goals per 90 shrunk towards the position × expected minutes. (6) <em>Projection</em>: Monte Carlo of the fixtures scheduled up to the winter break.</li>
+    <li><strong>Sport</strong> (Transfermarkt only, last two league seasons): each line is scored within its sub-position as a percentile rank in the pool (players with 900+ minutes), after shrinkage towards the sub-position median when the sample is short (confidence = minutes / (minutes + 900)).
+      <ul>
+        <li><em>Midfielders, forwards</em>: output (goals + 0.7 × assists) per 90 in Challenge League equivalent (× level) → percentile; 45 % (midfielders) or 60 % (forwards) of the score, the rest availability (minutes per season / 2,400) and discipline (10 %).</li>
+        <li><em>Goalkeepers</em>: never any attacking output. Defensive index = clean-sheet rate + a goals-conceded term: for a keeper sharing the job (under 85 % of the team's minutes), 1 − (his goals conceded per 90 ÷ the team's), capped at ± 0.5; for a sole starter (ratio of 1 by construction), the team's league rank, from −0.3 (last) to +0.3 (first). Percentile among goalkeepers only → 65 %; availability capped at 25 %; discipline 10 %. Without goals-conceded data: goalkeeper median and "low" confidence.</li>
+        <li><em>Centre-backs</em>: team defensive results — team goals conceded per match against the league median (0.5 = median; 1 = half as many; 0 = twice as many) → percentile among centre-backs → 55 %; availability 30 %; cards as a negative (discipline 15 %). Transfermarkt has no individual defensive data: confidence capped at 50 % and shown as "low".</li>
+        <li><em>Full-backs</em>: 50 % defensive profile (same formula as centre-backs) + 50 % attacking output (goals + 0.7 × assists, percentile among full-backs) → 55 %; availability 35 %; discipline 10 %.</li>
+      </ul>
+      Everything is multiplied by (0.55 + 0.45 × level), level = league coefficient / 1.45 (Super League ≈ 1, bounded 0.3-1.2), and by (1 − injury days / 180, at most 0.5), then divided by 0.85 and capped at 100.</li>
+    <li><strong>2026/27 season dynamics</strong> (Transfermarkt match-by-match log, all competitions, as of <span id="dynDate"></span>). Before the league level, the raw sub-position score is blended with a "dynamics" score: weight = <span id="dynW"></span> × confidence, confidence = team matches / (matches + <span id="dynK"></span>) — at 10 matches dynamics weighs about 16 % of the score, rising as the season goes on. Dynamics score (0-1) = 0.30 start share (starts / matches in which the player was available, injuries and suspensions excluded) + 0.20 share of the team's minutes + 0.15 role trend (share of minutes over the team's last 5 matches minus the first 5, re-centred) + 0.15 form (output over the last 5 matches played / season output, 1.0 = his average; goalkeepers and centre-backs: goals conceded on the pitch, inverted) + 0.10 big-game factor (output against the top half of the league table on the log date / bottom half) + 0.05 availability (1 − matches missed through injury or suspension / matches) + 0.05 consistency (1 − standard deviation of minutes per match played / 45). An indicator that cannot be computed counts as 0.5. A player without a log keeps his score and gets the "26/27 season not read" tag.
+      <ul>
+        <li><em>All-competition minutes.</em> Current-season aggregates now count the league (weight 1.0, at its coefficient), the national cup (weight <span id="cupW"></span>, at the level of the player's league) and European cups (weight 1.0, level <span id="euroC"></span> by default, opponent league unknown); the current season is weighted min(1, team matches / <span id="rampN"></span>) against 2025/26, so it counts more and more as matchdays pass. Displayed minutes remain actual minutes.</li>
+        <li><em>Tags.</em> "In form" (form ≥ 1.3 and ≥ 3 matches played), "Losing his place" (trend ≤ −0.3), "Winning his place" (≥ +0.3), "Established starter" (starts ≥ 80 % and ≥ 6 matches), "Breakout 26/27" (output per 90 ≥ 1.5 × 2025/26 with ≥ 450 minutes; goalkeepers: goals conceded per 90 divided by 1.5), "Currently injured" (latest status injured), "Small sample" (under 900 actual minutes).</li>
+        <li><em>Log statuses.</em> A player's "detailed stats" page is rendered client-side by Transfermarkt (tmapi API not reachable): the log is rebuilt from club fixture lists, match reports (goals, assists, substitutions, cards, minute read from the clock sprite) and line-ups (XI, bench, position played). Absences: injured (player injury history, club's current absences), suspended (red card in the previous match or suspension listed by the club), otherwise not in squad; matches before the player joined the club do not count. A match without a published line-up is ignored.</li>
+      </ul></li>
+    <li><strong>League coefficients.</strong> A player's level is the minute-weighted average of his leagues' coefficients over his last two seasons with minutes, keeping only competitions with a known coefficient (cups and "Total" rows ignored; 0.8 if none is known). Reference Challenge League = 1.00. Exact Transfermarkt codes: <span id="coefExact"></span>. Lower divisions, by code prefix: <span id="coefPrefix"></span>. Worked example: 1,080 minutes in the Challenge League (1.00) and 900 minutes in the 1st League Classic (0.45) → (1,080 × 1.00 + 900 × 0.45) / 1,980 = 0.75.</li>
+    <li><strong>Value</strong>: 40 % undervaluation (residual of a regression log(market value) ~ sport score + age + age² + league + position across the whole pool, so that "plays in the National" is not mistaken for "undervalued"), 25 % contract leverage (≤ 6 months = free or pre-contract), 15 % 12-month value trend, 20 % expected net gain: projected value in 24 months (age curve per line, peaking at 26 for midfielders and forwards, 27 for defenders, 29 for goalkeepers, modulated by the last 12 months' momentum) minus the estimated fee, relative to the current value. A player without a Transfermarkt value gets the value predicted by this regression, marked (*): his Value score weighs half as much in the final score and he is excluded from the automatic transfer plan.</li>
+    <li><strong>Fan fit</strong>: regional anchoring (normalised birthplace — Genf, Genève and Geneva are the same city — linked to its municipality, canton and zone: North Vaud catchment 1.00, Vaud 0.85, French-speaking Switzerland 0.70, Switzerland 0.45, cross-border 0.40, international 0.10; a Yverdon youth club counts as the catchment, a French-speaking Swiss youth club as French-speaking Switzerland, and the better of the two readings is kept for everyone), French language, loyalty (average time per club), media potential (social media + attacking flair) and link with the club, weighted by the fan DNA above.</li>
+    <li><strong>Final score</strong> = weighted average of the three scores × (0.85 + 0.30 × positional need).</li>
+    <li><strong>Estimated fee</strong> = 0 within six months of the contract's end, otherwise 35 to 100 % of market value depending on the time left. An order of magnitude, not an offer.</li>
+  </ul>
+  <h3>Sources</h3>
+  <ul>
+    <li><strong>Transfermarkt</strong> (direct reading of www.transfermarkt.com pages): profiles, statistics for the last two seasons (each club's "Squad statistics" page: league, and for the current season every competition in the selector), goalkeepers' goals conceded and clean sheets (each competition's "Clean sheets" page, detailed view), league tables (goals conceded and rank of each team), value history, transfers, and for 2026/27 the match-by-match log (club fixtures, match reports with shot statistics, line-ups, absences, injury history). Values in euros. <span id="srcTm"></span> <span id="srcJournal"></span></li>
+    <li><strong>Yverdon Sport Fanbase Manager cockpit</strong>: penetration index, CMON_SCORE categories, Brevo campaigns, Metricool audiences. <span id="srcDate"></span></li>
+  </ul>
+  <h3>Limitations</h3>
+  <ul>
+    <li>Next matches: no location-based xG (Sofascore and Opta not reachable), shot-based xG only; the model ignores fatigue, weather and the opponent's tactics; the 4-3-3 rests on a single match under the new coach; team ratings stay fixed during the simulation; Old Boys' level is inferred from 9 professional-versus-amateur cup matches.</li>
+    <li>Planned sources not active on this pool: Sofascore (xG, xA, rating; returns 403 outside a browser) and API-Football (rating, shots, key passes; no key). Without them the Sport score relies on Transfermarkt goals, assists, minutes, discipline, goals conceded and team results.</li>
+    <li>2026/27 log: Transfermarkt does not publish suspensions match by match; they are inferred (red card in the previous match, suspension listed by the club). A player's matches with another club before he joined are not read. The level of European opponents is unknown in the aggregates (1.3 by default).</li>
+    <li>Transfermarkt has no individual defensive statistics (duels, interceptions): centre-backs are scored on their team's results, hence "low" confidence. A sole-starter goalkeeper is scored on his team's league position, not on his saves.</li>
+    <li>Transfermarkt does not give players' follower counts: media potential relies on having an account, not on its audience.</li>
+    <li>The club CRM does not hold fans' ages (date of birth filled in for 36 %): generational fit is not modelled.</li>
+    <li>Scope: men's team only.</li>
+    <li>A decision-support tool: it sorts a pool, it does not replace video or live scouting.</li>
+  </ul>
+</footer>
+</div>
+
+<script>
+const DATA=/*__DATA__*/null;
+(function(){
+  const $=id=>document.getElementById(id);
+  const J=DATA.joueurs, DNA=DATA.fan_dna, NEEDS=DATA.besoins;
+  const LOC="en-GB";
+  const GL={GK:"Goalkeepers",DEF:"Defence",MID:"Midfield",ATT:"Attack"};
+  const FL={ancrage:"Anchoring",francophonie:"French language",fidelite:"Loyalty",media:"Media",lien_club:"Club link"};
+  const TAG={"Fin de contrat < 12 mois":"Contract < 12 months","Libre / pré-contrat":"Free / pre-contract","Sous-évalué":"Undervalued","Valeur doublée":"Value doubled","Valeur en baisse":"Value falling","Enfant du pays":"Local talent","Échantillon faible":"Small sample","Valeur estimée":"Estimated value","Valeur inconnue":"Unknown value","Confiance faible":"Low confidence","Retour au club":"Club return","Sous-performe ses xG":"Underperforming xG","Sur-performe ses xG":"Overperforming xG","En forme":"In form","Perd sa place":"Losing his place","Gagne sa place":"Winning his place","Titulaire installé":"Established starter","Révélation 26/27":"Breakout 26/27","Blessé actuellement":"Currently injured","Saison 26/27 non lue":"26/27 season not read"};
+  const ZONE={"Bassin nord-vaudois":"North Vaud catchment","Vaud":"Vaud","Romandie":"French-speaking Switzerland","Suisse":"Switzerland","Frontalier":"Cross-border","International":"International"};
+  const LINK={"Ancien d'Yverdon":"Former Yverdon player","Foot suisse":"Swiss football","Foot francophone":"French-speaking football"};
+  const GKMODE={"gardien partagé : rapport à l'équipe":"shared keeper: compared with his team","titulaire unique : rang de l'équipe":"sole starter: team's league position","titulaire unique sans classement":"sole starter, no table","sans donnée d'équipe":"no team data","sans donnée de buts encaissés":"no goals-conceded data"};
+  const MOVE={"titularisation":"established starter","peu titularisé":"rarely starting","blessure / suspension":"injury / suspension","blessure":"injury","forme":"form","gagne sa place":"winning his place","perd sa place":"losing his place","temps de jeu":"playing time","sans journal":"no match log","production 26/27":"26/27 output","production 26/27 en retrait":"26/27 output down"};
+  const ROLE={GK:"Goalkeeper",RB:"Right-back",CB1:"Centre-back",CB2:"Centre-back",LB:"Left-back",DM:"Defensive midfielder",CM1:"Central midfielder",CM2:"Attacking midfielder",RW:"Right winger",CF:"Centre-forward",LW:"Left winger"};
+  const STATUS={played:"played",bench:"bench",not_in_squad:"not in squad",injured:"injured",suspended:"suspended",other:"not yet at club"};
+  const tr=(m,v)=>v==null?"—":(m[v]||v);
+  const eur=v=>v==null?"—":Math.abs(v)>=1e6?(v<0?"−":"")+"€"+(Math.abs(v)/1e6).toLocaleString(LOC,{maximumFractionDigits:2})+"m":Math.abs(v)>=1e3?(v<0?"−":"")+"€"+Math.round(Math.abs(v)/1e3)+"k":"€"+v;
+  const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const ROMAND=["Bassin nord-vaudois","Vaud","Romandie"];
+  const num=(v,d=2)=>v==null?"—":Number(v).toLocaleString(LOC,{maximumFractionDigits:d});
+  const ord=n=>n+(n%100>=11&&n%100<=13?"th":({1:"st",2:"nd",3:"rd"}[n%10]||"th"));
+
+  if(DATA.demo) $("demo").hidden=false;
+  const dateFr=d=>d?new Date(d).toLocaleDateString(LOC):"—";
+  const JN=DATA.journal||null;
+  const leagues=JN?Object.entries(JN.competitions).filter(([k,v])=>v.type==="league"&&v.journees):[];
+  $("eyebrow").textContent=`Yverdon Sport · Recruitment cell · Pool of ${DATA.vivier} players · Transfermarkt data as of ${dateFr(DATA.date_donnees||DATA.genere)}`+(leagues.length?` · matchdays covered: ${leagues.map(([k,v])=>`${k} ${v.journees}`).join(", ")}`:"");
+  const SRC=DATA.sources||{};
+  $("meta").textContent=`Model ${DATA.version_modele||"—"} · computed ${dateFr(DATA.genere)} · 26/27 log as of ${dateFr(DATA.date_donnees)}${DATA.date_vivier?` (pool read on ${dateFr(DATA.date_vivier)})`:""}${JN?` · match-by-match log: ${JN.joueurs_avec_journal} / ${JN.vivier} pool players, ${JN.effectif_avec_journal} / ${JN.effectif} YS players, ${JN.feuilles_lues} match reports`:" · 26/27 season not read"} · sources used: Transfermarkt ${SRC.transfermarkt_stats??"—"} / ${SRC.vivier??DATA.vivier} players with statistics, ${SRC.gardiens_buts_encaisses??0} / ${SRC.gardiens??"—"} goalkeepers with goals conceded; Sofascore: ${SRC.sofascore??0}; API-Football: ${SRC.api_football??0}${DATA.valeurs_estimees?` · ${DATA.valeurs_estimees} estimated market value${DATA.valeurs_estimees>1?"s":""} (*)`:""}.`;
+  $("srcDate").textContent=`Read on ${dateFr(DNA.releve)}.`;
+  if(JN) $("srcJournal").textContent=`2026/27 log as of ${dateFr(JN.date)}: ${JN.feuilles_lues} / ${JN.feuilles_listees} match reports read, ${JN.pages_blessures} injury histories, ${JN.joueurs_avec_journal} / ${JN.vivier} pool players and ${JN.effectif_avec_journal} / ${JN.effectif} YS players with a log; competitions: ${Object.entries(JN.competitions).map(([k,v])=>`${k} (${v.nom||k}, ${v.matchs} matches${v.journees?", matchday "+v.journees:""})`).join(", ")}.`;
+  if(!DATA.demo) $("srcTm").textContent=`Pool read on ${dateFr(DATA.date_vivier||DATA.date_donnees||DATA.genere)}: ${(DATA.competitions||[]).join(", ")}${DATA.saison?" · season "+DATA.saison:""} · ${SRC.transfermarkt_stats??"—"} / ${SRC.vivier??DATA.vivier} players with statistics, ${SRC.gardiens_buts_encaisses??0} / ${SRC.gardiens??"—"} goalkeepers with goals conceded, ${SRC.transfermarkt_equipe??0} players with their team's results.`;
+  const CO=DATA.coefficients_ligue||{exacts:{},prefixes:{}};
+  const fmtC=o=>Object.entries(o).map(([k,v])=>`${k} ${v.toFixed(2)}`).join(", ");
+  $("coefExact").textContent=fmtC(CO.exacts); $("coefPrefix").textContent=fmtC(CO.prefixes);
+  const DY=DATA.dynamique||{poids:0.25,retrecissement_matchs:6,poids_coupe:0.8,niveau_europe:1.3,rampe_saison_matchs:15};
+  $("dynDate").textContent=JN?dateFr(JN.date):"—"; $("dynW").textContent=num(DY.poids); $("dynK").textContent=DY.retrecissement_matchs;
+  $("cupW").textContent=num(DY.poids_coupe); $("euroC").textContent=num(DY.niveau_europe); $("rampN").textContent=DY.rampe_saison_matchs;
+
+  // Fan DNA
+  const S=DNA.signals;
+  const WHY={ancrage:`Penetration index ${S.penetration_indice} % across the ${S.bassin} catchment (${S.penetration_coeur} % in the Jura-Nord vaudois core): the fanbase is local first, a local player mobilises it.`,
+    francophonie:"Every Brevo campaign is written in French: a French-speaking player can front content and fan events directly.",
+    fidelite:`${S.new_lead_pct} % of the database are New Leads and ${S.super_fan_pct} % Super Fans: the club has to convert, it needs faces that stay.`,
+    media:`The signings announcement opened at ${S.ouverture_recrues} % against a ${S.ouverture_moyenne} % average: the transfer window drives audience; club Instagram engagement ${S.engagement_ig_club} %.`,
+    lien_club:"A former player or someone used to Swiss football settles in and connects with supporters faster."};
+  const maxW=Math.max(...Object.values(DNA.weights));
+  $("weights").innerHTML=Object.entries(DNA.weights).sort((a,b)=>b[1]-a[1]).map(([k,w])=>
+    `<div class="wrow"><span class="n">${FL[k]}</span><div class="track"><i style="width:${w/maxW*100}%"></i></div><span class="v num">${Math.round(w*100)}%</span><div class="why">${esc(WHY[k]||"")}</div></div>`).join("");
+  $("signals").innerHTML=[
+    [S.penetration_indice+" %","Catchment penetration index"],
+    [S.penetration_coeur+" %","Penetration, Jura-Nord vaudois core"],
+    [S.new_lead_pct+" %","of the database are New Leads"],
+    [S.super_fan_pct+" %","Super Fans"],
+    [S.ouverture_recrues+" %","open rate, signings announcement"],
+    [S.ouverture_moyenne+" %","average campaign open rate"],
+    [S.engagement_ig_club+" %","club Instagram engagement"],
+    [S.audience_sociale.toLocaleString(LOC),"de-duplicated social followers"],
+  ].map(([v,l])=>`<div><b class="num">${v}</b><small>${l}</small></div>`).join("");
+
+  // Needs
+  $("needs").innerHTML=["GK","DEF","MID","ATT"].map(g=>{const n=NEEDS[g];const lvl=n.besoin>=0.5?"hi":n.besoin>=0.3?"mid":"lo";
+    return `<div class="need ${lvl}"><div class="g"><h3>${GL[g]}</h3><span class="pill">${lvl==="hi"?"Priority":lvl==="mid"?"Strengthen":"Covered"}</span></div>
+    <div class="g" style="margin-top:6px"><b class="num">${n.besoin.toFixed(2)}</b><span class="psub">need</span></div>
+    <ul><li><span>Squad / target</span><span class="num">${n.effectif} / ${n.cible}</span></li><li><span>Contract &lt; 12 months</span><span class="num">${n.fin_contrat_12m}</span></li><li><span>Aged 31+</span><span class="num">${n["31_ans_plus"]}</span></li><li><span>Starters out long-term</span><span class="num">${n.blesses_longue_duree??0}</span></li><li><span>Average age</span><span class="num">${n.age_moyen??"—"}</span></li></ul></div>`}).join("");
+
+  const pctOr=v=>v==null?"—":Math.round(v*100)+" %";
+  const signed=v=>v==null?"—":(v>=0?"+":"")+Math.round(v*100)+" pt";
+  const ratio=v=>v==null?"—":"× "+v.toFixed(2);
+  function tagCls(t){return /Libre|Fin de/.test(t)?"free":/pays|Retour/.test(t)?"local":/Sous-/.test(t)?"under":/En forme|Gagne|Titulaire|Révélation/.test(t)?"form":/Perd sa/.test(t)?"down":/Blessé/.test(t)?"injury":/non lue/.test(t)?"unread":/faible|inconnue|estimée|baisse/.test(t)?"weak":""}
+  const tags=list=>`<div class="tags">${list.map(t=>`<span class="tag ${tagCls(t)}">${esc(tr(TAG,t))}</span>`).join("")}</div>`;
+
+  // Next matches
+  const PM=DATA.prochain_match;
+  if(PM){
+    $("matchSection").hidden=false;
+    const N=PM.noms||{}, YSID="322";
+    const LINES=[["CF","LW","RW"],["CM1","CM2","DM"],["LB","CB1","CB2","RB"],["GK"]];
+    const ORDER={LW:0,CF:1,RW:2,CM1:0,DM:1,CM2:2,LB:0,CB1:1,CB2:2,RB:3,GK:0};
+    const pitch=xi=>{const by=Object.fromEntries(xi.map(r=>[r.creneau,r]));return `<div class="pitch">${LINES.map(l=>`<div class="pline">${l.slice().sort((a,b)=>ORDER[a]-ORDER[b]).filter(k=>by[k]).map(k=>`<div class="pl"><b>${esc(by[k].name)}</b><small>${ROLE[k]}</small></div>`).join("")}</div>`).join("")}</div>`};
+    const why=r=>!r.disponible?`unavailable, ${tr(STATUS,r.statut)}`:`selection ${r.selection.toFixed(2)} · Sport ${Math.round(r.sport)} · ${pctOr(r.part_3_derniers)} of minutes over 3 matches · ${r.buts} G, ${r.passes} A in 26/27`;
+    const lastXiDate=PM.prochain_match.championnat.forme_ys.slice(-1)[0]?.date;
+    const card=(blk,cup,first=true)=>{const m=blk.match,p=blk.prediction,home=m.home_id===YSID;
+      const w=home?p.dom:p.ext,l=home?p.ext:p.dom,xgYS=home?p.xg_dom:p.xg_ext,xgOpp=home?p.xg_ext:p.xg_dom,cs=home?p.clean_sheet_dom:p.clean_sheet_ext;
+      const sc=p.scores.slice(0,3).map(x=>{const [a,b]=x.score.split(":");return (home?`${a}-${b}`:`${b}-${a}`)+" ("+pctOr(x.p)+")"}).join(" · ");
+      return `<div class="mcard"><div class="lab">${esc(cup?"Swiss Cup · "+(m.matchday||""):"Challenge League · matchday "+m.matchday)} · ${dateFr(m.date)}</div>
+      <div class="teams">${esc(m.home)} – ${esc(m.away)}</div>
+      <div class="pbar"><span class="w" style="width:${w*100}%">${pctOr(w)}</span><span class="d" style="width:${p.nul*100}%">${p.nul>0.08?pctOr(p.nul):""}</span><span class="l" style="width:${l*100}%">${l>0.08?pctOr(l):""}</span></div>
+      <div class="plabels"><span>Yverdon win</span><span>Draw (90')</span><span>Yverdon loss</span></div>
+      <div class="kpis"><div><b class="num">${xgYS.toFixed(2)}</b><small>Yverdon xG</small></div><div><b class="num">${xgOpp.toFixed(2)}</b><small>Opponent xG</small></div><div><b class="num">${cup?pctOr(home?p.qualif_dom:p.qualif_ext):pctOr(cs)}</b><small>${cup?"Progress (extra time and penalties included)":"Yverdon clean sheet"}</small></div><div><b class="num">${pctOr(p.plus_2_5)}</b><small>Over 2.5 goals</small></div></div>
+      <div class="psub">Most likely scores (Yverdon first): ${sc}${cup?` · extra time ${pctOr(p.prolongation)}, penalties ${pctOr(p.tirs_au_but)}`:` · both teams score ${pctOr(p.les_deux_marquent)}`}</div>
+      ${!cup&&blk.variantes?`<div class="psub" style="margin-top:4px">Sensitivity: on goals alone ${pctOr(home?blk.variantes.buts.dom:blk.variantes.buts.ext)} Yverdon win; on shot xG alone ${pctOr(home?blk.variantes.xg.dom:blk.variantes.xg.ext)}. The forecast blends both.</div>`:""}
+      <h3 style="margin-top:14px">Recommended XI · 4-3-3</h3>${pitch(blk.onze)}
+      <div class="psub" style="margin-top:8px"><b>Bench:</b> ${(blk.banc||[]).map(b=>esc(b.name)).join(", ")}</div>
+      ${cup&&blk.repos&&blk.repos.length?`<div class="psub"><b>Rotation:</b> ${blk.repos.map(r=>esc(r.name)).join(", ")} rested; Maxime Rouiller keeps goal as in the first round.</div>`:""}
+      ${!cup&&!first?`<div class="psub" style="margin-top:4px">Same XI as for the previous league match: the selection does not depend on the opponent; check availability on matchday.</div>`:""}
+      ${!cup&&first&&blk.ecarts?`<div class="psub" style="margin-top:4px"><b>Compared with the XI of ${dateFr(lastXiDate)}:</b> ${blk.ecarts.entrants.map(e=>"+ "+esc(e.name)+" ("+why(e.raison)+")").join("; ")}${blk.ecarts.sortants.length?"; "+blk.ecarts.sortants.map(e=>"− "+esc(e.name)+" ("+why(e.raison)+")").join("; "):""}.</div>`:""}
+      <h3 style="margin-top:12px">Likely scorers</h3><ol class="small-list">${blk.buteurs.slice(0,5).map(b=>`<li>${esc(b.name)} · <b>${pctOr(b.p_marquer)}</b> <span class="psub">(xG ${b.xg_match.toFixed(2)}, ${b.buts_90.toFixed(2)} goals/90 shrunk)</span></li>`).join("")}</ol></div>`};
+    const formRow=(fo)=>`<div class="last5">${fo.map(f=>`<div class="m5 ${f.issue==="V"?"V":f.issue==="D"?"D":""}"><div class="d">${dateFr(f.date)} · MD${f.journee} · ${f.dom?"home":"away"}</div><div>${esc(N[f.adversaire]||f.adversaire)}</div><div class="r num">${esc(f.score.replace(":","-"))} <small>${({V:"W",N:"D",D:"L"})[f.issue]}</small></div><div class="num">xG ${f.xg_pour??"—"} – ${f.xg_contre??"—"}</div></div>`).join("")}</div>`;
+    const dossier=blk=>{const ad=blk.adversaire,m=blk.match,oppName=m.home_id===YSID?m.away:m.home,c=ad.classement;
+      const goalsGap=c.bp-c.xg_pour, concGap=c.bc-c.xg_contre;
+      return `<div class="mcard"><h3>Opponent file · ${esc(oppName)}</h3>
+      <p class="psub" style="margin:4px 0 8px">${ord(c.rang)} with ${c.pts} pts from ${c.j} matches · goals ${c.bp}-${c.bc} for shot xG ${num(c.xg_pour,1)}-${num(c.xg_contre,1)} · attack × ${num(ad.attaque)}, defence × ${num(ad.defense)} the league average · coach ${esc(ad.entraineur||"—")} · systems this season: ${Object.entries(ad.systemes).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`${esc(k)} ×${v}`).join(", ")}</p>
+      <div class="lab">Last 5 league matches (score · shot xG for – against)</div>${formRow(blk.forme_adversaire)}
+      ${ad.confrontations.length?`<div class="lab" style="margin-top:10px">Head-to-head this season</div><p class="psub" style="margin:4px 0">${ad.confrontations.map(h=>`MD${h.journee} ${esc(N[h.home]||h.home)} ${h.score.replace(":","-")} ${esc(N[h.away]||h.away)}${h.xg?` (shot xG ${h.xg[0]}-${h.xg[1]})`:""}`).join("; ")}</p>`:""}
+      <div class="lab" style="margin-top:10px">Key players in our pool (aged 17-29, ≤ €1.5m: partial list)</div>
+      <ol class="small-list">${ad.joueurs_du_vivier.slice(0,6).map(j=>`<li>${esc(j.name)} <span class="psub">${esc(j.poste||"")}</span> · ${j.buts} G, ${j.passes} A · ${j.titularisations}/${j.matchs} starts, ${j.minutes}'</li>`).join("")}</ol>
+      ${ad.gardiens&&ad.gardiens.length?`<p class="psub" style="margin:6px 0 0">Goalkeeper: ${ad.gardiens.map(g=>`${esc(g.name)} (${g.matchs} match${g.matchs===1?"":"es"}, ${g.encaisses} conceded while on the pitch)`).join(", ")}.</p>`:""}
+      ${ad.indisponibles&&ad.indisponibles.length?`<p class="psub" style="margin:4px 0 0">Unavailable on the log date: ${ad.indisponibles.map(x=>`${esc(x.name)} (${esc(x.reason||x.status)}${x.missed_matches?", "+x.missed_matches+" match"+(x.missed_matches===1?"":"es")+" missed":""})`).join(", ")}.</p>`:""}
+      <p class="psub" style="margin:8px 0 0"><b>Reading:</b> ${goalsGap>2?`scores ${num(goalsGap,1)} goals above its shot xG, a gap that tends to close`:goalsGap<-2?`scores ${num(-goalsGap,1)} goals below its shot xG: more dangerous than its goal tally suggests`:`scores in line with its shot xG`}; ${concGap<-2?`concedes ${num(-concGap,1)} fewer goals than its shot xG against, likely to regress`:concGap>2?`concedes ${num(concGap,1)} more goals than its shot xG against`:`concedes in line with its shot xG against`}.</p></div>`};
+    const cupDossier=cup=>{const o=cup.adversaire,m=cup.match,name=m.home_id===YSID?m.away:m.home;
+      return `<div class="mcard"><h3>Opponent file · ${esc(name)}</h3>
+      <p class="psub" style="margin:4px 0 8px">Plays in ${esc(o.ligue)}${/^CIR/.test(o.ligue||"")?" (2nd League inter-regional, 5th tier)":""}, league coefficient ${o.coefficient} against 1.00 for the Challenge League${o.classement?` · ${ord(o.classement.rank)} of ${o.equipes}, ${o.classement.goals_for}-${o.classement.goals_against} from ${o.classement.matches} matches, ${o.classement.points} pts`:""} · attack × ${o.attaque_relative} and defence × ${o.defense_relative} its league average.</p>
+      <div class="lab">Latest results</div><ol class="small-list">${o.forme.map(f=>`<li>${dateFr(f.date)} · ${esc(f.dom)} ${esc((f.score||"").replace(":","-"))} ${esc(f.ext)} <span class="psub">${esc(f.competition)}</span></li>`).join("")}</ol>
+      <div class="lab" style="margin-top:10px">Cup model base: 2026/27 first round</div>
+      <p class="psub" style="margin:4px 0">${cup.modele.matchs} matches between Super League or Challenge League clubs and amateurs of a known tier; level effect β = ${num(cup.modele.beta)} per log unit of coefficient ratio, home effect × ${num(Math.exp(cup.modele.domicile))}.</p>
+      <ol class="small-list">${cup.modele.base.map(b=>`<li>${esc(b.dom)} <span class="psub">${esc(b.dom_ligue||"")}</span> ${esc(b.score.replace(":","-"))} ${esc(b.ext)} <span class="psub">${esc(b.ext_ligue||"")}</span></li>`).join("")}</ol></div>`};
+    const C=PM.prochain_match, leagueBlocks=C.championnat_matchs||[C.championnat];
+    $("matchRows").innerHTML=(C.coupe?`<div class="mgrid">${card(C.coupe,true)}${cupDossier(C.coupe)}</div>`:"")+leagueBlocks.map((b,i)=>`<div class="mgrid">${card(b,false,i===0)}${dossier(b)}</div>`).join("");
+    // projection
+    const PJ=PM.projection_saison, ys=PJ.clubs[YSID], mx=Math.max(...Object.values(ys.p_rang));
+    $("projCard").innerHTML=`<h3>Projection to the winter break (matchday ${PJ.horizon})</h3>
+      <p class="psub" style="margin:4px 0">${PJ.simulations.toLocaleString(LOC)} simulations of the ${PJ.matchs_restants} Challenge League matches already scheduled, team ratings frozen as of ${dateFr(PM.today)}.</p>
+      <div class="kpis"><div><b class="num">${ys.points_actuels}</b><small>points today</small></div><div><b class="num">${num(ys.points_projetes,1)}</b><small>projected points</small></div><div><b class="num">${num(ys.rang_moyen)}</b><small>average rank</small></div><div><b class="num">${pctOr(ys.p_rang["1"])}</b><small>1st at the break</small></div></div>
+      <div class="lab">Yverdon's position at the break</div>
+      <div class="dist" style="margin-bottom:22px">${Object.entries(ys.p_rang).map(([r,v])=>`<div style="height:${v/mx*100}%">${v>=0.01?`<em>${Math.round(v*100)}%</em>`:""}<span>${r}</span></div>`).join("")}</div>`;
+    const yr=PM.classement.find(r=>r.club_id===YSID);
+    $("modelCard").innerHTML=`<h3>How the forecast is built</h3>
+      <ol class="small-list">
+        <li><b>Shot xG.</b> ${num(PM.xg_modele.par_tir_cadre,3)} goals per shot on target, ${num(PM.xg_modele.par_tir_non_cadre,3)} per shot off target, fitted on ${PM.xg_modele.n/2} Challenge League matches (${PM.xg_modele.buts} goals for ${num(PM.xg_modele.xg,1)} xG, R² ${num(PM.xg_modele.r2)}).</li>
+        <li><b>Team ratings.</b> Poisson attack and defence on 50 % goals + 50 % shot xG, shrunk towards 2025/26; home advantage × ${num(PM.notes_equipes.avantage_terrain)}.</li>
+        <li><b>XI.</b> Coach ${esc(PM.yverdon.entraineur)} played ${Object.keys(PM.yverdon.systemes_entraineur).join(", ")} in his only match; 4-3-3 variants were also the most used this season (${Object.entries(PM.yverdon.systemes_saison).map(([k,v])=>`${k} ×${v}`).join(", ")}). Unavailable: ${PM.yverdon.indisponibles.map(x=>esc(x.name)).join(", ")||"none"}.</li>
+        <li><b>Yverdon so far.</b> ${yr.bp}-${yr.bc} goals for a shot xG of ${num(yr.xg_pour,1)}-${num(yr.xg_contre,1)}: the defence concedes about ${num(yr.xg_contre-yr.bc,1)} goals fewer than the chances allowed.</li>
+      </ol>`;
+    $("c2Rows").innerHTML=PM.classement.map(r=>{const pj=PJ.clubs[r.club_id];const d=(r.bp-r.xg_pour);
+      return `<tr${r.club_id===YSID?' style="font-weight:700"':""}><td class="l">${r.rang}</td><td class="l">${esc(r.club)}</td><td>${r.j}</td><td>${r.pts}</td><td>${r.bp}-${r.bc}</td><td>${r.xg_pour.toFixed(1)}</td><td>${r.xg_contre.toFixed(1)}</td><td class="${d>2?"trend down":d<-2?"trend up":""}">${d>=0?"+":""}${d.toFixed(1)}</td><td>${r.attaque.toFixed(2)}</td><td>${r.defense.toFixed(2)}</td><td>${pj.points_projetes.toFixed(1)}</td><td>${pctOr(pj.p_rang["1"])}</td></tr>`}).join("");
+    $("c2Note").textContent="Attack and defence: Poisson model multipliers (1.00 = league average; defence above 1 = concedes less than average). A positive goals − shot xG gap means the team scores more than its shot volume suggests, which tends to correct.";
+  }
+
+  // Controls
+  const st={wS:DATA.poids_defaut.sport*100,wV:DATA.poids_defaut.valeur*100,wF:DATA.poids_defaut.fan*100,pos:"",fee:1500000,budget:1500000,age:34,fFree:false,fLocal:false};
+  try{Object.assign(st,JSON.parse(localStorage.getItem("ysmb")||"{}"))}catch(e){}
+  for(const k of ["wS","wV","wF","fee","budget","age"]) $(k).value=st[k];
+  $("pos").value=st.pos; $("fFree").checked=st.fFree; $("fLocal").checked=st.fLocal;
+  let openId=null, shown=150;
+
+  function score(j){
+    const wV=j.market_value_estimated?st.wV/2:st.wV, t=(st.wS+wV+st.wF)||1, s=j.scores;
+    return (st.wS*s.sport+wV*s.valeur+st.wF*s.fan)/t*(0.85+0.30*s.besoin);
+  }
+  function mini(s){return `<div class="mini">${[["S",s.sport,"--sport"],["V",s.valeur,"--valeur"],["F",s.fan,"--fan"]].map(([l,v,c])=>
+    `<div><span>${l}</span><span class="t"><i style="width:${v}%;background:var(${c})"></i></span><span class="num">${Math.round(v)}</span></div>`).join("")}</div>`}
+  function kv(a){return a.map(([k,v])=>`<div class="kv"><span>${k}</span><span class="num">${v}</span></div>`).join("")}
+  const conf=j=>j.detail.sport.confiance_note==="faible"?"low":Math.round(j.detail.sport.confiance*100)+" %";
+  function detail(j){const d=j.detail, pct=v=>Math.round(v*100)+" %";
+    return `<tr class="detail"><td colspan="10"><div class="dgrid">
+      <div><h3 class="s">Sport · ${j.scores.sport}</h3>${kv([...(j.groupe==="GK"?[["Goals conceded · clean sheets (2 seasons)",d.sport.buts_encaisses==null?"no data":d.sport.buts_encaisses+" · "+d.sport.clean_sheets],["Goals conceded / 90 (keeper · team · league median)",[d.sport.buts_encaisses_90,d.sport.equipe_encaisses_90,d.sport.ligue_encaisses_90].map(v=>v==null?"—":v).join(" · ")],["Reading",esc(tr(GKMODE,d.sport.mode_gardien))],["Defensive rank among goalkeepers",pct(d.sport.rang_defensif)]]:j.groupe==="DEF"?[["Sub-position",j.sous_poste==="CB"?"centre-back":"full-back"],["Goals conceded / 90 (team · league median)",[d.sport.equipe_encaisses_90,d.sport.ligue_encaisses_90].map(v=>v==null?"—":v).join(" · ")],["Defensive rank in sub-position",pct(d.sport.rang_defensif)],...(d.sport.rang_production!=null?[["(Goals + 0.7 assists) / 90",d.sport.g_a_90],["Attacking rank among full-backs",pct(d.sport.rang_production)]]:[])]:[["(Goals + 0.7 assists) / 90",d.sport.g_a_90],["Goals · assists",d.sport.buts+" · "+d.sport.passes],...(d.sport.rang_production!=null?[["Output rank in the pool",pct(d.sport.rang_production)]]:[])]),["Matches (2 seasons)",d.sport.matchs],["Minutes (2 seasons)",d.sport.minutes_total],["Sport score confidence",conf(j)+(d.sport.confiance_note==="faible"?" ("+pct(d.sport.confiance)+" of sample)":"")],["League level",d.sport.niveau],["Availability",pct(d.sport.disponibilite)]])}</div>
+      <div><h3 class="v">Value · ${j.scores.valeur}${j.market_value_estimated?" *":""}</h3>${kv([...(j.market_value_estimated?[["Market value","estimated "+eur(j.market_value)+" (regression, missing on Transfermarkt)"]]:[]),["Undervaluation (rank)",pct(d.valeur.sous_evaluation)],["12-month trend",(d.valeur.tendance>=0?"+":"")+Math.round(d.valeur.tendance*100)+" %"],["Contract months left",d.valeur.mois_contrat??"—"],["Contract expires",j.contract_expires??"—"],["Projected value in 24 months",eur(d.valeur.valeur_projetee_24m)],["Expected net gain",d.valeur.plus_value==null?"—":(d.valeur.plus_value>=0?"+":"")+Math.round(d.valeur.plus_value*100)+" % of value"],["Net cost (fee − resale)",d.valeur.cout_net==null?"—":eur(d.valeur.cout_net)]])}</div>
+      <div><h3 class="f">Fan fit · ${j.scores.fan}</h3>${kv([["Origin",esc(tr(ZONE,d.fan.origine))+(j.naissance?" ("+esc(j.naissance)+")":"")],["Nationalities",esc(j.nationalites.join(", "))],["French language",pct(d.fan.francophonie)],["Average time per club",d.fan.tenure+" years"],["Media potential",pct(d.fan.media)],["Club link",esc(tr(LINK,d.fan.lien))]])}</div>
+    </div>${season(j.detail.sport.dynamique,j.detail.sport.poids_dynamique,j.groupe)}${j.url?`<p style="margin:12px 0 0"><a href="${esc(j.url)}" style="color:var(--accent-ink)">Transfermarkt profile</a></p>`:""}</td></tr>`}
+  function last5(list){return `<div class="last5">${(list||[]).map(m=>m.status==="played"?`<div class="m5 ${m.outcome==="V"?"V":m.outcome==="D"?"D":""}"><div class="d">${dateFr(m.date)} · ${m.home?"home":"away"} · ${esc(m.competition_id||"")}</div><div>${esc(m.opponent||"—")}</div><div class="r num">${esc((m.result||"—").replace(":","-"))} <small>${({V:"W",N:"D",D:"L"})[m.outcome]||""}</small></div><div class="num">${m.minutes}' · ${m.goals}G ${m.assists}A${m.conceded!=null&&m.conceded!==undefined?" · "+m.conceded+" conc.":""}${m.started?"":" · sub"}</div></div>`
+    :`<div class="m5 abs"><div class="d">${dateFr(m.date)} · ${esc(m.competition_id||"")}</div><div>${esc(m.opponent||"—")}</div><div>${tr(STATUS,m.status)}</div></div>`).join("")}</div>`}
+  function season(d,w,g){
+    if(!d) return `<div class="season"><h3>Season 26/27</h3><p class="psub" style="margin:0">No match-by-match log for this player (page missing or club outside the fixture lists read): the Sport score keeps the sub-position formula.</p></div>`;
+    const cur=d.statut_actuel?` · current status: <b>${tr(STATUS,d.statut_actuel.status)}</b>${d.statut_actuel.reason?" ("+esc(d.statut_actuel.reason)+")":""}`:"";
+    return `<div class="season"><h3>Season 26/27 · all competitions (${esc((d.competitions||[]).join(", "))})</h3>
+      <p class="psub" style="margin:0 0 8px">${d.matchs} team matches · ${d.joues} played · ${d.titularisations} starts · ${d.minutes} minutes · ${d.buts} goal${d.buts===1?"":"s"} · ${d.passes} assist${d.passes===1?"":"s"}${d.buts_encaisses!=null?" · "+d.buts_encaisses+" conceded while on the pitch":""} · bench ${d.banc} · not in squad ${d.hors_groupe} · injured ${d.blesse} · suspended ${d.suspendu}${cur}</p>
+      <div class="sgrid"><div>${kv([["Start share",pctOr(d.starter_share)],["Share of team minutes",pctOr(d.minutes_share)],["Role trend (last 5 − first 5)",signed(d.role_trend)],["Form, last 5 matches / season",ratio(d.form_5)],["Big-game factor (top / bottom half)",ratio(d.big_game_factor)],["Matches missed (injury, suspension)",pctOr(d.availability_2627)],["Playing-time consistency (std dev / 45)",d.consistency==null?"—":d.consistency.toFixed(2)],[g==="GK"||g==="DEF"?"Goals conceded / 90 (season · 25/26)":"(Goals + 0.7 assists) / 90 (season · 25/26)",`${d.production_90??d.encaisses_90??"—"} · ${d.production_90_2526??"—"}`],["Dynamics score · confidence · weight in Sport score",`${Math.round(d.score*100)} · ${pctOr(d.confiance)} · ${pctOr(w)}`]])}</div>
+      <div><div class="lab">Team's last 5 matches</div>${last5(d.derniers_matchs)}</div></div></div>`}
+
+  // Squad this season
+  const SQ=DATA.effectif_saison||[];
+  const trendCls=v=>v==null?"":v>=0.3?"trend up":v<=-0.3?"trend down":"";
+  if(!JN){$("squadSub").textContent="2026/27 log not available: run python -m moneyball.matchlog then python -m moneyball.recommend.";}
+  $("squadRows").innerHTML=SQ.length?SQ.map(r=>{const d=r.dynamique;const bar=v=>v==null?"—":`<span class="bar"><i style="width:${Math.round(v*100)}%"></i></span>${Math.round(v*100)} %`;
+    return `<tr><td class="l"><div class="pname">${esc(r.name)}</div><div class="psub">${esc(r.position)} · ${GL[r.groupe]}</div></td><td>${r.age??"—"}</td>`+(d?`<td>${d.matchs}</td><td>${d.titularisations}</td><td>${d.minutes}</td><td>${d.buts} · ${d.passes}</td><td>${bar(d.starter_share)}</td><td>${bar(d.minutes_share)}</td><td class="${trendCls(d.role_trend)}">${signed(d.role_trend)}</td><td class="l">${d.statut_actuel?`${tr(STATUS,d.statut_actuel.status)}${d.statut_actuel.reason?" · "+esc(d.statut_actuel.reason):""}`:(d.derniers_matchs&&d.derniers_matchs.length?tr(STATUS,d.derniers_matchs[d.derniers_matchs.length-1].status):"—")}</td>`:`<td colspan="8" class="l psub">log not read</td>`)+`<td class="l">${tags(r.tags)}</td></tr>`}).join(""):`<tr><td colspan="11" class="empty">No 2026/27 log.</td></tr>`;
+  const CP=DATA.comparaison;
+  if(CP){const li=m=>`<li><b>${esc(m.name)}</b> <span class="psub">${esc(m.club)} · ${GL[m.groupe]}</span> · ${m.rang_avant} → ${m.rang_apres} <span class="why">· Sport ${m.sport_avant} → ${m.sport_apres} · ${esc(tr(MOVE,m.raison))}</span></li>`;
+    $("moves").innerHTML=`<div class="moves"><div><h3>Ten biggest climbers with the 26/27 season</h3><ol>${CP.montees.map(li).join("")}</ol></div><div><h3>Ten biggest fallers</h3><ol>${CP.descentes.map(li).join("")}</ol></div></div><p class="psub" style="margin-top:10px">Ranks by final score at default weights, without then with the dynamics component. Top 20 by line before → after: ${["GK","DEF","MID","ATT"].map(g=>`${GL[g]} ${CP.top20_par_ligne_avant[g]} → ${CP.top20_par_ligne_apres[g]}`).join(", ")}.</p>`;}
+
+  function filtered(){
+    return J.filter(j=>(!st.pos||j.groupe===st.pos)&&j.indemnite_estimee<=st.fee&&(j.age??0)<=st.age
+      &&(!st.fFree||(j.detail.valeur.mois_contrat!=null&&j.detail.valeur.mois_contrat<=12))
+      &&(!st.fLocal||ROMAND.includes(j.detail.fan.origine))).map(j=>({j,f:score(j)})).sort((a,b)=>b.f-a.f);
+  }
+  function renderPlan(){
+    const all=J.filter(j=>(j.age??0)<=st.age&&!j.market_value_estimated).map(j=>({j,f:score(j)})).sort((a,b)=>b.f-a.f);
+    const excluded=J.filter(j=>(j.age??0)<=st.age&&j.market_value_estimated).length;
+    let left=st.budget; const picks=[];
+    const order=["GK","DEF","MID","ATT"].sort((a,b)=>NEEDS[b].besoin-NEEDS[a].besoin);
+    for(const g of order){const n=NEEDS[g].besoin>0.45?2:1;let c=0;
+      for(const x of all){if(c>=n)break;if(x.j.groupe!==g||x.j.indemnite_estimee>left)continue;picks.push({...x,g});left-=x.j.indemnite_estimee;c++}
+      if(c<n) for(;c<n;c++) picks.push({g,none:true});}
+    $("plan").innerHTML=["GK","DEF","MID","ATT"].map(g=>`<div style="display:grid;gap:10px;align-content:start"><h3>${GL[g]}</h3>${picks.filter(p=>p.g===g).map(p=>p.none?`<div class="slot none">No option within the remaining budget</div>`:
+      `<div class="slot"><span class="sc num">${p.f.toFixed(1)}</span><div class="lab">${esc(p.j.position)}</div><div class="who">${esc(p.j.name)}</div><div class="meta">${p.j.age} · ${esc(p.j.club)}</div><div class="meta">Fee ${eur(p.j.indemnite_estimee)} · fan fit ${Math.round(p.j.scores.fan)}</div></div>`).join("")}</div>`).join("");
+    const real=picks.filter(p=>!p.none), cost=real.reduce((s,p)=>s+p.j.indemnite_estimee,0);
+    const fan=real.length?real.reduce((s,p)=>s+p.j.scores.fan,0)/real.length:0;
+    $("totals").innerHTML=`<span><b class="num">${real.length}</b>signings</span><span><b class="num">${eur(cost)}</b>in estimated fees</span><span><b class="num">${eur(st.budget-cost)}</b>left</span><span><b class="num">${Math.round(fan)}</b>average fan fit</span><span><b class="num">${real.filter(p=>ROMAND.includes(p.j.detail.fan.origine)).length}</b>French-speaking Swiss profiles</span><span><b class="num">${excluded}</b>player${excluded===1?"":"s"} with an estimated value, outside the automatic plan</span>`;
+  }
+  function render(){
+    $("oS").textContent=st.wS;$("oV").textContent=st.wV;$("oF").textContent=st.wF;
+    $("oFee").textContent=eur(+st.fee);$("oBud").textContent=eur(+st.budget);$("oAge").textContent=st.age;
+    const all=filtered(), list=all.slice(0,shown);
+    $("rows").innerHTML=list.length?list.map(({j,f},i)=>`<tr class="row${openId===j.id?" open":""}" data-id="${esc(j.id)}" tabindex="0" aria-expanded="${openId===j.id}">
+      <td class="l rk">${i+1}</td>
+      <td class="l"><div class="pname">${esc(j.name)}</div><div class="psub">${esc(j.position)} · ${j.age}</div></td>
+      <td class="l"><div>${esc(j.club)}</div><div class="psub">${esc(j.league_id)}</div></td>
+      <td class="l">${mini(j.scores)}</td>
+      <td>${conf(j)}</td>
+      <td>${j.scores.besoin.toFixed(2)}</td><td>${eur(j.market_value)}${j.market_value_estimated?" *":""}</td><td>${eur(j.indemnite_estimee)}</td>
+      <td class="l">${tags(j.tags)}</td>
+      <td class="final">${f.toFixed(1)}</td></tr>${openId===j.id?detail(j):""}`).join(""):`<tr><td colspan="10" class="empty">No player passes these filters. Raise the max fee or the max age.</td></tr>`;
+    $("count").innerHTML=`${list.length} player${list.length===1?"":"s"} shown of ${all.length} selected (pool ${J.length}).`+(all.length>shown?` <button type="button" id="more" class="morebtn">Show 150 more</button>`:"");
+    const mb=$("more"); if(mb) mb.addEventListener("click",()=>{shown+=150;render()});
+    renderPlan();
+    try{localStorage.setItem("ysmb",JSON.stringify(st))}catch(e){}
+  }
+  for(const k of ["wS","wV","wF","fee","budget","age"]) $(k).addEventListener("input",e=>{st[k]=+e.target.value;shown=150;render()});
+  $("pos").addEventListener("change",e=>{st.pos=e.target.value;shown=150;render()});
+  for(const k of ["fFree","fLocal"]) $(k).addEventListener("change",e=>{st[k]=e.target.checked;shown=150;render()});
+  const toggle=tr=>{if(!tr)return;openId=openId===tr.dataset.id?null:tr.dataset.id;render()};
+  $("rows").addEventListener("click",e=>{if(e.target.closest("a"))return;toggle(e.target.closest("tr.row"))});
+  $("rows").addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();toggle(e.target.closest("tr.row"))}});
+  render();
+})();
+</script>
