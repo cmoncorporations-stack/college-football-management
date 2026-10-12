@@ -24,6 +24,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 TEMPLATE = ROOT / "dashboard_template.html"
 MATCHLOG = DATA / "matchlog_2627.json"
+MATCHPREP = DATA / "matchprep.json"
 DEFENCE = DATA / "defence.json"
 
 
@@ -186,6 +187,7 @@ def run(use_demo: bool, today: date, top: int = 60, with_matchlog: bool = True) 
         "journal": journal_summary(matchlog, cand["players"], squad["players"]),
         "effectif_saison": squad_season(squad["players"], matchlog, today, standings),
         "comparaison": comparison,
+        "prochain_match": json.loads(MATCHPREP.read_text()) if MATCHPREP.exists() and not use_demo else None,
         "sport_par_ligne": sport_by_line(ranked),
         "top20": {g: sum(1 for j in ranked[:20] if j["groupe"] == g) for g in ("GK", "DEF", "MID", "ATT")},
         "lieux_non_reconnus": geo.unrecognized(cand["players"]),

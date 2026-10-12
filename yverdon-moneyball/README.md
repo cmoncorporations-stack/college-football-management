@@ -67,6 +67,21 @@ Tags : « En forme » (`form_5` ≥ 1,3 et ≥ 3 matchs joués), « Perd sa plac
 
 Effectif : `squad_needs` compte un **titulaire blessé longue durée** (≥ 3 matchs manqués consécutifs, dernier statut blessé, titulaire à ≥ 50 % avant la blessure) comme un demi-manque ; le tableau de bord affiche « L'effectif cette saison » (part de titularisations, part de minutes, tendance, statut) et, sur chaque fiche, le bloc « Saison 26/27 » avec les 5 derniers matchs.
 
+### Prochain match (`moneyball/matchprep.py`)
+
+`python -m moneyball.matchprep` écrit `data/matchprep.json`, repris par `recommend` dans la section « Prochain match » du tableau de bord. Approche pilotée par la donnée, dans l'esprit des clubs qui en ont fait leur méthode comme l'AC Como ; le modèle interne de Como n'est pas public et aucun de ses paramètres n'est repris. Tout est calculé sur des données Transfermarkt réelles de 2026/27.
+
+| Bloc | Méthode |
+|---|---|
+| xG-tirs | Transfermarkt publie par match tirs, tirs non cadrés et tirs arrêtés (`/spielbericht/statistik/…`), pas d'expected goals. Buts ≈ a × tirs cadrés + b × tirs non cadrés, ajusté sur les matchs de Challenge League 2026/27 (au 11.10 : 0,299 par tir cadré, 0,014 par tir non cadré, 146 buts pour 147,2 xG). Ce n'est pas un xG positionnel. |
+| Notes d'équipes | Poisson attaque / défense / avantage du terrain sur la Challenge League 2026/27, cible = 50 % buts + 50 % xG-tirs, rétrécie vers le classement 2025/26 (6 matchs de poids). Variantes « buts seuls » et « xG-tirs seuls » données pour la sensibilité. |
+| Coupe contre un amateur | Régression de Poisson sur le 1er tour de Coupe de Suisse 2026/27 (clubs pros contre clubs de division à coefficient connu) : log λ = α + β × ln(rapport des coefficients) + domicile ; adversaire situé dans sa ligue (buts pour et contre rétrécis de 8 matchs) ; prolongation à un tiers des buts attendus, tirs au but à 50 %. |
+| Onze | Joueurs disponibles au jour du journal, postes réellement occupés cette saison, 4-3-3 de l'entraîneur en place ; note de sélection = 0,45 Sport + 0,35 part des minutes sur les 3 derniers matchs + 0,20 dynamique 26/27 ; affectation par créneau (glouton puis échanges). En coupe : le gardien du 1er tour, et repos des joueurs les plus chargés si un remplaçant atteint 80 % de leur note. |
+| Buteurs | P(marquer) = 1 − e^(−λ × part), part = buts/90 (26/27 + 25/26, rétrécis de 900 minutes vers le poste) × minutes attendues. |
+| Projection | 20 000 simulations des matchs de Challenge League programmés (jusqu'à la trêve au 11.10), notes figées. |
+
+Limites : pas de xG positionnel (Sofascore et Opta inaccessibles) ; ni fatigue, ni météo, ni tactique adverse ; le 4-3-3 repose sur un seul match du nouvel entraîneur ; le niveau d'un amateur est déduit de peu de matchs de coupe.
+
 ### Coefficients de ligue
 
 Le **niveau** d'un joueur est la moyenne des coefficients de ses championnats pondérée par ses minutes (`recent_stats`), sur ses deux dernières saisons ayant des minutes, en ne gardant que les compétitions à coefficient connu (coupes et lignes « Total » ignorées ; si aucune n'est connue, toutes les lignes comptent au coefficient 0,80). Référence : Challenge League = 1,00.
@@ -140,7 +155,8 @@ python -m moneyball.defence            # ou seulement la partie défensive (clea
 
 # 2c. Journal match par match de la saison en cours (≈ 25 min la première fois, cache 72 h ensuite)
 python -m moneyball.matchlog --workers 3      # → data/matchlog_2627.json
-python -m moneyball.recommend                 # relit le journal s'il existe (--no-matchlog pour l'ignorer)
+python -m moneyball.matchprep                 # prochain match → data/matchprep.json
+python -m moneyball.recommend                 # relit le journal et la préparation s'ils existent (--no-matchlog pour ignorer le journal)
 
 # Variantes : instance transfermarkt-api pour profils/valeurs/transferts, enrichissement API-Football
 export TM_API_URL=http://localhost:8000   # docker run -p 8000:8000 transfermarkt-api
@@ -168,6 +184,7 @@ moneyball/tm_client.py   client transfermarkt-api (option, TM_API_URL)
 moneyball/scout.py       constitution du vivier + normalisation (--stats-only : rafraîchit les statistiques)
 moneyball/defence.py     clean sheets / buts encaissés des gardiens, classements → colonnes défensives
 moneyball/matchlog.py    journal match par match de la saison en cours (calendriers, feuilles de match, compositions, absences)
+moneyball/matchprep.py   prochain match : xG-tirs, notes d'équipes, pronostic, onze, buteurs, projection
 moneyball/geo.py         toponymes multilingues → commune → canton → zone d'ancrage
 moneyball/apifootball.py API-Football : notes, tirs, passes clés… (API gratuite retenue)
 moneyball/sofascore.py   Sofascore : xG / xA / notes (optionnel, sans API publique)

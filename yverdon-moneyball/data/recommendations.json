@@ -2,7 +2,7 @@
  "genere": "2026-10-11",
  "date_donnees": "2026-10-11",
  "date_vivier": "2026-09-26",
- "version_modele": "2ef588e",
+ "version_modele": "2806b21",
  "demo": false,
  "source": "www.transfermarkt.com (lecture directe)",
  "sources": {
@@ -3668,6 +3668,2176 @@
     "raison": "peu titularisé"
    }
   ]
+ },
+ "prochain_match": {
+  "genere": "2026-10-12",
+  "today": "2026-10-11",
+  "saison": "26/27",
+  "source": "www.transfermarkt.com : résultats, statistiques de tirs des feuilles de match, compositions, classements, journal match par match 2026/27",
+  "xg_modele": {
+   "par_tir_cadre": 0.2986,
+   "par_tir_non_cadre": 0.0136,
+   "n": 98,
+   "r2": 0.268,
+   "buts": 146,
+   "xg": 147.2
+  },
+  "notes_equipes": {
+   "mu": 0.243,
+   "avantage_terrain": 1.284,
+   "prior_matchs": 6,
+   "clubs_avec_prior": [
+    "116",
+    "1292",
+    "322",
+    "5499",
+    "5507",
+    "625",
+    "8463",
+    "850"
+   ]
+  },
+  "classement": [
+   {
+    "club_id": "5499",
+    "club": "FC Stade-Lausanne-Ouchy",
+    "j": 10,
+    "pts": 24,
+    "bp": 20,
+    "bc": 3,
+    "xg_pour": 12.9,
+    "xg_contre": 12.5,
+    "rang": 1,
+    "attaque": 1.08,
+    "defense": 1.5
+   },
+   {
+    "club_id": "322",
+    "club": "Yverdon Sport FC",
+    "j": 10,
+    "pts": 19,
+    "bp": 16,
+    "bc": 9,
+    "xg_pour": 14.3,
+    "xg_contre": 14.1,
+    "rang": 2,
+    "attaque": 1.15,
+    "defense": 1.19
+   },
+   {
+    "club_id": "242",
+    "club": "FC Winterthur",
+    "j": 10,
+    "pts": 18,
+    "bp": 19,
+    "bc": 11,
+    "xg_pour": 14.2,
+    "xg_contre": 15.3,
+    "rang": 3,
+    "attaque": 1.09,
+    "defense": 1.05
+   },
+   {
+    "club_id": "2074",
+    "club": "SC Kriens",
+    "j": 10,
+    "pts": 15,
+    "bp": 17,
+    "bc": 12,
+    "xg_pour": 18.9,
+    "xg_contre": 13.7,
+    "rang": 4,
+    "attaque": 1.12,
+    "defense": 1.06
+   },
+   {
+    "club_id": "625",
+    "club": "Neuchâtel Xamax FCS",
+    "j": 10,
+    "pts": 15,
+    "bp": 15,
+    "bc": 17,
+    "xg_pour": 14.2,
+    "xg_contre": 12.2,
+    "rang": 5,
+    "attaque": 1.01,
+    "defense": 0.99
+   },
+   {
+    "club_id": "116",
+    "club": "FC Aarau",
+    "j": 10,
+    "pts": 12,
+    "bp": 15,
+    "bc": 18,
+    "xg_pour": 15.1,
+    "xg_contre": 19.0,
+    "rang": 6,
+    "attaque": 1.16,
+    "defense": 0.87
+   },
+   {
+    "club_id": "8463",
+    "club": "FC Rapperswil-Jona",
+    "j": 10,
+    "pts": 10,
+    "bp": 15,
+    "bc": 19,
+    "xg_pour": 17.2,
+    "xg_contre": 15.8,
+    "rang": 7,
+    "attaque": 1.09,
+    "defense": 0.85
+   },
+   {
+    "club_id": "850",
+    "club": "FC Wil 1900",
+    "j": 10,
+    "pts": 10,
+    "bp": 16,
+    "bc": 22,
+    "xg_pour": 15.5,
+    "xg_contre": 15.4,
+    "rang": 8,
+    "attaque": 0.96,
+    "defense": 0.87
+   },
+   {
+    "club_id": "1292",
+    "club": "Etoile Carouge FC",
+    "j": 10,
+    "pts": 9,
+    "bp": 8,
+    "bc": 14,
+    "xg_pour": 12.5,
+    "xg_contre": 15.7,
+    "rang": 9,
+    "attaque": 0.74,
+    "defense": 1.0
+   },
+   {
+    "club_id": "5507",
+    "club": "FC Stade Nyonnais",
+    "j": 10,
+    "pts": 5,
+    "bp": 8,
+    "bc": 24,
+    "xg_pour": 15.4,
+    "xg_contre": 16.6,
+    "rang": 10,
+    "attaque": 0.73,
+    "defense": 0.8
+   }
+  ],
+  "noms": {
+   "1292": "Etoile Carouge FC",
+   "116": "FC Aarau",
+   "5499": "FC Stade-Lausanne-Ouchy",
+   "5507": "FC Stade Nyonnais",
+   "2155": "FC Biel-Bienne 1896",
+   "322": "Yverdon Sport FC",
+   "625": "Neuchâtel Xamax FCS",
+   "850": "FC Wil 1900",
+   "8463": "FC Rapperswil-Jona",
+   "2074": "SC Kriens",
+   "242": "FC Winterthur",
+   "260": "FC Zürich",
+   "29723": "FC Collex-Bossy",
+   "5504": "SC Cham",
+   "79975": "Zürich City SC",
+   "434": "FC Luzern",
+   "14199": "US Terre Sainte",
+   "2016": "BSC Old Boys",
+   "36779": "CS Italien GE",
+   "55623": "FC Amical Saint-Prex",
+   "26": "FC Basel 1893",
+   "2833": "Meyrin FC",
+   "1852": "FC Langenthal",
+   "2395": "SC YF Juventus Zürich",
+   "257": "FC St. Gallen 1879",
+   "35229": "FC Rebstein",
+   "2053": "FC Bulle"
+  },
+  "prochain_match": {
+   "championnat": {
+    "match": {
+     "id": "4897485",
+     "date": "2026-10-25",
+     "competition_id": "C2",
+     "matchday": 11,
+     "home_id": "322",
+     "home": "Yverdon Sport FC",
+     "away_id": "2074",
+     "away": "SC Kriens"
+    },
+    "prediction": {
+     "dom": 0.5089,
+     "nul": 0.2332,
+     "ext": 0.2579,
+     "xg_dom": 1.78,
+     "xg_ext": 1.2,
+     "clean_sheet_dom": 0.3009,
+     "clean_sheet_ext": 0.1691,
+     "plus_2_5": 0.572,
+     "les_deux_marquent": 0.5809,
+     "scores": [
+      {
+       "score": "1:1",
+       "p": 0.1086
+      },
+      {
+       "score": "2:1",
+       "p": 0.0965
+      },
+      {
+       "score": "1:0",
+       "p": 0.0904
+      },
+      {
+       "score": "2:0",
+       "p": 0.0803
+      },
+      {
+       "score": "1:2",
+       "p": 0.0652
+      },
+      {
+       "score": "0:1",
+       "p": 0.0611
+      }
+     ]
+    },
+    "variantes": {
+     "buts": {
+      "dom": 0.5995,
+      "nul": 0.2223,
+      "ext": 0.1781,
+      "xg_dom": 1.87,
+      "xg_ext": 0.91
+     },
+     "xg": {
+      "dom": 0.4116,
+      "nul": 0.233,
+      "ext": 0.3555,
+      "xg_dom": 1.68,
+      "xg_ext": 1.54
+     }
+    },
+    "forme_ys": [
+     {
+      "date": "2026-09-01",
+      "journee": 6,
+      "dom": false,
+      "adversaire": "625",
+      "score": "2:1",
+      "issue": "V",
+      "xg_pour": 1.89,
+      "xg_contre": 1.55
+     },
+     {
+      "date": "2026-09-06",
+      "journee": 7,
+      "dom": true,
+      "adversaire": "5507",
+      "score": "4:1",
+      "issue": "V",
+      "xg_pour": 2.0,
+      "xg_contre": 1.81
+     },
+     {
+      "date": "2026-09-11",
+      "journee": 8,
+      "dom": false,
+      "adversaire": "8463",
+      "score": "0:2",
+      "issue": "D",
+      "xg_pour": 1.0,
+      "xg_contre": 2.19
+     },
+     {
+      "date": "2026-09-20",
+      "journee": 9,
+      "dom": true,
+      "adversaire": "5499",
+      "score": "0:0",
+      "issue": "N",
+      "xg_pour": 0.98,
+      "xg_contre": 1.53
+     },
+     {
+      "date": "2026-10-09",
+      "journee": 10,
+      "dom": false,
+      "adversaire": "1292",
+      "score": "2:0",
+      "issue": "V",
+      "xg_pour": 1.57,
+      "xg_contre": 0.92
+     }
+    ],
+    "forme_adversaire": [
+     {
+      "date": "2026-09-01",
+      "journee": 6,
+      "dom": false,
+      "adversaire": "8463",
+      "score": "1:1",
+      "issue": "N",
+      "xg_pour": 3.35,
+      "xg_contre": 1.82
+     },
+     {
+      "date": "2026-09-04",
+      "journee": 7,
+      "dom": true,
+      "adversaire": "5499",
+      "score": "0:2",
+      "issue": "D",
+      "xg_pour": 1.57,
+      "xg_contre": 0.96
+     },
+     {
+      "date": "2026-09-12",
+      "journee": 8,
+      "dom": false,
+      "adversaire": "116",
+      "score": "2:2",
+      "issue": "N",
+      "xg_pour": 2.81,
+      "xg_contre": 1.66
+     },
+     {
+      "date": "2026-09-18",
+      "journee": 9,
+      "dom": true,
+      "adversaire": "1292",
+      "score": "4:1",
+      "issue": "V",
+      "xg_pour": 2.43,
+      "xg_contre": 1.0
+     },
+     {
+      "date": "2026-10-09",
+      "journee": 10,
+      "dom": true,
+      "adversaire": "850",
+      "score": "1:1",
+      "issue": "N",
+      "xg_pour": 1.29,
+      "xg_contre": 0.71
+     }
+    ],
+    "adversaire": {
+     "id": "2074",
+     "systemes": {
+      "4-2-3-1": 8,
+      "4-4-1-1": 2,
+      "4-3-3 Attacking": 1
+     },
+     "entraineur": "Michael Winsauer",
+     "joueurs_du_vivier": [
+      {
+       "id": "1015825",
+       "name": "Elio Rufener",
+       "matchs": 11,
+       "minutes": 824,
+       "buts": 5,
+       "passes": 2,
+       "titularisations": 10,
+       "statut": null
+      },
+      {
+       "id": "684604",
+       "name": "Albin Krasniqi",
+       "matchs": 10,
+       "minutes": 753,
+       "buts": 4,
+       "passes": 1,
+       "titularisations": 10,
+       "statut": null
+      },
+      {
+       "id": "290607",
+       "name": "Martin François",
+       "matchs": 11,
+       "minutes": 945,
+       "buts": 2,
+       "passes": 1,
+       "titularisations": 10,
+       "statut": null
+      },
+      {
+       "id": "1177478",
+       "name": "Malek Ishuayed",
+       "matchs": 11,
+       "minutes": 775,
+       "buts": 1,
+       "passes": 2,
+       "titularisations": 9,
+       "statut": null
+      },
+      {
+       "id": "925197",
+       "name": "Kevin Tröndle",
+       "matchs": 8,
+       "minutes": 572,
+       "buts": 1,
+       "passes": 0,
+       "titularisations": 8,
+       "statut": null
+      },
+      {
+       "id": "342095",
+       "name": "Lukas Riedmann",
+       "matchs": 10,
+       "minutes": 206,
+       "buts": 1,
+       "passes": 0,
+       "titularisations": 1,
+       "statut": null
+      },
+      {
+       "id": "539797",
+       "name": "Mauricio Willimann",
+       "matchs": 11,
+       "minutes": 850,
+       "buts": 0,
+       "passes": 1,
+       "titularisations": 9,
+       "statut": null
+      },
+      {
+       "id": "322512",
+       "name": "Rrezart Hoxha",
+       "matchs": 5,
+       "minutes": 165,
+       "buts": 0,
+       "passes": 1,
+       "titularisations": 1,
+       "statut": null
+      }
+     ],
+     "note": "joueurs de l'adversaire présents dans le vivier (17-29 ans, ≤ 1,5 M€) : liste partielle"
+    },
+    "onze": [
+     {
+      "creneau": "GK",
+      "role": "Gardien",
+      "id": "237664",
+      "name": "Simon Enzler",
+      "position": "Goalkeeper",
+      "selection": 0.7827,
+      "sport": 60.6,
+      "part_3_derniers": 1.0,
+      "dynamique": 0.8,
+      "adequation": 1.0
+     },
+     {
+      "creneau": "RB",
+      "role": "Latéral droit",
+      "id": "69899",
+      "name": "Anthony Sauthier",
+      "position": "Right-Back",
+      "selection": 0.8246,
+      "sport": 74.2,
+      "part_3_derniers": 0.96,
+      "dynamique": 0.775,
+      "adequation": 0.9
+     },
+     {
+      "creneau": "CB1",
+      "role": "Défenseur central",
+      "id": "1030482",
+      "name": "Jason Gnakpa",
+      "position": "Centre-Back",
+      "selection": 0.6598,
+      "sport": 60.8,
+      "part_3_derniers": 0.78,
+      "dynamique": 0.57,
+      "adequation": 1.0
+     },
+     {
+      "creneau": "CB2",
+      "role": "Défenseur central",
+      "id": "417895",
+      "name": "Lucas Pos",
+      "position": "Centre-Back",
+      "selection": 0.8218,
+      "sport": 68.8,
+      "part_3_derniers": 1.0,
+      "dynamique": 0.811,
+      "adequation": 0.98
+     },
+     {
+      "creneau": "LB",
+      "role": "Latéral gauche",
+      "id": "466918",
+      "name": "Vegard Kongsro",
+      "position": "Left-Back",
+      "selection": 0.8224,
+      "sport": 73.3,
+      "part_3_derniers": 1.0,
+      "dynamique": 0.713,
+      "adequation": 1.0
+     },
+     {
+      "creneau": "DM",
+      "role": "Milieu défensif",
+      "id": "286292",
+      "name": "Ousmane Doumbia",
+      "position": "Defensive Midfield",
+      "selection": 0.6257,
+      "sport": 39.3,
+      "part_3_derniers": 0.9,
+      "dynamique": 0.669,
+      "adequation": 0.86
+     },
+     {
+      "creneau": "CM1",
+      "role": "Milieu central",
+      "id": "159317",
+      "name": "Hélios Sessolo",
+      "position": "Centre-Forward",
+      "selection": 0.5797,
+      "sport": 64.4,
+      "part_3_derniers": 0.5,
+      "dynamique": 0.568,
+      "adequation": 0.59
+     },
+     {
+      "creneau": "CM2",
+      "role": "Milieu offensif",
+      "id": "98167",
+      "name": "Valon Fazliu",
+      "position": "Attacking Midfield",
+      "selection": 0.6593,
+      "sport": 53.0,
+      "part_3_derniers": 0.79,
+      "dynamique": 0.717,
+      "adequation": 0.97
+     },
+     {
+      "creneau": "RW",
+      "role": "Ailier droit",
+      "id": "310361",
+      "name": "Varol Tasar",
+      "position": "Right Winger",
+      "selection": 0.6206,
+      "sport": 64.1,
+      "part_3_derniers": 0.62,
+      "dynamique": 0.572,
+      "adequation": 0.86
+     },
+     {
+      "creneau": "CF",
+      "role": "Avant-centre",
+      "id": "264956",
+      "name": "Jean-Kévin Augustin",
+      "position": "Centre-Forward",
+      "selection": 0.5239,
+      "sport": 40.0,
+      "part_3_derniers": 0.66,
+      "dynamique": 0.566,
+      "adequation": 0.94
+     },
+     {
+      "creneau": "LW",
+      "role": "Ailier gauche",
+      "id": "524384",
+      "name": "Elias Pasche",
+      "position": "Left Winger",
+      "selection": 0.644,
+      "sport": 65.0,
+      "part_3_derniers": 0.73,
+      "dynamique": 0.487,
+      "adequation": 0.95
+     }
+    ],
+    "banc": [
+     {
+      "id": "289404",
+      "name": "Jonathan Okita",
+      "position": "Left Winger",
+      "selection": 0.6067,
+      "sport": 43.8,
+      "part_3_derniers": 0.76
+     },
+     {
+      "id": "1195252",
+      "name": "Jonatan Mayorga",
+      "position": "Right Winger",
+      "selection": 0.4248,
+      "sport": 32.5,
+      "part_3_derniers": 0.47
+     },
+     {
+      "id": "294583",
+      "name": "Shkelqim Demhasaj",
+      "position": "Centre-Forward",
+      "selection": 0.3877,
+      "sport": 45.3,
+      "part_3_derniers": 0.29
+     },
+     {
+      "id": "876629",
+      "name": "Mahamadou Kanouté",
+      "position": "Centre-Forward",
+      "selection": 0.3646,
+      "sport": 55.7,
+      "part_3_derniers": 0.11
+     },
+     {
+      "id": "390179",
+      "name": "Bastien Toma",
+      "position": "Attacking Midfield",
+      "selection": 0.3295,
+      "sport": 34.3,
+      "part_3_derniers": 0.32
+     },
+     {
+      "id": "479486",
+      "name": "Robin Golliard",
+      "position": "Centre-Forward",
+      "selection": 0.327,
+      "sport": 55.4,
+      "part_3_derniers": 0.07
+     },
+     {
+      "id": "624910",
+      "name": "Anthony Baron",
+      "position": "Centre-Back",
+      "selection": 0.3268,
+      "sport": 52.9,
+      "part_3_derniers": 0.0
+     },
+     {
+      "id": "700223",
+      "name": "Gilles Richard",
+      "position": "Centre-Back",
+      "selection": 0.2955,
+      "sport": 48.3,
+      "part_3_derniers": 0.0
+     },
+     {
+      "id": "864381",
+      "name": "Lorenzo Bittarelli",
+      "position": "Right-Back",
+      "selection": 0.241,
+      "sport": 38.0,
+      "part_3_derniers": 0.0
+     }
+    ],
+    "buteurs": [
+     {
+      "id": "310361",
+      "name": "Varol Tasar",
+      "minutes_attendues": 80,
+      "buts_90": 0.49,
+      "xg_match": 0.44,
+      "p_marquer": 0.354
+     },
+     {
+      "id": "159317",
+      "name": "Hélios Sessolo",
+      "minutes_attendues": 80,
+      "buts_90": 0.3,
+      "xg_match": 0.27,
+      "p_marquer": 0.234
+     },
+     {
+      "id": "524384",
+      "name": "Elias Pasche",
+      "minutes_attendues": 80,
+      "buts_90": 0.29,
+      "xg_match": 0.26,
+      "p_marquer": 0.228
+     },
+     {
+      "id": "264956",
+      "name": "Jean-Kévin Augustin",
+      "minutes_attendues": 80,
+      "buts_90": 0.27,
+      "xg_match": 0.24,
+      "p_marquer": 0.215
+     },
+     {
+      "id": "98167",
+      "name": "Valon Fazliu",
+      "minutes_attendues": 80,
+      "buts_90": 0.17,
+      "xg_match": 0.16,
+      "p_marquer": 0.144
+     },
+     {
+      "id": "466918",
+      "name": "Vegard Kongsro",
+      "minutes_attendues": 80,
+      "buts_90": 0.11,
+      "xg_match": 0.1,
+      "p_marquer": 0.092
+     },
+     {
+      "id": "289404",
+      "name": "Jonathan Okita",
+      "minutes_attendues": 20,
+      "buts_90": 0.37,
+      "xg_match": 0.08,
+      "p_marquer": 0.08
+     },
+     {
+      "id": "417895",
+      "name": "Lucas Pos",
+      "minutes_attendues": 80,
+      "buts_90": 0.08,
+      "xg_match": 0.07,
+      "p_marquer": 0.069
+     },
+     {
+      "id": "294583",
+      "name": "Shkelqim Demhasaj",
+      "minutes_attendues": 20,
+      "buts_90": 0.3,
+      "xg_match": 0.07,
+      "p_marquer": 0.064
+     },
+     {
+      "id": "1195252",
+      "name": "Jonatan Mayorga",
+      "minutes_attendues": 20,
+      "buts_90": 0.18,
+      "xg_match": 0.04,
+      "p_marquer": 0.04
+     },
+     {
+      "id": "286292",
+      "name": "Ousmane Doumbia",
+      "minutes_attendues": 80,
+      "buts_90": 0.04,
+      "xg_match": 0.04,
+      "p_marquer": 0.039
+     },
+     {
+      "id": "1030482",
+      "name": "Jason Gnakpa",
+      "minutes_attendues": 80,
+      "buts_90": 0.01,
+      "xg_match": 0.01,
+      "p_marquer": 0.011
+     },
+     {
+      "id": "69899",
+      "name": "Anthony Sauthier",
+      "minutes_attendues": 80,
+      "buts_90": 0.01,
+      "xg_match": 0.01,
+      "p_marquer": 0.009
+     },
+     {
+      "id": "237664",
+      "name": "Simon Enzler",
+      "minutes_attendues": 80,
+      "buts_90": 0.0,
+      "xg_match": 0.0,
+      "p_marquer": 0.0
+     }
+    ],
+    "dernier_onze": [
+     {
+      "id": "237664",
+      "name": "Simon Enzler",
+      "position": "Goalkeeper"
+     },
+     {
+      "id": "1030482",
+      "name": "Jason Gnakpa",
+      "position": "Centre-Back"
+     },
+     {
+      "id": "417895",
+      "name": "Lucas Pos",
+      "position": "Centre-Back"
+     },
+     {
+      "id": "466918",
+      "name": "Vegard Kongsro",
+      "position": "Left-Back"
+     },
+     {
+      "id": "69899",
+      "name": "Anthony Sauthier",
+      "position": "Right-Back"
+     },
+     {
+      "id": "286292",
+      "name": "Ousmane Doumbia",
+      "position": "Defensive Midfield"
+     },
+     {
+      "id": "98167",
+      "name": "Valon Fazliu",
+      "position": "Central Midfield"
+     },
+     {
+      "id": "289404",
+      "name": "Jonathan Okita",
+      "position": "Left Winger"
+     },
+     {
+      "id": "524384",
+      "name": "Elias Pasche",
+      "position": "Right Winger"
+     },
+     {
+      "id": "294583",
+      "name": "Shkelqim Demhasaj",
+      "position": "Centre-Forward"
+     },
+     {
+      "id": "159317",
+      "name": "Hélios Sessolo",
+      "position": "Central Midfield"
+     }
+    ],
+    "ecarts": {
+     "dernier_match": "4897476",
+     "entrants": [
+      {
+       "id": "310361",
+       "name": "Varol Tasar",
+       "raison": "sélection 0.62 · Sport 64 · 62% des minutes sur 3 matchs · 4 b, 0 p en 26/27"
+      },
+      {
+       "id": "264956",
+       "name": "Jean-Kévin Augustin",
+       "raison": "sélection 0.52 · Sport 40 · 66% des minutes sur 3 matchs · 1 b, 1 p en 26/27"
+      }
+     ],
+     "sortants": [
+      {
+       "id": "289404",
+       "name": "Jonathan Okita",
+       "raison": "sélection 0.61 · Sport 44 · 76% des minutes sur 3 matchs · 1 b, 0 p en 26/27"
+      },
+      {
+       "id": "294583",
+       "name": "Shkelqim Demhasaj",
+       "raison": "sélection 0.39 · Sport 45 · 29% des minutes sur 3 matchs · 1 b, 1 p en 26/27"
+      }
+     ]
+    }
+   },
+   "coupe": {
+    "match": {
+     "id": "5019275",
+     "date": "2026-10-17",
+     "competition_id": "SCC",
+     "competition": "Swiss Cup",
+     "matchday": "Second Round",
+     "home_id": "2016",
+     "home": "BSC Old Boys",
+     "away_id": "322",
+     "away": "Yverdon Sport FC"
+    },
+    "adversaire": {
+     "id": "2016",
+     "ligue": "CIR3",
+     "coefficient": 0.3,
+     "classement": {
+      "rank": 3,
+      "club_id": "2016",
+      "club": "BSC Old Boys",
+      "matches": 8,
+      "goals_for": 26,
+      "goals_against": 11,
+      "points": 18,
+      "teams": 14
+     },
+     "equipes": 14,
+     "forme": [
+      {
+       "date": "2026-09-09",
+       "competition": "Swiss Cup qualifiers",
+       "dom": "VfR Kleinhüningen",
+       "ext": "BSC Old Boys",
+       "score": "1:6"
+      },
+      {
+       "date": "2026-09-12",
+       "competition": "2. Liga interregional - Gruppe 3",
+       "dom": "BSC Old Boys",
+       "ext": "FC Kirchberg BE",
+       "score": "4:2"
+      },
+      {
+       "date": "2026-09-19",
+       "competition": "2. Liga interregional - Gruppe 3",
+       "dom": "AS Italiana Bern",
+       "ext": "BSC Old Boys",
+       "score": "2:0"
+      },
+      {
+       "date": "2026-09-26",
+       "competition": "2. Liga interregional - Gruppe 3",
+       "dom": "BSC Old Boys",
+       "ext": "Zürich City SC",
+       "score": "1:4"
+      },
+      {
+       "date": "2026-10-03",
+       "competition": "2. Liga interregional - Gruppe 3",
+       "dom": "BSC Old Boys",
+       "ext": "FC Allschwil",
+       "score": "3:0"
+      },
+      {
+       "date": "2026-10-10",
+       "competition": "2. Liga interregional - Gruppe 3",
+       "dom": "BSC Old Boys",
+       "ext": "FC Liestal",
+       "score": "3:1"
+      }
+     ],
+     "attaque_relative": 1.28,
+     "defense_relative": 1.2
+    },
+    "modele": {
+     "alpha": 0.189,
+     "beta": 0.9,
+     "domicile": 0.458,
+     "matchs": 9,
+     "base": [
+      {
+       "date": "2026-08-15",
+       "dom": "FC Collex-Bossy",
+       "dom_ligue": "CIR1",
+       "ext": "Etoile Carouge FC",
+       "ext_ligue": "C2",
+       "score": "0:2"
+      },
+      {
+       "date": "2026-08-15",
+       "dom": "Zürich City SC",
+       "dom_ligue": "CIR3",
+       "ext": "FC Winterthur",
+       "ext_ligue": "C2",
+       "score": "1:3"
+      },
+      {
+       "date": "2026-08-16",
+       "dom": "FC Thalwil",
+       "dom_ligue": "CHC3",
+       "ext": "FC St. Gallen 1879",
+       "ext_ligue": "C1",
+       "score": "0:3"
+      },
+      {
+       "date": "2026-08-15",
+       "dom": "FC Courtételle",
+       "dom_ligue": "CHC2",
+       "ext": "FC Basel 1893",
+       "ext_ligue": "C1",
+       "score": "1:6"
+      },
+      {
+       "date": "2026-08-14",
+       "dom": "FC Tuggen",
+       "dom_ligue": "CHC3",
+       "ext": "FC Zürich",
+       "ext_ligue": "C1",
+       "score": "1:2"
+      },
+      {
+       "date": "2026-08-16",
+       "dom": "US Terre Sainte",
+       "dom_ligue": "CIR1",
+       "ext": "Yverdon Sport FC",
+       "ext_ligue": "C2",
+       "score": "0:5"
+      },
+      {
+       "date": "2026-08-16",
+       "dom": "SC Buochs",
+       "dom_ligue": "CHC2",
+       "ext": "FC Luzern",
+       "ext_ligue": "C1",
+       "score": "0:3"
+      },
+      {
+       "date": "2026-08-15",
+       "dom": "FC Liestal",
+       "dom_ligue": "CIR3",
+       "ext": "BSC Young Boys",
+       "ext_ligue": "C1",
+       "score": "0:4"
+      },
+      {
+       "date": "2026-08-15",
+       "dom": "Meyrin FC",
+       "dom_ligue": "CHC1",
+       "ext": "Neuchâtel Xamax FCS",
+       "ext_ligue": "C2",
+       "score": "3:4"
+      }
+     ]
+    },
+    "prediction": {
+     "dom": 0.0425,
+     "nul": 0.0866,
+     "ext": 0.8701,
+     "xg_dom": 0.7,
+     "xg_ext": 3.4,
+     "clean_sheet_dom": 0.0333,
+     "clean_sheet_ext": 0.4964,
+     "plus_2_5": 0.7756,
+     "les_deux_marquent": 0.4864,
+     "scores": [
+      {
+       "score": "0:3",
+       "p": 0.1085
+      },
+      {
+       "score": "0:2",
+       "p": 0.0957
+      },
+      {
+       "score": "0:4",
+       "p": 0.0923
+      },
+      {
+       "score": "1:3",
+       "p": 0.076
+      },
+      {
+       "score": "1:2",
+       "p": 0.067
+      },
+      {
+       "score": "1:4",
+       "p": 0.0646
+      }
+     ],
+     "qualif_dom": 0.0632,
+     "qualif_ext": 0.9368,
+     "prolongation": 0.0866,
+     "tirs_au_but": 0.0283
+    },
+    "onze": [
+     {
+      "creneau": "GK",
+      "role": "Gardien",
+      "id": "894261",
+      "name": "Maxime Rouiller",
+      "position": "Goalkeeper",
+      "selection": 0.2303,
+      "sport": 38.3,
+      "part_3_derniers": 0.0,
+      "dynamique": 0.29,
+      "adequation": 1.0
+     },
+     {
+      "creneau": "RB",
+      "role": "Latéral droit",
+      "id": "69899",
+      "name": "Anthony Sauthier",
+      "position": "Right-Back",
+      "selection": 0.8246,
+      "sport": 74.2,
+      "part_3_derniers": 0.96,
+      "dynamique": 0.775,
+      "adequation": 0.9
+     },
+     {
+      "creneau": "CB1",
+      "role": "Défenseur central",
+      "id": "1030482",
+      "name": "Jason Gnakpa",
+      "position": "Centre-Back",
+      "selection": 0.6598,
+      "sport": 60.8,
+      "part_3_derniers": 0.78,
+      "dynamique": 0.57,
+      "adequation": 1.0
+     },
+     {
+      "creneau": "CB2",
+      "role": "Défenseur central",
+      "id": "417895",
+      "name": "Lucas Pos",
+      "position": "Centre-Back",
+      "selection": 0.8218,
+      "sport": 68.8,
+      "part_3_derniers": 1.0,
+      "dynamique": 0.811,
+      "adequation": 0.98
+     },
+     {
+      "creneau": "LB",
+      "role": "Latéral gauche",
+      "id": "466918",
+      "name": "Vegard Kongsro",
+      "position": "Left-Back",
+      "selection": 0.8224,
+      "sport": 73.3,
+      "part_3_derniers": 1.0,
+      "dynamique": 0.713,
+      "adequation": 1.0
+     },
+     {
+      "creneau": "DM",
+      "role": "Milieu défensif",
+      "id": "286292",
+      "name": "Ousmane Doumbia",
+      "position": "Defensive Midfield",
+      "selection": 0.6257,
+      "sport": 39.3,
+      "part_3_derniers": 0.9,
+      "dynamique": 0.669,
+      "adequation": 0.86
+     },
+     {
+      "creneau": "CM1",
+      "role": "Milieu central",
+      "id": "159317",
+      "name": "Hélios Sessolo",
+      "position": "Centre-Forward",
+      "selection": 0.5797,
+      "sport": 64.4,
+      "part_3_derniers": 0.5,
+      "dynamique": 0.568,
+      "adequation": 0.59
+     },
+     {
+      "creneau": "CM2",
+      "role": "Milieu offensif",
+      "id": "98167",
+      "name": "Valon Fazliu",
+      "position": "Attacking Midfield",
+      "selection": 0.6593,
+      "sport": 53.0,
+      "part_3_derniers": 0.79,
+      "dynamique": 0.717,
+      "adequation": 0.97
+     },
+     {
+      "creneau": "RW",
+      "role": "Ailier droit",
+      "id": "310361",
+      "name": "Varol Tasar",
+      "position": "Right Winger",
+      "selection": 0.6206,
+      "sport": 64.1,
+      "part_3_derniers": 0.62,
+      "dynamique": 0.572,
+      "adequation": 0.86
+     },
+     {
+      "creneau": "CF",
+      "role": "Avant-centre",
+      "id": "264956",
+      "name": "Jean-Kévin Augustin",
+      "position": "Centre-Forward",
+      "selection": 0.5239,
+      "sport": 40.0,
+      "part_3_derniers": 0.66,
+      "dynamique": 0.566,
+      "adequation": 0.94
+     },
+     {
+      "creneau": "LW",
+      "role": "Ailier gauche",
+      "id": "524384",
+      "name": "Elias Pasche",
+      "position": "Left Winger",
+      "selection": 0.644,
+      "sport": 65.0,
+      "part_3_derniers": 0.73,
+      "dynamique": 0.487,
+      "adequation": 0.95
+     }
+    ],
+    "repos": [
+     {
+      "id": "237664",
+      "name": "Simon Enzler"
+     }
+    ],
+    "banc": [
+     {
+      "id": "237664",
+      "name": "Simon Enzler",
+      "position": "Goalkeeper",
+      "selection": 0.7827,
+      "sport": 60.6,
+      "part_3_derniers": 1.0
+     },
+     {
+      "id": "289404",
+      "name": "Jonathan Okita",
+      "position": "Left Winger",
+      "selection": 0.6067,
+      "sport": 43.8,
+      "part_3_derniers": 0.76
+     },
+     {
+      "id": "1195252",
+      "name": "Jonatan Mayorga",
+      "position": "Right Winger",
+      "selection": 0.4248,
+      "sport": 32.5,
+      "part_3_derniers": 0.47
+     },
+     {
+      "id": "294583",
+      "name": "Shkelqim Demhasaj",
+      "position": "Centre-Forward",
+      "selection": 0.3877,
+      "sport": 45.3,
+      "part_3_derniers": 0.29
+     },
+     {
+      "id": "876629",
+      "name": "Mahamadou Kanouté",
+      "position": "Centre-Forward",
+      "selection": 0.3646,
+      "sport": 55.7,
+      "part_3_derniers": 0.11
+     },
+     {
+      "id": "390179",
+      "name": "Bastien Toma",
+      "position": "Attacking Midfield",
+      "selection": 0.3295,
+      "sport": 34.3,
+      "part_3_derniers": 0.32
+     },
+     {
+      "id": "479486",
+      "name": "Robin Golliard",
+      "position": "Centre-Forward",
+      "selection": 0.327,
+      "sport": 55.4,
+      "part_3_derniers": 0.07
+     },
+     {
+      "id": "624910",
+      "name": "Anthony Baron",
+      "position": "Centre-Back",
+      "selection": 0.3268,
+      "sport": 52.9,
+      "part_3_derniers": 0.0
+     },
+     {
+      "id": "700223",
+      "name": "Gilles Richard",
+      "position": "Centre-Back",
+      "selection": 0.2955,
+      "sport": 48.3,
+      "part_3_derniers": 0.0
+     }
+    ],
+    "buteurs": [
+     {
+      "id": "310361",
+      "name": "Varol Tasar",
+      "minutes_attendues": 80,
+      "buts_90": 0.49,
+      "xg_match": 0.87,
+      "p_marquer": 0.58
+     },
+     {
+      "id": "159317",
+      "name": "Hélios Sessolo",
+      "minutes_attendues": 80,
+      "buts_90": 0.3,
+      "xg_match": 0.53,
+      "p_marquer": 0.412
+     },
+     {
+      "id": "524384",
+      "name": "Elias Pasche",
+      "minutes_attendues": 80,
+      "buts_90": 0.29,
+      "xg_match": 0.51,
+      "p_marquer": 0.402
+     },
+     {
+      "id": "264956",
+      "name": "Jean-Kévin Augustin",
+      "minutes_attendues": 80,
+      "buts_90": 0.27,
+      "xg_match": 0.48,
+      "p_marquer": 0.381
+     },
+     {
+      "id": "98167",
+      "name": "Valon Fazliu",
+      "minutes_attendues": 80,
+      "buts_90": 0.17,
+      "xg_match": 0.31,
+      "p_marquer": 0.266
+     },
+     {
+      "id": "466918",
+      "name": "Vegard Kongsro",
+      "minutes_attendues": 80,
+      "buts_90": 0.11,
+      "xg_match": 0.19,
+      "p_marquer": 0.174
+     },
+     {
+      "id": "289404",
+      "name": "Jonathan Okita",
+      "minutes_attendues": 20,
+      "buts_90": 0.37,
+      "xg_match": 0.17,
+      "p_marquer": 0.152
+     },
+     {
+      "id": "417895",
+      "name": "Lucas Pos",
+      "minutes_attendues": 80,
+      "buts_90": 0.08,
+      "xg_match": 0.14,
+      "p_marquer": 0.133
+     },
+     {
+      "id": "1195252",
+      "name": "Jonatan Mayorga",
+      "minutes_attendues": 20,
+      "buts_90": 0.18,
+      "xg_match": 0.08,
+      "p_marquer": 0.078
+     },
+     {
+      "id": "286292",
+      "name": "Ousmane Doumbia",
+      "minutes_attendues": 80,
+      "buts_90": 0.04,
+      "xg_match": 0.08,
+      "p_marquer": 0.075
+     },
+     {
+      "id": "1030482",
+      "name": "Jason Gnakpa",
+      "minutes_attendues": 80,
+      "buts_90": 0.01,
+      "xg_match": 0.02,
+      "p_marquer": 0.022
+     },
+     {
+      "id": "69899",
+      "name": "Anthony Sauthier",
+      "minutes_attendues": 80,
+      "buts_90": 0.01,
+      "xg_match": 0.02,
+      "p_marquer": 0.017
+     },
+     {
+      "id": "894261",
+      "name": "Maxime Rouiller",
+      "minutes_attendues": 80,
+      "buts_90": 0.0,
+      "xg_match": 0.0,
+      "p_marquer": 0.0
+     },
+     {
+      "id": "237664",
+      "name": "Simon Enzler",
+      "minutes_attendues": 20,
+      "buts_90": 0.0,
+      "xg_match": 0.0,
+      "p_marquer": 0.0
+     }
+    ]
+   }
+  },
+  "yverdon": {
+   "entraineur": "Guillermo Abascal",
+   "systemes_saison": {
+    "4-2-3-1": 3,
+    "4-3-3 Attacking": 5,
+    "4-1-4-1": 2,
+    "3-5-2 flat": 1
+   },
+   "systemes_entraineur": {
+    "4-3-3 Attacking": 1
+   },
+   "systeme_retenu": "4-3-3",
+   "indisponibles": [
+    {
+     "id": "583015",
+     "name": "Mayka Okuka",
+     "statut": {
+      "status": "injured",
+      "reason": "unknown injury",
+      "since": "2026-10-07",
+      "until": null,
+      "missed_matches": 1
+     }
+    },
+    {
+     "id": "154475",
+     "name": "Aurélien Chappuis",
+     "statut": {
+      "status": "injured",
+      "reason": "unknown injury",
+      "since": "2026-09-16",
+      "until": null,
+      "missed_matches": 2
+     }
+    }
+   ],
+   "joueurs": [
+    {
+     "id": "69899",
+     "name": "Anthony Sauthier",
+     "position": "Right-Back",
+     "groupe": "DEF",
+     "age": 35,
+     "sport": 74.2,
+     "part_3_derniers": 0.96,
+     "dynamique": 0.775,
+     "selection": 0.8246,
+     "positions": {
+      "Right-Back": 9,
+      "Centre-Back": 1
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 889,
+     "buts_2627": 0,
+     "passes_2627": 0,
+     "titularisations": 10,
+     "jaunes_2627": 2
+    },
+    {
+     "id": "466918",
+     "name": "Vegard Kongsro",
+     "position": "Left-Back",
+     "groupe": "DEF",
+     "age": 28,
+     "sport": 73.3,
+     "part_3_derniers": 1.0,
+     "dynamique": 0.713,
+     "selection": 0.8224,
+     "positions": {
+      "Left-Back": 10
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 855,
+     "buts_2627": 1,
+     "passes_2627": 2,
+     "titularisations": 10,
+     "jaunes_2627": 1
+    },
+    {
+     "id": "417895",
+     "name": "Lucas Pos",
+     "position": "Centre-Back",
+     "groupe": "DEF",
+     "age": 28,
+     "sport": 68.8,
+     "part_3_derniers": 1.0,
+     "dynamique": 0.811,
+     "selection": 0.8218,
+     "positions": {
+      "Defensive Midfield": 1,
+      "Centre-Back": 10
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 990,
+     "buts_2627": 1,
+     "passes_2627": 0,
+     "titularisations": 11,
+     "jaunes_2627": 4
+    },
+    {
+     "id": "237664",
+     "name": "Simon Enzler",
+     "position": "Goalkeeper",
+     "groupe": "GK",
+     "age": 28,
+     "sport": 60.6,
+     "part_3_derniers": 1.0,
+     "dynamique": 0.8,
+     "selection": 0.7827,
+     "positions": {
+      "Goalkeeper": 10
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 900,
+     "buts_2627": 0,
+     "passes_2627": 0,
+     "titularisations": 10,
+     "jaunes_2627": 0
+    },
+    {
+     "id": "1030482",
+     "name": "Jason Gnakpa",
+     "position": "Centre-Back",
+     "groupe": "DEF",
+     "age": 22,
+     "sport": 60.8,
+     "part_3_derniers": 0.78,
+     "dynamique": 0.57,
+     "selection": 0.6598,
+     "positions": {
+      "Centre-Back": 5
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 345,
+     "buts_2627": 0,
+     "passes_2627": 0,
+     "titularisations": 3,
+     "jaunes_2627": 0
+    },
+    {
+     "id": "98167",
+     "name": "Valon Fazliu",
+     "position": "Attacking Midfield",
+     "groupe": "MID",
+     "age": 30,
+     "sport": 53.0,
+     "part_3_derniers": 0.79,
+     "dynamique": 0.717,
+     "selection": 0.6593,
+     "positions": {
+      "Attacking Midfield": 4,
+      "Central Midfield": 5,
+      "Defensive Midfield": 1
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 756,
+     "buts_2627": 2,
+     "passes_2627": 3,
+     "titularisations": 9,
+     "jaunes_2627": 3
+    },
+    {
+     "id": "524384",
+     "name": "Elias Pasche",
+     "position": "Left Winger",
+     "groupe": "ATT",
+     "age": 27,
+     "sport": 65.0,
+     "part_3_derniers": 0.73,
+     "dynamique": 0.487,
+     "selection": 0.644,
+     "positions": {
+      "Left Midfield": 1,
+      "Left Winger": 3,
+      "Right Winger": 1
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 291,
+     "buts_2627": 0,
+     "passes_2627": 2,
+     "titularisations": 3,
+     "jaunes_2627": 2
+    },
+    {
+     "id": "286292",
+     "name": "Ousmane Doumbia",
+     "position": "Defensive Midfield",
+     "groupe": "MID",
+     "age": 34,
+     "sport": 39.3,
+     "part_3_derniers": 0.9,
+     "dynamique": 0.669,
+     "selection": 0.6257,
+     "positions": {
+      "Centre-Back": 4,
+      "Defensive Midfield": 3
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 527,
+     "buts_2627": 0,
+     "passes_2627": 0,
+     "titularisations": 6,
+     "jaunes_2627": 0
+    },
+    {
+     "id": "310361",
+     "name": "Varol Tasar",
+     "position": "Right Winger",
+     "groupe": "ATT",
+     "age": 30,
+     "sport": 64.1,
+     "part_3_derniers": 0.62,
+     "dynamique": 0.572,
+     "selection": 0.6206,
+     "positions": {
+      "Right Midfield": 3,
+      "Left Winger": 1,
+      "Left Midfield": 1,
+      "Right Winger": 4
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 493,
+     "buts_2627": 4,
+     "passes_2627": 0,
+     "titularisations": 6,
+     "jaunes_2627": 0
+    },
+    {
+     "id": "289404",
+     "name": "Jonathan Okita",
+     "position": "Left Winger",
+     "groupe": "ATT",
+     "age": 30,
+     "sport": 43.8,
+     "part_3_derniers": 0.76,
+     "dynamique": 0.726,
+     "selection": 0.6067,
+     "positions": {
+      "Left Winger": 1
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 68,
+     "buts_2627": 1,
+     "passes_2627": 0,
+     "titularisations": 1,
+     "jaunes_2627": 0
+    },
+    {
+     "id": "159317",
+     "name": "Hélios Sessolo",
+     "position": "Centre-Forward",
+     "groupe": "ATT",
+     "age": 33,
+     "sport": 64.4,
+     "part_3_derniers": 0.5,
+     "dynamique": 0.568,
+     "selection": 0.5797,
+     "positions": {
+      "Centre-Forward": 4,
+      "Central Midfield": 4,
+      "Second Striker": 1,
+      "Attacking Midfield": 1,
+      "Defensive Midfield": 1
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 588,
+     "buts_2627": 3,
+     "passes_2627": 2,
+     "titularisations": 7,
+     "jaunes_2627": 0
+    },
+    {
+     "id": "264956",
+     "name": "Jean-Kévin Augustin",
+     "position": "Centre-Forward",
+     "groupe": "ATT",
+     "age": 29,
+     "sport": 40.0,
+     "part_3_derniers": 0.66,
+     "dynamique": 0.566,
+     "selection": 0.5239,
+     "positions": {
+      "Centre-Forward": 7,
+      "Attacking Midfield": 2
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 435,
+     "buts_2627": 1,
+     "passes_2627": 1,
+     "titularisations": 6,
+     "jaunes_2627": 1
+    },
+    {
+     "id": "154475",
+     "name": "Aurélien Chappuis",
+     "position": "Defensive Midfield",
+     "groupe": "MID",
+     "age": 32,
+     "sport": 50.0,
+     "part_3_derniers": 0.22,
+     "dynamique": 0.628,
+     "selection": 0.4284,
+     "positions": {
+      "Defensive Midfield": 8,
+      "Central Midfield": 1
+     },
+     "disponible": false,
+     "statut": {
+      "status": "injured",
+      "reason": "unknown injury",
+      "since": "2026-09-16",
+      "until": null,
+      "missed_matches": 2
+     },
+     "minutes_2627": 661,
+     "buts_2627": 0,
+     "passes_2627": 0,
+     "titularisations": 9,
+     "jaunes_2627": 2
+    },
+    {
+     "id": "1195252",
+     "name": "Jonatan Mayorga",
+     "position": "Right Winger",
+     "groupe": "ATT",
+     "age": 21,
+     "sport": 32.5,
+     "part_3_derniers": 0.47,
+     "dynamique": 0.576,
+     "selection": 0.4248,
+     "positions": {
+      "Right Winger": 4,
+      "Right Midfield": 1,
+      "Left Winger": 2,
+      "Left Midfield": 4
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 576,
+     "buts_2627": 0,
+     "passes_2627": 0,
+     "titularisations": 7,
+     "jaunes_2627": 2
+    },
+    {
+     "id": "583015",
+     "name": "Mayka Okuka",
+     "position": "Defensive Midfield",
+     "groupe": "MID",
+     "age": 23,
+     "sport": 34.7,
+     "part_3_derniers": 0.42,
+     "dynamique": 0.52,
+     "selection": 0.4079,
+     "positions": {
+      "Defensive Midfield": 5,
+      "Central Midfield": 3,
+      "Attacking Midfield": 1
+     },
+     "disponible": false,
+     "statut": {
+      "status": "injured",
+      "reason": "unknown injury",
+      "since": "2026-10-07",
+      "until": null,
+      "missed_matches": 1
+     },
+     "minutes_2627": 472,
+     "buts_2627": 0,
+     "passes_2627": 0,
+     "titularisations": 4,
+     "jaunes_2627": 1
+    },
+    {
+     "id": "294583",
+     "name": "Shkelqim Demhasaj",
+     "position": "Centre-Forward",
+     "groupe": "ATT",
+     "age": 30,
+     "sport": 45.3,
+     "part_3_derniers": 0.29,
+     "dynamique": 0.407,
+     "selection": 0.3877,
+     "positions": {
+      "Centre-Forward": 7
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 313,
+     "buts_2627": 1,
+     "passes_2627": 1,
+     "titularisations": 4,
+     "jaunes_2627": 0
+    },
+    {
+     "id": "876629",
+     "name": "Mahamadou Kanouté",
+     "position": "Centre-Forward",
+     "groupe": "ATT",
+     "age": 22,
+     "sport": 55.7,
+     "part_3_derniers": 0.11,
+     "dynamique": 0.369,
+     "selection": 0.3646,
+     "positions": {
+      "Centre-Forward": 10
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 385,
+     "buts_2627": 3,
+     "passes_2627": 0,
+     "titularisations": 3,
+     "jaunes_2627": 1
+    },
+    {
+     "id": "390179",
+     "name": "Bastien Toma",
+     "position": "Attacking Midfield",
+     "groupe": "MID",
+     "age": 27,
+     "sport": 34.3,
+     "part_3_derniers": 0.32,
+     "dynamique": 0.312,
+     "selection": 0.3295,
+     "positions": {
+      "Attacking Midfield": 2
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 58,
+     "buts_2627": 1,
+     "passes_2627": 0,
+     "titularisations": 0,
+     "jaunes_2627": 0
+    },
+    {
+     "id": "479486",
+     "name": "Robin Golliard",
+     "position": "Centre-Forward",
+     "groupe": "ATT",
+     "age": 27,
+     "sport": 55.4,
+     "part_3_derniers": 0.07,
+     "dynamique": 0.259,
+     "selection": 0.327,
+     "positions": {
+      "Centre-Forward": 6,
+      "Right Winger": 3,
+      "Right Midfield": 1
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 389,
+     "buts_2627": 2,
+     "passes_2627": 0,
+     "titularisations": 4,
+     "jaunes_2627": 0
+    },
+    {
+     "id": "624910",
+     "name": "Anthony Baron",
+     "position": "Centre-Back",
+     "groupe": "DEF",
+     "age": 33,
+     "sport": 52.9,
+     "part_3_derniers": 0.0,
+     "dynamique": 0.444,
+     "selection": 0.3268,
+     "positions": {
+      "Centre-Back": 3
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 256,
+     "buts_2627": 0,
+     "passes_2627": 0,
+     "titularisations": 3,
+     "jaunes_2627": 0
+    },
+    {
+     "id": "700223",
+     "name": "Gilles Richard",
+     "position": "Centre-Back",
+     "groupe": "DEF",
+     "age": 23,
+     "sport": 48.3,
+     "part_3_derniers": 0.0,
+     "dynamique": 0.391,
+     "selection": 0.2955,
+     "positions": {
+      "Centre-Back": 2
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 148,
+     "buts_2627": 0,
+     "passes_2627": 0,
+     "titularisations": 2,
+     "jaunes_2627": 0
+    },
+    {
+     "id": "864381",
+     "name": "Lorenzo Bittarelli",
+     "position": "Right-Back",
+     "groupe": "DEF",
+     "age": 21,
+     "sport": 38.0,
+     "part_3_derniers": 0.0,
+     "dynamique": 0.35,
+     "selection": 0.241,
+     "positions": {
+      "Right-Back": 2,
+      "Right Midfield": 1
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 179,
+     "buts_2627": 0,
+     "passes_2627": 0,
+     "titularisations": 2,
+     "jaunes_2627": 0
+    },
+    {
+     "id": "894261",
+     "name": "Maxime Rouiller",
+     "position": "Goalkeeper",
+     "groupe": "GK",
+     "age": 21,
+     "sport": 38.3,
+     "part_3_derniers": 0.0,
+     "dynamique": 0.29,
+     "selection": 0.2303,
+     "positions": {
+      "Goalkeeper": 1
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 90,
+     "buts_2627": 0,
+     "passes_2627": 0,
+     "titularisations": 1,
+     "jaunes_2627": 0
+    },
+    {
+     "id": "1208616",
+     "name": "Loan Guignard",
+     "position": "Left-Back",
+     "groupe": "DEF",
+     "age": 20,
+     "sport": 33.1,
+     "part_3_derniers": 0.0,
+     "dynamique": 0.296,
+     "selection": 0.2082,
+     "positions": {
+      "Left-Back": 3
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 94,
+     "buts_2627": 0,
+     "passes_2627": 0,
+     "titularisations": 0,
+     "jaunes_2627": 1
+    },
+    {
+     "id": "1177907",
+     "name": "Ethan Bruchez",
+     "position": "Attacking Midfield",
+     "groupe": "MID",
+     "age": 18,
+     "sport": 24.3,
+     "part_3_derniers": 0.0,
+     "dynamique": 0.266,
+     "selection": 0.1626,
+     "positions": {
+      "Attacking Midfield": 2
+     },
+     "disponible": true,
+     "statut": null,
+     "minutes_2627": 45,
+     "buts_2627": 0,
+     "passes_2627": 0,
+     "titularisations": 0,
+     "jaunes_2627": 1
+    }
+   ]
+  },
+  "projection_saison": {
+   "simulations": 20000,
+   "matchs_restants": 40,
+   "horizon": 18,
+   "clubs": {
+    "116": {
+     "points_actuels": 12,
+     "points_projetes": 22.7,
+     "rang_moyen": 6.3,
+     "p_rang": {
+      "1": 0.0003,
+      "2": 0.008,
+      "3": 0.0352,
+      "4": 0.0876,
+      "5": 0.164,
+      "6": 0.2499,
+      "7": 0.2163,
+      "8": 0.1594,
+      "9": 0.075,
+      "10": 0.0042
+     },
+     "club": "FC Aarau"
+    },
+    "1292": {
+     "points_actuels": 9,
+     "points_projetes": 17.4,
+     "rang_moyen": 8.29,
+     "p_rang": {
+      "1": 0.0,
+      "2": 0.0001,
+      "3": 0.0013,
+      "4": 0.007,
+      "5": 0.0219,
+      "6": 0.0611,
+      "7": 0.1283,
+      "8": 0.2369,
+      "9": 0.4427,
+      "10": 0.1007
+     },
+     "club": "Etoile Carouge FC"
+    },
+    "2074": {
+     "points_actuels": 15,
+     "points_projetes": 26.9,
+     "rang_moyen": 4.39,
+     "p_rang": {
+      "1": 0.0056,
+      "2": 0.0861,
+      "3": 0.1875,
+      "4": 0.2797,
+      "5": 0.2314,
+      "6": 0.1252,
+      "7": 0.0585,
+      "8": 0.0211,
+      "9": 0.0046,
+      "10": 0.0003
+     },
+     "club": "SC Kriens"
+    },
+    "242": {
+     "points_actuels": 18,
+     "points_projetes": 30.2,
+     "rang_moyen": 3.22,
+     "p_rang": {
+      "1": 0.0348,
+      "2": 0.2651,
+      "3": 0.3565,
+      "4": 0.2011,
+      "5": 0.0941,
+      "6": 0.0343,
+      "7": 0.0113,
+      "8": 0.0027,
+      "9": 0.0001,
+      "10": 0.0
+     },
+     "club": "FC Winterthur"
+    },
+    "322": {
+     "points_actuels": 19,
+     "points_projetes": 32.5,
+     "rang_moyen": 2.58,
+     "p_rang": {
+      "1": 0.0865,
+      "2": 0.4913,
+      "3": 0.2544,
+      "4": 0.1087,
+      "5": 0.042,
+      "6": 0.0134,
+      "7": 0.0032,
+      "8": 0.0006,
+      "9": 0.0,
+      "10": 0.0
+     },
+     "club": "Yverdon Sport FC"
+    },
+    "5499": {
+     "points_actuels": 24,
+     "points_projetes": 39.1,
+     "rang_moyen": 1.16,
+     "p_rang": {
+      "1": 0.8703,
+      "2": 0.1032,
+      "3": 0.022,
+      "4": 0.0036,
+      "5": 0.0008,
+      "6": 0.0001,
+      "7": 0.0,
+      "8": 0.0,
+      "9": 0.0,
+      "10": 0.0
+     },
+     "club": "FC Stade-Lausanne-Ouchy"
+    },
+    "5507": {
+     "points_actuels": 5,
+     "points_projetes": 11.8,
+     "rang_moyen": 9.78,
+     "p_rang": {
+      "1": 0.0,
+      "2": 0.0,
+      "3": 0.0001,
+      "4": 0.0001,
+      "5": 0.0004,
+      "6": 0.0024,
+      "7": 0.0083,
+      "8": 0.0307,
+      "9": 0.1188,
+      "10": 0.8394
+     },
+     "club": "FC Stade Nyonnais"
+    },
+    "625": {
+     "points_actuels": 15,
+     "points_projetes": 26.2,
+     "rang_moyen": 4.92,
+     "p_rang": {
+      "1": 0.0024,
+      "2": 0.0424,
+      "3": 0.1206,
+      "4": 0.2382,
+      "5": 0.2706,
+      "6": 0.1774,
+      "7": 0.0959,
+      "8": 0.0403,
+      "9": 0.0117,
+      "10": 0.0005
+     },
+     "club": "Neuchâtel Xamax FCS"
+    },
+    "8463": {
+     "points_actuels": 10,
+     "points_projetes": 20.8,
+     "rang_moyen": 7.0,
+     "p_rang": {
+      "1": 0.0,
+      "2": 0.0024,
+      "3": 0.0143,
+      "4": 0.045,
+      "5": 0.1016,
+      "6": 0.186,
+      "7": 0.2465,
+      "8": 0.2374,
+      "9": 0.1449,
+      "10": 0.022
+     },
+     "club": "FC Rapperswil-Jona"
+    },
+    "850": {
+     "points_actuels": 10,
+     "points_projetes": 20.1,
+     "rang_moyen": 7.35,
+     "p_rang": {
+      "1": 0.0,
+      "2": 0.0014,
+      "3": 0.0083,
+      "4": 0.029,
+      "5": 0.0732,
+      "6": 0.1503,
+      "7": 0.2318,
+      "8": 0.2708,
+      "9": 0.2021,
+      "10": 0.0331
+     },
+     "club": "FC Wil 1900"
+    }
+   }
+  }
  },
  "sport_par_ligne": {
   "GK": {

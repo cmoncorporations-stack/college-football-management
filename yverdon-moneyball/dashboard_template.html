@@ -128,6 +128,29 @@ tbody tr.open{background:var(--surface2)}
 .moves li{padding:3px 0;border-bottom:1px dotted var(--line)}
 .moves .why{color:var(--ink3);font-size:12px}
 @media (max-width:900px){.sgrid,.moves{grid-template-columns:1fr}}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.mcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;box-shadow:var(--shadow)}
+.mcard .teams{font-family:Oswald,sans-serif;font-size:22px;line-height:1.2;margin:4px 0 2px}
+.pbar{display:flex;height:26px;border-radius:7px;overflow:hidden;margin:12px 0 4px;font-size:12px;font-weight:700;color:#fff}
+.pbar span{display:flex;align-items:center;justify-content:center;min-width:0;white-space:nowrap;overflow:hidden}
+.pbar .w{background:var(--good)}.pbar .d{background:var(--ink3)}.pbar .l{background:var(--bad)}
+.plabels{display:flex;justify-content:space-between;font-size:12px;color:var(--ink3)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.kpis div{background:var(--surface2);border-radius:8px;padding:8px 10px}
+.kpis b{display:block;font-family:Oswald,sans-serif;font-size:20px;font-weight:600}
+.kpis small{font-size:11.5px;color:var(--ink3)}
+.pitch{background:color-mix(in srgb,var(--good) 9%,var(--surface));border:1px solid var(--line);border-radius:10px;padding:10px 6px;display:grid;gap:8px;margin-top:10px}
+.pline{display:flex;justify-content:space-around;gap:4px}
+.pl{text-align:center;font-size:12px;min-width:0;flex:1}
+.pl b{display:block;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl small{color:var(--ink3);font-size:11px}
+.small-list{font-size:13px;margin:6px 0 0;padding-left:18px}
+.small-list li{padding:1px 0}
+.dist{display:flex;gap:3px;align-items:flex-end;height:70px;margin-top:8px}
+.dist div{flex:1;background:var(--sport);border-radius:3px 3px 0 0;position:relative;min-height:1px}
+.dist span{position:absolute;bottom:-17px;left:0;right:0;text-align:center;font-size:11px;color:var(--ink3)}
+.dist em{position:absolute;top:-16px;left:0;right:0;text-align:center;font-size:10.5px;font-style:normal;color:var(--ink2)}
+@media (max-width:900px){.mgrid{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}}
 .morebtn{font:inherit;font-size:13px;margin-left:8px;padding:4px 12px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--accent-ink);cursor:pointer}
 .detail td{background:var(--surface2);text-align:left;padding:16px 18px}
 .dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -191,6 +214,20 @@ footer li{margin-bottom:5px}
   <div id="moves"></div>
 </section>
 
+<section id="matchSection" hidden>
+  <div class="shead"><h2>Prochain <span>match</span></h2>
+    <p id="matchSub">Préparation des deux prochains matchs d'Yverdon Sport à partir des données Transfermarkt 2026/27 : pronostic, expected goals (xG-tirs), onze recommandé, buteurs probables et projection jusqu'à la trêve.</p></div>
+  <div class="mgrid" id="matchCards"></div>
+  <div class="mgrid" style="margin-top:18px">
+    <div class="mcard" id="oppCard"></div>
+    <div class="mcard" id="projCard"></div>
+  </div>
+  <div class="tw" style="margin-top:18px"><table id="c2Table">
+    <thead><tr><th class="l">#</th><th class="l">Club</th><th>J</th><th>Pts</th><th>Buts</th><th>xG-tirs pour</th><th>xG-tirs contre</th><th>Écart buts − xG</th><th>Attaque</th><th>Défense</th><th>Pts projetés</th><th>P(1er à la trêve)</th></tr></thead>
+    <tbody id="c2Rows"></tbody></table></div>
+  <p class="psub" id="c2Note" style="margin-top:8px"></p>
+</section>
+
 <section>
   <div class="shead"><h2>Plan <span>mercato</span></h2>
     <p>Meilleure option par ligne dans l'enveloppe fixée, deux recrues sur les lignes où le besoin dépasse 0,45. Suit les réglages du tableau de chasse. Les joueurs à valeur marchande estimée (*) en sont exclus et comptés à part.</p></div>
@@ -243,6 +280,7 @@ footer li{margin-bottom:5px}
     <li><strong>Valeur</strong> : 40 % sous-évaluation (résidu d'une régression log(valeur marchande) ~ note sportive + âge + âge² + ligue + poste sur tout le vivier, pour ne pas confondre « joue en National » et « sous-évalué »), 25 % levier contractuel (≤ 6 mois = libre ou pré-contrat), 15 % tendance de la valeur sur 12 mois, 20 % plus-value nette attendue : valeur projetée à 24 mois (courbe d'âge par ligne, pic à 26 ans pour milieux et attaquants, 27 pour défenseurs, 29 pour gardiens, modulée par l'élan des 12 derniers mois) moins l'indemnité estimée, rapportée à la valeur actuelle. Un joueur sans valeur Transfermarkt reçoit la valeur prédite par cette régression, marquée (*) : sa note Valeur pèse moitié moins dans la note finale et il est exclu du plan mercato automatique.</li>
     <li><strong>Fan fit</strong> : ancrage régional (lieu de naissance normalisé — Genf, Genève et Geneva sont la même ville — rattaché à sa commune, son canton et sa zone : bassin nord-vaudois 1,00, Vaud 0,85, Romandie 0,70, Suisse 0,45, frontalier 0,40, international 0,10 ; un club formateur d'Yverdon vaut bassin, un club formateur romand vaut Romandie, et l'on retient la meilleure des deux lectures pour tous), francophonie, fidélité (durée moyenne par club), potentiel média (réseaux sociaux + spectacle offensif) et lien avec le club, pondérés par l'ADN fan ci-dessus.</li>
     <li><strong>Note finale</strong> = moyenne pondérée des trois notes × (0,85 + 0,30 × besoin du poste).</li>
+    <li><strong>Prochain match</strong> (<code>moneyball/matchprep.py</code>). Approche pilotée par la donnée, dans l'esprit des clubs qui en ont fait leur méthode comme l'AC Como ; le modèle interne de Como n'est pas public et aucun de ses paramètres n'est repris. (1) <em>xG-tirs</em> : Transfermarkt publie tirs, tirs non cadrés et tirs arrêtés mais pas d'expected goals ; buts ≈ a × tirs cadrés + b × tirs non cadrés, ajusté sur les matchs de Challenge League 2026/27. Ce n'est pas un xG fondé sur la position des tirs. (2) <em>Notes d'équipes</em> : modèle de Poisson attaque / défense / avantage du terrain sur la Challenge League 2026/27, cible = 50 % buts + 50 % xG-tirs, rétréci vers le classement 2025/26 (6 matchs de poids). (3) <em>Coupe</em> : régression de Poisson sur les matchs du 1er tour de Coupe de Suisse 2026/27 entre clubs pros et clubs de division à coefficient connu (log λ = α + β × ln(rapport des coefficients) + domicile), puis adversaire situé dans sa propre ligue ; prolongation à un tiers des buts attendus, tirs au but à 50 %. (4) <em>Onze</em> : joueurs disponibles, postes réellement occupés cette saison, 4-3-3 de l'entraîneur en place ; note de sélection = 0,45 Sport + 0,35 part des minutes sur les 3 derniers matchs + 0,20 dynamique 26/27. (5) <em>Buteurs</em> : P(marquer) = 1 − e<sup>−λ × part</sup>, part = buts/90 rétrécis vers le poste × minutes attendues. (6) <em>Projection</em> : Monte-Carlo des matchs programmés jusqu'à la trêve.</li>
     <li><strong>Indemnité estimée</strong> = 0 à six mois de la fin de contrat, sinon 35 à 100 % de la valeur marchande selon la durée restante. C'est un ordre de grandeur, pas une offre.</li>
   </ul>
   <h3>Sources</h3>
@@ -253,6 +291,7 @@ footer li{margin-bottom:5px}
   <h3>Limites</h3>
   <ul>
     <li>Sources prévues, non actives sur ce vivier : Sofascore (xG, xA, note ; répond 403 hors navigateur) et API-Football (note, tirs, passes clés ; pas de clé). Sans elles, la note Sport repose sur buts, passes, minutes, discipline, buts encaissés et résultats d'équipe Transfermarkt.</li>
+    <li>Prochain match : aucun xG positionnel (Sofascore et Opta inaccessibles), xG-tirs seulement ; le modèle ignore la fatigue, la météo et la tactique adverse ; le 4-3-3 retenu repose sur un seul match du nouvel entraîneur ; les notes d'équipes ne bougent pas pendant la simulation ; le niveau d'Old Boys est déduit de 9 matchs de coupe pros contre amateurs.</li>
     <li>Journal 2026/27 : les suspensions ne sont pas publiées match par match par Transfermarkt ; elles sont déduites (carton rouge au match précédent, suspension listée par le club). Les matchs d'un joueur avec un autre club avant son arrivée ne sont pas lus. Le niveau des adversaires européens n'est pas connu dans les agrégats (1,3 par défaut).</li>
     <li>Transfermarkt ne donne aucune statistique défensive individuelle (duels, interceptions) : les défenseurs centraux sont notés sur les résultats de leur équipe, d'où une confiance « faible ». Un gardien titulaire unique est noté sur le classement de son équipe, pas sur ses arrêts.</li>
     <li>Transfermarkt ne donne pas le volume d'abonnés des joueurs : le potentiel média se fonde sur la présence d'un compte, pas sur son audience.</li>
@@ -312,6 +351,55 @@ const DATA=/*__DATA__*/null;
     return `<div class="need ${lvl}"><div class="g"><h3>${GL[g]}</h3><span class="pill">${lvl==="hi"?"Prioritaire":lvl==="mid"?"À renforcer":"Couvert"}</span></div>
     <div class="g" style="margin-top:6px"><b class="num">${n.besoin.toFixed(2)}</b><span class="psub">besoin</span></div>
     <ul><li><span>Effectif / cible</span><span class="num">${n.effectif} / ${n.cible}</span></li><li><span>Fin de contrat &lt; 12 mois</span><span class="num">${n.fin_contrat_12m}</span></li><li><span>31 ans et plus</span><span class="num">${n["31_ans_plus"]}</span></li><li><span>Titulaires blessés longue durée</span><span class="num">${n.blesses_longue_duree??0}</span></li><li><span>Âge moyen</span><span class="num">${n.age_moyen??"—"}</span></li></ul></div>`}).join("");
+
+  // Prochain match
+  const PM=DATA.prochain_match;
+  if(PM){
+    $("matchSection").hidden=false;
+    const N=PM.noms||{}, YSID="322", pc=v=>v==null?"—":Math.round(v*100)+" %";
+    const LINES=[["CF","LW","RW"],["CM1","CM2","DM"],["LB","CB1","CB2","RB"],["GK"]];
+    const ORDER={LW:0,CF:1,RW:2,CM1:0,DM:1,CM2:2,LB:0,CB1:1,CB2:2,RB:3,GK:0};
+    const pitch=xi=>{const by=Object.fromEntries(xi.map(r=>[r.creneau,r]));return `<div class="pitch">${LINES.map(l=>`<div class="pline">${l.slice().sort((a,b)=>ORDER[a]-ORDER[b]).filter(k=>by[k]).map(k=>`<div class="pl"><b>${esc(by[k].name)}</b><small>${esc(by[k].role)}</small></div>`).join("")}</div>`).join("")}</div>`};
+    const ROUNDS={"First Round":"1er tour","Second Round":"2e tour","Third Round":"3e tour","Round of 16":"8e de finale","Quarter-Finals":"quart de finale","Semi-Finals":"demi-finale","Final":"finale"};
+    const card=(blk,cup)=>{if(!blk) return "";const m=blk.match,p=blk.prediction,home=m.home_id===YSID;
+      const w=home?p.dom:p.ext,l=home?p.ext:p.dom,xgYS=home?p.xg_dom:p.xg_ext,xgOpp=home?p.xg_ext:p.xg_dom,cs=home?p.clean_sheet_dom:p.clean_sheet_ext;
+      const sc=p.scores.slice(0,3).map(x=>{const [a,b]=x.score.split(":");return (home?`${a}:${b}`:`${b}:${a}`)+" ("+pc(x.p)+")"}).join(" · ");
+      return `<div class="mcard"><div class="lab">${esc(cup?"Coupe de Suisse · "+(ROUNDS[m.matchday]||m.matchday||""):"Challenge League · "+m.matchday+"e journée")} · ${dateFr(m.date)}</div>
+      <div class="teams">${esc(m.home)} – ${esc(m.away)}</div>
+      <div class="pbar"><span class="w" style="width:${w*100}%">${pc(w)}</span><span class="d" style="width:${p.nul*100}%">${p.nul>0.08?pc(p.nul):""}</span><span class="l" style="width:${l*100}%">${l>0.08?pc(l):""}</span></div>
+      <div class="plabels"><span>Victoire Yverdon</span><span>Nul (90')</span><span>Défaite</span></div>
+      <div class="kpis"><div><b class="num">${xgYS.toFixed(2)}</b><small>xG Yverdon</small></div><div><b class="num">${xgOpp.toFixed(2)}</b><small>xG adversaire</small></div><div><b class="num">${cup?pc(home?p.qualif_dom:p.qualif_ext):pc(cs)}</b><small>${cup?"Qualification (prolongation et tirs au but compris)":"Clean sheet Yverdon"}</small></div><div><b class="num">${pc(p.plus_2_5)}</b><small>Plus de 2,5 buts</small></div></div>
+      <div class="psub">Scores les plus probables (Yverdon en premier) : ${sc}${cup?` · prolongation ${pc(p.prolongation)}, tirs au but ${pc(p.tirs_au_but)}`:` · les deux équipes marquent ${pc(p.les_deux_marquent)}`}</div>
+      ${!cup&&blk.variantes?`<div class="psub" style="margin-top:4px">Sensibilité : sur les buts seuls ${pc(home?blk.variantes.buts.dom:blk.variantes.buts.ext)} de victoire ; sur les xG-tirs seuls ${pc(home?blk.variantes.xg.dom:blk.variantes.xg.ext)}. Le pronostic retenu mélange les deux.</div>`:""}
+      <h3 style="margin-top:14px">Onze recommandé · 4-3-3</h3>${pitch(cup?blk.onze:blk.onze)}
+      <div class="psub" style="margin-top:8px"><b>Banc :</b> ${(blk.banc||[]).map(b=>esc(b.name)).join(", ")}</div>
+      ${cup&&blk.repos&&blk.repos.length?`<div class="psub"><b>Rotation :</b> ${blk.repos.map(r=>esc(r.name)).join(", ")} laissé${blk.repos.length>1?"s":""} au repos ; Maxime Rouiller garde la cage comme au 1er tour.</div>`:""}
+      ${!cup&&blk.ecarts?`<div class="psub" style="margin-top:4px"><b>Par rapport au onze du ${dateFr(PM.prochain_match.championnat.forme_ys.slice(-1)[0]?.date)} :</b> ${blk.ecarts.entrants.map(e=>"+ "+esc(e.name)+" ("+esc(e.raison)+")").join(" ; ")}${blk.ecarts.sortants.length?" ; "+blk.ecarts.sortants.map(e=>"− "+esc(e.name)+" ("+esc(e.raison)+")").join(" ; "):""}.</div>`:""}
+      <h3 style="margin-top:12px">Buteurs probables</h3><ol class="small-list">${blk.buteurs.slice(0,5).map(b=>`<li>${esc(b.name)} · <b>${pc(b.p_marquer)}</b> <span class="psub">(xG ${b.xg_match.toFixed(2)}, ${b.buts_90.toFixed(2)} but/90 rétréci)</span></li>`).join("")}</ol></div>`};
+    const C=PM.prochain_match;
+    $("matchCards").innerHTML=card(C.coupe&&{...C.coupe,match:C.coupe.match},true)+card(C.championnat,false);
+    // dossier adversaire
+    const ad=C.championnat.adversaire, fo=C.championnat.forme_adversaire, oppName=C.championnat.match.home_id===YSID?C.championnat.match.away:C.championnat.match.home;
+    const cupOpp=C.coupe?C.coupe.adversaire:null;
+    $("oppCard").innerHTML=`<h3>Dossier ${esc(oppName)}</h3>
+      <p class="psub" style="margin:4px 0 8px">Entraîneur ${esc(ad.entraineur||"—")} · systèmes cette saison : ${Object.entries(ad.systemes).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`${esc(k)} ×${v}`).join(", ")}</p>
+      <div class="lab">5 derniers matchs (score · xG-tirs pour – contre)</div>
+      <div class="last5">${fo.map(f=>`<div class="m5 ${f.issue}"><div class="d">${dateFr(f.date)} · J${f.journee} · ${f.dom?"dom.":"ext."}</div><div>${esc(N[f.adversaire]||f.adversaire)}</div><div class="r num">${esc(f.score)} <small>${f.issue}</small></div><div class="num">xG ${f.xg_pour??"—"} – ${f.xg_contre??"—"}</div></div>`).join("")}</div>
+      <div class="lab" style="margin-top:10px">Joueurs clés présents dans le vivier (17-29 ans, ≤ 1,5 M€ : liste partielle)</div>
+      <ol class="small-list">${ad.joueurs_du_vivier.slice(0,6).map(j=>`<li>${esc(j.name)} · ${j.buts} b, ${j.passes} p · ${j.titularisations}/${j.matchs} titularisations, ${j.minutes}'</li>`).join("")}</ol>
+      ${cupOpp?`<div class="lab" style="margin-top:10px">Coupe : ${esc(C.coupe.match.home_id===YSID?C.coupe.match.away:C.coupe.match.home)}</div><p class="psub" style="margin:4px 0">${esc(cupOpp.ligue)} (coefficient ${cupOpp.coefficient}) · ${cupOpp.classement?`${cupOpp.classement.rank}e sur ${cupOpp.equipes}, ${cupOpp.classement.goals_for}:${cupOpp.classement.goals_against} en ${cupOpp.classement.matches} matchs`:""} · attaque ${cupOpp.attaque_relative} et défense ${cupOpp.defense_relative} × la moyenne de sa ligue. Derniers résultats : ${cupOpp.forme.map(f=>`${esc(f.dom)} ${esc(f.score)} ${esc(f.ext)}`).join(" ; ")}.</p>`:""}`;
+    // projection
+    const PJ=PM.projection_saison, ys=PJ.clubs[YSID], mx=Math.max(...Object.values(ys.p_rang));
+    $("projCard").innerHTML=`<h3>Projection à la trêve (${PJ.horizon}e journée)</h3>
+      <p class="psub" style="margin:4px 0">${PJ.simulations.toLocaleString("fr-CH")} simulations des ${PJ.matchs_restants} matchs de Challenge League déjà programmés, notes d'équipes figées au ${dateFr(PM.today)}.</p>
+      <div class="kpis"><div><b class="num">${ys.points_actuels}</b><small>points aujourd'hui</small></div><div><b class="num">${ys.points_projetes.toLocaleString("fr-CH")}</b><small>points projetés</small></div><div><b class="num">${ys.rang_moyen.toLocaleString("fr-CH")}</b><small>rang moyen</small></div><div><b class="num">${pc(ys.p_rang["1"])}</b><small>1er à la trêve</small></div></div>
+      <div class="lab">Rang d'Yverdon à la trêve</div>
+      <div class="dist" style="margin-bottom:22px">${Object.entries(ys.p_rang).map(([r,v])=>`<div style="height:${v/mx*100}%">${v>=0.01?`<em>${Math.round(v*100)}%</em>`:""}<span>${r}</span></div>`).join("")}</div>
+      <p class="psub">xG-tirs : ${PM.xg_modele.par_tir_cadre.toLocaleString("fr-CH")} but par tir cadré, ${PM.xg_modele.par_tir_non_cadre.toLocaleString("fr-CH")} par tir non cadré (ajusté sur ${PM.xg_modele.n/2} matchs, ${PM.xg_modele.buts} buts pour ${PM.xg_modele.xg.toLocaleString("fr-CH")} xG). Avantage du terrain : × ${PM.notes_equipes.avantage_terrain.toLocaleString("fr-CH")}.</p>`;
+    $("c2Rows").innerHTML=PM.classement.map(r=>{const pj=PJ.clubs[r.club_id];const d=(r.bp-r.xg_pour);
+      return `<tr${r.club_id===YSID?' style="font-weight:700"':""}><td class="l">${r.rang}</td><td class="l">${esc(r.club)}</td><td>${r.j}</td><td>${r.pts}</td><td>${r.bp}:${r.bc}</td><td>${r.xg_pour.toFixed(1)}</td><td>${r.xg_contre.toFixed(1)}</td><td class="${d>2?"trend down":d<-2?"trend up":""}">${d>=0?"+":""}${d.toFixed(1)}</td><td>${r.attaque.toFixed(2)}</td><td>${r.defense.toFixed(2)}</td><td>${pj.points_projetes.toFixed(1)}</td><td>${pc(pj.p_rang["1"])}</td></tr>`}).join("");
+    $("c2Note").textContent="Attaque et défense : multiplicateurs du modèle de Poisson (1,00 = moyenne de la ligue ; défense > 1 = encaisse moins que la moyenne). Écart buts − xG-tirs positif : l'équipe marque plus que le volume de ses tirs ne le laisse attendre, ce qui tend à se corriger.";
+  }
 
   // Contrôles
   const st={wS:DATA.poids_defaut.sport*100,wV:DATA.poids_defaut.valeur*100,wF:DATA.poids_defaut.fan*100,pos:"",fee:1500000,budget:1500000,age:34,fFree:false,fLocal:false};
